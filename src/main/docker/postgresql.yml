@@ -1,0 +1,11 @@
+version: '2'
+services:
+  emna_back_end-postgresql:
+    image: postgres:12.1
+    # volumes:
+    #     - ~/volumes/jhipster/emna_back_end/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=emna_back_end
+      - POSTGRES_PASSWORD=
+    ports:
+      - 5432:5432

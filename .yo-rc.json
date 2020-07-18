@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "fr.insy2s",
+      "nativeLanguage": "fr"
+    },
+    "jhipsterVersion": "6.8.0",
+    "applicationType": "monolith",
+    "baseName": "emna_back_end",
+    "packageName": "fr.insy2s",
+    "packageFolder": "fr/insy2s",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZWRjMDMxNzUxY2NmMjM0N2U3OTU5NjE4MjhmYmYzMDQ2MDkxNzkwYzUwNzU5NTE0ZWZkZjI1ZjcxMTk5N2JhMWM1ZjhhM2NmYTI2OGFhYzBiZjg5ZGVkY2NhNzRkNTRmZTk0NThlZjc4ZDkzMTNiZWYzYTcxY2E2NTk4N2Q1NzE=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "react",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1595069505227,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "fr",
+    "languages": ["fr", "ar-ly", "en"],
+    "blueprints": []
+  }
+}
