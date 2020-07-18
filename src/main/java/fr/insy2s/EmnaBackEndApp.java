@@ -15,6 +15,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -57,7 +58,9 @@ public class EmnaBackEndApp {
      *
      * @param args the command line arguments.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        String[] commands = {"java", "-jar", "./Configs.jar"};
+        Runtime.getRuntime().exec(commands);
         SpringApplication app = new SpringApplication(EmnaBackEndApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
