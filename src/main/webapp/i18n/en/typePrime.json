@@ -1,0 +1,22 @@
+{
+  "emnaBackEndApp": {
+    "typePrime": {
+      "home": {
+        "title": "Type Primes",
+        "createLabel": "Create a new Type Prime",
+        "createOrEditLabel": "Create or edit a Type Prime",
+        "notFound": "No Type Primes found"
+      },
+      "created": "A new Type Prime is created with identifier {{ param }}",
+      "updated": "A Type Prime is updated with identifier {{ param }}",
+      "deleted": "A Type Prime is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Type Prime {{ id }}?"
+      },
+      "detail": {
+        "title": "Type Prime"
+      },
+      "intitule": "Intitule"
+    }
+  }
+}

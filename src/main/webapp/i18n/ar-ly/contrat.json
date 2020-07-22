@@ -1,0 +1,29 @@
+{
+  "emnaBackEndApp": {
+    "contrat": {
+      "home": {
+        "title": "Contrats",
+        "createLabel": "Create a new Contrat",
+        "createOrEditLabel": "Create or edit a Contrat",
+        "notFound": "No Contrats found"
+      },
+      "created": "A new Contrat is created with identifier {{ param }}",
+      "updated": "A Contrat is updated with identifier {{ param }}",
+      "deleted": "A Contrat is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Contrat {{ id }}?"
+      },
+      "detail": {
+        "title": "Contrat"
+      },
+      "titre": "Titre",
+      "dateCreation": "Date Creation",
+      "signe": "Signe",
+      "archive": "Archive",
+      "listeAvenants": "Liste Avenants",
+      "employe": "Employe",
+      "listeArticles": "Liste Articles",
+      "listeClauses": "Liste Clauses"
+    }
+  }
+}

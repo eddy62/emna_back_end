@@ -1,0 +1,62 @@
+{
+  "name": "Article",
+  "fields": [
+    {
+      "fieldName": "reference",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "titre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "clause",
+      "otherEntityRelationshipName": "article",
+      "relationshipName": "listeClauses"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "avenant",
+      "otherEntityRelationshipName": "listeArticles",
+      "relationshipName": "listeAvenants",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "contrat",
+      "otherEntityRelationshipName": "listeArticles",
+      "relationshipName": "listeContrats",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "societe",
+      "otherEntityRelationshipName": "listeArticles",
+      "relationshipName": "societe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722091504",
+  "entityTableName": "article",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

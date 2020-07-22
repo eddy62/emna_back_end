@@ -1,0 +1,57 @@
+{
+  "name": "InfoEntreprise",
+  "fields": [
+    {
+      "fieldName": "raisonSociale",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fax",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "formeJuridique",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateDeCreation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "siren",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "siret",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "domaineDactivite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20200722093004",
+  "entityTableName": "info_entreprise",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,29 @@
+{
+  "emnaBackEndApp": {
+    "releve": {
+      "home": {
+        "title": "Releves",
+        "createLabel": "Créer un nouveau Releve",
+        "createOrEditLabel": "Créer ou éditer un Releve",
+        "notFound": "Aucun Releve trouvé"
+      },
+      "created": "Un nouveau Releve a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Releve avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Releve avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Releve {{ id }} ?"
+      },
+      "detail": {
+        "title": "Releve"
+      },
+      "dateDebut": "Date Debut",
+      "dateFin": "Date Fin",
+      "solde": "Solde",
+      "banque": "Banque",
+      "cheminFichier": "Chemin Fichier",
+      "etatReleve": "Etat Releve",
+      "listeOperations": "Liste Operations",
+      "societe": "Societe"
+    }
+  }
+}

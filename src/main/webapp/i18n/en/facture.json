@@ -1,0 +1,39 @@
+{
+  "emnaBackEndApp": {
+    "facture": {
+      "home": {
+        "title": "Factures",
+        "createLabel": "Create a new Facture",
+        "createOrEditLabel": "Create or edit a Facture",
+        "notFound": "No Factures found"
+      },
+      "created": "A new Facture is created with identifier {{ param }}",
+      "updated": "A Facture is updated with identifier {{ param }}",
+      "deleted": "A Facture is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Facture {{ id }}?"
+      },
+      "detail": {
+        "title": "Facture"
+      },
+      "numfact": "Numfact",
+      "nom": "Nom",
+      "message": "Message",
+      "date": "Date",
+      "dateEcheance": "Date Echeance",
+      "prixHT": "Prix HT",
+      "prixTTC": "Prix TTC",
+      "tva": "Tva",
+      "fichier": "Fichier",
+      "cheminFichier": "Chemin Fichier",
+      "type": "Type",
+      "moyenDePaiement": "Moyen De Paiement",
+      "adresse": "Adresse",
+      "etatFacture": "Etat Facture",
+      "societe": "Societe",
+      "operation": "Operation",
+      "clientFournisseur": "Client Fournisseur",
+      "listeProduits": "Liste Produits"
+    }
+  }
+}

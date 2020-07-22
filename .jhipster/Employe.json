@@ -1,0 +1,157 @@
+{
+  "name": "Employe",
+  "fields": [
+    {
+      "fieldName": "matricule",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "civilite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomNaissance",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nomUsage",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateNaissance",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "villeNaissance",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "departementNaissance",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paysNaisance",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numeroSecuriteSociale",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephoneFix",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephonePortable",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fax",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "salaireHoraire",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "salaireBrutMensuelle",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "heuresMensuelle",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "categorie",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "adresse",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "adresse",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "contrat",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listeContrats"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "absence",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listeAbsences"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "prime",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listePrimes"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "fichePaie",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listeFichePaies"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "heuresSupplementaires",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listeHeureSupplementaires"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "noteDeFrais",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listeNoteDeFrais"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "autresVariable",
+      "otherEntityRelationshipName": "employe",
+      "relationshipName": "listeAutresVariables"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "societe",
+      "otherEntityRelationshipName": "listeEmployes",
+      "relationshipName": "societe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722091704",
+  "entityTableName": "employe",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

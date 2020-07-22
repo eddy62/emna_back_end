@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "etatReleve": {
+      "home": {
+        "title": "Etat Releves",
+        "createLabel": "Create a new Etat Releve",
+        "createOrEditLabel": "Create or edit a Etat Releve",
+        "notFound": "No Etat Releves found"
+      },
+      "created": "A new Etat Releve is created with identifier {{ param }}",
+      "updated": "A Etat Releve is updated with identifier {{ param }}",
+      "deleted": "A Etat Releve is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Etat Releve {{ id }}?"
+      },
+      "detail": {
+        "title": "Etat Releve"
+      },
+      "libelle": "Libelle",
+      "codeRef": "Code Ref"
+    }
+  }
+}

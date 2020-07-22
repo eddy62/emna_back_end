@@ -1,0 +1,26 @@
+{
+  "emnaBackEndApp": {
+    "autresVariable": {
+      "home": {
+        "title": "Autres Variables",
+        "createLabel": "Create a new Autres Variable",
+        "createOrEditLabel": "Create or edit a Autres Variable",
+        "notFound": "No Autres Variables found"
+      },
+      "created": "A new Autres Variable is created with identifier {{ param }}",
+      "updated": "A Autres Variable is updated with identifier {{ param }}",
+      "deleted": "A Autres Variable is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Autres Variable {{ id }}?"
+      },
+      "detail": {
+        "title": "Autres Variable"
+      },
+      "description": "Description",
+      "date": "Date",
+      "montant": "Montant",
+      "justificatif": "Justificatif",
+      "employe": "Employe"
+    }
+  }
+}

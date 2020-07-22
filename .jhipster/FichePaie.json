@@ -1,0 +1,40 @@
+{
+  "name": "FichePaie",
+  "fields": [
+    {
+      "fieldName": "debutPeriode",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "finPeriode",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lienDocument",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "employe",
+      "otherEntityRelationshipName": "listeFichePaies",
+      "relationshipName": "employe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722092204",
+  "entityTableName": "fiche_paie",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

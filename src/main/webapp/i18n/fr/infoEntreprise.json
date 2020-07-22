@@ -1,0 +1,31 @@
+{
+  "emnaBackEndApp": {
+    "infoEntreprise": {
+      "home": {
+        "title": "InfoEntreprises",
+        "createLabel": "Créer un nouveau Info Entreprise",
+        "createOrEditLabel": "Créer ou éditer un Info Entreprise",
+        "notFound": "Aucun Info Entreprise trouvé"
+      },
+      "created": "Un nouveau Info Entreprise a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Info Entreprise avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Info Entreprise avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Info Entreprise {{ id }} ?"
+      },
+      "detail": {
+        "title": "Info Entreprise"
+      },
+      "raisonSociale": "Raison Sociale",
+      "telephone": "Telephone",
+      "fax": "Fax",
+      "formeJuridique": "Forme Juridique",
+      "dateDeCreation": "Date De Creation",
+      "siren": "Siren",
+      "siret": "Siret",
+      "domaineDactivite": "Domaine Dactivite",
+      "description": "Description",
+      "email": "Email"
+    }
+  }
+}

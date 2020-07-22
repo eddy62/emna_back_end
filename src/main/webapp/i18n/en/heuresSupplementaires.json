@@ -1,0 +1,25 @@
+{
+  "emnaBackEndApp": {
+    "heuresSupplementaires": {
+      "home": {
+        "title": "Heures Supplementaires",
+        "createLabel": "Create a new Heures Supplementaires",
+        "createOrEditLabel": "Create or edit a Heures Supplementaires",
+        "notFound": "No Heures Supplementaires found"
+      },
+      "created": "A new Heures Supplementaires is created with identifier {{ param }}",
+      "updated": "A Heures Supplementaires is updated with identifier {{ param }}",
+      "deleted": "A Heures Supplementaires is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Heures Supplementaires {{ id }}?"
+      },
+      "detail": {
+        "title": "Heures Supplementaires"
+      },
+      "date": "Date",
+      "nombreHeure": "Nombre Heure",
+      "justificatif": "Justificatif",
+      "employe": "Employe"
+    }
+  }
+}

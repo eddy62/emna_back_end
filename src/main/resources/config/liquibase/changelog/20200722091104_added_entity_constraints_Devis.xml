@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Devis.
+    -->
+    <changeSet id="20200722091104-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="etat_devis_id"
+                                 baseTableName="devis"
+                                 constraintName="fk_devis_etat_devis_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="etat_devis"/>
+
+        <addForeignKeyConstraint baseColumnNames="societe_id"
+                                 baseTableName="devis"
+                                 constraintName="fk_devis_societe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="societe"/>
+
+        <addForeignKeyConstraint baseColumnNames="client_fournisseur_id"
+                                 baseTableName="devis"
+                                 constraintName="fk_devis_client_fournisseur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="client_fournisseur"/>
+
+    </changeSet>
+</databaseChangeLog>

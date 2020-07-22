@@ -1,0 +1,53 @@
+{
+  "name": "Comptable",
+  "fields": [
+    {
+      "fieldName": "civilite",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "adresse",
+      "otherEntityRelationshipName": "comptable",
+      "relationshipValidateRules": "required",
+      "relationshipName": "adresse",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "infoEntreprise",
+      "otherEntityRelationshipName": "comptable",
+      "relationshipName": "infoEntreprise",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "comptable",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "societe",
+      "otherEntityRelationshipName": "comptable",
+      "relationshipName": "listeSocietes"
+    }
+  ],
+  "changelogDate": "20200722092804",
+  "entityTableName": "comptable",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

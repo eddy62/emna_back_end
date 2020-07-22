@@ -1,0 +1,27 @@
+{
+  "emnaBackEndApp": {
+    "clause": {
+      "home": {
+        "title": "Clauses",
+        "createLabel": "Créer un nouveau Clause",
+        "createOrEditLabel": "Créer ou éditer un Clause",
+        "notFound": "Aucun Clause trouvé"
+      },
+      "created": "Un nouveau Clause a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Clause avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Clause avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Clause {{ id }} ?"
+      },
+      "detail": {
+        "title": "Clause"
+      },
+      "reference": "Reference",
+      "description": "Description",
+      "listeContrats": "Liste Contrats",
+      "listeAvenants": "Liste Avenants",
+      "societe": "Societe",
+      "article": "Article"
+    }
+  }
+}

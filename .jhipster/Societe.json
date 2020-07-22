@@ -1,0 +1,101 @@
+{
+  "name": "Societe",
+  "fields": [
+    {
+      "fieldName": "civilite",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "adresse",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "adresse",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "infoEntreprise",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "infoEntreprise",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "user",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "facture",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeFactures"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "devis",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeDevis"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "releve",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeReleves"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "produit",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeProduits"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "clientFournisseur",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeClientsFournisseurs"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "clause",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeClauses"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "article",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeArticles"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "employe",
+      "otherEntityRelationshipName": "societe",
+      "relationshipName": "listeEmployes"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "comptable",
+      "otherEntityRelationshipName": "listeSocietes",
+      "relationshipName": "comptable",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722092904",
+  "entityTableName": "societe",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

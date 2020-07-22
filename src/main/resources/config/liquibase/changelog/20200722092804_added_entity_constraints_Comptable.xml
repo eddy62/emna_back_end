@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Comptable.
+    -->
+    <changeSet id="20200722092804-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="adresse_id"
+                                 baseTableName="comptable"
+                                 constraintName="fk_comptable_adresse_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="adresse"/>
+
+        <addForeignKeyConstraint baseColumnNames="info_entreprise_id"
+                                 baseTableName="comptable"
+                                 constraintName="fk_comptable_info_entreprise_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="info_entreprise"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="comptable"
+                                 constraintName="fk_comptable_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,69 @@
+{
+  "name": "Produit",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "reference",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tva",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "prix",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "unite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "quantite",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "facture",
+      "otherEntityRelationshipName": "listeProduits",
+      "relationshipName": "listeFactures",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "devis",
+      "otherEntityRelationshipName": "listeProduits",
+      "relationshipName": "listeDevis",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "societe",
+      "otherEntityRelationshipName": "listeProduits",
+      "relationshipName": "societe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722090704",
+  "entityTableName": "produit",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

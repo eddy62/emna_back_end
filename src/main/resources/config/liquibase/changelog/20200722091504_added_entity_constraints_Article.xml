@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Article.
+    -->
+    <changeSet id="20200722091504-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="article_id"
+                                 baseTableName="article_liste_avenants"
+                                 constraintName="fk_article_liste_avenants_article_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article"/>
+
+        <addForeignKeyConstraint baseColumnNames="liste_avenants_id"
+                                 baseTableName="article_liste_avenants"
+                                 constraintName="fk_article_liste_avenants_liste_avenants_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avenant"/>
+        
+        <addForeignKeyConstraint baseColumnNames="article_id"
+                                 baseTableName="article_liste_contrats"
+                                 constraintName="fk_article_liste_contrats_article_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article"/>
+
+        <addForeignKeyConstraint baseColumnNames="liste_contrats_id"
+                                 baseTableName="article_liste_contrats"
+                                 constraintName="fk_article_liste_contrats_liste_contrats_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contrat"/>
+        
+        <addForeignKeyConstraint baseColumnNames="societe_id"
+                                 baseTableName="article"
+                                 constraintName="fk_article_societe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="societe"/>
+
+    </changeSet>
+</databaseChangeLog>

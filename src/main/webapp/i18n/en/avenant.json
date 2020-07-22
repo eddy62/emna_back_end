@@ -1,0 +1,26 @@
+{
+  "emnaBackEndApp": {
+    "avenant": {
+      "home": {
+        "title": "Avenants",
+        "createLabel": "Create a new Avenant",
+        "createOrEditLabel": "Create or edit a Avenant",
+        "notFound": "No Avenants found"
+      },
+      "created": "A new Avenant is created with identifier {{ param }}",
+      "updated": "A Avenant is updated with identifier {{ param }}",
+      "deleted": "A Avenant is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Avenant {{ id }}?"
+      },
+      "detail": {
+        "title": "Avenant"
+      },
+      "reference": "Reference",
+      "signe": "Signe",
+      "contrat": "Contrat",
+      "listeArticles": "Liste Articles",
+      "listeClauses": "Liste Clauses"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "emnaBackEndApp": {
+    "devis": {
+      "home": {
+        "title": "Devis",
+        "createLabel": "Create a new Devis",
+        "createOrEditLabel": "Create or edit a Devis",
+        "notFound": "No Devis found"
+      },
+      "created": "A new Devis is created with identifier {{ param }}",
+      "updated": "A Devis is updated with identifier {{ param }}",
+      "deleted": "A Devis is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Devis {{ id }}?"
+      },
+      "detail": {
+        "title": "Devis"
+      },
+      "numDevis": "Num Devis",
+      "nom": "Nom",
+      "message": "Message",
+      "dateCreation": "Date Creation",
+      "dateLimite": "Date Limite",
+      "prixHT": "Prix HT",
+      "prixTTC": "Prix TTC",
+      "tva": "Tva",
+      "cheminFichier": "Chemin Fichier",
+      "etatDevis": "Etat Devis",
+      "societe": "Societe",
+      "clientFournisseur": "Client Fournisseur",
+      "listeProduits": "Liste Produits"
+    }
+  }
+}

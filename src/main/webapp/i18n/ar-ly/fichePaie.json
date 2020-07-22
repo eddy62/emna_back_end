@@ -1,0 +1,25 @@
+{
+  "emnaBackEndApp": {
+    "fichePaie": {
+      "home": {
+        "title": "Fiche Paies",
+        "createLabel": "Create a new Fiche Paie",
+        "createOrEditLabel": "Create or edit a Fiche Paie",
+        "notFound": "No Fiche Paies found"
+      },
+      "created": "A new Fiche Paie is created with identifier {{ param }}",
+      "updated": "A Fiche Paie is updated with identifier {{ param }}",
+      "deleted": "A Fiche Paie is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fiche Paie {{ id }}?"
+      },
+      "detail": {
+        "title": "Fiche Paie"
+      },
+      "debutPeriode": "Debut Periode",
+      "finPeriode": "Fin Periode",
+      "lienDocument": "Lien Document",
+      "employe": "Employe"
+    }
+  }
+}

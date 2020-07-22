@@ -14,6 +14,51 @@
     <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090504_added_entity_Facture.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090604_added_entity_ClientFournisseur.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090704_added_entity_Produit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090804_added_entity_Operation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090904_added_entity_Releve.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091004_added_entity_EtatReleve.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091104_added_entity_Devis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091204_added_entity_Contrat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091304_added_entity_Avenant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091404_added_entity_Clause.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091504_added_entity_Article.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091604_added_entity_Adresse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091704_added_entity_Employe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091804_added_entity_TypeAbsence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091904_added_entity_Absence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092004_added_entity_TypePrime.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092104_added_entity_Prime.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092204_added_entity_FichePaie.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092304_added_entity_HeuresSupplementaires.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092404_added_entity_NoteDeFrais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092504_added_entity_AutresVariable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092604_added_entity_EtatFacture.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092704_added_entity_EtatDevis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092804_added_entity_Comptable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092904_added_entity_Societe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722093004_added_entity_InfoEntreprise.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20200722090504_added_entity_constraints_Facture.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090604_added_entity_constraints_ClientFournisseur.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090704_added_entity_constraints_Produit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090804_added_entity_constraints_Operation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722090904_added_entity_constraints_Releve.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091104_added_entity_constraints_Devis.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091204_added_entity_constraints_Contrat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091304_added_entity_constraints_Avenant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091404_added_entity_constraints_Clause.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091504_added_entity_constraints_Article.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091704_added_entity_constraints_Employe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722091904_added_entity_constraints_Absence.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092104_added_entity_constraints_Prime.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092204_added_entity_constraints_FichePaie.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092304_added_entity_constraints_HeuresSupplementaires.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092404_added_entity_constraints_NoteDeFrais.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092504_added_entity_constraints_AutresVariable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092804_added_entity_constraints_Comptable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200722092904_added_entity_constraints_Societe.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

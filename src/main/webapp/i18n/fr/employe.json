@@ -1,0 +1,49 @@
+{
+  "emnaBackEndApp": {
+    "employe": {
+      "home": {
+        "title": "Employes",
+        "createLabel": "Créer un nouveau Employe",
+        "createOrEditLabel": "Créer ou éditer un Employe",
+        "notFound": "Aucun Employe trouvé"
+      },
+      "created": "Un nouveau Employe a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Employe avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Employe avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Employe {{ id }} ?"
+      },
+      "detail": {
+        "title": "Employe"
+      },
+      "matricule": "Matricule",
+      "civilite": "Civilite",
+      "nomNaissance": "Nom Naissance",
+      "nomUsage": "Nom Usage",
+      "prenom": "Prenom",
+      "dateNaissance": "Date Naissance",
+      "villeNaissance": "Ville Naissance",
+      "departementNaissance": "Departement Naissance",
+      "paysNaisance": "Pays Naisance",
+      "numeroSecuriteSociale": "Numero Securite Sociale",
+      "email": "Email",
+      "telephoneFix": "Telephone Fix",
+      "telephonePortable": "Telephone Portable",
+      "fax": "Fax",
+      "salaireHoraire": "Salaire Horaire",
+      "salaireBrutMensuelle": "Salaire Brut Mensuelle",
+      "heuresMensuelle": "Heures Mensuelle",
+      "categorie": "Categorie",
+      "statut": "Statut",
+      "adresse": "Adresse",
+      "listeContrats": "Liste Contrats",
+      "listeAbsences": "Liste Absences",
+      "listePrimes": "Liste Primes",
+      "listeFichePaies": "Liste Fiche Paies",
+      "listeHeureSupplementaires": "Liste Heure Supplementaires",
+      "listeNoteDeFrais": "Liste Note De Frais",
+      "listeAutresVariables": "Liste Autres Variables",
+      "societe": "Societe"
+    }
+  }
+}

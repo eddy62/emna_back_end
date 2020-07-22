@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Releve.
+    -->
+    <changeSet id="20200722090904-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="etat_releve_id"
+                                 baseTableName="releve"
+                                 constraintName="fk_releve_etat_releve_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="etat_releve"/>
+
+        <addForeignKeyConstraint baseColumnNames="societe_id"
+                                 baseTableName="releve"
+                                 constraintName="fk_releve_societe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="societe"/>
+
+    </changeSet>
+</databaseChangeLog>

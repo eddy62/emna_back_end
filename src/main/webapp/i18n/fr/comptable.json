@@ -1,0 +1,26 @@
+{
+  "emnaBackEndApp": {
+    "comptable": {
+      "home": {
+        "title": "Comptables",
+        "createLabel": "Créer un nouveau Comptable",
+        "createOrEditLabel": "Créer ou éditer un Comptable",
+        "notFound": "Aucun Comptable trouvé"
+      },
+      "created": "Un nouveau Comptable a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Comptable avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Comptable avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Comptable {{ id }} ?"
+      },
+      "detail": {
+        "title": "Comptable"
+      },
+      "civilite": "Civilite",
+      "adresse": "Adresse",
+      "infoEntreprise": "Info Entreprise",
+      "user": "User",
+      "listeSocietes": "Liste Societes"
+    }
+  }
+}

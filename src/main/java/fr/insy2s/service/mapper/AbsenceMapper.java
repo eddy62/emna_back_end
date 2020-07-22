@@ -1,0 +1,31 @@
+package fr.insy2s.service.mapper;
+
+
+import fr.insy2s.domain.*;
+import fr.insy2s.service.dto.AbsenceDTO;
+
+import org.mapstruct.*;
+
+/**
+ * Mapper for the entity {@link Absence} and its DTO {@link AbsenceDTO}.
+ */
+@Mapper(componentModel = "spring", uses = {TypeAbsenceMapper.class, EmployeMapper.class})
+public interface AbsenceMapper extends EntityMapper<AbsenceDTO, Absence> {
+
+    @Mapping(source = "typeAbsence.id", target = "typeAbsenceId")
+    @Mapping(source = "employe.id", target = "employeId")
+    AbsenceDTO toDto(Absence absence);
+
+    @Mapping(source = "typeAbsenceId", target = "typeAbsence")
+    @Mapping(source = "employeId", target = "employe")
+    Absence toEntity(AbsenceDTO absenceDTO);
+
+    default Absence fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Absence absence = new Absence();
+        absence.setId(id);
+        return absence;
+    }
+}

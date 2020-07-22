@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "etatDevis": {
+      "home": {
+        "title": "Etat Devis",
+        "createLabel": "Create a new Etat Devis",
+        "createOrEditLabel": "Create or edit a Etat Devis",
+        "notFound": "No Etat Devis found"
+      },
+      "created": "A new Etat Devis is created with identifier {{ param }}",
+      "updated": "A Etat Devis is updated with identifier {{ param }}",
+      "deleted": "A Etat Devis is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Etat Devis {{ id }}?"
+      },
+      "detail": {
+        "title": "Etat Devis"
+      },
+      "libelle": "Libelle",
+      "codeRef": "Code Ref"
+    }
+  }
+}

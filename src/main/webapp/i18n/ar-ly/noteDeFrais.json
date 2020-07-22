@@ -1,0 +1,26 @@
+{
+  "emnaBackEndApp": {
+    "noteDeFrais": {
+      "home": {
+        "title": "Note De Frais",
+        "createLabel": "Create a new Note De Frais",
+        "createOrEditLabel": "Create or edit a Note De Frais",
+        "notFound": "No Note De Frais found"
+      },
+      "created": "A new Note De Frais is created with identifier {{ param }}",
+      "updated": "A Note De Frais is updated with identifier {{ param }}",
+      "deleted": "A Note De Frais is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Note De Frais {{ id }}?"
+      },
+      "detail": {
+        "title": "Note De Frais"
+      },
+      "designation": "Designation",
+      "date": "Date",
+      "montant": "Montant",
+      "justificatif": "Justificatif",
+      "employe": "Employe"
+    }
+  }
+}

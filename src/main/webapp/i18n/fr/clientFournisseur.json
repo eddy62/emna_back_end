@@ -1,0 +1,25 @@
+{
+  "emnaBackEndApp": {
+    "clientFournisseur": {
+      "home": {
+        "title": "ClientFournisseurs",
+        "createLabel": "Créer un nouveau Client Fournisseur",
+        "createOrEditLabel": "Créer ou éditer un Client Fournisseur",
+        "notFound": "Aucun Client Fournisseur trouvé"
+      },
+      "created": "Un nouveau Client Fournisseur a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Client Fournisseur avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Client Fournisseur avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Client Fournisseur {{ id }} ?"
+      },
+      "detail": {
+        "title": "Client Fournisseur"
+      },
+      "infoEntreprise": "Info Entreprise",
+      "listeFactures": "Liste Factures",
+      "listeDevis": "Liste Devis",
+      "societe": "Societe"
+    }
+  }
+}

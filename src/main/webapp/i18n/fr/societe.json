@@ -1,0 +1,34 @@
+{
+  "emnaBackEndApp": {
+    "societe": {
+      "home": {
+        "title": "Societes",
+        "createLabel": "Créer un nouveau Societe",
+        "createOrEditLabel": "Créer ou éditer un Societe",
+        "notFound": "Aucun Societe trouvé"
+      },
+      "created": "Un nouveau Societe a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Societe avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Societe avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Societe {{ id }} ?"
+      },
+      "detail": {
+        "title": "Societe"
+      },
+      "civilite": "Civilite",
+      "adresse": "Adresse",
+      "infoEntreprise": "Info Entreprise",
+      "user": "User",
+      "listeFactures": "Liste Factures",
+      "listeDevis": "Liste Devis",
+      "listeReleves": "Liste Releves",
+      "listeProduits": "Liste Produits",
+      "listeClientsFournisseurs": "Liste Clients Fournisseurs",
+      "listeClauses": "Liste Clauses",
+      "listeArticles": "Liste Articles",
+      "listeEmployes": "Liste Employes",
+      "comptable": "Comptable"
+    }
+  }
+}

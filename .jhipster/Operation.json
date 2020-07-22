@@ -1,0 +1,51 @@
+{
+  "name": "Operation",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rapproche",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "solde",
+      "fieldType": "Double"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "facture",
+      "otherEntityRelationshipName": "operation",
+      "relationshipName": "listeFactures"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "releve",
+      "otherEntityRelationshipName": "listeOperations",
+      "relationshipName": "releve",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722090804",
+  "entityTableName": "operation",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
