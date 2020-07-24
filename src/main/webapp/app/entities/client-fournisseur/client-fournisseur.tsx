@@ -37,7 +37,19 @@ export const ClientFournisseur = (props: IClientFournisseurProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.clientFournisseur.infoEntreprise">Info Entreprise</Translate>
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.nom">Nom</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.siren">Siren</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.telephone">Telephone</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.email">Email</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.adresse">Adresse</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.clientFournisseur.societe">Societe</Translate>
@@ -53,9 +65,13 @@ export const ClientFournisseur = (props: IClientFournisseurProps) => {
                       {clientFournisseur.id}
                     </Button>
                   </td>
+                  <td>{clientFournisseur.nom}</td>
+                  <td>{clientFournisseur.siren}</td>
+                  <td>{clientFournisseur.telephone}</td>
+                  <td>{clientFournisseur.email}</td>
                   <td>
-                    {clientFournisseur.infoEntrepriseId ? (
-                      <Link to={`info-entreprise/${clientFournisseur.infoEntrepriseId}`}>{clientFournisseur.infoEntrepriseId}</Link>
+                    {clientFournisseur.adresseId ? (
+                      <Link to={`adresse/${clientFournisseur.adresseId}`}>{clientFournisseur.adresseId}</Link>
                     ) : (
                       ''
                     )}
@@ -107,11 +123,11 @@ export const ClientFournisseur = (props: IClientFournisseurProps) => {
 
 const mapStateToProps = ({ clientFournisseur }: IRootState) => ({
   clientFournisseurList: clientFournisseur.entities,
-  loading: clientFournisseur.loading,
+  loading: clientFournisseur.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

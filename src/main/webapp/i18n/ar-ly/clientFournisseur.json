@@ -16,7 +16,11 @@
       "detail": {
         "title": "Client Fournisseur"
       },
-      "infoEntreprise": "Info Entreprise",
+      "nom": "Nom",
+      "siren": "Siren",
+      "telephone": "Telephone",
+      "email": "Email",
+      "adresse": "Adresse",
       "listeFactures": "Liste Factures",
       "listeDevis": "Liste Devis",
       "societe": "Societe"

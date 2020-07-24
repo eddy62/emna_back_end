@@ -14,6 +14,10 @@ entity Facture{
 }
 
 entity ClientFournisseur {
+	nom String
+	siren Integer
+    telephone String 
+	email String
 }
  
 entity Produit {
@@ -240,7 +244,7 @@ relationship OneToOne{
     Prime{typePrime} to TypePrime
     Employe{adresse} to Adresse
     Releve{etatReleve} to EtatReleve
-    ClientFournisseur{infoEntreprise} to InfoEntreprise
+    ClientFournisseur{adresse} to Adresse
     Societe{infoEntreprise}  to InfoEntreprise
     Comptable{infoEntreprise}  to InfoEntreprise
     Comptable{user} to User

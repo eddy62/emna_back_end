@@ -9,14 +9,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link ClientFournisseur} and its DTO {@link ClientFournisseurDTO}.
  */
-@Mapper(componentModel = "spring", uses = {InfoEntrepriseMapper.class, SocieteMapper.class})
+@Mapper(componentModel = "spring", uses = {AdresseMapper.class, SocieteMapper.class})
 public interface ClientFournisseurMapper extends EntityMapper<ClientFournisseurDTO, ClientFournisseur> {
 
-    @Mapping(source = "infoEntreprise.id", target = "infoEntrepriseId")
+    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "societe.id", target = "societeId")
     ClientFournisseurDTO toDto(ClientFournisseur clientFournisseur);
 
-    @Mapping(source = "infoEntrepriseId", target = "infoEntreprise")
+    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(target = "listeFactures", ignore = true)
     @Mapping(target = "removeListeFactures", ignore = true)
     @Mapping(target = "listeDevis", ignore = true)

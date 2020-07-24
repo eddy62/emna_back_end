@@ -25,7 +25,6 @@ public interface ClientFournisseurService {
      */
     List<ClientFournisseurDTO> findAll();
 
-
     /**
      * Get the "id" clientFournisseur.
      *
