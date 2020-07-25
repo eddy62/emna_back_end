@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ClientFournisseurDTO;
+import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +40,12 @@ public interface ClientFournisseurService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Save a clientFournisseur
+     *
+     * @param wrapperclientFournisseur the entity to save.
+     * @return the persisted entity
+     */
+    ClientFournisseurDTO saveWrapperClientFournisseur(WrapperClientFournisseur wrapperclientFournisseur);
 }

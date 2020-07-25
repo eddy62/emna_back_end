@@ -1,10 +1,15 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.Adresse;
+import fr.insy2s.domain.Societe;
+import fr.insy2s.repository.AdresseRepository;
+import fr.insy2s.repository.SocieteRepository;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.repository.ClientFournisseurRepository;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
+import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +34,15 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
 
     private final ClientFournisseurMapper clientFournisseurMapper;
 
-    public ClientFournisseurServiceImpl(ClientFournisseurRepository clientFournisseurRepository, ClientFournisseurMapper clientFournisseurMapper) {
+    private final SocieteRepository societeRepository;
+
+    private final AdresseRepository adresseRepository;
+
+    public ClientFournisseurServiceImpl(ClientFournisseurRepository clientFournisseurRepository, ClientFournisseurMapper clientFournisseurMapper , SocieteRepository societeRepository , AdresseRepository adresseRepository) {
         this.clientFournisseurRepository = clientFournisseurRepository;
         this.clientFournisseurMapper = clientFournisseurMapper;
+        this.societeRepository = societeRepository;
+        this.adresseRepository = adresseRepository;
     }
 
     /**
@@ -85,5 +96,59 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
     public void delete(Long id) {
         log.debug("Request to delete ClientFournisseur : {}", id);
         clientFournisseurRepository.deleteById(id);
+    }
+
+    @Override
+    public ClientFournisseurDTO saveWrapperClientFournisseur(WrapperClientFournisseur clientFournisseur) {
+        ClientFournisseur client = new ClientFournisseur();
+        try {
+            client.setEmail(clientFournisseur.getEmail());
+            client.setNom(clientFournisseur.getNom());
+            client.setSiren(clientFournisseur.getSiren());
+            client.setTelephone(clientFournisseur.getTelephone());
+            if (clientFournisseur.getIdSociete() != null) {
+                Optional<Societe> societe = societeRepository.findById(clientFournisseur.getIdSociete());
+                client.setSociete(societe.get());
+            }
+
+            Adresse adresse = wrapperClientFournisseurToAdresse(clientFournisseur);
+            if (adresse.getId()!= null) {
+                client.setAdresse(adresse);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ClientFournisseur newClient = clientFournisseurRepository.save(client);
+        return clientFournisseurMapper.toDto(newClient);
+    }
+
+    /**
+     * Permet de créer un adresse à partir de l'objet wrapperClientFournisseur
+     * @param client wrapperClientFournisseur
+     * @return adresse
+     */
+    private Adresse wrapperClientFournisseurToAdresse(WrapperClientFournisseur client){
+        Adresse adresse = new Adresse();
+        try {
+            if (client.getIdAdresse() == null) {
+                adresse.setNumeroRue(client.getNumeroRue());
+                if (client.getNomRue() != null) {
+                    adresse.setNomRue(client.getNomRue());
+                }
+                if (client.getNomRue() != null) {
+                    adresse.setCodePostal(client.getCodePostal());
+                }
+                if (client.getNomRue() != null) {
+                    adresse.setVille(client.getVille());
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return adresseRepository.save(adresse);
     }
 }
