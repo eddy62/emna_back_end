@@ -1,11 +1,11 @@
-id;debut_absence;fin_absence;justificatif;type_Absence;employe
-1;2020-07-21;2020-07-21;Arrêt Maladie;1;
-2;2020-07-21;2020-07-21;Notification de Congé Payé;3;
-3;2020-07-22;2020-07-21;Acte de naissance;9;
-4;2020-07-22;2020-07-21;Acte de decés;8;
-5;2020-07-22;2020-07-21;Non justifiée;10;
-6;2020-07-21;2020-07-22;Arrêt Maladie;1;
-7;2020-07-21;2020-07-21;Arrêt Maladie;1;
-8;2020-07-21;2020-07-21;Mariage;7;
-9;2020-07-21;2020-07-21;Notification de Congé Payé;3;
-10;2020-07-21;2020-07-21;Arrêt Accident de travail;2;
+id;debut_absence;fin_absence;justificatif
+1;2020-07-21;2020-07-21;Arrêt Maladie
+2;2020-07-21;2020-07-21;Notification de Congé Payé
+3;2020-07-22;2020-07-21;Acte de naissance
+4;2020-07-22;2020-07-21;Acte de decés
+5;2020-07-22;2020-07-21;Non justifiée
+6;2020-07-21;2020-07-22;Arrêt Maladie
+7;2020-07-21;2020-07-21;Arrêt Maladie
+8;2020-07-21;2020-07-21;Mariage
+9;2020-07-21;2020-07-21;Notification de Congé Payé
+10;2020-07-21;2020-07-21;Arrêt Accident de travail
