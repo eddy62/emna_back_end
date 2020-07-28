@@ -1,5 +1,7 @@
 package fr.insy2s.service;
 
+import fr.insy2s.repository.projection.IContratAllInfoProjection;
+import fr.insy2s.repository.projection.IContratEmployerProjection;
 import fr.insy2s.service.dto.ContratDTO;
 
 import java.util.List;
@@ -40,4 +42,14 @@ public interface ContratService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all info with "id" contrat.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    List<IContratAllInfoProjection> getContratAllInfos(Long id);
+
+    List<IContratEmployerProjection> getAllContratEmployerById(Long id);
 }
