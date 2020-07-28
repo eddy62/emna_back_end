@@ -3,7 +3,11 @@ import { IDevis } from 'app/shared/model/devis.model';
 
 export interface IClientFournisseur {
   id?: number;
-  infoEntrepriseId?: number;
+  nom?: string;
+  siren?: number;
+  telephone?: string;
+  email?: string;
+  adresseId?: number;
   listeFactures?: IFacture[];
   listeDevis?: IDevis[];
   societeId?: number;

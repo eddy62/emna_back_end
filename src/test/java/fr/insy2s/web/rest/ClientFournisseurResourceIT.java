@@ -28,9 +28,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ClientFournisseurResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class ClientFournisseurResourceIT {
+
+    private static final String DEFAULT_NOM = "AAAAAAAAAA";
+    private static final String UPDATED_NOM = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_SIREN = 1;
+    private static final Integer UPDATED_SIREN = 2;
+
+    private static final String DEFAULT_TELEPHONE = "AAAAAAAAAA";
+    private static final String UPDATED_TELEPHONE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
     @Autowired
     private ClientFournisseurRepository clientFournisseurRepository;
@@ -56,7 +69,11 @@ public class ClientFournisseurResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ClientFournisseur createEntity(EntityManager em) {
-        ClientFournisseur clientFournisseur = new ClientFournisseur();
+        ClientFournisseur clientFournisseur = new ClientFournisseur()
+            .nom(DEFAULT_NOM)
+            .siren(DEFAULT_SIREN)
+            .telephone(DEFAULT_TELEPHONE)
+            .email(DEFAULT_EMAIL);
         return clientFournisseur;
     }
     /**
@@ -66,7 +83,11 @@ public class ClientFournisseurResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static ClientFournisseur createUpdatedEntity(EntityManager em) {
-        ClientFournisseur clientFournisseur = new ClientFournisseur();
+        ClientFournisseur clientFournisseur = new ClientFournisseur()
+            .nom(UPDATED_NOM)
+            .siren(UPDATED_SIREN)
+            .telephone(UPDATED_TELEPHONE)
+            .email(UPDATED_EMAIL);
         return clientFournisseur;
     }
 
@@ -79,6 +100,7 @@ public class ClientFournisseurResourceIT {
     @Transactional
     public void createClientFournisseur() throws Exception {
         int databaseSizeBeforeCreate = clientFournisseurRepository.findAll().size();
+
         // Create the ClientFournisseur
         ClientFournisseurDTO clientFournisseurDTO = clientFournisseurMapper.toDto(clientFournisseur);
         restClientFournisseurMockMvc.perform(post("/api/client-fournisseurs")
@@ -90,6 +112,10 @@ public class ClientFournisseurResourceIT {
         List<ClientFournisseur> clientFournisseurList = clientFournisseurRepository.findAll();
         assertThat(clientFournisseurList).hasSize(databaseSizeBeforeCreate + 1);
         ClientFournisseur testClientFournisseur = clientFournisseurList.get(clientFournisseurList.size() - 1);
+        assertThat(testClientFournisseur.getNom()).isEqualTo(DEFAULT_NOM);
+        assertThat(testClientFournisseur.getSiren()).isEqualTo(DEFAULT_SIREN);
+        assertThat(testClientFournisseur.getTelephone()).isEqualTo(DEFAULT_TELEPHONE);
+        assertThat(testClientFournisseur.getEmail()).isEqualTo(DEFAULT_EMAIL);
     }
 
     @Test
@@ -123,7 +149,11 @@ public class ClientFournisseurResourceIT {
         restClientFournisseurMockMvc.perform(get("/api/client-fournisseurs?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(clientFournisseur.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(clientFournisseur.getId().intValue())))
+            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
+            .andExpect(jsonPath("$.[*].siren").value(hasItem(DEFAULT_SIREN)))
+            .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
     }
     
     @Test
@@ -136,8 +166,13 @@ public class ClientFournisseurResourceIT {
         restClientFournisseurMockMvc.perform(get("/api/client-fournisseurs/{id}", clientFournisseur.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(clientFournisseur.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(clientFournisseur.getId().intValue()))
+            .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
+            .andExpect(jsonPath("$.siren").value(DEFAULT_SIREN))
+            .andExpect(jsonPath("$.telephone").value(DEFAULT_TELEPHONE))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
     }
+
     @Test
     @Transactional
     public void getNonExistingClientFournisseur() throws Exception {
@@ -158,6 +193,11 @@ public class ClientFournisseurResourceIT {
         ClientFournisseur updatedClientFournisseur = clientFournisseurRepository.findById(clientFournisseur.getId()).get();
         // Disconnect from session so that the updates on updatedClientFournisseur are not directly saved in db
         em.detach(updatedClientFournisseur);
+        updatedClientFournisseur
+            .nom(UPDATED_NOM)
+            .siren(UPDATED_SIREN)
+            .telephone(UPDATED_TELEPHONE)
+            .email(UPDATED_EMAIL);
         ClientFournisseurDTO clientFournisseurDTO = clientFournisseurMapper.toDto(updatedClientFournisseur);
 
         restClientFournisseurMockMvc.perform(put("/api/client-fournisseurs")
@@ -169,6 +209,10 @@ public class ClientFournisseurResourceIT {
         List<ClientFournisseur> clientFournisseurList = clientFournisseurRepository.findAll();
         assertThat(clientFournisseurList).hasSize(databaseSizeBeforeUpdate);
         ClientFournisseur testClientFournisseur = clientFournisseurList.get(clientFournisseurList.size() - 1);
+        assertThat(testClientFournisseur.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testClientFournisseur.getSiren()).isEqualTo(UPDATED_SIREN);
+        assertThat(testClientFournisseur.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
+        assertThat(testClientFournisseur.getEmail()).isEqualTo(UPDATED_EMAIL);
     }
 
     @Test

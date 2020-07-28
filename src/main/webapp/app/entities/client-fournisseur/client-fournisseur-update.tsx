@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IInfoEntreprise } from 'app/shared/model/info-entreprise.model';
-import { getEntities as getInfoEntreprises } from 'app/entities/info-entreprise/info-entreprise.reducer';
+import { IAdresse } from 'app/shared/model/adresse.model';
+import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
 import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './client-fournisseur.reducer';
@@ -19,11 +19,11 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IClientFournisseurUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) => {
-  const [infoEntrepriseId, setInfoEntrepriseId] = useState('0');
+  const [adresseId, setAdresseId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { clientFournisseurEntity, infoEntreprises, societes, loading, updating } = props;
+  const { clientFournisseurEntity, adresses, societes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/client-fournisseur');
@@ -36,7 +36,7 @@ export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) =>
       props.getEntity(props.match.params.id);
     }
 
-    props.getInfoEntreprises();
+    props.getAdresses();
     props.getSocietes();
   }, []);
 
@@ -50,7 +50,7 @@ export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) =>
     if (errors.length === 0) {
       const entity = {
         ...clientFournisseurEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -85,13 +85,37 @@ export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) =>
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label for="client-fournisseur-infoEntreprise">
-                  <Translate contentKey="emnaBackEndApp.clientFournisseur.infoEntreprise">Info Entreprise</Translate>
+                <Label id="nomLabel" for="client-fournisseur-nom">
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.nom">Nom</Translate>
                 </Label>
-                <AvInput id="client-fournisseur-infoEntreprise" type="select" className="form-control" name="infoEntrepriseId">
+                <AvField id="client-fournisseur-nom" type="text" name="nom" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="sirenLabel" for="client-fournisseur-siren">
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.siren">Siren</Translate>
+                </Label>
+                <AvField id="client-fournisseur-siren" type="string" className="form-control" name="siren" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="telephoneLabel" for="client-fournisseur-telephone">
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.telephone">Telephone</Translate>
+                </Label>
+                <AvField id="client-fournisseur-telephone" type="text" name="telephone" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="emailLabel" for="client-fournisseur-email">
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.email">Email</Translate>
+                </Label>
+                <AvField id="client-fournisseur-email" type="text" name="email" />
+              </AvGroup>
+              <AvGroup>
+                <Label for="client-fournisseur-adresse">
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.adresse">Adresse</Translate>
+                </Label>
+                <AvInput id="client-fournisseur-adresse" type="select" className="form-control" name="adresseId">
                   <option value="" key="0" />
-                  {infoEntreprises
-                    ? infoEntreprises.map(otherEntity => (
+                  {adresses
+                    ? adresses.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -136,21 +160,21 @@ export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) =>
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  infoEntreprises: storeState.infoEntreprise.entities,
+  adresses: storeState.adresse.entities,
   societes: storeState.societe.entities,
   clientFournisseurEntity: storeState.clientFournisseur.entity,
   loading: storeState.clientFournisseur.loading,
   updating: storeState.clientFournisseur.updating,
-  updateSuccess: storeState.clientFournisseur.updateSuccess,
+  updateSuccess: storeState.clientFournisseur.updateSuccess
 });
 
 const mapDispatchToProps = {
-  getInfoEntreprises,
+  getAdresses,
   getSocietes,
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

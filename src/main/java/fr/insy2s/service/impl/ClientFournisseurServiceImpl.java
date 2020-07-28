@@ -34,6 +34,12 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         this.clientFournisseurMapper = clientFournisseurMapper;
     }
 
+    /**
+     * Save a clientFournisseur.
+     *
+     * @param clientFournisseurDTO the entity to save.
+     * @return the persisted entity.
+     */
     @Override
     public ClientFournisseurDTO save(ClientFournisseurDTO clientFournisseurDTO) {
         log.debug("Request to save ClientFournisseur : {}", clientFournisseurDTO);
@@ -42,6 +48,11 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         return clientFournisseurMapper.toDto(clientFournisseur);
     }
 
+    /**
+     * Get all the clientFournisseurs.
+     *
+     * @return the list of entities.
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ClientFournisseurDTO> findAll() {
@@ -51,7 +62,12 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
+    /**
+     * Get one clientFournisseur by id.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
     @Override
     @Transactional(readOnly = true)
     public Optional<ClientFournisseurDTO> findOne(Long id) {
@@ -60,6 +76,11 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             .map(clientFournisseurMapper::toDto);
     }
 
+    /**
+     * Delete the clientFournisseur by id.
+     *
+     * @param id the id of the entity.
+     */
     @Override
     public void delete(Long id) {
         log.debug("Request to delete ClientFournisseur : {}", id);

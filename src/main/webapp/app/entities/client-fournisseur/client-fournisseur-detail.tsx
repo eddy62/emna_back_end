@@ -27,9 +27,33 @@ export const ClientFournisseurDetail = (props: IClientFournisseurDetailProps) =>
         </h2>
         <dl className="jh-entity-details">
           <dt>
-            <Translate contentKey="emnaBackEndApp.clientFournisseur.infoEntreprise">Info Entreprise</Translate>
+            <span id="nom">
+              <Translate contentKey="emnaBackEndApp.clientFournisseur.nom">Nom</Translate>
+            </span>
           </dt>
-          <dd>{clientFournisseurEntity.infoEntrepriseId ? clientFournisseurEntity.infoEntrepriseId : ''}</dd>
+          <dd>{clientFournisseurEntity.nom}</dd>
+          <dt>
+            <span id="siren">
+              <Translate contentKey="emnaBackEndApp.clientFournisseur.siren">Siren</Translate>
+            </span>
+          </dt>
+          <dd>{clientFournisseurEntity.siren}</dd>
+          <dt>
+            <span id="telephone">
+              <Translate contentKey="emnaBackEndApp.clientFournisseur.telephone">Telephone</Translate>
+            </span>
+          </dt>
+          <dd>{clientFournisseurEntity.telephone}</dd>
+          <dt>
+            <span id="email">
+              <Translate contentKey="emnaBackEndApp.clientFournisseur.email">Email</Translate>
+            </span>
+          </dt>
+          <dd>{clientFournisseurEntity.email}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.clientFournisseur.adresse">Adresse</Translate>
+          </dt>
+          <dd>{clientFournisseurEntity.adresseId ? clientFournisseurEntity.adresseId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.clientFournisseur.societe">Societe</Translate>
           </dt>
@@ -54,7 +78,7 @@ export const ClientFournisseurDetail = (props: IClientFournisseurDetailProps) =>
 };
 
 const mapStateToProps = ({ clientFournisseur }: IRootState) => ({
-  clientFournisseurEntity: clientFournisseur.entity,
+  clientFournisseurEntity: clientFournisseur.entity
 });
 
 const mapDispatchToProps = { getEntity };
