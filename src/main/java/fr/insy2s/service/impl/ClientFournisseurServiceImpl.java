@@ -7,7 +7,9 @@ import fr.insy2s.repository.SocieteRepository;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.repository.ClientFournisseurRepository;
+import fr.insy2s.service.dto.AdresseDTO;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
+import fr.insy2s.service.mapper.AdresseMapper;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
 import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import org.slf4j.Logger;
@@ -38,11 +40,14 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
 
     private final AdresseRepository adresseRepository;
 
-    public ClientFournisseurServiceImpl(ClientFournisseurRepository clientFournisseurRepository, ClientFournisseurMapper clientFournisseurMapper , SocieteRepository societeRepository , AdresseRepository adresseRepository) {
+    private final AdresseMapper adresseMapper ;
+
+    public ClientFournisseurServiceImpl(ClientFournisseurRepository clientFournisseurRepository, ClientFournisseurMapper clientFournisseurMapper , SocieteRepository societeRepository , AdresseRepository adresseRepository , AdresseMapper adresseMapper) {
         this.clientFournisseurRepository = clientFournisseurRepository;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.societeRepository = societeRepository;
         this.adresseRepository = adresseRepository;
+        this.adresseMapper = adresseMapper;
     }
 
     /**
@@ -108,6 +113,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             client.setTelephone(clientFournisseur.getTelephone());
             if (clientFournisseur.getIdSociete() != null) {
                 Optional<Societe> societe = societeRepository.findById(clientFournisseur.getIdSociete());
+                System.out.println(societe);
                 client.setSociete(societe.get());
             }
 
@@ -150,5 +156,65 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             e.printStackTrace();
         }
         return adresseRepository.save(adresse);
+    }
+
+    /**
+     * Recupere clientFournisseur par son id
+     *
+     * @param id l'id de client fournisseur
+     * @return le client founisseur si present en BDD
+     */
+    @Override
+    public Optional<WrapperClientFournisseur> getClientById(Long id) {
+        Optional<ClientFournisseur> client = clientFournisseurRepository.findById(id);
+         return client.isPresent() ? Optional.of(toWrapperCLientFournisseur(client.get())) : Optional.empty();
+    }
+
+    /**
+     * Transforme le ClientFournisseur en WrapperClientFournisseur
+     *
+     * @param client Le clientFournisseur
+     * @return Un client sous l'objet WrapperClientFournisseur
+     */
+    public WrapperClientFournisseur toWrapperCLientFournisseur(ClientFournisseur client) {
+        WrapperClientFournisseur wrapperCLient = new WrapperClientFournisseur();
+
+        try {
+            ClientFournisseurDTO clientSaved = clientFournisseurMapper.toDto(client);
+            wrapperCLient.setId(clientSaved.getId());
+            wrapperCLient.setNom(clientSaved.getNom());
+            wrapperCLient.setEmail(clientSaved.getEmail());
+            wrapperCLient.setTelephone(clientSaved.getTelephone());
+            wrapperCLient.setSiren(clientSaved.getSiren());
+
+            Optional<Adresse> adresse = adresseRepository.findById(client.getAdresse().getId());
+            if(adresse !=null) {
+                AdresseDTO adresseDTO = adresseMapper.toDto(adresse.get());
+                wrapperCLient.setIdAdresse(adresseDTO.getId());
+                wrapperCLient.setNumeroRue(adresseDTO.getNumeroRue());
+                wrapperCLient.setNomRue(adresseDTO.getNomRue());
+                wrapperCLient.setBoitePostale(adresseDTO.getBoitePostale());
+                wrapperCLient.setCodePostal(adresseDTO.getCodePostal());
+                wrapperCLient.setVille(adresseDTO.getVille());
+            }
+
+            return wrapperCLient;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /**
+     * Get all the clientFournisseurs.
+     *
+     * @return the list of entities.
+     */
+    @Override
+    public List<WrapperClientFournisseur> findAllBySocieteId(Long id ) {
+        log.debug("Request to get all ClientFournisseurs");
+        List<ClientFournisseur> listeclient = clientFournisseurRepository.findBySocieteId(id);
+        return listeclient.stream().map(clientFournisseur -> toWrapperCLientFournisseur(clientFournisseur)).collect(Collectors.toList());
     }
 }

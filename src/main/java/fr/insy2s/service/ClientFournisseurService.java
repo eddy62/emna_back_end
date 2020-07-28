@@ -48,4 +48,20 @@ public interface ClientFournisseurService {
      * @return the persisted entity
      */
     ClientFournisseurDTO saveWrapperClientFournisseur(WrapperClientFournisseur wrapperclientFournisseur);
+
+
+    /**
+     * Get the "id" WrapperclientFournisseur.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+     Optional<WrapperClientFournisseur> getClientById(Long id);
+
+    /**
+     * Get all the clientFournisseursWrapper.
+     *
+     * @return the list of entitiesWrapper.
+     */
+    public List<WrapperClientFournisseur> findAllBySocieteId(Long id );
 }
