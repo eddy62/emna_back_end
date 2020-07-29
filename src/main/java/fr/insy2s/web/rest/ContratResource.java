@@ -62,6 +62,7 @@ public class ContratResource {
         contratDTO.setDateCreation(LocalDate.now());
         contratDTO.setSigne(false);
         contratDTO.setArchive(false);
+        contratDTO.setEmployeId(1L);
         ContratDTO result = contratService.save(contratDTO);
         return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

@@ -51,7 +51,6 @@ public class Contrat implements Serializable {
     @JsonIgnoreProperties(value = "listeContrats", allowSetters = true)
     private Employe employe;
 
-
     @ManyToMany(mappedBy = "listeContrats")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnore
