@@ -5,6 +5,10 @@ public interface IContratEmployerProjection {
 
     String getContratTitre();
 
+    Boolean getContratSigner();
+
+    Boolean getContratArchiver();
+
     String getEmployerNom();
 
     String getEmployerPrenom();

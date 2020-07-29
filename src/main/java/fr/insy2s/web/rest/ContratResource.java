@@ -54,6 +54,7 @@ public class ContratResource {
      */
     @PostMapping("/contrats")
     public ResponseEntity<ContratDTO> createContrat(@Valid @RequestBody ContratDTO contratDTO) throws URISyntaxException {
+        System.err.println(contratDTO);
         log.debug("REST request to save Contrat : {}", contratDTO);
         if (contratDTO.getId() != null) {
             throw new BadRequestAlertException("A new contrat cannot already have an ID", ENTITY_NAME, "idexists");
@@ -179,7 +180,7 @@ public class ContratResource {
         List<ContratEmployerVM> contratEmployerVMS = new ArrayList<>();
         List<IContratEmployerProjection> iContratEmployerProjections = this.contratService.getAllContratEmployerById(id);
         for (IContratEmployerProjection iContratEmployerProjection: iContratEmployerProjections) {
-            contratEmployerVMS.add(new ContratEmployerVM(iContratEmployerProjection.getEmployerId(), iContratEmployerProjection.getContratTitre(), iContratEmployerProjection.getEmployerNom(), iContratEmployerProjection.getEmployerPrenom()));
+            contratEmployerVMS.add(new ContratEmployerVM(iContratEmployerProjection.getEmployerId(), iContratEmployerProjection.getContratTitre(), iContratEmployerProjection.getEmployerNom(), iContratEmployerProjection.getEmployerPrenom(), iContratEmployerProjection.getContratSigner(), iContratEmployerProjection.getContratArchiver()));
         }
         return contratEmployerVMS;
     }
