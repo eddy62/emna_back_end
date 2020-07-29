@@ -1,13 +1,14 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.ContratService;
 import fr.insy2s.domain.Contrat;
 import fr.insy2s.repository.ContratRepository;
+import fr.insy2s.repository.projection.IContratAllInfoProjection;
+import fr.insy2s.repository.projection.IContratEmployerProjection;
+import fr.insy2s.service.ContratService;
 import fr.insy2s.service.dto.ContratDTO;
 import fr.insy2s.service.mapper.ContratMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +65,15 @@ public class ContratServiceImpl implements ContratService {
     public void delete(Long id) {
         log.debug("Request to delete Contrat : {}", id);
         contratRepository.deleteById(id);
+    }
+
+    @Override
+    public List<IContratAllInfoProjection> getContratAllInfos(Long id) {
+        return this.contratRepository.getContratAllInfo(id);
+    }
+
+    @Override
+    public List<IContratEmployerProjection> getAllContratEmployerById(Long id) {
+        return this.contratRepository.getAllContratEmployerByEmployeId(id);
     }
 }

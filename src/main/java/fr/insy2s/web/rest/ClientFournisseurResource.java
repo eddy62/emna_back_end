@@ -1,6 +1,7 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.ClientFournisseurService;
+import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 
@@ -113,4 +114,48 @@ public class ClientFournisseurResource {
         clientFournisseurService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code POST  /client-fournisseurs/new} : Create a new clientFournisseur.
+     *
+     * @param clientFournisseur the wrapperclientFournisseur to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wrapperclientFournisseur, or with status {@code 400 (Bad Request)} if the clientFournisseur has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/client-fournisseurs/new")
+    public ResponseEntity<ClientFournisseurDTO> create(@RequestBody WrapperClientFournisseur  clientFournisseur) throws URISyntaxException {
+        log.debug("REST request to save ClientFournisseur : {}", clientFournisseur);
+        if (clientFournisseur.getId() != null) {
+            throw new BadRequestAlertException("A new clientFournisseur cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        ClientFournisseurDTO result = clientFournisseurService.saveWrapperClientFournisseur(clientFournisseur);
+        return ResponseEntity.created(new URI("/api/client-fournisseurs/new" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code GET  /client-fournisseurs/wrapper/:id} : get  the "id" clientFournisseurWrapper.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientFournisseursWrapper in body.or with status {@code 404 (Not Found)}
+     */
+    @GetMapping("/client-fournisseurs/wrapper/{id}")
+    public ResponseEntity<WrapperClientFournisseur> getClientFournisseursWrapper(@PathVariable Long id) {
+        Optional<WrapperClientFournisseur> clientFournisseur = clientFournisseurService.getClientById(id);
+        return ResponseUtil.wrapOrNotFound(clientFournisseur);
+    }
+
+
+    /**
+     * {@code GET  /client-fournisseurs/wrapper} : get all the clientFournisseursWrapper.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clientFournisseursWrapper in body.
+     */
+    @GetMapping("/client-fournisseurs/societe/{id}")
+    public List<WrapperClientFournisseur> getAllWrapperClientFournisseurs(@PathVariable Long id) {
+        log.debug("REST request to get all ClientFournisseurs");
+        return clientFournisseurService.findAllBySocieteId(id);
+    }
+
+
 }
