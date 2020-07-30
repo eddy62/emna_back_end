@@ -8,7 +8,7 @@ import java.io.Serializable;
  * A DTO for the {@link fr.insy2s.domain.Contrat} entity.
  */
 public class ContratDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -22,9 +22,8 @@ public class ContratDTO implements Serializable {
 
     private Boolean archive;
 
-
     private Long employeId;
-    
+
     public Long getId() {
         return id;
     }

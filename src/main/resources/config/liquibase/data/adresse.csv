@@ -1,0 +1,4 @@
+id;numero_rue;boite_postale;nom_rue;code_postale;ville
+1;22;boitePostale;rue des bois;59000;Lille
+2;186;boitePostale;rue saint anne;59200;Tourcoing
+3;57;boitePostale;rue des champs;59100;Roubaix
