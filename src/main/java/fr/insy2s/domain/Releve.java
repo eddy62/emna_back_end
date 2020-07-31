@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "releve")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Releve implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,19 +42,19 @@ public class Releve implements Serializable {
     @Column(name = "chemin_fichier")
     private String cheminFichier;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private EtatReleve etatReleve;
-
     @OneToMany(mappedBy = "releve")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Operation> listeOperations = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeReleves", allowSetters = true)
+    @JsonIgnoreProperties("releves")
+    private EtatReleve etatReleve;
+
+    @ManyToOne
+    @JsonIgnoreProperties("listeReleves")
     private Societe societe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -127,19 +128,6 @@ public class Releve implements Serializable {
         this.cheminFichier = cheminFichier;
     }
 
-    public EtatReleve getEtatReleve() {
-        return etatReleve;
-    }
-
-    public Releve etatReleve(EtatReleve etatReleve) {
-        this.etatReleve = etatReleve;
-        return this;
-    }
-
-    public void setEtatReleve(EtatReleve etatReleve) {
-        this.etatReleve = etatReleve;
-    }
-
     public Set<Operation> getListeOperations() {
         return listeOperations;
     }
@@ -165,6 +153,19 @@ public class Releve implements Serializable {
         this.listeOperations = operations;
     }
 
+    public EtatReleve getEtatReleve() {
+        return etatReleve;
+    }
+
+    public Releve etatReleve(EtatReleve etatReleve) {
+        this.etatReleve = etatReleve;
+        return this;
+    }
+
+    public void setEtatReleve(EtatReleve etatReleve) {
+        this.etatReleve = etatReleve;
+    }
+
     public Societe getSociete() {
         return societe;
     }
@@ -177,7 +178,7 @@ public class Releve implements Serializable {
     public void setSociete(Societe societe) {
         this.societe = societe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -195,7 +196,6 @@ public class Releve implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Releve{" +

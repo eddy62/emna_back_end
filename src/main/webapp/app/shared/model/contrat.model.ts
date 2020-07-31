@@ -6,11 +6,12 @@ import { IClause } from 'app/shared/model/clause.model';
 export interface IContrat {
   id?: number;
   titre?: string;
-  dateCreation?: string;
+  dateCreation?: Moment;
   signe?: boolean;
   archive?: boolean;
   listeAvenants?: IAvenant[];
   employeId?: number;
+  societeId?: number;
   listeArticles?: IArticle[];
   listeClauses?: IClause[];
 }

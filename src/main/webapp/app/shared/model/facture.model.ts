@@ -6,8 +6,8 @@ export interface IFacture {
   numfact?: number;
   nom?: string;
   message?: string;
-  date?: string;
-  dateEcheance?: string;
+  date?: Moment;
+  dateEcheance?: Moment;
   prixHT?: number;
   prixTTC?: number;
   tva?: number;

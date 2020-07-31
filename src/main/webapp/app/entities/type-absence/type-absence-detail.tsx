@@ -26,6 +26,12 @@ export const TypeAbsenceDetail = (props: ITypeAbsenceDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
+            <span id="codeRef">
+              <Translate contentKey="emnaBackEndApp.typeAbsence.codeRef">Code Ref</Translate>
+            </span>
+          </dt>
+          <dd>{typeAbsenceEntity.codeRef}</dd>
+          <dt>
             <span id="intitule">
               <Translate contentKey="emnaBackEndApp.typeAbsence.intitule">Intitule</Translate>
             </span>
@@ -51,7 +57,7 @@ export const TypeAbsenceDetail = (props: ITypeAbsenceDetailProps) => {
 };
 
 const mapStateToProps = ({ typeAbsence }: IRootState) => ({
-  typeAbsenceEntity: typeAbsence.entity,
+  typeAbsenceEntity: typeAbsence.entity
 });
 
 const mapDispatchToProps = { getEntity };

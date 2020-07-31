@@ -3,13 +3,13 @@ import { IOperation } from 'app/shared/model/operation.model';
 
 export interface IReleve {
   id?: number;
-  dateDebut?: string;
-  dateFin?: string;
+  dateDebut?: Moment;
+  dateFin?: Moment;
   solde?: number;
   banque?: string;
   cheminFichier?: string;
-  etatReleveId?: number;
   listeOperations?: IOperation[];
+  etatReleveId?: number;
   societeId?: number;
 }
 

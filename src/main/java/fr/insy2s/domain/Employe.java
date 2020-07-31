@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "employe")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Employe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +32,8 @@ public class Employe implements Serializable {
     @Column(name = "matricule", nullable = false)
     private String matricule;
 
-    @Column(name = "civilite")
+    @NotNull
+    @Column(name = "civilite", nullable = false)
     private String civilite;
 
     @Column(name = "nom_naissance")
@@ -41,7 +43,8 @@ public class Employe implements Serializable {
     @Column(name = "nom_usage", nullable = false)
     private String nomUsage;
 
-    @Column(name = "prenom")
+    @NotNull
+    @Column(name = "prenom", nullable = false)
     private String prenom;
 
     @NotNull
@@ -63,70 +66,104 @@ public class Employe implements Serializable {
     @Column(name = "numero_securite_sociale", nullable = false)
     private String numeroSecuriteSociale;
 
-    @Column(name = "email")
+    @NotNull
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "telephone_fix")
     private String telephoneFix;
 
-    @Column(name = "telephone_portable")
+    @NotNull
+    @Column(name = "telephone_portable", nullable = false)
     private String telephonePortable;
 
-    @Column(name = "fax")
+    @NotNull
+    @Column(name = "fax", nullable = false)
     private String fax;
 
-    @Column(name = "salaire_horaire")
+    @NotNull
+    @Column(name = "salaire_horaire", nullable = false)
     private Double salaireHoraire;
 
-    @Column(name = "salaire_brut_mensuelle")
+    @NotNull
+    @Column(name = "salaire_brut_mensuelle", nullable = false)
     private Double salaireBrutMensuelle;
 
-    @Column(name = "heures_mensuelle")
+    @NotNull
+    @Column(name = "heures_mensuelle", nullable = false)
     private Double heuresMensuelle;
 
-    @Column(name = "categorie")
+    @NotNull
+    @Column(name = "categorie", nullable = false)
     private String categorie;
 
-    @Column(name = "statut")
-    private String statut;
+    @NotNull
+    @Column(name = "poste", nullable = false)
+    private String poste;
 
-    @OneToOne
+    @NotNull
+    @Column(name = "date_embauche", nullable = false)
+    private LocalDate dateEmbauche;
+
+    @NotNull
+    @Column(name = "date_sortie", nullable = false)
+    private LocalDate dateSortie;
+
+    @NotNull
+    @Column(name = "type_contrat", nullable = false)
+    private String typeContrat;
+
+    @NotNull
+    @Column(name = "situation_familiale", nullable = false)
+    private String situationFamiliale;
+
+    @NotNull
+    @Column(name = "enfants_a_charge", nullable = false)
+    private Integer enfantsACharge;
+
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private Adresse adresse;
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contrat> listeContrats = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Absence> listeAbsences = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Prime> listePrimes = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<FichePaie> listeFichePaies = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<HeuresSupplementaires> listeHeureSupplementaires = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<NoteDeFrais> listeNoteDeFrais = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AutresVariable> listeAutresVariables = new HashSet<>();
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("employes")
+    private StatutEmploye statutEmploye;
+
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeEmployes", allowSetters = true)
+    @JsonIgnoreProperties("listeEmployes")
     private Societe societe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -369,17 +406,82 @@ public class Employe implements Serializable {
         this.categorie = categorie;
     }
 
-    public String getStatut() {
-        return statut;
+    public String getPoste() {
+        return poste;
     }
 
-    public Employe statut(String statut) {
-        this.statut = statut;
+    public Employe poste(String poste) {
+        this.poste = poste;
         return this;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setPoste(String poste) {
+        this.poste = poste;
+    }
+
+    public LocalDate getDateEmbauche() {
+        return dateEmbauche;
+    }
+
+    public Employe dateEmbauche(LocalDate dateEmbauche) {
+        this.dateEmbauche = dateEmbauche;
+        return this;
+    }
+
+    public void setDateEmbauche(LocalDate dateEmbauche) {
+        this.dateEmbauche = dateEmbauche;
+    }
+
+    public LocalDate getDateSortie() {
+        return dateSortie;
+    }
+
+    public Employe dateSortie(LocalDate dateSortie) {
+        this.dateSortie = dateSortie;
+        return this;
+    }
+
+    public void setDateSortie(LocalDate dateSortie) {
+        this.dateSortie = dateSortie;
+    }
+
+    public String getTypeContrat() {
+        return typeContrat;
+    }
+
+    public Employe typeContrat(String typeContrat) {
+        this.typeContrat = typeContrat;
+        return this;
+    }
+
+    public void setTypeContrat(String typeContrat) {
+        this.typeContrat = typeContrat;
+    }
+
+    public String getSituationFamiliale() {
+        return situationFamiliale;
+    }
+
+    public Employe situationFamiliale(String situationFamiliale) {
+        this.situationFamiliale = situationFamiliale;
+        return this;
+    }
+
+    public void setSituationFamiliale(String situationFamiliale) {
+        this.situationFamiliale = situationFamiliale;
+    }
+
+    public Integer getEnfantsACharge() {
+        return enfantsACharge;
+    }
+
+    public Employe enfantsACharge(Integer enfantsACharge) {
+        this.enfantsACharge = enfantsACharge;
+        return this;
+    }
+
+    public void setEnfantsACharge(Integer enfantsACharge) {
+        this.enfantsACharge = enfantsACharge;
     }
 
     public Adresse getAdresse() {
@@ -570,6 +672,19 @@ public class Employe implements Serializable {
         this.listeAutresVariables = autresVariables;
     }
 
+    public StatutEmploye getStatutEmploye() {
+        return statutEmploye;
+    }
+
+    public Employe statutEmploye(StatutEmploye statutEmploye) {
+        this.statutEmploye = statutEmploye;
+        return this;
+    }
+
+    public void setStatutEmploye(StatutEmploye statutEmploye) {
+        this.statutEmploye = statutEmploye;
+    }
+
     public Societe getSociete() {
         return societe;
     }
@@ -582,7 +697,7 @@ public class Employe implements Serializable {
     public void setSociete(Societe societe) {
         this.societe = societe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -600,7 +715,6 @@ public class Employe implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Employe{" +
@@ -623,7 +737,12 @@ public class Employe implements Serializable {
             ", salaireBrutMensuelle=" + getSalaireBrutMensuelle() +
             ", heuresMensuelle=" + getHeuresMensuelle() +
             ", categorie='" + getCategorie() + "'" +
-            ", statut='" + getStatut() + "'" +
+            ", poste='" + getPoste() + "'" +
+            ", dateEmbauche='" + getDateEmbauche() + "'" +
+            ", dateSortie='" + getDateSortie() + "'" +
+            ", typeContrat='" + getTypeContrat() + "'" +
+            ", situationFamiliale='" + getSituationFamiliale() + "'" +
+            ", enfantsACharge=" + getEnfantsACharge() +
             "}";
     }
 }

@@ -59,7 +59,7 @@ export const TypePrimeDeleteDialog = (props: ITypePrimeDeleteDialogProps) => {
 
 const mapStateToProps = ({ typePrime }: IRootState) => ({
   typePrimeEntity: typePrime.entity,
-  updateSuccess: typePrime.updateSuccess,
+  updateSuccess: typePrime.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

@@ -3,12 +3,13 @@ package fr.insy2s.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Contrat} entity.
  */
 public class ContratDTO implements Serializable {
-
+    
     private Long id;
 
     @NotNull
@@ -22,8 +23,11 @@ public class ContratDTO implements Serializable {
 
     private Boolean archive;
 
+
     private Long employeId;
 
+    private Long societeId;
+    
     public Long getId() {
         return id;
     }
@@ -72,24 +76,35 @@ public class ContratDTO implements Serializable {
         this.employeId = employeId;
     }
 
+    public Long getSocieteId() {
+        return societeId;
+    }
+
+    public void setSocieteId(Long societeId) {
+        this.societeId = societeId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ContratDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((ContratDTO) o).id);
+        ContratDTO contratDTO = (ContratDTO) o;
+        if (contratDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), contratDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "ContratDTO{" +
@@ -99,6 +114,7 @@ public class ContratDTO implements Serializable {
             ", signe='" + isSigne() + "'" +
             ", archive='" + isArchive() + "'" +
             ", employeId=" + getEmployeId() +
+            ", societeId=" + getSocieteId() +
             "}";
     }
 }

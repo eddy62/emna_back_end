@@ -48,16 +48,16 @@ export const FactureDetail = (props: IFactureDetailProps) => {
               <Translate contentKey="emnaBackEndApp.facture.date">Date</Translate>
             </span>
           </dt>
-          <dd>{factureEntity.date ? <TextFormat value={factureEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
+          <dd>
+            <TextFormat value={factureEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} />
+          </dd>
           <dt>
             <span id="dateEcheance">
               <Translate contentKey="emnaBackEndApp.facture.dateEcheance">Date Echeance</Translate>
             </span>
           </dt>
           <dd>
-            {factureEntity.dateEcheance ? (
-              <TextFormat value={factureEntity.dateEcheance} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            ) : null}
+            <TextFormat value={factureEntity.dateEcheance} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="prixHT">
@@ -141,7 +141,7 @@ export const FactureDetail = (props: IFactureDetailProps) => {
 };
 
 const mapStateToProps = ({ facture }: IRootState) => ({
-  factureEntity: facture.entity,
+  factureEntity: facture.entity
 });
 
 const mapDispatchToProps = { getEntity };

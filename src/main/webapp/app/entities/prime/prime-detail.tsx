@@ -65,7 +65,7 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
 };
 
 const mapStateToProps = ({ prime }: IRootState) => ({
-  primeEntity: prime.entity,
+  primeEntity: prime.entity
 });
 
 const mapDispatchToProps = { getEntity };

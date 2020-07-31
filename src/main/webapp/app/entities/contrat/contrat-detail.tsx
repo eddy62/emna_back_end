@@ -37,9 +37,7 @@ export const ContratDetail = (props: IContratDetailProps) => {
             </span>
           </dt>
           <dd>
-            {contratEntity.dateCreation ? (
-              <TextFormat value={contratEntity.dateCreation} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            ) : null}
+            <TextFormat value={contratEntity.dateCreation} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="signe">
@@ -57,6 +55,10 @@ export const ContratDetail = (props: IContratDetailProps) => {
             <Translate contentKey="emnaBackEndApp.contrat.employe">Employe</Translate>
           </dt>
           <dd>{contratEntity.employeId ? contratEntity.employeId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.contrat.societe">Societe</Translate>
+          </dt>
+          <dd>{contratEntity.societeId ? contratEntity.societeId : ''}</dd>
         </dl>
         <Button tag={Link} to="/contrat" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
@@ -77,7 +79,7 @@ export const ContratDetail = (props: IContratDetailProps) => {
 };
 
 const mapStateToProps = ({ contrat }: IRootState) => ({
-  contratEntity: contrat.entity,
+  contratEntity: contrat.entity
 });
 
 const mapDispatchToProps = { getEntity };

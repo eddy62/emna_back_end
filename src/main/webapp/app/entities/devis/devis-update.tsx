@@ -58,7 +58,7 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...devisEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -220,7 +220,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   devisEntity: storeState.devis.entity,
   loading: storeState.devis.loading,
   updating: storeState.devis.updating,
-  updateSuccess: storeState.devis.updateSuccess,
+  updateSuccess: storeState.devis.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -231,7 +231,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

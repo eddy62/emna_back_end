@@ -41,7 +41,7 @@ export const TypeAbsenceUpdate = (props: ITypeAbsenceUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...typeAbsenceEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -76,6 +76,19 @@ export const TypeAbsenceUpdate = (props: ITypeAbsenceUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
+                <Label id="codeRefLabel" for="type-absence-codeRef">
+                  <Translate contentKey="emnaBackEndApp.typeAbsence.codeRef">Code Ref</Translate>
+                </Label>
+                <AvField
+                  id="type-absence-codeRef"
+                  type="text"
+                  name="codeRef"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label id="intituleLabel" for="type-absence-intitule">
                   <Translate contentKey="emnaBackEndApp.typeAbsence.intitule">Intitule</Translate>
                 </Label>
@@ -84,7 +97,7 @@ export const TypeAbsenceUpdate = (props: ITypeAbsenceUpdateProps) => {
                   type="text"
                   name="intitule"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -113,14 +126,14 @@ const mapStateToProps = (storeState: IRootState) => ({
   typeAbsenceEntity: storeState.typeAbsence.entity,
   loading: storeState.typeAbsence.loading,
   updating: storeState.typeAbsence.updating,
-  updateSuccess: storeState.typeAbsence.updateSuccess,
+  updateSuccess: storeState.typeAbsence.updateSuccess
 });
 
 const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

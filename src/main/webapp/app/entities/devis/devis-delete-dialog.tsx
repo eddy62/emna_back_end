@@ -59,7 +59,7 @@ export const DevisDeleteDialog = (props: IDevisDeleteDialogProps) => {
 
 const mapStateToProps = ({ devis }: IRootState) => ({
   devisEntity: devis.entity,
-  updateSuccess: devis.updateSuccess,
+  updateSuccess: devis.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

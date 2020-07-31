@@ -34,7 +34,12 @@
       "salaireBrutMensuelle": "Salaire Brut Mensuelle",
       "heuresMensuelle": "Heures Mensuelle",
       "categorie": "Categorie",
-      "statut": "Statut",
+      "poste": "Poste",
+      "dateEmbauche": "Date Embauche",
+      "dateSortie": "Date Sortie",
+      "typeContrat": "Type Contrat",
+      "situationFamiliale": "Situation Familiale",
+      "enfantsACharge": "Enfants A Charge",
       "adresse": "Adresse",
       "listeContrats": "Liste Contrats",
       "listeAbsences": "Liste Absences",
@@ -43,6 +48,7 @@
       "listeHeureSupplementaires": "Liste Heure Supplementaires",
       "listeNoteDeFrais": "Liste Note De Frais",
       "listeAutresVariables": "Liste Autres Variables",
+      "statutEmploye": "Statut Employe",
       "societe": "Societe"
     }
   }

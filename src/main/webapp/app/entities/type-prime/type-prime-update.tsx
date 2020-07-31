@@ -41,7 +41,7 @@ export const TypePrimeUpdate = (props: ITypePrimeUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...typePrimeEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -76,6 +76,19 @@ export const TypePrimeUpdate = (props: ITypePrimeUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
+                <Label id="codeRefLabel" for="type-prime-codeRef">
+                  <Translate contentKey="emnaBackEndApp.typePrime.codeRef">Code Ref</Translate>
+                </Label>
+                <AvField
+                  id="type-prime-codeRef"
+                  type="text"
+                  name="codeRef"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label id="intituleLabel" for="type-prime-intitule">
                   <Translate contentKey="emnaBackEndApp.typePrime.intitule">Intitule</Translate>
                 </Label>
@@ -84,7 +97,7 @@ export const TypePrimeUpdate = (props: ITypePrimeUpdateProps) => {
                   type="text"
                   name="intitule"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -113,14 +126,14 @@ const mapStateToProps = (storeState: IRootState) => ({
   typePrimeEntity: storeState.typePrime.entity,
   loading: storeState.typePrime.loading,
   updating: storeState.typePrime.updating,
-  updateSuccess: storeState.typePrime.updateSuccess,
+  updateSuccess: storeState.typePrime.updateSuccess
 });
 
 const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

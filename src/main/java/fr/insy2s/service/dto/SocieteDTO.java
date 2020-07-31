@@ -1,6 +1,7 @@
 package fr.insy2s.service.dto;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Societe} entity.
@@ -73,19 +74,22 @@ public class SocieteDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SocieteDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((SocieteDTO) o).id);
+        SocieteDTO societeDTO = (SocieteDTO) o;
+        if (societeDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), societeDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "SocieteDTO{" +

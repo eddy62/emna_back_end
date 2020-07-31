@@ -26,6 +26,12 @@ export const TypePrimeDetail = (props: ITypePrimeDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
+            <span id="codeRef">
+              <Translate contentKey="emnaBackEndApp.typePrime.codeRef">Code Ref</Translate>
+            </span>
+          </dt>
+          <dd>{typePrimeEntity.codeRef}</dd>
+          <dt>
             <span id="intitule">
               <Translate contentKey="emnaBackEndApp.typePrime.intitule">Intitule</Translate>
             </span>
@@ -51,7 +57,7 @@ export const TypePrimeDetail = (props: ITypePrimeDetailProps) => {
 };
 
 const mapStateToProps = ({ typePrime }: IRootState) => ({
-  typePrimeEntity: typePrime.entity,
+  typePrimeEntity: typePrime.entity
 });
 
 const mapDispatchToProps = { getEntity };

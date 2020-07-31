@@ -134,7 +134,7 @@ public class EmployeResourceIT {
             .salaireBrutMensuelle(DEFAULT_SALAIRE_BRUT_MENSUELLE)
             .heuresMensuelle(DEFAULT_HEURES_MENSUELLE)
             .categorie(DEFAULT_CATEGORIE)
-            .statut(DEFAULT_STATUT);
+            .poste(DEFAULT_STATUT);
         return employe;
     }
     /**
@@ -163,7 +163,7 @@ public class EmployeResourceIT {
             .salaireBrutMensuelle(UPDATED_SALAIRE_BRUT_MENSUELLE)
             .heuresMensuelle(UPDATED_HEURES_MENSUELLE)
             .categorie(UPDATED_CATEGORIE)
-            .statut(UPDATED_STATUT);
+            .poste(UPDATED_STATUT);
         return employe;
     }
 
@@ -205,7 +205,7 @@ public class EmployeResourceIT {
         assertThat(testEmploye.getSalaireBrutMensuelle()).isEqualTo(DEFAULT_SALAIRE_BRUT_MENSUELLE);
         assertThat(testEmploye.getHeuresMensuelle()).isEqualTo(DEFAULT_HEURES_MENSUELLE);
         assertThat(testEmploye.getCategorie()).isEqualTo(DEFAULT_CATEGORIE);
-        assertThat(testEmploye.getStatut()).isEqualTo(DEFAULT_STATUT);
+        assertThat(testEmploye.getPoste()).isEqualTo(DEFAULT_STATUT);
     }
 
     @Test
@@ -451,7 +451,7 @@ public class EmployeResourceIT {
             .salaireBrutMensuelle(UPDATED_SALAIRE_BRUT_MENSUELLE)
             .heuresMensuelle(UPDATED_HEURES_MENSUELLE)
             .categorie(UPDATED_CATEGORIE)
-            .statut(UPDATED_STATUT);
+            .poste(UPDATED_STATUT);
         EmployeDTO employeDTO = employeMapper.toDto(updatedEmploye);
 
         restEmployeMockMvc.perform(put("/api/employes")
@@ -481,7 +481,7 @@ public class EmployeResourceIT {
         assertThat(testEmploye.getSalaireBrutMensuelle()).isEqualTo(UPDATED_SALAIRE_BRUT_MENSUELLE);
         assertThat(testEmploye.getHeuresMensuelle()).isEqualTo(UPDATED_HEURES_MENSUELLE);
         assertThat(testEmploye.getCategorie()).isEqualTo(UPDATED_CATEGORIE);
-        assertThat(testEmploye.getStatut()).isEqualTo(UPDATED_STATUT);
+        assertThat(testEmploye.getPoste()).isEqualTo(UPDATED_STATUT);
     }
 
     @Test

@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "statutEmploye": {
+      "home": {
+        "title": "StatutEmployes",
+        "createLabel": "Créer un nouveau Statut Employe",
+        "createOrEditLabel": "Créer ou éditer un Statut Employe",
+        "notFound": "Aucun Statut Employe trouvé"
+      },
+      "created": "Un nouveau Statut Employe a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Statut Employe avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Statut Employe avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Statut Employe {{ id }} ?"
+      },
+      "detail": {
+        "title": "Statut Employe"
+      },
+      "codeRef": "Code Ref",
+      "libelle": "Libelle"
+    }
+  }
+}

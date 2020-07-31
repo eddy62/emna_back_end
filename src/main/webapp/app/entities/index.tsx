@@ -30,6 +30,7 @@ import EtatDevis from './etat-devis';
 import Comptable from './comptable';
 import Societe from './societe';
 import InfoEntreprise from './info-entreprise';
+import StatutEmploye from './statut-employe';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -62,6 +63,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}comptable`} component={Comptable} />
       <ErrorBoundaryRoute path={`${match.url}societe`} component={Societe} />
       <ErrorBoundaryRoute path={`${match.url}info-entreprise`} component={InfoEntreprise} />
+      <ErrorBoundaryRoute path={`${match.url}statut-employe`} component={StatutEmploye} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

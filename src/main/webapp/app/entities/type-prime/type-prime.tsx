@@ -37,6 +37,9 @@ export const TypePrime = (props: ITypePrimeProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.typePrime.codeRef">Code Ref</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.typePrime.intitule">Intitule</Translate>
                 </th>
                 <th />
@@ -50,6 +53,7 @@ export const TypePrime = (props: ITypePrimeProps) => {
                       {typePrime.id}
                     </Button>
                   </td>
+                  <td>{typePrime.codeRef}</td>
                   <td>{typePrime.intitule}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -91,11 +95,11 @@ export const TypePrime = (props: ITypePrimeProps) => {
 
 const mapStateToProps = ({ typePrime }: IRootState) => ({
   typePrimeList: typePrime.entities,
-  loading: typePrime.loading,
+  loading: typePrime.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

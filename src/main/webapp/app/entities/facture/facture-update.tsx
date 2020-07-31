@@ -66,7 +66,7 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...factureEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -278,7 +278,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   factureEntity: storeState.facture.entity,
   loading: storeState.facture.loading,
   updating: storeState.facture.updating,
-  updateSuccess: storeState.facture.updateSuccess,
+  updateSuccess: storeState.facture.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -291,7 +291,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

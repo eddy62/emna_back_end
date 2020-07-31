@@ -63,10 +63,10 @@ export const Absence = (props: IAbsenceProps) => {
                     </Button>
                   </td>
                   <td>
-                    {absence.debutAbsence ? <TextFormat type="date" value={absence.debutAbsence} format={APP_LOCAL_DATE_FORMAT} /> : null}
+                    <TextFormat type="date" value={absence.debutAbsence} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    {absence.finAbsence ? <TextFormat type="date" value={absence.finAbsence} format={APP_LOCAL_DATE_FORMAT} /> : null}
+                    <TextFormat type="date" value={absence.finAbsence} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{absence.justificatif}</td>
                   <td>{absence.typeAbsenceId ? <Link to={`type-absence/${absence.typeAbsenceId}`}>{absence.typeAbsenceId}</Link> : ''}</td>
@@ -111,11 +111,11 @@ export const Absence = (props: IAbsenceProps) => {
 
 const mapStateToProps = ({ absence }: IRootState) => ({
   absenceList: absence.entities,
-  loading: absence.loading,
+  loading: absence.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

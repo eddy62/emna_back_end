@@ -103,11 +103,11 @@ export const Prime = (props: IPrimeProps) => {
 
 const mapStateToProps = ({ prime }: IRootState) => ({
   primeList: prime.entities,
-  loading: prime.loading,
+  loading: prime.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

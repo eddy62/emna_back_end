@@ -1,11 +1,11 @@
-id;debut_absence;fin_absence;justificatif
-1;2020-07-21;2020-07-21;Arrêt Maladie
-2;2020-07-21;2020-07-21;Notification de Congé Payé
-3;2020-07-22;2020-07-21;Acte de naissance
-4;2020-07-22;2020-07-21;Acte de decés
-5;2020-07-22;2020-07-21;Non justifiée
-6;2020-07-21;2020-07-22;Arrêt Maladie
-7;2020-07-21;2020-07-21;Arrêt Maladie
-8;2020-07-21;2020-07-21;Mariage
-9;2020-07-21;2020-07-21;Notification de Congé Payé
-10;2020-07-21;2020-07-21;Arrêt Accident de travail
+id;debut_absence;fin_absence;justificatif;type_absence_id
+1;2020-07-21;2020-07-21;parse Azerbaijan;1
+2;2020-07-21;2020-07-21;Fantastic Steel Shirt Solomon Islands Dollar cross-platform;2
+3;2020-07-22;2020-07-21;New Taiwan Dollar;3
+4;2020-07-22;2020-07-21;methodologies magenta;4
+5;2020-07-22;2020-07-21;Computers Interactions;5
+6;2020-07-21;2020-07-22;benchmark synergistic;6
+7;2020-07-21;2020-07-21;wireless;7
+8;2020-07-21;2020-07-21;Lead parsing;8
+9;2020-07-21;2020-07-21;Tasty Granite Car orchestration West Virginia;9
+10;2020-07-21;2020-07-21;incentivize Product Samoa;10

@@ -49,7 +49,7 @@ export const DevisDetail = (props: IDevisDetailProps) => {
             </span>
           </dt>
           <dd>
-            {devisEntity.dateCreation ? <TextFormat value={devisEntity.dateCreation} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
+            <TextFormat value={devisEntity.dateCreation} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="dateLimite">
@@ -57,7 +57,7 @@ export const DevisDetail = (props: IDevisDetailProps) => {
             </span>
           </dt>
           <dd>
-            {devisEntity.dateLimite ? <TextFormat value={devisEntity.dateLimite} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
+            <TextFormat value={devisEntity.dateLimite} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="prixHT">
@@ -115,7 +115,7 @@ export const DevisDetail = (props: IDevisDetailProps) => {
 };
 
 const mapStateToProps = ({ devis }: IRootState) => ({
-  devisEntity: devis.entity,
+  devisEntity: devis.entity
 });
 
 const mapDispatchToProps = { getEntity };

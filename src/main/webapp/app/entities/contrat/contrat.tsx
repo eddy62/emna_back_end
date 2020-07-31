@@ -51,6 +51,9 @@ export const Contrat = (props: IContratProps) => {
                 <th>
                   <Translate contentKey="emnaBackEndApp.contrat.employe">Employe</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.contrat.societe">Societe</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -64,11 +67,12 @@ export const Contrat = (props: IContratProps) => {
                   </td>
                   <td>{contrat.titre}</td>
                   <td>
-                    {contrat.dateCreation ? <TextFormat type="date" value={contrat.dateCreation} format={APP_LOCAL_DATE_FORMAT} /> : null}
+                    <TextFormat type="date" value={contrat.dateCreation} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{contrat.signe ? 'true' : 'false'}</td>
                   <td>{contrat.archive ? 'true' : 'false'}</td>
                   <td>{contrat.employeId ? <Link to={`employe/${contrat.employeId}`}>{contrat.employeId}</Link> : ''}</td>
+                  <td>{contrat.societeId ? <Link to={`societe/${contrat.societeId}`}>{contrat.societeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${contrat.id}`} color="info" size="sm">
@@ -109,11 +113,11 @@ export const Contrat = (props: IContratProps) => {
 
 const mapStateToProps = ({ contrat }: IRootState) => ({
   contratList: contrat.entities,
-  loading: contrat.loading,
+  loading: contrat.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
