@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link AdresseResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class AdresseResourceIT {
@@ -46,6 +47,9 @@ public class AdresseResourceIT {
 
     private static final String DEFAULT_VILLE = "AAAAAAAAAA";
     private static final String UPDATED_VILLE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PAYS = "AAAAAAAAAA";
+    private static final String UPDATED_PAYS = "BBBBBBBBBB";
 
     @Autowired
     private AdresseRepository adresseRepository;
@@ -76,7 +80,8 @@ public class AdresseResourceIT {
             .boitePostale(DEFAULT_BOITE_POSTALE)
             .nomRue(DEFAULT_NOM_RUE)
             .codePostal(DEFAULT_CODE_POSTAL)
-            .ville(DEFAULT_VILLE);
+            .ville(DEFAULT_VILLE)
+            .pays(DEFAULT_PAYS);
         return adresse;
     }
     /**
@@ -91,7 +96,8 @@ public class AdresseResourceIT {
             .boitePostale(UPDATED_BOITE_POSTALE)
             .nomRue(UPDATED_NOM_RUE)
             .codePostal(UPDATED_CODE_POSTAL)
-            .ville(UPDATED_VILLE);
+            .ville(UPDATED_VILLE)
+            .pays(UPDATED_PAYS);
         return adresse;
     }
 
@@ -104,6 +110,7 @@ public class AdresseResourceIT {
     @Transactional
     public void createAdresse() throws Exception {
         int databaseSizeBeforeCreate = adresseRepository.findAll().size();
+
         // Create the Adresse
         AdresseDTO adresseDTO = adresseMapper.toDto(adresse);
         restAdresseMockMvc.perform(post("/api/adresses")
@@ -120,6 +127,7 @@ public class AdresseResourceIT {
         assertThat(testAdresse.getNomRue()).isEqualTo(DEFAULT_NOM_RUE);
         assertThat(testAdresse.getCodePostal()).isEqualTo(DEFAULT_CODE_POSTAL);
         assertThat(testAdresse.getVille()).isEqualTo(DEFAULT_VILLE);
+        assertThat(testAdresse.getPays()).isEqualTo(DEFAULT_PAYS);
     }
 
     @Test
@@ -153,7 +161,6 @@ public class AdresseResourceIT {
         // Create the Adresse, which fails.
         AdresseDTO adresseDTO = adresseMapper.toDto(adresse);
 
-
         restAdresseMockMvc.perform(post("/api/adresses")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(adresseDTO)))
@@ -172,7 +179,6 @@ public class AdresseResourceIT {
 
         // Create the Adresse, which fails.
         AdresseDTO adresseDTO = adresseMapper.toDto(adresse);
-
 
         restAdresseMockMvc.perform(post("/api/adresses")
             .contentType(MediaType.APPLICATION_JSON)
@@ -193,6 +199,24 @@ public class AdresseResourceIT {
         // Create the Adresse, which fails.
         AdresseDTO adresseDTO = adresseMapper.toDto(adresse);
 
+        restAdresseMockMvc.perform(post("/api/adresses")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(adresseDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Adresse> adresseList = adresseRepository.findAll();
+        assertThat(adresseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPaysIsRequired() throws Exception {
+        int databaseSizeBeforeTest = adresseRepository.findAll().size();
+        // set the field null
+        adresse.setPays(null);
+
+        // Create the Adresse, which fails.
+        AdresseDTO adresseDTO = adresseMapper.toDto(adresse);
 
         restAdresseMockMvc.perform(post("/api/adresses")
             .contentType(MediaType.APPLICATION_JSON)
@@ -218,7 +242,8 @@ public class AdresseResourceIT {
             .andExpect(jsonPath("$.[*].boitePostale").value(hasItem(DEFAULT_BOITE_POSTALE)))
             .andExpect(jsonPath("$.[*].nomRue").value(hasItem(DEFAULT_NOM_RUE)))
             .andExpect(jsonPath("$.[*].codePostal").value(hasItem(DEFAULT_CODE_POSTAL)))
-            .andExpect(jsonPath("$.[*].ville").value(hasItem(DEFAULT_VILLE)));
+            .andExpect(jsonPath("$.[*].ville").value(hasItem(DEFAULT_VILLE)))
+            .andExpect(jsonPath("$.[*].pays").value(hasItem(DEFAULT_PAYS)));
     }
     
     @Test
@@ -236,8 +261,10 @@ public class AdresseResourceIT {
             .andExpect(jsonPath("$.boitePostale").value(DEFAULT_BOITE_POSTALE))
             .andExpect(jsonPath("$.nomRue").value(DEFAULT_NOM_RUE))
             .andExpect(jsonPath("$.codePostal").value(DEFAULT_CODE_POSTAL))
-            .andExpect(jsonPath("$.ville").value(DEFAULT_VILLE));
+            .andExpect(jsonPath("$.ville").value(DEFAULT_VILLE))
+            .andExpect(jsonPath("$.pays").value(DEFAULT_PAYS));
     }
+
     @Test
     @Transactional
     public void getNonExistingAdresse() throws Exception {
@@ -263,7 +290,8 @@ public class AdresseResourceIT {
             .boitePostale(UPDATED_BOITE_POSTALE)
             .nomRue(UPDATED_NOM_RUE)
             .codePostal(UPDATED_CODE_POSTAL)
-            .ville(UPDATED_VILLE);
+            .ville(UPDATED_VILLE)
+            .pays(UPDATED_PAYS);
         AdresseDTO adresseDTO = adresseMapper.toDto(updatedAdresse);
 
         restAdresseMockMvc.perform(put("/api/adresses")
@@ -280,6 +308,7 @@ public class AdresseResourceIT {
         assertThat(testAdresse.getNomRue()).isEqualTo(UPDATED_NOM_RUE);
         assertThat(testAdresse.getCodePostal()).isEqualTo(UPDATED_CODE_POSTAL);
         assertThat(testAdresse.getVille()).isEqualTo(UPDATED_VILLE);
+        assertThat(testAdresse.getPays()).isEqualTo(UPDATED_PAYS);
     }
 
     @Test

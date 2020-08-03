@@ -55,6 +55,12 @@ export const AdresseDetail = (props: IAdresseDetailProps) => {
             </span>
           </dt>
           <dd>{adresseEntity.ville}</dd>
+          <dt>
+            <span id="pays">
+              <Translate contentKey="emnaBackEndApp.adresse.pays">Pays</Translate>
+            </span>
+          </dt>
+          <dd>{adresseEntity.pays}</dd>
         </dl>
         <Button tag={Link} to="/adresse" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
@@ -75,7 +81,7 @@ export const AdresseDetail = (props: IAdresseDetailProps) => {
 };
 
 const mapStateToProps = ({ adresse }: IRootState) => ({
-  adresseEntity: adresse.entity,
+  adresseEntity: adresse.entity
 });
 
 const mapDispatchToProps = { getEntity };

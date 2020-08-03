@@ -41,7 +41,7 @@ export const AdresseUpdate = (props: IAdresseUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...adresseEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -96,7 +96,7 @@ export const AdresseUpdate = (props: IAdresseUpdateProps) => {
                   type="text"
                   name="nomRue"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -109,7 +109,7 @@ export const AdresseUpdate = (props: IAdresseUpdateProps) => {
                   type="text"
                   name="codePostal"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -122,7 +122,20 @@ export const AdresseUpdate = (props: IAdresseUpdateProps) => {
                   type="text"
                   name="ville"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="paysLabel" for="adresse-pays">
+                  <Translate contentKey="emnaBackEndApp.adresse.pays">Pays</Translate>
+                </Label>
+                <AvField
+                  id="adresse-pays"
+                  type="text"
+                  name="pays"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -151,14 +164,14 @@ const mapStateToProps = (storeState: IRootState) => ({
   adresseEntity: storeState.adresse.entity,
   loading: storeState.adresse.loading,
   updating: storeState.adresse.updating,
-  updateSuccess: storeState.adresse.updateSuccess,
+  updateSuccess: storeState.adresse.updateSuccess
 });
 
 const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
