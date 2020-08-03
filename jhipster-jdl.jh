@@ -92,6 +92,7 @@ entity Adresse{
     nomRue String required
     codePostal String required
     ville String required
+	pays String required
 }
 
 entity Employe{

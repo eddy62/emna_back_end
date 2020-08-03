@@ -5,6 +5,7 @@ export interface IAdresse {
   nomRue?: string;
   codePostal?: string;
   ville?: string;
+  pays?: string;
 }
 
 export const defaultValue: Readonly<IAdresse> = {};

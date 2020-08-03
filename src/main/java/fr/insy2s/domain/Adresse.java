@@ -7,13 +7,14 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Adresse.
  */
 @Entity
 @Table(name = "adresse")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Adresse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +42,11 @@ public class Adresse implements Serializable {
     @Column(name = "ville", nullable = false)
     private String ville;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    @NotNull
+    @Column(name = "pays", nullable = false)
+    private String pays;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -114,7 +119,20 @@ public class Adresse implements Serializable {
     public void setVille(String ville) {
         this.ville = ville;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public String getPays() {
+        return pays;
+    }
+
+    public Adresse pays(String pays) {
+        this.pays = pays;
+        return this;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -132,7 +150,6 @@ public class Adresse implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Adresse{" +
@@ -142,6 +159,7 @@ public class Adresse implements Serializable {
             ", nomRue='" + getNomRue() + "'" +
             ", codePostal='" + getCodePostal() + "'" +
             ", ville='" + getVille() + "'" +
+            ", pays='" + getPays() + "'" +
             "}";
     }
 }

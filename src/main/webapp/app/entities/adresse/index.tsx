@@ -11,12 +11,12 @@ import AdresseDeleteDialog from './adresse-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={AdresseDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={AdresseUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={AdresseUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={AdresseDetail} />
       <ErrorBoundaryRoute path={match.url} component={Adresse} />
     </Switch>
-    <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={AdresseDeleteDialog} />
   </>
 );
 
