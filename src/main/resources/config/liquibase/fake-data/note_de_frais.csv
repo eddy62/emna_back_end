@@ -1,11 +1,11 @@
 id;designation;date;montant;justificatif
-1;reciprocal;2020-07-21;39792;SDD indexing Village
-2;violet;2020-07-21;24148;parsing orchid
-3;proactive hacking;2020-07-22;30547;synthesizing lavender Orchestrator
-4;Cotton online Principal;2020-07-21;49604;synergy
-5;TCP;2020-07-21;52668;concept Networked
-6;encompassing Bahraini Dinar Montana;2020-07-21;19434;protocol Corporate
-7;Fantastic Steel Shirt;2020-07-22;43006;Kroon invoice
-8;quantify Soft;2020-07-22;21380;calculating
-9;web services Towels;2020-07-21;99307;array Industrial
-10;Shoes Republic of Korea quantify;2020-07-22;59615;Games
+1;Frais d'Hôtel pour 3 Nuits;2020-07-21;250;Facture
+2;Frais de déplacement en voiture;2020-07-21;170;Facture
+3;Frais d'Hôtel pour 1 nuit;2020-07-21;80;Facture
+4;Logement Professionnel;2020-07-21;600;Quittance de loyer
+5;Billet de train Lille-Strasbourg;2020-07-21;150;Facture
+6;Billet d'avion Paris-Londre;2020-07-21;200;Facture
+7;Frais de repas;2020-07-21;250;Facture
+8;Frais de Parking;2020-07-21;100;Facture
+9;Frais de Péage;2020-07-21;40;Facture
+10;Frais de déplacement en voiture;2020-07-21;250;Facture

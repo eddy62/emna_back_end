@@ -59,7 +59,7 @@ export const AdresseDeleteDialog = (props: IAdresseDeleteDialogProps) => {
 
 const mapStateToProps = ({ adresse }: IRootState) => ({
   adresseEntity: adresse.entity,
-  updateSuccess: adresse.updateSuccess,
+  updateSuccess: adresse.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

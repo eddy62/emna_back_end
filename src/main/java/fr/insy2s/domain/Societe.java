@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "societe")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Societe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,42 +42,46 @@ public class Societe implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Facture> listeFactures = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Devis> listeDevis = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Releve> listeReleves = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Produit> listeProduits = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Contrat> listeContrats = new HashSet<>();
+
+    @OneToMany(mappedBy = "societe")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ClientFournisseur> listeClientsFournisseurs = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Clause> listeClauses = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Article> listeArticles = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Employe> listeEmployes = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeSocietes", allowSetters = true)
+    @JsonIgnoreProperties("listeSocietes")
     private Comptable comptable;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -237,6 +242,31 @@ public class Societe implements Serializable {
         this.listeProduits = produits;
     }
 
+    public Set<Contrat> getListeContrats() {
+        return listeContrats;
+    }
+
+    public Societe listeContrats(Set<Contrat> contrats) {
+        this.listeContrats = contrats;
+        return this;
+    }
+
+    public Societe addListeContrats(Contrat contrat) {
+        this.listeContrats.add(contrat);
+        contrat.setSociete(this);
+        return this;
+    }
+
+    public Societe removeListeContrats(Contrat contrat) {
+        this.listeContrats.remove(contrat);
+        contrat.setSociete(null);
+        return this;
+    }
+
+    public void setListeContrats(Set<Contrat> contrats) {
+        this.listeContrats = contrats;
+    }
+
     public Set<ClientFournisseur> getListeClientsFournisseurs() {
         return listeClientsFournisseurs;
     }
@@ -349,7 +379,7 @@ public class Societe implements Serializable {
     public void setComptable(Comptable comptable) {
         this.comptable = comptable;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -367,7 +397,6 @@ public class Societe implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Societe{" +

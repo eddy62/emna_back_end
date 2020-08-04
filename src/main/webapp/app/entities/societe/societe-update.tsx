@@ -58,8 +58,9 @@ export const SocieteUpdate = (props: ISocieteUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...societeEntity,
-        ...values,
+        ...values
       };
+      entity.user = users[values.user];
 
       if (isNew) {
         props.createEntity(entity);
@@ -187,7 +188,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   societeEntity: storeState.societe.entity,
   loading: storeState.societe.loading,
   updating: storeState.societe.updating,
-  updateSuccess: storeState.societe.updateSuccess,
+  updateSuccess: storeState.societe.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -198,7 +199,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

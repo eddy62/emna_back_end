@@ -14,7 +14,7 @@ export interface IEmploye {
   nomNaissance?: string;
   nomUsage?: string;
   prenom?: string;
-  dateNaissance?: string;
+  dateNaissance?: Moment;
   villeNaissance?: string;
   departementNaissance?: string;
   paysNaisance?: string;
@@ -27,7 +27,12 @@ export interface IEmploye {
   salaireBrutMensuelle?: number;
   heuresMensuelle?: number;
   categorie?: string;
-  statut?: string;
+  poste?: string;
+  dateEmbauche?: Moment;
+  dateSortie?: Moment;
+  typeContrat?: string;
+  situationFamiliale?: string;
+  enfantsACharge?: number;
   adresseId?: number;
   listeContrats?: IContrat[];
   listeAbsences?: IAbsence[];
@@ -36,6 +41,7 @@ export interface IEmploye {
   listeHeureSupplementaires?: IHeuresSupplementaires[];
   listeNoteDeFrais?: INoteDeFrais[];
   listeAutresVariables?: IAutresVariable[];
+  statutEmployeId?: number;
   societeId?: number;
 }
 

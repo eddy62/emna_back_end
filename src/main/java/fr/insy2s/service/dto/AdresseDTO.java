@@ -2,6 +2,7 @@ package fr.insy2s.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Adresse} entity.
@@ -22,6 +23,9 @@ public class AdresseDTO implements Serializable {
 
     @NotNull
     private String ville;
+
+    @NotNull
+    private String pays;
 
     
     public Long getId() {
@@ -72,24 +76,35 @@ public class AdresseDTO implements Serializable {
         this.ville = ville;
     }
 
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AdresseDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((AdresseDTO) o).id);
+        AdresseDTO adresseDTO = (AdresseDTO) o;
+        if (adresseDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), adresseDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "AdresseDTO{" +
@@ -99,6 +114,7 @@ public class AdresseDTO implements Serializable {
             ", nomRue='" + getNomRue() + "'" +
             ", codePostal='" + getCodePostal() + "'" +
             ", ville='" + getVille() + "'" +
+            ", pays='" + getPays() + "'" +
             "}";
     }
 }

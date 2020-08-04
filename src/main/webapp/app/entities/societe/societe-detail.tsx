@@ -67,7 +67,7 @@ export const SocieteDetail = (props: ISocieteDetailProps) => {
 };
 
 const mapStateToProps = ({ societe }: IRootState) => ({
-  societeEntity: societe.entity,
+  societeEntity: societe.entity
 });
 
 const mapDispatchToProps = { getEntity };

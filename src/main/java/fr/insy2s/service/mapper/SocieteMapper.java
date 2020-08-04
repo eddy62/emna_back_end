@@ -29,6 +29,8 @@ public interface SocieteMapper extends EntityMapper<SocieteDTO, Societe> {
     @Mapping(target = "removeListeReleves", ignore = true)
     @Mapping(target = "listeProduits", ignore = true)
     @Mapping(target = "removeListeProduits", ignore = true)
+    @Mapping(target = "listeContrats", ignore = true)
+    @Mapping(target = "removeListeContrats", ignore = true)
     @Mapping(target = "listeClientsFournisseurs", ignore = true)
     @Mapping(target = "removeListeClientsFournisseurs", ignore = true)
     @Mapping(target = "listeClauses", ignore = true)

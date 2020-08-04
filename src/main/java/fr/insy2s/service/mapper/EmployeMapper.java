@@ -9,10 +9,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Employe} and its DTO {@link EmployeDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AdresseMapper.class, SocieteMapper.class})
+@Mapper(componentModel = "spring", uses = {AdresseMapper.class, StatutEmployeMapper.class, SocieteMapper.class})
 public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
 
     @Mapping(source = "adresse.id", target = "adresseId")
+    @Mapping(source = "statutEmploye.id", target = "statutEmployeId")
     @Mapping(source = "societe.id", target = "societeId")
     EmployeDTO toDto(Employe employe);
 
@@ -31,6 +32,7 @@ public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
     @Mapping(target = "removeListeNoteDeFrais", ignore = true)
     @Mapping(target = "listeAutresVariables", ignore = true)
     @Mapping(target = "removeListeAutresVariables", ignore = true)
+    @Mapping(source = "statutEmployeId", target = "statutEmploye")
     @Mapping(source = "societeId", target = "societe")
     Employe toEntity(EmployeDTO employeDTO);
 

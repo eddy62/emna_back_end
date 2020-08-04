@@ -1,66 +1,79 @@
 {
-  "name": "Contrat",
-  "fields": [
-    {
-      "fieldName": "titre",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "dateCreation",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "signe",
-      "fieldType": "Boolean",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "archive",
-      "fieldType": "Boolean"
-    }
-  ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "avenant",
-      "otherEntityRelationshipName": "contrat",
-      "relationshipName": "listeAvenants"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "employe",
-      "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "employe",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "article",
-      "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "listeArticles",
-      "otherEntityField": "id",
-      "ownerSide": false
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "clause",
-      "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "listeClauses",
-      "otherEntityField": "id",
-      "ownerSide": false
-    }
-  ],
-  "changelogDate": "20200722091204",
-  "entityTableName": "contrat",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "clientRootFolder": "",
-  "applications": "*"
+    "name": "Contrat",
+    "fields": [
+        {
+            "fieldName": "titre",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dateCreation",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "signe",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "archive",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "avenant",
+            "otherEntityRelationshipName": "contrat",
+            "relationshipName": "listeAvenants"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "employe",
+            "otherEntityRelationshipName": "listeContrats",
+            "relationshipName": "employe",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "societe",
+            "otherEntityRelationshipName": "listeContrats",
+            "relationshipName": "societe",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "article",
+            "otherEntityRelationshipName": "listeContrats",
+            "relationshipName": "listeArticles",
+            "otherEntityField": "id",
+            "ownerSide": false
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "clause",
+            "otherEntityRelationshipName": "listeContrats",
+            "relationshipName": "listeClauses",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20200722091204",
+    "entityTableName": "contrat",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
 }

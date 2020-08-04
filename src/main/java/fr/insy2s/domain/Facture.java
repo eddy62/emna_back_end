@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "facture")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Facture implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,28 +68,28 @@ public class Facture implements Serializable {
     @JoinColumn(unique = true)
     private Adresse adresse;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("factures")
     private EtatFacture etatFacture;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeFactures", allowSetters = true)
+    @JsonIgnoreProperties("listeFactures")
     private Societe societe;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeFactures", allowSetters = true)
+    @JsonIgnoreProperties("listeFactures")
     private Operation operation;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeFactures", allowSetters = true)
+    @JsonIgnoreProperties("listeFactures")
     private ClientFournisseur clientFournisseur;
 
     @ManyToMany(mappedBy = "listeFactures")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
     private Set<Produit> listeProduits = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -342,7 +343,7 @@ public class Facture implements Serializable {
     public void setListeProduits(Set<Produit> produits) {
         this.listeProduits = produits;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -360,7 +361,6 @@ public class Facture implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Facture{" +

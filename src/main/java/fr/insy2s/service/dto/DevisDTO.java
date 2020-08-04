@@ -2,6 +2,7 @@ package fr.insy2s.service.dto;
 
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Devis} entity.
@@ -144,19 +145,22 @@ public class DevisDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DevisDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((DevisDTO) o).id);
+        DevisDTO devisDTO = (DevisDTO) o;
+        if (devisDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), devisDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "DevisDTO{" +

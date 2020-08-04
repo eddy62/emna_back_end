@@ -2,6 +2,7 @@ package fr.insy2s.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Prime} entity.
@@ -66,19 +67,22 @@ public class PrimeDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PrimeDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((PrimeDTO) o).id);
+        PrimeDTO primeDTO = (PrimeDTO) o;
+        if (primeDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), primeDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "PrimeDTO{" +

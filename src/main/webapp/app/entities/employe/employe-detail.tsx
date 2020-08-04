@@ -61,9 +61,7 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
             </span>
           </dt>
           <dd>
-            {employeEntity.dateNaissance ? (
-              <TextFormat value={employeEntity.dateNaissance} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            ) : null}
+            <TextFormat value={employeEntity.dateNaissance} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="villeNaissance">
@@ -138,15 +136,53 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
           </dt>
           <dd>{employeEntity.categorie}</dd>
           <dt>
-            <span id="statut">
-              <Translate contentKey="emnaBackEndApp.employe.statut">Statut</Translate>
+            <span id="poste">
+              <Translate contentKey="emnaBackEndApp.employe.poste">Poste</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.statut}</dd>
+          <dd>{employeEntity.poste}</dd>
+          <dt>
+            <span id="dateEmbauche">
+              <Translate contentKey="emnaBackEndApp.employe.dateEmbauche">Date Embauche</Translate>
+            </span>
+          </dt>
+          <dd>
+            <TextFormat value={employeEntity.dateEmbauche} type="date" format={APP_LOCAL_DATE_FORMAT} />
+          </dd>
+          <dt>
+            <span id="dateSortie">
+              <Translate contentKey="emnaBackEndApp.employe.dateSortie">Date Sortie</Translate>
+            </span>
+          </dt>
+          <dd>
+            <TextFormat value={employeEntity.dateSortie} type="date" format={APP_LOCAL_DATE_FORMAT} />
+          </dd>
+          <dt>
+            <span id="typeContrat">
+              <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
+            </span>
+          </dt>
+          <dd>{employeEntity.typeContrat}</dd>
+          <dt>
+            <span id="situationFamiliale">
+              <Translate contentKey="emnaBackEndApp.employe.situationFamiliale">Situation Familiale</Translate>
+            </span>
+          </dt>
+          <dd>{employeEntity.situationFamiliale}</dd>
+          <dt>
+            <span id="enfantsACharge">
+              <Translate contentKey="emnaBackEndApp.employe.enfantsACharge">Enfants A Charge</Translate>
+            </span>
+          </dt>
+          <dd>{employeEntity.enfantsACharge}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.employe.adresse">Adresse</Translate>
           </dt>
           <dd>{employeEntity.adresseId ? employeEntity.adresseId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
+          </dt>
+          <dd>{employeEntity.statutEmployeId ? employeEntity.statutEmployeId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.employe.societe">Societe</Translate>
           </dt>
@@ -171,7 +207,7 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
 };
 
 const mapStateToProps = ({ employe }: IRootState) => ({
-  employeEntity: employe.entity,
+  employeEntity: employe.entity
 });
 
 const mapDispatchToProps = { getEntity };

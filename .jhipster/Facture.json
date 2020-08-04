@@ -1,111 +1,110 @@
 {
-  "name": "Facture",
-  "fields": [
-    {
-      "fieldName": "numfact",
-      "fieldType": "Long"
-    },
-    {
-      "fieldName": "nom",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "message",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "date",
-      "fieldType": "LocalDate"
-    },
-    {
-      "fieldName": "dateEcheance",
-      "fieldType": "LocalDate"
-    },
-    {
-      "fieldName": "prixHT",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "prixTTC",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "tva",
-      "fieldType": "Float"
-    },
-    {
-      "fieldName": "fichier",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "cheminFichier",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "type",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "moyenDePaiement",
-      "fieldType": "String"
-    }
-  ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "adresse",
-      "otherEntityRelationshipName": "facture",
-      "relationshipName": "adresse",
-      "otherEntityField": "id",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "etatFacture",
-      "otherEntityRelationshipName": "facture",
-      "relationshipName": "etatFacture",
-      "otherEntityField": "id",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "societe",
-      "otherEntityRelationshipName": "listeFactures",
-      "relationshipName": "societe",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "operation",
-      "otherEntityRelationshipName": "listeFactures",
-      "relationshipName": "operation",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "clientFournisseur",
-      "otherEntityRelationshipName": "listeFactures",
-      "relationshipName": "clientFournisseur",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "produit",
-      "otherEntityRelationshipName": "listeFactures",
-      "relationshipName": "listeProduits",
-      "otherEntityField": "id",
-      "ownerSide": false
-    }
-  ],
-  "changelogDate": "20200722090504",
-  "entityTableName": "facture",
-  "dto": "mapstruct",
-  "pagination": "no",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
-  "fluentMethods": true,
-  "readOnly": false,
-  "embedded": false,
-  "clientRootFolder": "",
-  "applications": "*"
+    "name": "Facture",
+    "fields": [
+        {
+            "fieldName": "numfact",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "nom",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "message",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "dateEcheance",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "prixHT",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "prixTTC",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "tva",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "fichier",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cheminFichier",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "moyenDePaiement",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "adresse",
+            "otherEntityRelationshipName": "facture",
+            "relationshipName": "adresse",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "etatFacture",
+            "otherEntityRelationshipName": "facture",
+            "relationshipName": "etatFacture",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "societe",
+            "otherEntityRelationshipName": "listeFactures",
+            "relationshipName": "societe",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "operation",
+            "otherEntityRelationshipName": "listeFactures",
+            "relationshipName": "operation",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "clientFournisseur",
+            "otherEntityRelationshipName": "listeFactures",
+            "relationshipName": "clientFournisseur",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "produit",
+            "otherEntityRelationshipName": "listeFactures",
+            "relationshipName": "listeProduits",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20200722090504",
+    "entityTableName": "facture",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
 }

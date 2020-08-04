@@ -16,9 +16,9 @@ public interface ReleveMapper extends EntityMapper<ReleveDTO, Releve> {
     @Mapping(source = "societe.id", target = "societeId")
     ReleveDTO toDto(Releve releve);
 
-    @Mapping(source = "etatReleveId", target = "etatReleve")
     @Mapping(target = "listeOperations", ignore = true)
     @Mapping(target = "removeListeOperations", ignore = true)
+    @Mapping(source = "etatReleveId", target = "etatReleve")
     @Mapping(source = "societeId", target = "societe")
     Releve toEntity(ReleveDTO releveDTO);
 

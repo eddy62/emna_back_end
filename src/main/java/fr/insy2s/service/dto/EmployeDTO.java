@@ -3,6 +3,7 @@ package fr.insy2s.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Employe} entity.
@@ -14,6 +15,7 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String matricule;
 
+    @NotNull
     private String civilite;
 
     private String nomNaissance;
@@ -21,6 +23,7 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String nomUsage;
 
+    @NotNull
     private String prenom;
 
     @NotNull
@@ -37,26 +40,51 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String numeroSecuriteSociale;
 
+    @NotNull
     private String email;
 
     private String telephoneFix;
 
+    @NotNull
     private String telephonePortable;
 
+    @NotNull
     private String fax;
 
+    @NotNull
     private Double salaireHoraire;
 
+    @NotNull
     private Double salaireBrutMensuelle;
 
+    @NotNull
     private Double heuresMensuelle;
 
+    @NotNull
     private String categorie;
 
-    private String statut;
+    @NotNull
+    private String poste;
+
+    @NotNull
+    private LocalDate dateEmbauche;
+
+    @NotNull
+    private LocalDate dateSortie;
+
+    @NotNull
+    private String typeContrat;
+
+    @NotNull
+    private String situationFamiliale;
+
+    @NotNull
+    private Integer enfantsACharge;
 
 
     private Long adresseId;
+
+    private Long statutEmployeId;
 
     private Long societeId;
     
@@ -212,12 +240,52 @@ public class EmployeDTO implements Serializable {
         this.categorie = categorie;
     }
 
-    public String getStatut() {
-        return statut;
+    public String getPoste() {
+        return poste;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setPoste(String poste) {
+        this.poste = poste;
+    }
+
+    public LocalDate getDateEmbauche() {
+        return dateEmbauche;
+    }
+
+    public void setDateEmbauche(LocalDate dateEmbauche) {
+        this.dateEmbauche = dateEmbauche;
+    }
+
+    public LocalDate getDateSortie() {
+        return dateSortie;
+    }
+
+    public void setDateSortie(LocalDate dateSortie) {
+        this.dateSortie = dateSortie;
+    }
+
+    public String getTypeContrat() {
+        return typeContrat;
+    }
+
+    public void setTypeContrat(String typeContrat) {
+        this.typeContrat = typeContrat;
+    }
+
+    public String getSituationFamiliale() {
+        return situationFamiliale;
+    }
+
+    public void setSituationFamiliale(String situationFamiliale) {
+        this.situationFamiliale = situationFamiliale;
+    }
+
+    public Integer getEnfantsACharge() {
+        return enfantsACharge;
+    }
+
+    public void setEnfantsACharge(Integer enfantsACharge) {
+        this.enfantsACharge = enfantsACharge;
     }
 
     public Long getAdresseId() {
@@ -226,6 +294,14 @@ public class EmployeDTO implements Serializable {
 
     public void setAdresseId(Long adresseId) {
         this.adresseId = adresseId;
+    }
+
+    public Long getStatutEmployeId() {
+        return statutEmployeId;
+    }
+
+    public void setStatutEmployeId(Long statutEmployeId) {
+        this.statutEmployeId = statutEmployeId;
     }
 
     public Long getSocieteId() {
@@ -241,19 +317,22 @@ public class EmployeDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EmployeDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((EmployeDTO) o).id);
+        EmployeDTO employeDTO = (EmployeDTO) o;
+        if (employeDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), employeDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "EmployeDTO{" +
@@ -276,8 +355,14 @@ public class EmployeDTO implements Serializable {
             ", salaireBrutMensuelle=" + getSalaireBrutMensuelle() +
             ", heuresMensuelle=" + getHeuresMensuelle() +
             ", categorie='" + getCategorie() + "'" +
-            ", statut='" + getStatut() + "'" +
+            ", poste='" + getPoste() + "'" +
+            ", dateEmbauche='" + getDateEmbauche() + "'" +
+            ", dateSortie='" + getDateSortie() + "'" +
+            ", typeContrat='" + getTypeContrat() + "'" +
+            ", situationFamiliale='" + getSituationFamiliale() + "'" +
+            ", enfantsACharge=" + getEnfantsACharge() +
             ", adresseId=" + getAdresseId() +
+            ", statutEmployeId=" + getStatutEmployeId() +
             ", societeId=" + getSocieteId() +
             "}";
     }

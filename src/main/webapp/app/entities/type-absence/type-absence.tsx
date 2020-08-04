@@ -37,6 +37,9 @@ export const TypeAbsence = (props: ITypeAbsenceProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.typeAbsence.codeRef">Code Ref</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.typeAbsence.intitule">Intitule</Translate>
                 </th>
                 <th />
@@ -50,6 +53,7 @@ export const TypeAbsence = (props: ITypeAbsenceProps) => {
                       {typeAbsence.id}
                     </Button>
                   </td>
+                  <td>{typeAbsence.codeRef}</td>
                   <td>{typeAbsence.intitule}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -91,11 +95,11 @@ export const TypeAbsence = (props: ITypeAbsenceProps) => {
 
 const mapStateToProps = ({ typeAbsence }: IRootState) => ({
   typeAbsenceList: typeAbsence.entities,
-  loading: typeAbsence.loading,
+  loading: typeAbsence.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

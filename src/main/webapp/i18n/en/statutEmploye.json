@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "statutEmploye": {
+      "home": {
+        "title": "Statut Employes",
+        "createLabel": "Create a new Statut Employe",
+        "createOrEditLabel": "Create or edit a Statut Employe",
+        "notFound": "No Statut Employes found"
+      },
+      "created": "A new Statut Employe is created with identifier {{ param }}",
+      "updated": "A Statut Employe is updated with identifier {{ param }}",
+      "deleted": "A Statut Employe is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Statut Employe {{ id }}?"
+      },
+      "detail": {
+        "title": "Statut Employe"
+      },
+      "codeRef": "Code Ref",
+      "libelle": "Libelle"
+    }
+  }
+}

@@ -8,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "devis")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Devis implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,24 +55,24 @@ public class Devis implements Serializable {
     @Column(name = "chemin_fichier")
     private String cheminFichier;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("devis")
     private EtatDevis etatDevis;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeDevis", allowSetters = true)
+    @JsonIgnoreProperties("listeDevis")
     private Societe societe;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeDevis", allowSetters = true)
+    @JsonIgnoreProperties("listeDevis")
     private ClientFournisseur clientFournisseur;
 
     @ManyToMany(mappedBy = "listeDevis")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
     private Set<Produit> listeProduits = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -260,7 +261,7 @@ public class Devis implements Serializable {
     public void setListeProduits(Set<Produit> produits) {
         this.listeProduits = produits;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -278,7 +279,6 @@ public class Devis implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Devis{" +

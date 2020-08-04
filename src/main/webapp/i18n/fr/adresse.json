@@ -20,7 +20,8 @@
       "boitePostale": "Boite Postale",
       "nomRue": "Nom Rue",
       "codePostal": "Code Postal",
-      "ville": "Ville"
+      "ville": "Ville",
+      "pays": "Pays"
     }
   }
 }

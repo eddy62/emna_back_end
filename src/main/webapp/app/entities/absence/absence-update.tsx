@@ -50,7 +50,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...absenceEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -94,7 +94,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                   className="form-control"
                   name="debutAbsence"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -108,7 +108,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                   className="form-control"
                   name="finAbsence"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -122,8 +122,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                 <Label for="absence-typeAbsence">
                   <Translate contentKey="emnaBackEndApp.absence.typeAbsence">Type Absence</Translate>
                 </Label>
-                <AvInput id="absence-typeAbsence" type="select" className="form-control" name="typeAbsenceId">
-                  <option value="" key="0" />
+                <AvInput id="absence-typeAbsence" type="select" className="form-control" name="typeAbsenceId" required>
                   {typeAbsences
                     ? typeAbsences.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -132,6 +131,9 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="absence-employe">
@@ -175,7 +177,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   absenceEntity: storeState.absence.entity,
   loading: storeState.absence.loading,
   updating: storeState.absence.updating,
-  updateSuccess: storeState.absence.updateSuccess,
+  updateSuccess: storeState.absence.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -184,7 +186,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

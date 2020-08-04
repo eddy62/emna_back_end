@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "contrat")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Contrat implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,24 +45,28 @@ public class Contrat implements Serializable {
     private Boolean archive;
 
     @OneToMany(mappedBy = "contrat")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Avenant> listeAvenants = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeContrats", allowSetters = true)
+    @JsonIgnoreProperties("listeContrats")
     private Employe employe;
 
+    @ManyToOne
+    @JsonIgnoreProperties("listeContrats")
+    private Societe societe;
+
     @ManyToMany(mappedBy = "listeContrats")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
     private Set<Article> listeArticles = new HashSet<>();
 
     @ManyToMany(mappedBy = "listeContrats")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
     private Set<Clause> listeClauses = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -160,6 +165,19 @@ public class Contrat implements Serializable {
         this.employe = employe;
     }
 
+    public Societe getSociete() {
+        return societe;
+    }
+
+    public Contrat societe(Societe societe) {
+        this.societe = societe;
+        return this;
+    }
+
+    public void setSociete(Societe societe) {
+        this.societe = societe;
+    }
+
     public Set<Article> getListeArticles() {
         return listeArticles;
     }
@@ -209,7 +227,7 @@ public class Contrat implements Serializable {
     public void setListeClauses(Set<Clause> clauses) {
         this.listeClauses = clauses;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -227,7 +245,6 @@ public class Contrat implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Contrat{" +

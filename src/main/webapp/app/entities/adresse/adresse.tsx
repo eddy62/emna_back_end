@@ -51,6 +51,9 @@ export const Adresse = (props: IAdresseProps) => {
                 <th>
                   <Translate contentKey="emnaBackEndApp.adresse.ville">Ville</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.adresse.pays">Pays</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -67,6 +70,7 @@ export const Adresse = (props: IAdresseProps) => {
                   <td>{adresse.nomRue}</td>
                   <td>{adresse.codePostal}</td>
                   <td>{adresse.ville}</td>
+                  <td>{adresse.pays}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${adresse.id}`} color="info" size="sm">
@@ -107,11 +111,11 @@ export const Adresse = (props: IAdresseProps) => {
 
 const mapStateToProps = ({ adresse }: IRootState) => ({
   adresseList: adresse.entities,
-  loading: adresse.loading,
+  loading: adresse.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

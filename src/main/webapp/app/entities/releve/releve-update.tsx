@@ -50,7 +50,7 @@ export const ReleveUpdate = (props: IReleveUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...releveEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -171,7 +171,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   releveEntity: storeState.releve.entity,
   loading: storeState.releve.loading,
   updating: storeState.releve.updating,
-  updateSuccess: storeState.releve.updateSuccess,
+  updateSuccess: storeState.releve.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -180,7 +180,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

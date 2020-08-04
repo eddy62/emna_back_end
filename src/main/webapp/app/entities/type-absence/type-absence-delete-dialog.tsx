@@ -59,7 +59,7 @@ export const TypeAbsenceDeleteDialog = (props: ITypeAbsenceDeleteDialogProps) =>
 
 const mapStateToProps = ({ typeAbsence }: IRootState) => ({
   typeAbsenceEntity: typeAbsence.entity,
-  updateSuccess: typeAbsence.updateSuccess,
+  updateSuccess: typeAbsence.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

@@ -68,8 +68,12 @@ export const Releve = (props: IReleveProps) => {
                       {releve.id}
                     </Button>
                   </td>
-                  <td>{releve.dateDebut ? <TextFormat type="date" value={releve.dateDebut} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
-                  <td>{releve.dateFin ? <TextFormat type="date" value={releve.dateFin} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
+                  <td>
+                    <TextFormat type="date" value={releve.dateDebut} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    <TextFormat type="date" value={releve.dateFin} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
                   <td>{releve.solde}</td>
                   <td>{releve.banque}</td>
                   <td>{releve.cheminFichier}</td>
@@ -115,11 +119,11 @@ export const Releve = (props: IReleveProps) => {
 
 const mapStateToProps = ({ releve }: IRootState) => ({
   releveList: releve.entities,
-  loading: releve.loading,
+  loading: releve.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

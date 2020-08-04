@@ -33,6 +33,7 @@
         "comptable": "Comptable",
         "societe": "Societe",
         "infoEntreprise": "Info Entreprise",
+        "statutEmploye": "Statut Employe",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

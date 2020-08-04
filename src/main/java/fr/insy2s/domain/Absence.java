@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 
 /**
@@ -15,7 +16,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "absence")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Absence implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,15 +37,16 @@ public class Absence implements Serializable {
     @Column(name = "justificatif")
     private String justificatif;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("absences")
     private TypeAbsence typeAbsence;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeAbsences", allowSetters = true)
+    @JsonIgnoreProperties("listeAbsences")
     private Employe employe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -117,7 +119,7 @@ public class Absence implements Serializable {
     public void setEmploye(Employe employe) {
         this.employe = employe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -135,7 +137,6 @@ public class Absence implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Absence{" +

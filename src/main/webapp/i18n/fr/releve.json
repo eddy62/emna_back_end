@@ -21,8 +21,8 @@
       "solde": "Solde",
       "banque": "Banque",
       "cheminFichier": "Chemin Fichier",
-      "etatReleve": "Etat Releve",
       "listeOperations": "Liste Operations",
+      "etatReleve": "Etat Releve",
       "societe": "Societe"
     }
   }

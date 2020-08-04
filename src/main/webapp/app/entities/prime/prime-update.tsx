@@ -50,7 +50,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...primeEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -93,7 +93,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                   type="text"
                   name="type"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -108,7 +108,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                   name="montant"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') }
                   }}
                 />
               </AvGroup>
@@ -116,8 +116,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                 <Label for="prime-typePrime">
                   <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
                 </Label>
-                <AvInput id="prime-typePrime" type="select" className="form-control" name="typePrimeId">
-                  <option value="" key="0" />
+                <AvInput id="prime-typePrime" type="select" className="form-control" name="typePrimeId" required>
                   {typePrimes
                     ? typePrimes.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -126,6 +125,9 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="prime-employe">
@@ -169,7 +171,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   primeEntity: storeState.prime.entity,
   loading: storeState.prime.loading,
   updating: storeState.prime.updating,
-  updateSuccess: storeState.prime.updateSuccess,
+  updateSuccess: storeState.prime.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -178,7 +180,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

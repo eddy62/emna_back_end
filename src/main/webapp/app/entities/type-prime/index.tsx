@@ -11,12 +11,12 @@ import TypePrimeDeleteDialog from './type-prime-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
+      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={TypePrimeDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={TypePrimeUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={TypePrimeUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={TypePrimeDetail} />
       <ErrorBoundaryRoute path={match.url} component={TypePrime} />
     </Switch>
-    <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={TypePrimeDeleteDialog} />
   </>
 );
 

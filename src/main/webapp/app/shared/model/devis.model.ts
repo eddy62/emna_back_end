@@ -6,8 +6,8 @@ export interface IDevis {
   numDevis?: number;
   nom?: string;
   message?: string;
-  dateCreation?: string;
-  dateLimite?: string;
+  dateCreation?: Moment;
+  dateLimite?: Moment;
   prixHT?: number;
   prixTTC?: number;
   tva?: number;

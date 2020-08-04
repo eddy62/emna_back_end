@@ -92,32 +92,44 @@ entity Adresse{
     nomRue String required
     codePostal String required
     ville String required
+	pays String required
 }
 
 entity Employe{
     matricule String required
-    civilite String
+    civilite String required
     nomNaissance String
     nomUsage String required
-    prenom String
+    prenom String required
     dateNaissance LocalDate required
     villeNaissance String required
     departementNaissance String
     paysNaisance String required
     numeroSecuriteSociale String required
-    email String
+    email String required
     telephoneFix String
-    telephonePortable String
-    fax String
-    salaireHoraire Double
-    salaireBrutMensuelle Double
-    heuresMensuelle Double
-    categorie String
-    statut String
+    telephonePortable String required
+    fax String required
+    salaireHoraire Double required
+    salaireBrutMensuelle Double required
+    heuresMensuelle Double required
+    categorie String required
+    poste String required
+    dateEmbauche LocalDate required
+    dateSortie LocalDate required
+    typeContrat String required
+    situationFamiliale String required
+    enfantsACharge Integer required
+}
+
+entity StatutEmploye{
+	codeRef String required unique
+	libelle String required unique
 }
 
 entity TypeAbsence{
-    intitule String required
+    codeRef String required unique
+    intitule String required unique
 }
 
 entity Absence{
@@ -127,7 +139,8 @@ entity Absence{
 }
 
 entity TypePrime{
-    intitule String required
+    codeRef String required unique
+    intitule String required unique
 }
 
 entity Prime{
@@ -209,6 +222,7 @@ relationship OneToMany{
     Societe{listeProduits} to Produit{societe}
     
     Employe{listeContrats} to Contrat{employe}
+    Societe{listeContrats} to Contrat{societe}
     Societe{listeClientsFournisseurs} to ClientFournisseur{societe}
     
     Societe{listeClauses} to Clause{societe}  
@@ -226,6 +240,16 @@ relationship OneToMany{
     Employe{listeAutresVariables} to AutresVariable{employe}
     Article{listeClauses} to Clause{article}
 }
+
+relationship ManyToOne{
+	Absence{typeAbsence required} to TypeAbsence
+    Prime{typePrime required} to TypePrime
+    Employe{statutEmploye required} to StatutEmploye
+    Releve{etatReleve} to EtatReleve
+    Facture{etatFacture} to EtatFacture
+    Devis{etatDevis} to EtatDevis
+}
+
 relationship ManyToMany{
     Article{listeAvenants} to Avenant{listeArticles}
     Article{listeContrats} to Contrat{listeArticles}
@@ -238,12 +262,7 @@ relationship OneToOne{
     Facture{adresse} to Adresse
     Societe{adresse} to Adresse
     Comptable{adresse required} to Adresse
-    Facture{etatFacture} to EtatFacture
-    Devis{etatDevis} to EtatDevis
-    Absence{typeAbsence} to TypeAbsence
-    Prime{typePrime} to TypePrime
-    Employe{adresse} to Adresse
-    Releve{etatReleve} to EtatReleve
+    Employe{adresse required} to Adresse
     ClientFournisseur{adresse} to Adresse
     Societe{infoEntreprise}  to InfoEntreprise
     Comptable{infoEntreprise}  to InfoEntreprise

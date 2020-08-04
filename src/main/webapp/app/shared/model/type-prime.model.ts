@@ -1,5 +1,6 @@
 export interface ITypePrime {
   id?: number;
+  codeRef?: string;
   intitule?: string;
 }
 

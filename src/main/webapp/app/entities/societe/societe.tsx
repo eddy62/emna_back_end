@@ -113,11 +113,11 @@ export const Societe = (props: ISocieteProps) => {
 
 const mapStateToProps = ({ societe }: IRootState) => ({
   societeList: societe.entities,
-  loading: societe.loading,
+  loading: societe.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

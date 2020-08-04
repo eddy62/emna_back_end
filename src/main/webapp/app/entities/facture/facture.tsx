@@ -101,9 +101,11 @@ export const Facture = (props: IFactureProps) => {
                   <td>{facture.numfact}</td>
                   <td>{facture.nom}</td>
                   <td>{facture.message}</td>
-                  <td>{facture.date ? <TextFormat type="date" value={facture.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
-                    {facture.dateEcheance ? <TextFormat type="date" value={facture.dateEcheance} format={APP_LOCAL_DATE_FORMAT} /> : null}
+                    <TextFormat type="date" value={facture.date} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    <TextFormat type="date" value={facture.dateEcheance} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{facture.prixHT}</td>
                   <td>{facture.prixTTC}</td>
@@ -163,11 +165,11 @@ export const Facture = (props: IFactureProps) => {
 
 const mapStateToProps = ({ facture }: IRootState) => ({
   factureList: facture.entities,
-  loading: facture.loading,
+  loading: facture.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
