@@ -1,22 +1,31 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.service.EmployeService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.EmployeDTO;
-
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import fr.insy2s.service.EmployeService;
+import fr.insy2s.service.dto.EmployeDTO;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Employe}.
@@ -25,12 +34,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class EmployeResource {
 
-    private final Logger log = LoggerFactory.getLogger(EmployeResource.class);
+    private final Logger         log         = LoggerFactory.getLogger(EmployeResource.class);
 
-    private static final String ENTITY_NAME = "employe";
+    private static final String  ENTITY_NAME = "employe";
 
     @Value("${jhipster.clientApp.name}")
-    private String applicationName;
+    private String               applicationName;
 
     private final EmployeService employeService;
 
@@ -52,18 +61,16 @@ public class EmployeResource {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
         EmployeDTO result = employeService.save(employeDTO);
-        return ResponseEntity.created(new URI("/api/employes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity.created(new URI("/api/employes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                        .body(result);
     }
 
     /**
      * {@code PUT  /employes} : Updates an existing employe.
      *
      * @param employeDTO the employeDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated employeDTO,
-     * or with status {@code 400 (Bad Request)} if the employeDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the employeDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated employeDTO, or with status {@code 400 (Bad Request)} if the employeDTO is not valid, or with status
+     *         {@code 500 (Internal Server Error)} if the employeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/employes")
@@ -73,9 +80,7 @@ public class EmployeResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         EmployeDTO result = employeService.save(employeDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, employeDTO.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, employeDTO.getId().toString())).body(result);
     }
 
     /**
@@ -113,5 +118,17 @@ public class EmployeResource {
         log.debug("REST request to delete Employe : {}", id);
         employeService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * {@code GET  /wrapperemployes} : get all the wrapperEmployes.
+     * 
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wrapperEmployes in body.
+     */
+    @GetMapping("/wrapperemployes")
+    public List<WrapperEmploye> getAllWrapperEmployes() {
+        log.debug("REST request to get all WrapperEmployes");
+        List<WrapperEmploye> list = employeService.findAllWrapperEmploye();
+        return list ;
     }
 }
