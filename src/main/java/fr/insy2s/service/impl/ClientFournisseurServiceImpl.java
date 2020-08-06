@@ -113,13 +113,14 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             client.setTelephone(clientFournisseur.getTelephone());
             if (clientFournisseur.getIdSociete() != null) {
                 Optional<Societe> societe = societeRepository.findById(clientFournisseur.getIdSociete());
-                System.out.println(societe);
                 client.setSociete(societe.get());
             }
 
-            Adresse adresse = wrapperClientFournisseurToAdresse(clientFournisseur);
-            if (adresse.getId()!= null) {
-                client.setAdresse(adresse);
+            if(clientFournisseur.getIdAdresse() == null) {
+                Adresse adresse = wrapperClientFournisseurToAdresse(clientFournisseur , true);
+                if (adresse.getId()!= null) {
+                    client.setAdresse(adresse);
+                }
             }
 
 
@@ -136,26 +137,33 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
      * @param client wrapperClientFournisseur
      * @return adresse
      */
-    private Adresse wrapperClientFournisseurToAdresse(WrapperClientFournisseur client){
-        Adresse adresse = new Adresse();
+    private Adresse wrapperClientFournisseurToAdresse(WrapperClientFournisseur client  , Boolean creatOrUpdate){
         try {
-            if (client.getIdAdresse() == null) {
-                adresse.setNumeroRue(client.getNumeroRue());
-                if (client.getNomRue() != null) {
-                    adresse.setNomRue(client.getNomRue());
-                }
-                if (client.getNomRue() != null) {
-                    adresse.setCodePostal(client.getCodePostal());
-                }
-                if (client.getNomRue() != null) {
-                    adresse.setVille(client.getVille());
-                }
-            }
+        if(creatOrUpdate) {
+            Adresse adresse = new Adresse();
+            adresse.setNumeroRue(client.getNumeroRue());
+            adresse.setNomRue(client.getNomRue());
+            adresse.setCodePostal(client.getCodePostal());
+            adresse.setVille(client.getVille());
+            adresse.setPays(client.getPays());
+            return adresseRepository.save(adresse);
+
+        }
+        if(!creatOrUpdate) {
+            Optional<Adresse> adresseUpdated =adresseRepository.findById(client.getIdAdresse());
+            adresseUpdated.get().setNumeroRue(client.getNumeroRue());
+            adresseUpdated.get().setNomRue(client.getNomRue());
+            adresseUpdated.get().setCodePostal(client.getCodePostal());
+            adresseUpdated.get().setVille(client.getVille());
+            adresseUpdated.get().setPays(client.getPays());
+            return adresseRepository.save(adresseUpdated.get());
+        }
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return adresseRepository.save(adresse);
+        return null;
     }
 
     /**
@@ -186,6 +194,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             wrapperCLient.setEmail(clientSaved.getEmail());
             wrapperCLient.setTelephone(clientSaved.getTelephone());
             wrapperCLient.setSiren(clientSaved.getSiren());
+            wrapperCLient.setIdSociete(clientSaved.getSocieteId());
 
             Optional<Adresse> adresse = adresseRepository.findById(client.getAdresse().getId());
             if(adresse !=null) {
@@ -196,6 +205,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
                 wrapperCLient.setBoitePostale(adresseDTO.getBoitePostale());
                 wrapperCLient.setCodePostal(adresseDTO.getCodePostal());
                 wrapperCLient.setVille(adresseDTO.getVille());
+                wrapperCLient.setPays(adresseDTO.getPays());
             }
 
             return wrapperCLient;
@@ -217,4 +227,35 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         List<ClientFournisseur> listeclient = clientFournisseurRepository.findBySocieteId(id);
         return listeclient.stream().map(clientFournisseur -> toWrapperCLientFournisseur(clientFournisseur)).collect(Collectors.toList());
     }
-}
+
+    @Override
+    public WrapperClientFournisseur updateWrapperClientFournisseur(WrapperClientFournisseur wrapperClientFournisseur) {
+
+        Optional<ClientFournisseur> result = clientFournisseurRepository.findById(wrapperClientFournisseur.getId());
+        ClientFournisseur client = result.get();
+
+        try {
+            client.setEmail(wrapperClientFournisseur.getEmail());
+            client.setNom(wrapperClientFournisseur.getNom());
+            client.setSiren(wrapperClientFournisseur.getSiren());
+            client.setTelephone(wrapperClientFournisseur.getTelephone());
+            if (wrapperClientFournisseur.getIdSociete() != null) {
+                Optional<Societe> societe = societeRepository.findById(wrapperClientFournisseur.getIdSociete());
+                client.setSociete(societe.get());
+            }
+            if(wrapperClientFournisseur.getIdAdresse() !=null) {
+                Adresse adresse = wrapperClientFournisseurToAdresse(wrapperClientFournisseur , false);
+                if (adresse.getId()!= null) {
+                    client.setAdresse(adresse);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ClientFournisseur clientUpdated = clientFournisseurRepository.save(client);
+        return toWrapperCLientFournisseur(clientUpdated);
+      }
+    }
+

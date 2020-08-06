@@ -21,12 +21,13 @@ public class WrapperClientFournisseur {
     private String nomRue;
     private String codePostal;
     private String ville;
+    private String pays;
 
     public WrapperClientFournisseur() {
     }
 
     public WrapperClientFournisseur(Long idSociete, Long id, String nom, Integer siren, String telephone, String email, Long idAdresse, String numeroRue,
-                                    String boitePostale, String nomRue, String codePostal, String ville) {
+                                    String boitePostale, String nomRue, String codePostal, String ville , String pays) {
         this.idSociete = idSociete;
         this.id = id;
         this.nom = nom;
@@ -39,6 +40,7 @@ public class WrapperClientFournisseur {
         this.nomRue = nomRue;
         this.codePostal = codePostal;
         this.ville = ville;
+        this.pays = pays;
     }
 
     public Long getIdSociete() {
@@ -137,6 +139,14 @@ public class WrapperClientFournisseur {
         return ville;
     }
 
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
     @Override
     public String toString() {
         return "WrapperClientFournisseur{" +
@@ -152,6 +162,7 @@ public class WrapperClientFournisseur {
             ", nomRue='" + nomRue + '\'' +
             ", codePostal='" + codePostal + '\'' +
             ", ville='" + ville + '\'' +
+            ", pays='" + pays + '\'' +
             '}';
     }
 }
