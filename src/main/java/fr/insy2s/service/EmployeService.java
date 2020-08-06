@@ -1,9 +1,10 @@
 package fr.insy2s.service;
 
-import fr.insy2s.service.dto.EmployeDTO;
-
 import java.util.List;
 import java.util.Optional;
+
+import fr.insy2s.service.dto.EmployeDTO;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
 
 /**
  * Service Interface for managing {@link fr.insy2s.domain.Employe}.
@@ -25,7 +26,6 @@ public interface EmployeService {
      */
     List<EmployeDTO> findAll();
 
-
     /**
      * Get the "id" employe.
      *
@@ -40,4 +40,19 @@ public interface EmployeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the WrapperEmploye
+     * 
+     * @return the list of wrapperEmploye
+     */
+    List<WrapperEmploye> findAllWrapperEmploye();
+
+    /**
+     * Get the "id" wripperEmploye
+     * 
+     * @param id
+     * @return the wrapperEmploye
+     */
+    WrapperEmploye findById(final Long id);
 }
