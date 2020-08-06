@@ -49,10 +49,17 @@ public interface EmployeService {
     List<WrapperEmploye> findAllWrapperEmploye();
 
     /**
+     * Get all the WrapperEmploye by society
+     * 
+     * @return
+     */
+    List<WrapperEmploye> findAllWrapperEmployeBySociete(final Long societeId);
+
+    /**
      * Get the "id" wripperEmploye
      * 
      * @param id
      * @return the wrapperEmploye
      */
-    WrapperEmploye findById(final Long id);
+    Optional<WrapperEmploye> findById(final Long id);
 }

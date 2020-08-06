@@ -129,6 +129,32 @@ public class EmployeResource {
     public List<WrapperEmploye> getAllWrapperEmployes() {
         log.debug("REST request to get all WrapperEmployes");
         List<WrapperEmploye> list = employeService.findAllWrapperEmploye();
-        return list ;
+        return list;
+    }
+
+    /**
+     * {@code GET /wrapperemployes/society/:id} : get all the wrapperEmployes by society.
+     * 
+     * @param id of the society
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of society's wrapperEmployes in body.
+     */
+    @GetMapping("/wrapperemployes/society/{id}")
+    public List<WrapperEmploye> getAllWrapperEmployesBySociety(@PathVariable Long id) {
+        log.debug("REST request to get all WrapperEmployes by society : {}", id);
+        List<WrapperEmploye> list = employeService.findAllWrapperEmployeBySociete(id);
+        return list;
+    }
+
+    /**
+     * {@code GET  /wrapperemployes/:id} : get the "id" wrapperemploye.
+     * 
+     * @param id the id of the wrapperemploye to retrieve
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperemploye, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/wrapperemployes/{id}")
+    public ResponseEntity<WrapperEmploye> getWrapperEmploye(@PathVariable Long id) {
+        log.debug("REST request to get WrapperEmploye : {}", id);
+        Optional<WrapperEmploye> wrapperEmploye = employeService.findById(id);
+        return ResponseUtil.wrapOrNotFound(wrapperEmploye);
     }
 }

@@ -90,7 +90,21 @@ public class EmployeServiceImpl implements EmployeService {
         final List<WrapperEmploye> listWrapperEmployes = new ArrayList<>();
         final List<EmployeDTO> listEmployeDTOs = findAll();
         for (EmployeDTO employeDTO : listEmployeDTOs) {
-            WrapperEmploye wrapperEmploye = findById(employeDTO.getId());
+            WrapperEmploye wrapperEmploye = findById(employeDTO.getId()).get();
+            if (wrapperEmploye != null) {
+                listWrapperEmployes.add(wrapperEmploye);
+            }
+        }
+
+        return listWrapperEmployes;
+    }
+    
+    @Override
+    public List<WrapperEmploye> findAllWrapperEmployeBySociete(final Long societeId) {
+        final List<WrapperEmploye> listWrapperEmployes = new ArrayList<>();
+        final List<EmployeDTO> listEmployeDTOs = employeMapper.toDto(employeRepository.findBySocieteId(societeId));
+        for (EmployeDTO employeDTO : listEmployeDTOs) {
+            WrapperEmploye wrapperEmploye = findById(employeDTO.getId()).get();
             if (wrapperEmploye != null) {
                 listWrapperEmployes.add(wrapperEmploye);
             }
@@ -100,13 +114,14 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
-    public WrapperEmploye findById(final Long id) {
+    public Optional<WrapperEmploye> findById(final Long id) {
         final EmployeDTO employeDTO = findOne(id).get();
         final AdresseDTO adresseDTO = adresseService.findOne(employeDTO.getAdresseId()).get();
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
         final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
-        final WrapperEmploye wrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
-        return wrapperEmploye;
+        final Optional<WrapperEmploye> wrapperEmploye = Optional.of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
+        return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
+       // client.isPresent() ? Optional.of(toWrapperCLientFournisseur(client.get())) : Optional.empty();
     }
 }
