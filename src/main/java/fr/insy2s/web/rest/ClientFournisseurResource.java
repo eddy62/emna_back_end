@@ -218,7 +218,18 @@ public class ClientFournisseurResource {
         if (clientFournisseur.getPays() == null || "".equals(clientFournisseur.getPays())) {
             throw new BadRequestAlertException("Le pays de client fournisseur est vide", ENTITY_NAME, "Pays null");
         }
-
-
         }
+
+    /**
+     * {@code GET  /client-fournisseurs/nom/:nom} : get the "nom" clientFournisseur.
+     *
+     * @param nom the id of the clientFournisseurDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clientFournisseurDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/client-fournisseurs/nom/{nom}")
+    public ResponseEntity<ClientFournisseurDTO> getClientFournisseurByNom(@PathVariable String nom) {
+        log.debug("REST request to get ClientFournisseur : {}", nom);
+        Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findByNom(nom);
+        return ResponseUtil.wrapOrNotFound(clientFournisseurDTO);
+    }
 }
