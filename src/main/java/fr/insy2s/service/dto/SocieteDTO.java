@@ -12,7 +12,6 @@ public class SocieteDTO implements Serializable {
 
     private String civilite;
 
-
     private Long adresseId;
 
     private Long infoEntrepriseId;
