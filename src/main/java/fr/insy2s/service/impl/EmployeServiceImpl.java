@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -98,7 +100,7 @@ public class EmployeServiceImpl implements EmployeService {
 
         return listWrapperEmployes;
     }
-    
+
     @Override
     public List<WrapperEmploye> findAllWrapperEmployeBySociete(final Long societeId) {
         final List<WrapperEmploye> listWrapperEmployes = new ArrayList<>();
@@ -122,6 +124,24 @@ public class EmployeServiceImpl implements EmployeService {
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final Optional<WrapperEmploye> wrapperEmploye = Optional.of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
-       // client.isPresent() ? Optional.of(toWrapperCLientFournisseur(client.get())) : Optional.empty();
+        // client.isPresent() ? Optional.of(toWrapperCLientFournisseur(client.get())) : Optional.empty();
+    }
+
+    @Override
+    public WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public WrapperEmploye updateWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void deleteWrapperEmploye(Long id) {
+        // TODO Auto-generated method stub
+
     }
 }
