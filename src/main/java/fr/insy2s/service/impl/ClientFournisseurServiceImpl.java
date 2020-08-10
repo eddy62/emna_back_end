@@ -230,10 +230,8 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
 
     @Override
     public WrapperClientFournisseur updateWrapperClientFournisseur(WrapperClientFournisseur wrapperClientFournisseur) {
-
         Optional<ClientFournisseur> result = clientFournisseurRepository.findById(wrapperClientFournisseur.getId());
         ClientFournisseur client = result.get();
-
         try {
             client.setEmail(wrapperClientFournisseur.getEmail());
             client.setNom(wrapperClientFournisseur.getNom());
@@ -257,5 +255,19 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         ClientFournisseur clientUpdated = clientFournisseurRepository.save(client);
         return toWrapperCLientFournisseur(clientUpdated);
       }
+
+
+    /**
+     * Get one the clientFounisseur by name.
+     * @param nom the name of the entity
+     * @return the  entity.
+     */
+    @Override
+    public Optional<ClientFournisseurDTO> findByNom(String nom ) {
+        log.debug("Request to get ClientFournisseur : {}",nom);
+        return clientFournisseurRepository.findByNom(nom)
+            .map(clientFournisseurMapper::toDto);
+    }
+
     }
 
