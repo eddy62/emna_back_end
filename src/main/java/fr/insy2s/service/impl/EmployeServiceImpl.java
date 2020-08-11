@@ -1,31 +1,30 @@
 package fr.insy2s.service.impl;
 
+
+import fr.insy2s.repository.projection.IEmployeContratProjection;
+import fr.insy2s.service.EmployeService;
+import fr.insy2s.domain.Employe;
+import fr.insy2s.repository.EmployeRepository;
+import fr.insy2s.service.dto.EmployeDTO;
+import fr.insy2s.service.mapper.EmployeMapper;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import fr.insy2s.domain.Employe;
-import fr.insy2s.repository.EmployeRepository;
 import fr.insy2s.service.AdresseService;
-import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.InfoEntrepriseService;
 import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.StatutEmployeService;
 import fr.insy2s.service.dto.AdresseDTO;
-import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.InfoEntrepriseDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
-import fr.insy2s.service.mapper.EmployeMapper;
 import fr.insy2s.service.mapper.WrapperEmployeMapper;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
@@ -147,5 +146,10 @@ public class EmployeServiceImpl implements EmployeService {
     public void deleteWrapperEmploye(Long id) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
+        return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
     }
 }

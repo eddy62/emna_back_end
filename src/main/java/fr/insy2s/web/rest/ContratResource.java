@@ -63,6 +63,7 @@ public class ContratResource {
         contratDTO.setSigne(false);
         contratDTO.setArchive(false);
         contratDTO.setEmployeId(1L);
+        contratDTO.setSocieteId(1L);
         ContratDTO result = contratService.save(contratDTO);
         return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -179,8 +180,11 @@ public class ContratResource {
     @GetMapping("/contrats/employer/{id}")
     public List<ContratEmployerVM> getAllContratEmployerByIdSociete(@PathVariable Long id) {
         List<ContratEmployerVM> contratEmployerVMS = new ArrayList<>();
+        System.err.println(contratEmployerVMS);
         List<IContratEmployerProjection> iContratEmployerProjections = this.contratService.getAllContratEmployerById(id);
+        System.err.println(this.contratService.getAllContratEmployerById(id));
         for (IContratEmployerProjection iContratEmployerProjection: iContratEmployerProjections) {
+            System.err.println(contratEmployerVMS);
             contratEmployerVMS.add(new ContratEmployerVM(iContratEmployerProjection.getEmployerId(), iContratEmployerProjection.getContratTitre(), iContratEmployerProjection.getEmployerNom(), iContratEmployerProjection.getEmployerPrenom(), iContratEmployerProjection.getContratSigner(), iContratEmployerProjection.getContratArchiver()));
         }
         return contratEmployerVMS;
