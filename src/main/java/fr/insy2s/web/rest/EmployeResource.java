@@ -173,20 +173,38 @@ public class EmployeResource {
     }
 
     /**
-     * {@code POST  /employes} : Create a new employe.
+     * {@code POST  /wrapperEmploye} : Create a new wrapperEmploye.
      *
-     * @param wrapperEmploye the employeDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new employeDTO, or with status {@code 400 (Bad Request)} if the employe has already an ID.
+     * @param wrapperEmploye the wrapperEmploye to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/wrapperemployes")
     public ResponseEntity<WrapperEmploye> createWrapperEmploye(@Valid @RequestBody WrapperEmploye wrapperEmploye) throws URISyntaxException {
-        log.debug("REST request to save Employe : {}", wrapperEmploye);
+        log.debug("REST request to save WrapperEmploye : {}", wrapperEmploye);
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
         WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
-        return ResponseEntity.created(new URI("/api/employes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+        return ResponseEntity.created(new URI("/api/wrapperemployes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
                         .body(result);
+    }
+    
+    /**
+     * {@code PUT  /wrapperEmploye} : Updates an existing wrapperEmploye.
+     *
+     * @param wrapperEmploye the wrapperEmploye to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye is not valid, or with status
+     *         {@code 500 (Internal Server Error)} if the wrapperEmploye couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/wrapperemployes")
+    public ResponseEntity<WrapperEmploye> updateWrapperEmploye(@Valid @RequestBody WrapperEmploye wrapperEmploye) throws URISyntaxException {
+        log.debug("REST request to update WrapperEmploye : {}", wrapperEmploye);
+        if (wrapperEmploye.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        WrapperEmploye result = employeService.updateWrapperEmploye(wrapperEmploye);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
 }

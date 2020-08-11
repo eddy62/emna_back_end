@@ -1,88 +1,104 @@
 package fr.insy2s.utils.wrapper;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Set;
+
+import fr.insy2s.service.dto.AdresseDTO;
+import fr.insy2s.service.dto.InfoEntrepriseDTO;
+import fr.insy2s.service.dto.SocieteDTO;
+import fr.insy2s.service.dto.UserDTO;
 
 public class WrapperSociete {
 
     //Societe
-    private Long      id;
-    private String    civilite;
+    private Long        id;
+    private String      civilite;
 
-    //adresse
-    private Long      adresseId;
-    private String    numeroRue;
-    private String    nomRue;
-    private String    boitePostale;
-    private String    codePostal;
-    private String    ville;
-    private String    pays;
+    //Adresse
+    private Long        idAdresse;
+    private String      numeroRue;
+    private String      boitePostale;
+    private String      nomRue;
+    private String      codePostal;
+    private String      ville;
+    private String      pays;
 
     //InfoEntreprise
-    private Long      infoEntrepriseId;
-    private String    raisonSociale;
-    private String    telephone;
-    private String    fax;
-    private String    formeJuridique;
-    private LocalDate dateDeCreation;
-    private String    siren;
-    private String    siret;
-    private String    domaineDactivite;
-    private String    description;
-    private String    email;
+    private Long        idInfoEntreprise;
+    private String      raisonSociale;
+    private String      telephone;
+    private String      fax;
+    private String      formeJuridique;
+    private LocalDate   dateDeCreation;
+    private String      siren;
+    private String      siret;
+    private String      domaineDactivite;
+    private String      description;
+    private String      emailPro;
 
-    //private Long      userId;
-    //private Long      comptableId;
+    //User
+    private Long        idUser;
+    private String      login;
+    private String      firstName;
+    private String      lastName;
+    private String      email;
+    private String      imageUrl;
+    private boolean     activated = false;
+    private String      langKey;
+    private String      createdBy;
+    private Instant     createdDate;
+    private String      lastModifiedBy;
+    private Instant     lastModifiedDate;
+    private Set<String> authorities;
 
     public WrapperSociete() {
         // empty method
     }
 
-    /**
-     * @param id
-     * @param civilite
-     * @param adresseId
-     * @param numeroRue
-     * @param nomRue
-     * @param boitePostale
-     * @param codePostal
-     * @param ville
-     * @param pays
-     * @param infoEntrepriseId
-     * @param raisonSociale
-     * @param telephone
-     * @param fax
-     * @param formeJuridique
-     * @param dateDeCreation
-     * @param siren
-     * @param siret
-     * @param domaineDactivite
-     * @param description
-     * @param email
-     */
-    public WrapperSociete(Long id, String civilite, Long adresseId, String numeroRue, String nomRue, String boitePostale, String codePostal, String ville, String pays, Long infoEntrepriseId,
-                    String raisonSociale, String telephone, String fax, String formeJuridique, LocalDate dateDeCreation, String siren, String siret, String domaineDactivite, String description,
-                    String email) {
-        super();
-        this.id = id;
-        this.civilite = civilite;
-        this.adresseId = adresseId;
-        this.numeroRue = numeroRue;
-        this.nomRue = nomRue;
-        this.boitePostale = boitePostale;
-        this.codePostal = codePostal;
-        this.ville = ville;
-        this.pays = pays;
-        this.infoEntrepriseId = infoEntrepriseId;
-        this.raisonSociale = raisonSociale;
-        this.telephone = telephone;
-        this.fax = fax;
-        this.formeJuridique = formeJuridique;
-        this.dateDeCreation = dateDeCreation;
-        this.siren = siren;
-        this.siret = siret;
-        this.domaineDactivite = domaineDactivite;
-        this.description = description;
-        this.email = email;
+    public WrapperSociete(SocieteDTO societeDTO, AdresseDTO adresseDTO, InfoEntrepriseDTO infoEntrepriseDTO, UserDTO userDTO) {
+
+        //comptable
+        this.id = societeDTO.getId();
+        this.civilite = societeDTO.getCivilite();
+
+        //adresse
+        this.idAdresse = adresseDTO.getId();
+        this.numeroRue = adresseDTO.getNumeroRue();
+        this.boitePostale = adresseDTO.getBoitePostale();
+        this.codePostal = adresseDTO.getCodePostal();
+        this.nomRue = adresseDTO.getNomRue();
+        this.ville = adresseDTO.getVille();
+        this.pays = adresseDTO.getPays();
+
+        //info entreprise
+        this.idInfoEntreprise = infoEntrepriseDTO.getId();
+        this.raisonSociale = infoEntrepriseDTO.getRaisonSociale();
+        this.telephone = infoEntrepriseDTO.getTelephone();
+        this.fax = infoEntrepriseDTO.getFax();
+        this.formeJuridique = infoEntrepriseDTO.getFormeJuridique();
+        this.dateDeCreation = infoEntrepriseDTO.getDateDeCreation();
+        this.siren = infoEntrepriseDTO.getSiren();
+        this.siret = infoEntrepriseDTO.getSiret();
+        this.domaineDactivite = infoEntrepriseDTO.getDomaineDactivite();
+        this.description = infoEntrepriseDTO.getDescription();
+        this.emailPro = infoEntrepriseDTO.getEmail();
+
+        //user
+        this.idUser = userDTO.getId();
+        this.login = userDTO.getLogin();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.email = userDTO.getEmail();
+        this.imageUrl = userDTO.getImageUrl();
+        this.activated = userDTO.isActivated();
+        this.langKey = userDTO.getLangKey();
+        this.createdBy = userDTO.getCreatedBy();
+        this.createdDate = userDTO.getCreatedDate();
+        this.lastModifiedBy = userDTO.getLastModifiedBy();
+        this.lastModifiedDate = userDTO.getLastModifiedDate();
+        this.authorities = userDTO.getAuthorities();
+
     }
 
     public Long getId() {
@@ -101,12 +117,12 @@ public class WrapperSociete {
         this.civilite = civilite;
     }
 
-    public Long getAdresseId() {
-        return adresseId;
+    public Long getIdAdresse() {
+        return idAdresse;
     }
 
-    public void setAdresseId(Long adresseId) {
-        this.adresseId = adresseId;
+    public void setIdAdresse(Long idAdresse) {
+        this.idAdresse = idAdresse;
     }
 
     public String getNumeroRue() {
@@ -117,20 +133,20 @@ public class WrapperSociete {
         this.numeroRue = numeroRue;
     }
 
-    public String getNomRue() {
-        return nomRue;
-    }
-
-    public void setNomRue(String nomRue) {
-        this.nomRue = nomRue;
-    }
-
     public String getBoitePostale() {
         return boitePostale;
     }
 
     public void setBoitePostale(String boitePostale) {
         this.boitePostale = boitePostale;
+    }
+
+    public String getNomRue() {
+        return nomRue;
+    }
+
+    public void setNomRue(String nomRue) {
+        this.nomRue = nomRue;
     }
 
     public String getCodePostal() {
@@ -157,12 +173,12 @@ public class WrapperSociete {
         this.pays = pays;
     }
 
-    public Long getInfoEntrepriseId() {
-        return infoEntrepriseId;
+    public Long getIdInfoEntreprise() {
+        return idInfoEntreprise;
     }
 
-    public void setInfoEntrepriseId(Long infoEntrepriseId) {
-        this.infoEntrepriseId = infoEntrepriseId;
+    public void setIdInfoEntreprise(Long idInfoEntreprise) {
+        this.idInfoEntreprise = idInfoEntreprise;
     }
 
     public String getRaisonSociale() {
@@ -237,12 +253,116 @@ public class WrapperSociete {
         this.description = description;
     }
 
+    public String getEmailPro() {
+        return emailPro;
+    }
+
+    public void setEmailPro(String emailPro) {
+        this.emailPro = emailPro;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getLangKey() {
+        return langKey;
+    }
+
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
 
 }
