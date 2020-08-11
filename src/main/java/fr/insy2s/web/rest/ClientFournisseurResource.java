@@ -158,4 +158,78 @@ public class ClientFournisseurResource {
     }
 
 
+
+    /**
+     * {@code PUT  /client-fournisseurs} : Updates an existing clientFournisseur.
+     *
+     * @param wrapperClientFournisseur the clientFournisseurDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wrapperClientFournisseur,
+     * or with status {@code 400 (Bad Request)} if the wrapperClientFournisseur is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the wrapperClientFournisseur couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/client-fournisseurs/wrapper")
+    public ResponseEntity<WrapperClientFournisseur> updateClientFournisseur(@RequestBody WrapperClientFournisseur wrapperClientFournisseur) throws URISyntaxException {
+
+        log.debug("REST request to update WrapperClientFournisseur : {}", wrapperClientFournisseur);
+        if (wrapperClientFournisseur.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        verificationsClientFournisseur(wrapperClientFournisseur);
+        WrapperClientFournisseur result = clientFournisseurService.updateWrapperClientFournisseur(wrapperClientFournisseur);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperClientFournisseur.getId().toString()))
+            .body(result);
+    }
+
+
+    /**
+     * Permet de vérifier si les données entrées dans l'objet passé en paramètre
+     * sont valides et permettent  de modifier un clientFournisseur
+     *
+     * @param clientFournisseur : l'objet à vérifier
+     */
+    private void verificationsClientFournisseur(WrapperClientFournisseur clientFournisseur)  {
+        if (clientFournisseur.getNom() == null || clientFournisseur.getNom().isEmpty()) {
+            throw new BadRequestAlertException("Le nome de client founisseur est  vide", ENTITY_NAME, " nom null");
+        }
+        if (clientFournisseur.getSiren() == null || "".equals(clientFournisseur.getSiren())) {
+            throw new BadRequestAlertException("SIREN de client founisseur est vide", ENTITY_NAME, " SIREN null");
+        }
+        if (clientFournisseur.getEmail() == null || "".equals(clientFournisseur.getEmail())){
+            throw new BadRequestAlertException("L'email est vide", ENTITY_NAME, "Email null");
+        }
+        if (clientFournisseur.getIdAdresse() == null || "".equals(clientFournisseur.getIdAdresse())) {
+            throw new BadRequestAlertException("l'id d'adresse de client fournisseur est vide", ENTITY_NAME, "idAdresse null");
+        }
+        if (clientFournisseur.getIdSociete() == null || "".equals(clientFournisseur.getIdSociete())) {
+            throw new BadRequestAlertException("l'id société de client fournisseur est vide", ENTITY_NAME, "idSociété null");
+        }
+        if (clientFournisseur.getNomRue() == null || "".equals(clientFournisseur.getNomRue() )) {
+            throw new BadRequestAlertException("la rue de  client fournisseur est vide", ENTITY_NAME, "Rue null");
+
+        }
+        if (clientFournisseur.getCodePostal() == null || "".equals(clientFournisseur.getCodePostal())) {
+            throw new BadRequestAlertException("Le code postal de client fournisseur est vide", ENTITY_NAME, "Code postal null");
+        }
+        if (clientFournisseur.getVille() == null || "".equals(clientFournisseur.getVille())) {
+            throw new BadRequestAlertException("La ville de client fournisseur est vide", ENTITY_NAME, "Ville null");
+        }
+        if (clientFournisseur.getPays() == null || "".equals(clientFournisseur.getPays())) {
+            throw new BadRequestAlertException("Le pays de client fournisseur est vide", ENTITY_NAME, "Pays null");
+        }
+        }
+
+    /**
+     * {@code GET  /client-fournisseurs/nom/:nom} : get the "nom" clientFournisseur.
+     *
+     * @param nom the id of the clientFournisseurDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clientFournisseurDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/client-fournisseurs/nom/{nom}")
+    public ResponseEntity<ClientFournisseurDTO> getClientFournisseurByNom(@PathVariable String nom) {
+        log.debug("REST request to get ClientFournisseur : {}", nom);
+        Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findByNom(nom);
+        return ResponseUtil.wrapOrNotFound(clientFournisseurDTO);
+    }
 }

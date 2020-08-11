@@ -64,4 +64,20 @@ public interface ClientFournisseurService {
      * @return the list of entitiesWrapper.
      */
     public List<WrapperClientFournisseur> findAllBySocieteId(Long id );
+
+
+    /**
+     * update a wrapperclientFournisseur.
+     *
+     * @param wrapperClientFournisseur the entity to update.
+     * @return the updated entity.
+     */
+    WrapperClientFournisseur updateWrapperClientFournisseur(WrapperClientFournisseur wrapperClientFournisseur);
+
+    /**
+     * get the nom th clientFournisseurs
+     * @param nom the entity
+     * @return the entity
+     */
+    Optional<ClientFournisseurDTO> findByNom(String nom);
 }
