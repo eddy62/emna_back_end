@@ -129,7 +129,11 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
-        // TODO Auto-generated method stub
+        final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
+        final AdresseDTO adresseDTO = wrapperEmployeMapper.toAdresseDto(wrapperEmploye);
+        final StatutEmployeDTO statutEmployeDTO = wrapperEmployeMapper.toStatutEmploye(wrapperEmploye);
+        final SocieteDTO societeDTO = wrapperEmployeMapper.toSociteDto(wrapperEmploye);
+        final InfoEntrepriseDTO infoEntrepriseDTO = wrapperEmployeMapper.toInfoEntrepriseDto(wrapperEmploye);
         return null;
     }
 
