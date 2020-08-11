@@ -1,5 +1,6 @@
 package fr.insy2s.service;
 
+import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.dto.EmployeDTO;
 
 import java.util.List;
@@ -40,4 +41,6 @@ public interface EmployeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id);
 }

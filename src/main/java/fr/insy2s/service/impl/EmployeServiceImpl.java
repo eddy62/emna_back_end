@@ -1,5 +1,6 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.domain.Employe;
 import fr.insy2s.repository.EmployeRepository;
@@ -64,5 +65,10 @@ public class EmployeServiceImpl implements EmployeService {
     public void delete(Long id) {
         log.debug("Request to delete Employe : {}", id);
         employeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
+        return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
     }
 }

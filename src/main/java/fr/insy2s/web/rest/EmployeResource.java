@@ -1,9 +1,11 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.EmployeDTO;
 
+import fr.insy2s.web.rest.vm.EmployerArticleClauseVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,5 +116,15 @@ public class EmployeResource {
         log.debug("REST request to delete Employe : {}", id);
         employeService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/employer/article/clause/societe/{id}")
+    public List<EmployerArticleClauseVM> getAllEmployeArticleClauseBySocieteId(@PathVariable Long id){
+        List<EmployerArticleClauseVM> employerArticleClauseVMS = new ArrayList<>();
+        List<IEmployeContratProjection> iEmployeContratProjections = this.employeService.getAllEmployeArticleClauseBySocieteId(id);
+        for(IEmployeContratProjection iEmployeContratProjection: iEmployeContratProjections){
+            employerArticleClauseVMS.add(new EmployerArticleClauseVM(iEmployeContratProjection.getEmployerId(), iEmployeContratProjection.getEmployerNom(), iEmployeContratProjection.getEmployerPrenom(), iEmployeContratProjection.getSocieteId(), iEmployeContratProjection.getArticleTitre(), iEmployeContratProjection.getClauseId(), iEmployeContratProjection.getClauseReference(), iEmployeContratProjection.getClauseDescription()));
+        }
+        return employerArticleClauseVMS;
     }
 }
