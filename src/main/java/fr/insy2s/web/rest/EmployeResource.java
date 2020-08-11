@@ -146,15 +146,33 @@ public class EmployeResource {
     }
 
     /**
-     * {@code GET  /wrapperemployes/:id} : get the "id" wrapperemploye.
+     * {@code GET  /wrapperemployes/:id} : get the "id" wrapperEmploye.
      * 
-     * @param id the id of the wrapperemploye to retrieve
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperemploye, or with status {@code 404 (Not Found)}.
+     * @param id the id of the wrapperEmploye to retrieve
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperEmploye, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/wrapperemployes/{id}")
     public ResponseEntity<WrapperEmploye> getWrapperEmploye(@PathVariable Long id) {
         log.debug("REST request to get WrapperEmploye : {}", id);
         Optional<WrapperEmploye> wrapperEmploye = employeService.findById(id);
         return ResponseUtil.wrapOrNotFound(wrapperEmploye);
+    }
+    
+    /**
+     * {@code POST  /employes} : Create a new employe.
+     *
+     * @param employeDTO the employeDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new employeDTO, or with status {@code 400 (Bad Request)} if the employe has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/wrapperemployes")
+    public ResponseEntity<WrapperEmploye> createWrapperEmploye(@Valid @RequestBody WrapperEmploye wrapperEmploye) throws URISyntaxException {
+        log.debug("REST request to save Employe : {}", wrapperEmploye);
+        if (wrapperEmploye.getId() != null) {
+            throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
+        return ResponseEntity.created(new URI("/api/employes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                        .body(result);
     }
 }

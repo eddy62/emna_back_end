@@ -3,6 +3,8 @@ package fr.insy2s.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
@@ -62,4 +64,27 @@ public interface EmployeService {
      * @return the wrapperEmploye
      */
     Optional<WrapperEmploye> findById(final Long id);
+
+    /**
+     * Create a WrapperEmploye
+     * 
+     * @param wrapperEmploye
+     * @return the created WrapperEmploye
+     */
+    WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+
+    /**
+     * Update the WrapperEmploye
+     * 
+     * @param wrapperEmploye
+     * @return the updated WrapperEmploye
+     */
+    WrapperEmploye updateWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+
+    /**
+     * Delete the "id" WrapperEmploye
+     * 
+     * @param id
+     */
+    void deleteWrapperEmploye(Long id);
 }
