@@ -34,18 +34,6 @@
             "fieldType": "Float"
         },
         {
-            "fieldName": "fichier",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "cheminFichier",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "type",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "moyenDePaiement",
             "fieldType": "String"
         }
@@ -58,6 +46,12 @@
             "relationshipName": "adresse",
             "otherEntityField": "id",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "document",
+            "otherEntityRelationshipName": "facture",
+            "relationshipName": "listeDocuments"
         },
         {
             "relationshipType": "many-to-one",

@@ -39,15 +39,6 @@
             <column name="tva" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="fichier" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="chemin_fichier" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="type" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="moyen_de_paiement" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -97,9 +88,6 @@
             <column name="prix_ht" type="numeric"/>
             <column name="prix_ttc" type="numeric"/>
             <column name="tva" type="numeric"/>
-            <column name="fichier" type="string"/>
-            <column name="chemin_fichier" type="string"/>
-            <column name="type" type="string"/>
             <column name="moyen_de_paiement" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

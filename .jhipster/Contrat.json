@@ -35,6 +35,12 @@
             "relationshipName": "listeAvenants"
         },
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "document",
+            "otherEntityRelationshipName": "contrat",
+            "relationshipName": "listeDocuments"
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "employe",
             "otherEntityRelationshipName": "listeContrats",

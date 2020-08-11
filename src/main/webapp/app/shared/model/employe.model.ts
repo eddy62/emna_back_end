@@ -6,6 +6,7 @@ import { IFichePaie } from 'app/shared/model/fiche-paie.model';
 import { IHeuresSupplementaires } from 'app/shared/model/heures-supplementaires.model';
 import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
 import { IAutresVariable } from 'app/shared/model/autres-variable.model';
+import { IDocument } from 'app/shared/model/document.model';
 
 export interface IEmploye {
   id?: number;
@@ -41,6 +42,7 @@ export interface IEmploye {
   listeHeureSupplementaires?: IHeuresSupplementaires[];
   listeNoteDeFrais?: INoteDeFrais[];
   listeAutresVariables?: IAutresVariable[];
+  listeDocuments?: IDocument[];
   statutEmployeId?: number;
   societeId?: number;
 }

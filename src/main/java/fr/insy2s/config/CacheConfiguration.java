@@ -104,6 +104,11 @@ public class CacheConfiguration {
             createCache(cm, fr.insy2s.domain.InfoEntreprise.class.getName());
             createCache(cm, fr.insy2s.domain.StatutEmploye.class.getName());
             createCache(cm, fr.insy2s.domain.Societe.class.getName() + ".listeContrats");
+            createCache(cm, fr.insy2s.domain.Facture.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Document.class.getName());
+            createCache(cm, fr.insy2s.domain.Releve.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Contrat.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Employe.class.getName() + ".listeDocuments");
             // jhipster-needle-ehcache-add-entry
         };
     }

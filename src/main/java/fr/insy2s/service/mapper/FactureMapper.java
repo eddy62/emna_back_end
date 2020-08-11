@@ -20,6 +20,8 @@ public interface FactureMapper extends EntityMapper<FactureDTO, Facture> {
     FactureDTO toDto(Facture facture);
 
     @Mapping(source = "adresseId", target = "adresse")
+    @Mapping(target = "listeDocuments", ignore = true)
+    @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "etatFactureId", target = "etatFacture")
     @Mapping(source = "societeId", target = "societe")
     @Mapping(source = "operationId", target = "operation")

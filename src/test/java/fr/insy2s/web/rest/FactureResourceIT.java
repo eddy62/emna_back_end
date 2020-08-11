@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link FactureResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class FactureResourceIT {
@@ -57,15 +58,6 @@ public class FactureResourceIT {
 
     private static final Float DEFAULT_TVA = 1F;
     private static final Float UPDATED_TVA = 2F;
-
-    private static final String DEFAULT_FICHIER = "AAAAAAAAAA";
-    private static final String UPDATED_FICHIER = "BBBBBBBBBB";
-
-    private static final String DEFAULT_CHEMIN_FICHIER = "AAAAAAAAAA";
-    private static final String UPDATED_CHEMIN_FICHIER = "BBBBBBBBBB";
-
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
     private static final String DEFAULT_MOYEN_DE_PAIEMENT = "AAAAAAAAAA";
     private static final String UPDATED_MOYEN_DE_PAIEMENT = "BBBBBBBBBB";
@@ -103,9 +95,6 @@ public class FactureResourceIT {
             .prixHT(DEFAULT_PRIX_HT)
             .prixTTC(DEFAULT_PRIX_TTC)
             .tva(DEFAULT_TVA)
-            .fichier(DEFAULT_FICHIER)
-            .cheminFichier(DEFAULT_CHEMIN_FICHIER)
-            .type(DEFAULT_TYPE)
             .moyenDePaiement(DEFAULT_MOYEN_DE_PAIEMENT);
         return facture;
     }
@@ -125,9 +114,6 @@ public class FactureResourceIT {
             .prixHT(UPDATED_PRIX_HT)
             .prixTTC(UPDATED_PRIX_TTC)
             .tva(UPDATED_TVA)
-            .fichier(UPDATED_FICHIER)
-            .cheminFichier(UPDATED_CHEMIN_FICHIER)
-            .type(UPDATED_TYPE)
             .moyenDePaiement(UPDATED_MOYEN_DE_PAIEMENT);
         return facture;
     }
@@ -141,6 +127,7 @@ public class FactureResourceIT {
     @Transactional
     public void createFacture() throws Exception {
         int databaseSizeBeforeCreate = factureRepository.findAll().size();
+
         // Create the Facture
         FactureDTO factureDTO = factureMapper.toDto(facture);
         restFactureMockMvc.perform(post("/api/factures")
@@ -160,9 +147,6 @@ public class FactureResourceIT {
         assertThat(testFacture.getPrixHT()).isEqualTo(DEFAULT_PRIX_HT);
         assertThat(testFacture.getPrixTTC()).isEqualTo(DEFAULT_PRIX_TTC);
         assertThat(testFacture.getTva()).isEqualTo(DEFAULT_TVA);
-        assertThat(testFacture.getFichier()).isEqualTo(DEFAULT_FICHIER);
-        assertThat(testFacture.getCheminFichier()).isEqualTo(DEFAULT_CHEMIN_FICHIER);
-        assertThat(testFacture.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testFacture.getMoyenDePaiement()).isEqualTo(DEFAULT_MOYEN_DE_PAIEMENT);
     }
 
@@ -206,9 +190,6 @@ public class FactureResourceIT {
             .andExpect(jsonPath("$.[*].prixHT").value(hasItem(DEFAULT_PRIX_HT)))
             .andExpect(jsonPath("$.[*].prixTTC").value(hasItem(DEFAULT_PRIX_TTC)))
             .andExpect(jsonPath("$.[*].tva").value(hasItem(DEFAULT_TVA.doubleValue())))
-            .andExpect(jsonPath("$.[*].fichier").value(hasItem(DEFAULT_FICHIER)))
-            .andExpect(jsonPath("$.[*].cheminFichier").value(hasItem(DEFAULT_CHEMIN_FICHIER)))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].moyenDePaiement").value(hasItem(DEFAULT_MOYEN_DE_PAIEMENT)));
     }
     
@@ -231,11 +212,9 @@ public class FactureResourceIT {
             .andExpect(jsonPath("$.prixHT").value(DEFAULT_PRIX_HT))
             .andExpect(jsonPath("$.prixTTC").value(DEFAULT_PRIX_TTC))
             .andExpect(jsonPath("$.tva").value(DEFAULT_TVA.doubleValue()))
-            .andExpect(jsonPath("$.fichier").value(DEFAULT_FICHIER))
-            .andExpect(jsonPath("$.cheminFichier").value(DEFAULT_CHEMIN_FICHIER))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.moyenDePaiement").value(DEFAULT_MOYEN_DE_PAIEMENT));
     }
+
     @Test
     @Transactional
     public void getNonExistingFacture() throws Exception {
@@ -265,9 +244,6 @@ public class FactureResourceIT {
             .prixHT(UPDATED_PRIX_HT)
             .prixTTC(UPDATED_PRIX_TTC)
             .tva(UPDATED_TVA)
-            .fichier(UPDATED_FICHIER)
-            .cheminFichier(UPDATED_CHEMIN_FICHIER)
-            .type(UPDATED_TYPE)
             .moyenDePaiement(UPDATED_MOYEN_DE_PAIEMENT);
         FactureDTO factureDTO = factureMapper.toDto(updatedFacture);
 
@@ -288,9 +264,6 @@ public class FactureResourceIT {
         assertThat(testFacture.getPrixHT()).isEqualTo(UPDATED_PRIX_HT);
         assertThat(testFacture.getPrixTTC()).isEqualTo(UPDATED_PRIX_TTC);
         assertThat(testFacture.getTva()).isEqualTo(UPDATED_TVA);
-        assertThat(testFacture.getFichier()).isEqualTo(UPDATED_FICHIER);
-        assertThat(testFacture.getCheminFichier()).isEqualTo(UPDATED_CHEMIN_FICHIER);
-        assertThat(testFacture.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testFacture.getMoyenDePaiement()).isEqualTo(UPDATED_MOYEN_DE_PAIEMENT);
     }
 

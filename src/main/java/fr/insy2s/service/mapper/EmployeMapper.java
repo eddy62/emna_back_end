@@ -32,6 +32,8 @@ public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
     @Mapping(target = "removeListeNoteDeFrais", ignore = true)
     @Mapping(target = "listeAutresVariables", ignore = true)
     @Mapping(target = "removeListeAutresVariables", ignore = true)
+    @Mapping(target = "listeDocuments", ignore = true)
+    @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "statutEmployeId", target = "statutEmploye")
     @Mapping(source = "societeId", target = "societe")
     Employe toEntity(EmployeDTO employeDTO);

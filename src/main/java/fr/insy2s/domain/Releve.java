@@ -46,6 +46,10 @@ public class Releve implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Operation> listeOperations = new HashSet<>();
 
+    @OneToMany(mappedBy = "releve")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("releves")
     private EtatReleve etatReleve;
@@ -151,6 +155,31 @@ public class Releve implements Serializable {
 
     public void setListeOperations(Set<Operation> operations) {
         this.listeOperations = operations;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Releve listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Releve addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setReleve(this);
+        return this;
+    }
+
+    public Releve removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setReleve(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public EtatReleve getEtatReleve() {
