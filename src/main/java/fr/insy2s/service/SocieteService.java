@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.SocieteDTO;
+import fr.insy2s.utils.wrapper.WrapperSociete;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +41,11 @@ public interface SocieteService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the "id" WrapperSociete
+     * @param id
+     * @return the wrapperSociete
+     */
+    Optional<WrapperSociete> findById(Long id);
 }
