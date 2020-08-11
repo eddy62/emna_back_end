@@ -48,6 +48,10 @@ public class Contrat implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Avenant> listeAvenants = new HashSet<>();
 
+    @OneToMany(mappedBy = "contrat")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("listeContrats")
     private Employe employe;
@@ -150,6 +154,31 @@ public class Contrat implements Serializable {
 
     public void setListeAvenants(Set<Avenant> avenants) {
         this.listeAvenants = avenants;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Contrat listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Contrat addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setContrat(this);
+        return this;
+    }
+
+    public Contrat removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setContrat(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public Employe getEmploye() {

@@ -2,6 +2,8 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
 import fr.insy2s.domain.Employe;
+import fr.insy2s.domain.Adresse;
+import fr.insy2s.domain.StatutEmploye;
 import fr.insy2s.repository.EmployeRepository;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.dto.EmployeDTO;
@@ -30,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link EmployeResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class EmployeResourceIT {
@@ -88,8 +91,23 @@ public class EmployeResourceIT {
     private static final String DEFAULT_CATEGORIE = "AAAAAAAAAA";
     private static final String UPDATED_CATEGORIE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_STATUT = "AAAAAAAAAA";
-    private static final String UPDATED_STATUT = "BBBBBBBBBB";
+    private static final String DEFAULT_POSTE = "AAAAAAAAAA";
+    private static final String UPDATED_POSTE = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_DATE_EMBAUCHE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_EMBAUCHE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_DATE_SORTIE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_SORTIE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_TYPE_CONTRAT = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE_CONTRAT = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SITUATION_FAMILIALE = "AAAAAAAAAA";
+    private static final String UPDATED_SITUATION_FAMILIALE = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_ENFANTS_A_CHARGE = 1;
+    private static final Integer UPDATED_ENFANTS_A_CHARGE = 2;
 
     @Autowired
     private EmployeRepository employeRepository;
@@ -134,7 +152,32 @@ public class EmployeResourceIT {
             .salaireBrutMensuelle(DEFAULT_SALAIRE_BRUT_MENSUELLE)
             .heuresMensuelle(DEFAULT_HEURES_MENSUELLE)
             .categorie(DEFAULT_CATEGORIE)
-            .poste(DEFAULT_STATUT);
+            .poste(DEFAULT_POSTE)
+            .dateEmbauche(DEFAULT_DATE_EMBAUCHE)
+            .dateSortie(DEFAULT_DATE_SORTIE)
+            .typeContrat(DEFAULT_TYPE_CONTRAT)
+            .situationFamiliale(DEFAULT_SITUATION_FAMILIALE)
+            .enfantsACharge(DEFAULT_ENFANTS_A_CHARGE);
+        // Add required entity
+        Adresse adresse;
+        if (TestUtil.findAll(em, Adresse.class).isEmpty()) {
+            adresse = AdresseResourceIT.createEntity(em);
+            em.persist(adresse);
+            em.flush();
+        } else {
+            adresse = TestUtil.findAll(em, Adresse.class).get(0);
+        }
+        employe.setAdresse(adresse);
+        // Add required entity
+        StatutEmploye statutEmploye;
+        if (TestUtil.findAll(em, StatutEmploye.class).isEmpty()) {
+            statutEmploye = StatutEmployeResourceIT.createEntity(em);
+            em.persist(statutEmploye);
+            em.flush();
+        } else {
+            statutEmploye = TestUtil.findAll(em, StatutEmploye.class).get(0);
+        }
+        employe.setStatutEmploye(statutEmploye);
         return employe;
     }
     /**
@@ -163,7 +206,32 @@ public class EmployeResourceIT {
             .salaireBrutMensuelle(UPDATED_SALAIRE_BRUT_MENSUELLE)
             .heuresMensuelle(UPDATED_HEURES_MENSUELLE)
             .categorie(UPDATED_CATEGORIE)
-            .poste(UPDATED_STATUT);
+            .poste(UPDATED_POSTE)
+            .dateEmbauche(UPDATED_DATE_EMBAUCHE)
+            .dateSortie(UPDATED_DATE_SORTIE)
+            .typeContrat(UPDATED_TYPE_CONTRAT)
+            .situationFamiliale(UPDATED_SITUATION_FAMILIALE)
+            .enfantsACharge(UPDATED_ENFANTS_A_CHARGE);
+        // Add required entity
+        Adresse adresse;
+        if (TestUtil.findAll(em, Adresse.class).isEmpty()) {
+            adresse = AdresseResourceIT.createUpdatedEntity(em);
+            em.persist(adresse);
+            em.flush();
+        } else {
+            adresse = TestUtil.findAll(em, Adresse.class).get(0);
+        }
+        employe.setAdresse(adresse);
+        // Add required entity
+        StatutEmploye statutEmploye;
+        if (TestUtil.findAll(em, StatutEmploye.class).isEmpty()) {
+            statutEmploye = StatutEmployeResourceIT.createUpdatedEntity(em);
+            em.persist(statutEmploye);
+            em.flush();
+        } else {
+            statutEmploye = TestUtil.findAll(em, StatutEmploye.class).get(0);
+        }
+        employe.setStatutEmploye(statutEmploye);
         return employe;
     }
 
@@ -176,6 +244,7 @@ public class EmployeResourceIT {
     @Transactional
     public void createEmploye() throws Exception {
         int databaseSizeBeforeCreate = employeRepository.findAll().size();
+
         // Create the Employe
         EmployeDTO employeDTO = employeMapper.toDto(employe);
         restEmployeMockMvc.perform(post("/api/employes")
@@ -205,7 +274,12 @@ public class EmployeResourceIT {
         assertThat(testEmploye.getSalaireBrutMensuelle()).isEqualTo(DEFAULT_SALAIRE_BRUT_MENSUELLE);
         assertThat(testEmploye.getHeuresMensuelle()).isEqualTo(DEFAULT_HEURES_MENSUELLE);
         assertThat(testEmploye.getCategorie()).isEqualTo(DEFAULT_CATEGORIE);
-        assertThat(testEmploye.getPoste()).isEqualTo(DEFAULT_STATUT);
+        assertThat(testEmploye.getPoste()).isEqualTo(DEFAULT_POSTE);
+        assertThat(testEmploye.getDateEmbauche()).isEqualTo(DEFAULT_DATE_EMBAUCHE);
+        assertThat(testEmploye.getDateSortie()).isEqualTo(DEFAULT_DATE_SORTIE);
+        assertThat(testEmploye.getTypeContrat()).isEqualTo(DEFAULT_TYPE_CONTRAT);
+        assertThat(testEmploye.getSituationFamiliale()).isEqualTo(DEFAULT_SITUATION_FAMILIALE);
+        assertThat(testEmploye.getEnfantsACharge()).isEqualTo(DEFAULT_ENFANTS_A_CHARGE);
     }
 
     @Test
@@ -239,6 +313,24 @@ public class EmployeResourceIT {
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
 
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCiviliteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setCivilite(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
 
         restEmployeMockMvc.perform(post("/api/employes")
             .contentType(MediaType.APPLICATION_JSON)
@@ -259,6 +351,24 @@ public class EmployeResourceIT {
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
 
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPrenomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setPrenom(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
 
         restEmployeMockMvc.perform(post("/api/employes")
             .contentType(MediaType.APPLICATION_JSON)
@@ -279,7 +389,6 @@ public class EmployeResourceIT {
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
 
-
         restEmployeMockMvc.perform(post("/api/employes")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
@@ -298,7 +407,6 @@ public class EmployeResourceIT {
 
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
-
 
         restEmployeMockMvc.perform(post("/api/employes")
             .contentType(MediaType.APPLICATION_JSON)
@@ -319,7 +427,6 @@ public class EmployeResourceIT {
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
 
-
         restEmployeMockMvc.perform(post("/api/employes")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
@@ -339,6 +446,252 @@ public class EmployeResourceIT {
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
 
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setEmail(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTelephonePortableIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setTelephonePortable(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkFaxIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setFax(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSalaireHoraireIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setSalaireHoraire(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSalaireBrutMensuelleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setSalaireBrutMensuelle(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkHeuresMensuelleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setHeuresMensuelle(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCategorieIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setCategorie(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPosteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setPoste(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDateEmbaucheIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setDateEmbauche(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDateSortieIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setDateSortie(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTypeContratIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setTypeContrat(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSituationFamilialeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setSituationFamiliale(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEnfantsAChargeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setEnfantsACharge(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
 
         restEmployeMockMvc.perform(post("/api/employes")
             .contentType(MediaType.APPLICATION_JSON)
@@ -378,7 +731,12 @@ public class EmployeResourceIT {
             .andExpect(jsonPath("$.[*].salaireBrutMensuelle").value(hasItem(DEFAULT_SALAIRE_BRUT_MENSUELLE.doubleValue())))
             .andExpect(jsonPath("$.[*].heuresMensuelle").value(hasItem(DEFAULT_HEURES_MENSUELLE.doubleValue())))
             .andExpect(jsonPath("$.[*].categorie").value(hasItem(DEFAULT_CATEGORIE)))
-            .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT)));
+            .andExpect(jsonPath("$.[*].poste").value(hasItem(DEFAULT_POSTE)))
+            .andExpect(jsonPath("$.[*].dateEmbauche").value(hasItem(DEFAULT_DATE_EMBAUCHE.toString())))
+            .andExpect(jsonPath("$.[*].dateSortie").value(hasItem(DEFAULT_DATE_SORTIE.toString())))
+            .andExpect(jsonPath("$.[*].typeContrat").value(hasItem(DEFAULT_TYPE_CONTRAT)))
+            .andExpect(jsonPath("$.[*].situationFamiliale").value(hasItem(DEFAULT_SITUATION_FAMILIALE)))
+            .andExpect(jsonPath("$.[*].enfantsACharge").value(hasItem(DEFAULT_ENFANTS_A_CHARGE)));
     }
     
     @Test
@@ -410,8 +768,14 @@ public class EmployeResourceIT {
             .andExpect(jsonPath("$.salaireBrutMensuelle").value(DEFAULT_SALAIRE_BRUT_MENSUELLE.doubleValue()))
             .andExpect(jsonPath("$.heuresMensuelle").value(DEFAULT_HEURES_MENSUELLE.doubleValue()))
             .andExpect(jsonPath("$.categorie").value(DEFAULT_CATEGORIE))
-            .andExpect(jsonPath("$.statut").value(DEFAULT_STATUT));
+            .andExpect(jsonPath("$.poste").value(DEFAULT_POSTE))
+            .andExpect(jsonPath("$.dateEmbauche").value(DEFAULT_DATE_EMBAUCHE.toString()))
+            .andExpect(jsonPath("$.dateSortie").value(DEFAULT_DATE_SORTIE.toString()))
+            .andExpect(jsonPath("$.typeContrat").value(DEFAULT_TYPE_CONTRAT))
+            .andExpect(jsonPath("$.situationFamiliale").value(DEFAULT_SITUATION_FAMILIALE))
+            .andExpect(jsonPath("$.enfantsACharge").value(DEFAULT_ENFANTS_A_CHARGE));
     }
+
     @Test
     @Transactional
     public void getNonExistingEmploye() throws Exception {
@@ -451,7 +815,12 @@ public class EmployeResourceIT {
             .salaireBrutMensuelle(UPDATED_SALAIRE_BRUT_MENSUELLE)
             .heuresMensuelle(UPDATED_HEURES_MENSUELLE)
             .categorie(UPDATED_CATEGORIE)
-            .poste(UPDATED_STATUT);
+            .poste(UPDATED_POSTE)
+            .dateEmbauche(UPDATED_DATE_EMBAUCHE)
+            .dateSortie(UPDATED_DATE_SORTIE)
+            .typeContrat(UPDATED_TYPE_CONTRAT)
+            .situationFamiliale(UPDATED_SITUATION_FAMILIALE)
+            .enfantsACharge(UPDATED_ENFANTS_A_CHARGE);
         EmployeDTO employeDTO = employeMapper.toDto(updatedEmploye);
 
         restEmployeMockMvc.perform(put("/api/employes")
@@ -481,7 +850,12 @@ public class EmployeResourceIT {
         assertThat(testEmploye.getSalaireBrutMensuelle()).isEqualTo(UPDATED_SALAIRE_BRUT_MENSUELLE);
         assertThat(testEmploye.getHeuresMensuelle()).isEqualTo(UPDATED_HEURES_MENSUELLE);
         assertThat(testEmploye.getCategorie()).isEqualTo(UPDATED_CATEGORIE);
-        assertThat(testEmploye.getPoste()).isEqualTo(UPDATED_STATUT);
+        assertThat(testEmploye.getPoste()).isEqualTo(UPDATED_POSTE);
+        assertThat(testEmploye.getDateEmbauche()).isEqualTo(UPDATED_DATE_EMBAUCHE);
+        assertThat(testEmploye.getDateSortie()).isEqualTo(UPDATED_DATE_SORTIE);
+        assertThat(testEmploye.getTypeContrat()).isEqualTo(UPDATED_TYPE_CONTRAT);
+        assertThat(testEmploye.getSituationFamiliale()).isEqualTo(UPDATED_SITUATION_FAMILIALE);
+        assertThat(testEmploye.getEnfantsACharge()).isEqualTo(UPDATED_ENFANTS_A_CHARGE);
     }
 
     @Test

@@ -52,21 +52,16 @@ public class Facture implements Serializable {
     @Column(name = "tva")
     private Float tva;
 
-    @Column(name = "fichier")
-    private String fichier;
-
-    @Column(name = "chemin_fichier")
-    private String cheminFichier;
-
-    @Column(name = "type")
-    private String type;
-
     @Column(name = "moyen_de_paiement")
     private String moyenDePaiement;
 
     @OneToOne
     @JoinColumn(unique = true)
     private Adresse adresse;
+
+    @OneToMany(mappedBy = "facture")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("factures")
@@ -202,45 +197,6 @@ public class Facture implements Serializable {
         this.tva = tva;
     }
 
-    public String getFichier() {
-        return fichier;
-    }
-
-    public Facture fichier(String fichier) {
-        this.fichier = fichier;
-        return this;
-    }
-
-    public void setFichier(String fichier) {
-        this.fichier = fichier;
-    }
-
-    public String getCheminFichier() {
-        return cheminFichier;
-    }
-
-    public Facture cheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-        return this;
-    }
-
-    public void setCheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Facture type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getMoyenDePaiement() {
         return moyenDePaiement;
     }
@@ -265,6 +221,31 @@ public class Facture implements Serializable {
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Facture listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Facture addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setFacture(this);
+        return this;
+    }
+
+    public Facture removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setFacture(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public EtatFacture getEtatFacture() {
@@ -373,9 +354,6 @@ public class Facture implements Serializable {
             ", prixHT=" + getPrixHT() +
             ", prixTTC=" + getPrixTTC() +
             ", tva=" + getTva() +
-            ", fichier='" + getFichier() + "'" +
-            ", cheminFichier='" + getCheminFichier() + "'" +
-            ", type='" + getType() + "'" +
             ", moyenDePaiement='" + getMoyenDePaiement() + "'" +
             "}";
     }

@@ -120,6 +120,10 @@ import infoEntreprise, {
 import statutEmploye, {
   StatutEmployeState
 } from 'app/entities/statut-employe/statut-employe.reducer';
+// prettier-ignore
+import document, {
+  DocumentState
+} from 'app/entities/document/document.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -160,6 +164,7 @@ export interface IRootState {
   readonly societe: SocieteState;
   readonly infoEntreprise: InfoEntrepriseState;
   readonly statutEmploye: StatutEmployeState;
+  readonly document: DocumentState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -202,6 +207,7 @@ const rootReducer = combineReducers<IRootState>({
   societe,
   infoEntreprise,
   statutEmploye,
+  document,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

@@ -78,24 +78,6 @@ export const FactureDetail = (props: IFactureDetailProps) => {
           </dt>
           <dd>{factureEntity.tva}</dd>
           <dt>
-            <span id="fichier">
-              <Translate contentKey="emnaBackEndApp.facture.fichier">Fichier</Translate>
-            </span>
-          </dt>
-          <dd>{factureEntity.fichier}</dd>
-          <dt>
-            <span id="cheminFichier">
-              <Translate contentKey="emnaBackEndApp.facture.cheminFichier">Chemin Fichier</Translate>
-            </span>
-          </dt>
-          <dd>{factureEntity.cheminFichier}</dd>
-          <dt>
-            <span id="type">
-              <Translate contentKey="emnaBackEndApp.facture.type">Type</Translate>
-            </span>
-          </dt>
-          <dd>{factureEntity.type}</dd>
-          <dt>
             <span id="moyenDePaiement">
               <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
             </span>

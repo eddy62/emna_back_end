@@ -7,9 +7,6 @@ entity Facture{
     prixHT Integer
     prixTTC Integer
     tva Float
-    fichier String
-    cheminFichier String
-    type String
     moyenDePaiement String
 }
 
@@ -206,6 +203,12 @@ entity InfoEntreprise{
     email String
 }
 
+entity Document{
+	cheminFichier String
+	type String
+	nom String
+}
+
 
 
 relationship OneToMany{
@@ -239,6 +242,13 @@ relationship OneToMany{
     Employe{listeNoteDeFrais}  to NoteDeFrais{employe}
     Employe{listeAutresVariables} to AutresVariable{employe}
     Article{listeClauses} to Clause{article}
+	
+	Facture{listeDocuments} to Document{facture}
+	Releve{listeDocuments} to Document{releve}
+	Contrat{listeDocuments} to Document{contrat}
+	Employe{listeDocuments} to Document{employe}
+	
+	
 }
 
 relationship ManyToOne{

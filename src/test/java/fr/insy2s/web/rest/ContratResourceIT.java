@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ContratResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class ContratResourceIT {
@@ -101,6 +102,7 @@ public class ContratResourceIT {
     @Transactional
     public void createContrat() throws Exception {
         int databaseSizeBeforeCreate = contratRepository.findAll().size();
+
         // Create the Contrat
         ContratDTO contratDTO = contratMapper.toDto(contrat);
         restContratMockMvc.perform(post("/api/contrats")
@@ -149,7 +151,6 @@ public class ContratResourceIT {
         // Create the Contrat, which fails.
         ContratDTO contratDTO = contratMapper.toDto(contrat);
 
-
         restContratMockMvc.perform(post("/api/contrats")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(contratDTO)))
@@ -169,7 +170,6 @@ public class ContratResourceIT {
         // Create the Contrat, which fails.
         ContratDTO contratDTO = contratMapper.toDto(contrat);
 
-
         restContratMockMvc.perform(post("/api/contrats")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(contratDTO)))
@@ -188,7 +188,6 @@ public class ContratResourceIT {
 
         // Create the Contrat, which fails.
         ContratDTO contratDTO = contratMapper.toDto(contrat);
-
 
         restContratMockMvc.perform(post("/api/contrats")
             .contentType(MediaType.APPLICATION_JSON)
@@ -232,6 +231,7 @@ public class ContratResourceIT {
             .andExpect(jsonPath("$.signe").value(DEFAULT_SIGNE.booleanValue()))
             .andExpect(jsonPath("$.archive").value(DEFAULT_ARCHIVE.booleanValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingContrat() throws Exception {

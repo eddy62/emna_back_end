@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ReleveResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class ReleveResourceIT {
@@ -106,6 +107,7 @@ public class ReleveResourceIT {
     @Transactional
     public void createReleve() throws Exception {
         int databaseSizeBeforeCreate = releveRepository.findAll().size();
+
         // Create the Releve
         ReleveDTO releveDTO = releveMapper.toDto(releve);
         restReleveMockMvc.perform(post("/api/releves")
@@ -180,6 +182,7 @@ public class ReleveResourceIT {
             .andExpect(jsonPath("$.banque").value(DEFAULT_BANQUE))
             .andExpect(jsonPath("$.cheminFichier").value(DEFAULT_CHEMIN_FICHIER));
     }
+
     @Test
     @Transactional
     public void getNonExistingReleve() throws Exception {

@@ -61,15 +61,6 @@ export const Facture = (props: IFactureProps) => {
                   <Translate contentKey="emnaBackEndApp.facture.tva">Tva</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.facture.fichier">Fichier</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.facture.cheminFichier">Chemin Fichier</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.facture.type">Type</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
                 </th>
                 <th>
@@ -110,9 +101,6 @@ export const Facture = (props: IFactureProps) => {
                   <td>{facture.prixHT}</td>
                   <td>{facture.prixTTC}</td>
                   <td>{facture.tva}</td>
-                  <td>{facture.fichier}</td>
-                  <td>{facture.cheminFichier}</td>
-                  <td>{facture.type}</td>
                   <td>{facture.moyenDePaiement}</td>
                   <td>{facture.adresseId ? <Link to={`adresse/${facture.adresseId}`}>{facture.adresseId}</Link> : ''}</td>
                   <td>{facture.etatFactureId ? <Link to={`etat-facture/${facture.etatFactureId}`}>{facture.etatFactureId}</Link> : ''}</td>

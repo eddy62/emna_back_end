@@ -154,6 +154,10 @@ public class Employe implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AutresVariable> listeAutresVariables = new HashSet<>();
 
+    @OneToMany(mappedBy = "employe")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("employes")
@@ -670,6 +674,31 @@ public class Employe implements Serializable {
 
     public void setListeAutresVariables(Set<AutresVariable> autresVariables) {
         this.listeAutresVariables = autresVariables;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Employe listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Employe addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setEmploye(this);
+        return this;
+    }
+
+    public Employe removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setEmploye(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public StatutEmploye getStatutEmploye() {

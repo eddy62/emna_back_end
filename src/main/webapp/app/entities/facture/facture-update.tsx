@@ -149,24 +149,6 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
                 <AvField id="facture-tva" type="string" className="form-control" name="tva" />
               </AvGroup>
               <AvGroup>
-                <Label id="fichierLabel" for="facture-fichier">
-                  <Translate contentKey="emnaBackEndApp.facture.fichier">Fichier</Translate>
-                </Label>
-                <AvField id="facture-fichier" type="text" name="fichier" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="cheminFichierLabel" for="facture-cheminFichier">
-                  <Translate contentKey="emnaBackEndApp.facture.cheminFichier">Chemin Fichier</Translate>
-                </Label>
-                <AvField id="facture-cheminFichier" type="text" name="cheminFichier" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="typeLabel" for="facture-type">
-                  <Translate contentKey="emnaBackEndApp.facture.type">Type</Translate>
-                </Label>
-                <AvField id="facture-type" type="text" name="type" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="moyenDePaiementLabel" for="facture-moyenDePaiement">
                   <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
                 </Label>

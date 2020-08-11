@@ -27,12 +27,6 @@ public class FactureDTO implements Serializable {
 
     private Float tva;
 
-    private String fichier;
-
-    private String cheminFichier;
-
-    private String type;
-
     private String moyenDePaiement;
 
 
@@ -118,30 +112,6 @@ public class FactureDTO implements Serializable {
         this.tva = tva;
     }
 
-    public String getFichier() {
-        return fichier;
-    }
-
-    public void setFichier(String fichier) {
-        this.fichier = fichier;
-    }
-
-    public String getCheminFichier() {
-        return cheminFichier;
-    }
-
-    public void setCheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getMoyenDePaiement() {
         return moyenDePaiement;
     }
@@ -223,9 +193,6 @@ public class FactureDTO implements Serializable {
             ", prixHT=" + getPrixHT() +
             ", prixTTC=" + getPrixTTC() +
             ", tva=" + getTva() +
-            ", fichier='" + getFichier() + "'" +
-            ", cheminFichier='" + getCheminFichier() + "'" +
-            ", type='" + getType() + "'" +
             ", moyenDePaiement='" + getMoyenDePaiement() + "'" +
             ", adresseId=" + getAdresseId() +
             ", etatFactureId=" + getEtatFactureId() +

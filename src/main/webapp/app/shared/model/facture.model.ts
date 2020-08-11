@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { IDocument } from 'app/shared/model/document.model';
 import { IProduit } from 'app/shared/model/produit.model';
 
 export interface IFacture {
@@ -11,11 +12,9 @@ export interface IFacture {
   prixHT?: number;
   prixTTC?: number;
   tva?: number;
-  fichier?: string;
-  cheminFichier?: string;
-  type?: string;
   moyenDePaiement?: string;
   adresseId?: number;
+  listeDocuments?: IDocument[];
   etatFactureId?: number;
   societeId?: number;
   operationId?: number;

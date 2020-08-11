@@ -1,6 +1,9 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Facture;
 import fr.insy2s.service.dto.FactureDTO;
+import fr.insy2s.service.dto.FactureTemp;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +43,6 @@ public interface FactureService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    ResponseEntity<Facture> postFactureWithFile(FactureTemp factureTemp);
 }

@@ -30,6 +30,12 @@
             "relationshipName": "listeOperations"
         },
         {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "document",
+            "otherEntityRelationshipName": "releve",
+            "relationshipName": "listeDocuments"
+        },
+        {
             "relationshipType": "many-to-one",
             "otherEntityName": "etatReleve",
             "otherEntityRelationshipName": "releve",
