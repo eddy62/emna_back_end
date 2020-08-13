@@ -105,6 +105,20 @@ public class SocieteResource {
         return ResponseUtil.wrapOrNotFound(societeDTO);
     }
 
+    @GetMapping("/societes/comptable/{id}")
+    public List<SocieteDTO> getAllSocietesByComptableId(@PathVariable Long id) {
+        log.debug("REST request to get all Societes of a specific Comptable : {}", id);
+        List<SocieteDTO> list = societeService.findAllByComptableId(id);
+        return list;
+    }
+    @GetMapping("/societes/user/{id}")
+    public ResponseEntity<SocieteDTO> getSocieteByUserId(@PathVariable Long id) {
+        log.debug("REST request to get Societe from user ID : {}", id);
+        Optional<SocieteDTO> societeDTO = societeService.findByUser(id);
+        return ResponseUtil.wrapOrNotFound(societeDTO);
+    }
+
+
     /**
      * {@code DELETE  /societes/:id} : delete the "id" societe.
      *

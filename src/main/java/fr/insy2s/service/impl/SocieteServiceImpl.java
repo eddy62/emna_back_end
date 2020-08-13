@@ -42,7 +42,7 @@ public class SocieteServiceImpl implements SocieteService {
 
     private final SocieteMapper societeMapper;
     private final UserMapper userMapper;
-   
+
 
     public SocieteServiceImpl(SocieteRepository societeRepository, SocieteMapper societeMapper, AdresseService adresseService, InfoEntrepriseService infoEntrepriseService, UserService userService,UserMapper userMapper) {
         this.societeRepository = societeRepository;
@@ -84,7 +84,7 @@ public class SocieteServiceImpl implements SocieteService {
         log.debug("Request to delete Societe : {}", id);
         societeRepository.deleteById(id);
     }
-    
+
     @Override
     public Optional<WrapperSociete> findById(Long id) {
         log.debug("Request to get WrapperSociete : {}", id);
@@ -94,5 +94,19 @@ public class SocieteServiceImpl implements SocieteService {
         final UserDTO userDTO = userMapper.userToUserDTO(userService.getUserWithAuthorities(societeDTO.getUserId()).get());
         final Optional<WrapperSociete> wrapperSociete = Optional.of(new WrapperSociete(societeDTO, adresseDTO, infoEntrepriseDTO, userDTO));
         return wrapperSociete.isPresent() ? Optional.of(wrapperSociete.get()) : Optional.empty();
+    }
+
+    @Override
+    public List<SocieteDTO> findAllByComptableId(Long id) {
+        log.debug("Request to get all Societes from a specific Comptable id : {}", id);
+        return societeRepository.findByComptableId(id).stream()
+            .map(societeMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public Optional<SocieteDTO> findByUser(Long id) {
+        log.debug("Request to get Society from a specific User id : {}", id);
+        return societeRepository.findByUserId(id).map(societeMapper::toDto);
     }
 }

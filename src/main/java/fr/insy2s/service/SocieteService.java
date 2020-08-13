@@ -48,4 +48,9 @@ public interface SocieteService {
      * @return the wrapperSociete
      */
     Optional<WrapperSociete> findById(Long id);
+
+    List<SocieteDTO> findAllByComptableId(Long id);
+
+
+    Optional<SocieteDTO> findByUser(Long id);
 }
