@@ -149,5 +149,11 @@ public class ComptableServiceImpl implements ComptableService {
 
     }
 
+    @Override
+    public Optional<ComptableDTO> findByUser(Long id) {
+        log.debug("Request to get Comptable from a specific User id : {}", id);
+        return comptableRepository.findByUserId(id).map(comptableMapper::toDto);
+    }
+
 
 }
