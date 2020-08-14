@@ -69,44 +69,11 @@ public class WrapperEmploye {
     /**
      * Constructeur avec field
      * 
-     * @param id
-     * @param matricule
-     * @param civilite
-     * @param nomNaissance
-     * @param nomUsage
-     * @param prenom
-     * @param dateNaissance
-     * @param villeNaissance
-     * @param departementNaissance
-     * @param paysNaisance
-     * @param numeroSecuriteSociale
-     * @param email
-     * @param telephoneFix
-     * @param telephonePortable
-     * @param fax
-     * @param salaireHoraire
-     * @param salaireBrutMensuelle
-     * @param heuresMensuelle
-     * @param categorie
-     * @param poste
-     * @param dateEmbauche
-     * @param dateSortie
-     * @param typeContrat
-     * @param situationFamiliale
-     * @param enfantsACharge
-     * @param adresseId
-     * @param numeroRue
-     * @param nomRue
-     * @param boitePostale
-     * @param codePostal
-     * @param ville
-     * @param pays
-     * @param statutEmployeId
-     * @param codeRef
-     * @param libelle
-     * @param societeId
-     * @param infoEntrepriseId
-     * @param raisonSociale
+     * @param employeDTO
+     * @param adresseDTO
+     * @param statutEmployeDTO
+     * @param societeDTO
+     * @param infoEntrepriseDTO
      */
     public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO) {
         super();

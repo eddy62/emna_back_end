@@ -207,4 +207,17 @@ public class EmployeResource {
         WrapperEmploye result = employeService.updateWrapperEmploye(wrapperEmploye);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
+    
+    /**
+     * {@code DELETE  /wrapperemployes/:id} : delete the "id" wrapperemployes.
+     *
+     * @param id the id of the wrapperemployes to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @DeleteMapping("/wrapperemployes/{id}")
+    public ResponseEntity<Void> deleteWrapperEmploye(@PathVariable Long id) {
+        log.debug("REST request to delete WrapperEmploye : {}", id);
+        employeService.deleteWrapperEmploye(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
 }

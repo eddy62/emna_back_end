@@ -89,7 +89,8 @@ public class WrapperEmployeMapper {
 
         employeDTO.setId(wrapperEmploye.getId());
         employeDTO.setMatricule(wrapperEmploye.getMatricule());
-        employeDTO.setCivilite(wrapperEmploye.getNomNaissance());
+        employeDTO.setCivilite(wrapperEmploye.getCivilite());
+        employeDTO.setNomNaissance(wrapperEmploye.getNomNaissance());
         employeDTO.setNomUsage(wrapperEmploye.getNomUsage());
         employeDTO.setPrenom(wrapperEmploye.getPrenom());
         employeDTO.setDateNaissance(wrapperEmploye.getDateNaissance());
@@ -160,7 +161,7 @@ public class WrapperEmployeMapper {
      * @param wrapperEmploye
      * @return
      */
-    public SocieteDTO toSociteDto(final WrapperEmploye wrapperEmploye) {
+    public SocieteDTO toSocieteDto(final WrapperEmploye wrapperEmploye) {
         final SocieteDTO societeDTO = new SocieteDTO();
         
         societeDTO.setId(wrapperEmploye.getSocieteId());
