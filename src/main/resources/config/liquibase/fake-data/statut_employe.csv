@@ -2,4 +2,5 @@ id;code_ref;libelle
 1;EMPNEMB;Non Embauché
 2;EMPEMB;Embauché
 3;EMPEND;Sorti
+4;EMPOTHER;Autre
 
