@@ -1,30 +1,32 @@
 package fr.insy2s.service.impl;
 
-
-import fr.insy2s.repository.projection.IEmployeContratProjection;
-import fr.insy2s.service.EmployeService;
-import fr.insy2s.domain.Employe;
-import fr.insy2s.repository.EmployeRepository;
-import fr.insy2s.service.dto.EmployeDTO;
-import fr.insy2s.service.mapper.EmployeMapper;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import fr.insy2s.domain.Employe;
+import fr.insy2s.repository.EmployeRepository;
+import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.AdresseService;
+import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.InfoEntrepriseService;
 import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.StatutEmployeService;
 import fr.insy2s.service.dto.AdresseDTO;
+import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.InfoEntrepriseDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
+import fr.insy2s.service.mapper.EmployeMapper;
 import fr.insy2s.service.mapper.WrapperEmployeMapper;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
@@ -123,19 +125,44 @@ public class EmployeServiceImpl implements EmployeService {
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final Optional<WrapperEmploye> wrapperEmploye = Optional.of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
-        // client.isPresent() ? Optional.of(toWrapperCLientFournisseur(client.get())) : Optional.empty();
     }
 
     @Override
     public WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
-        // TODO Auto-generated method stub
-        return null;
+        final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
+        final AdresseDTO adresseDTO = wrapperEmployeMapper.toAdresseDto(wrapperEmploye);
+        final StatutEmployeDTO statutEmployeDTO = wrapperEmployeMapper.toStatutEmploye(wrapperEmploye);
+        final SocieteDTO societeDTO = wrapperEmployeMapper.toSociteDto(wrapperEmploye);
+        final InfoEntrepriseDTO infoEntrepriseDTO = wrapperEmployeMapper.toInfoEntrepriseDto(wrapperEmploye);
+
+        final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
+        final AdresseDTO newAdresseDTO = adresseService.save(adresseDTO);
+        final StatutEmployeDTO newStatutEmployeDTO = statutEmployeService.save(statutEmployeDTO);
+        final InfoEntrepriseDTO newInfoEntrepriseDTO = infoEntrepriseService.save(infoEntrepriseDTO);
+        final SocieteDTO newSocieteDTO = societeService.save(societeDTO);
+
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, newStatutEmployeDTO, newSocieteDTO, newInfoEntrepriseDTO);
+
+        return newWrapperEmploye;
     }
 
     @Override
     public WrapperEmploye updateWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
-        // TODO Auto-generated method stub
-        return null;
+        final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
+        final AdresseDTO adresseDTO = wrapperEmployeMapper.toAdresseDto(wrapperEmploye);
+        final StatutEmployeDTO statutEmployeDTO = wrapperEmployeMapper.toStatutEmploye(wrapperEmploye);
+        final SocieteDTO societeDTO = wrapperEmployeMapper.toSociteDto(wrapperEmploye);
+        final InfoEntrepriseDTO infoEntrepriseDTO = wrapperEmployeMapper.toInfoEntrepriseDto(wrapperEmploye);
+
+        final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
+        final AdresseDTO newAdresseDTO = adresseService.save(adresseDTO);
+        final StatutEmployeDTO newStatutEmployeDTO = statutEmployeService.save(statutEmployeDTO);
+        final InfoEntrepriseDTO newInfoEntrepriseDTO = infoEntrepriseService.save(infoEntrepriseDTO);
+        final SocieteDTO newSocieteDTO = societeService.save(societeDTO);
+
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, newStatutEmployeDTO, newSocieteDTO, newInfoEntrepriseDTO);
+
+        return newWrapperEmploye;
     }
 
     @Override
@@ -148,4 +175,5 @@ public class EmployeServiceImpl implements EmployeService {
     public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
         return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
     }
+
 }

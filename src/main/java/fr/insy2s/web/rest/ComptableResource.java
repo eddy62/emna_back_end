@@ -4,6 +4,7 @@ import fr.insy2s.domain.Comptable;
 import fr.insy2s.repository.ComptableRepository;
 import fr.insy2s.service.ComptableService;
 import fr.insy2s.service.dto.ComptableInfoEntrepriseAdresseUserDTO;
+import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.mapper.ComptableMapper;
 import fr.insy2s.utils.wrapper.WrapperComptable;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -171,6 +172,13 @@ public class ComptableResource {
         ComptableDTO res = comptableMapper.toDto(result.get());
         Optional<ComptableDTO> resS = Optional.ofNullable(res);
         return ResponseUtil.wrapOrNotFound(resS);
+    }
+
+    @GetMapping("/comptables/user/{id}")
+    public ResponseEntity<ComptableDTO> getComptableByUserId(@PathVariable Long id) {
+        log.debug("REST request to get Comptable from user ID : {}", id);
+        Optional<ComptableDTO> comptableDTO = comptableService.findByUser(id);
+        return ResponseUtil.wrapOrNotFound(comptableDTO);
     }
 
     private void verificationsComptable(ComptableInfoEntrepriseAdresseUserDTO comptable, String callingMethode ) {

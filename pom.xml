@@ -10,7 +10,14 @@
     <name>Emna Back End</name>
 
     <repositories>
-        <!-- jhipster-needle-maven-repository -->
+
+        <repository>
+            <id>jr-ce-releases</id>
+            <!--// CHECKSTYLE:OFF-->
+            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+            <!--// CHECKSTYLE:ON-->
+        </repository>
+
     </repositories>
 
     <pluginRepositories>
@@ -321,6 +328,39 @@
             <artifactId>metrics-core</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+
+        <!--MANUAL DEPENDENCIES-->
+        <!-- JasperSoft -->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-functions</artifactId>
+            <version>6.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-fonts</artifactId>
+            <version>6.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ar.com.fdvs</groupId>
+            <artifactId>DynamicJasper-core-fonts</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

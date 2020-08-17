@@ -50,4 +50,6 @@ public interface ComptableService {
      */
     WrapperComptable creerOuModifierComptable(ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO, String callingMethode);
     WrapperComptable getComptable(Long id);
+
+    Optional<ComptableDTO> findByUser(Long id);
 }

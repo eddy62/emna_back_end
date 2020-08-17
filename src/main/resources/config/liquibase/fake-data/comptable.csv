@@ -1,11 +1,3 @@
-id;civilite;adresse_id
-1;Principal;1
-2;Group Refined connect;2
-3;Buckinghamshire;3
-4;Administrator Sleek Frozen Bacon;4
-5;global morph;5
-6;infrastructure Steel redundant;6
-7;Interactions;7
-8;Borders Money Market Account web-enabled;8
-9;Sleek Wooden Salad Frozen Tasty Steel Ball;9
-10;yellow Salad;10
+id;civilite;adresse_id;user_id
+1;Principal;1;4
+

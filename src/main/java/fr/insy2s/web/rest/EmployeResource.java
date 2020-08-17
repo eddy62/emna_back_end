@@ -1,33 +1,27 @@
 package fr.insy2s.web.rest;
 
 
+import fr.insy2s.domain.Article;
 import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.EmployeService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.EmployeDTO;
-import fr.insy2s.web.rest.vm.EmployerArticleClauseVM;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
+import fr.insy2s.web.rest.vm.ArticleVM;
+import fr.insy2s.web.rest.vm.ClauseVm;
+import fr.insy2s.web.rest.vm.EmployerVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
-import fr.insy2s.utils.wrapper.WrapperEmploye;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
 
 
 /**
@@ -37,12 +31,12 @@ import fr.insy2s.utils.wrapper.WrapperEmploye;
 @RequestMapping("/api")
 public class EmployeResource {
 
-    private final Logger         log         = LoggerFactory.getLogger(EmployeResource.class);
+    private final Logger log = LoggerFactory.getLogger(EmployeResource.class);
 
-    private static final String  ENTITY_NAME = "employe";
+    private static final String ENTITY_NAME = "employe";
 
     @Value("${jhipster.clientApp.name}")
-    private String               applicationName;
+    private String applicationName;
 
     private final EmployeService employeService;
 
@@ -65,7 +59,7 @@ public class EmployeResource {
         }
         EmployeDTO result = employeService.save(employeDTO);
         return ResponseEntity.created(new URI("/api/employes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-                        .body(result);
+            .body(result);
     }
 
     /**
@@ -73,7 +67,7 @@ public class EmployeResource {
      *
      * @param employeDTO the employeDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated employeDTO, or with status {@code 400 (Bad Request)} if the employeDTO is not valid, or with status
-     *         {@code 500 (Internal Server Error)} if the employeDTO couldn't be updated.
+     * {@code 500 (Internal Server Error)} if the employeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/employes")
@@ -125,13 +119,67 @@ public class EmployeResource {
 
 
     @GetMapping("/employer/article/clause/societe/{id}")
-    public List<EmployerArticleClauseVM> getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
-        List<EmployerArticleClauseVM> employerArticleClauseVMS = new ArrayList<>();
-        List<IEmployeContratProjection> iEmployeContratProjections = this.employeService.getAllEmployeArticleClauseBySocieteId(id);
-        for (IEmployeContratProjection iEmployeContratProjection : iEmployeContratProjections) {
-            employerArticleClauseVMS.add(new EmployerArticleClauseVM(iEmployeContratProjection.getEmployerId(), iEmployeContratProjection.getEmployerNom(), iEmployeContratProjection.getEmployerPrenom(), iEmployeContratProjection.getSocieteId(), iEmployeContratProjection.getArticleTitre(), iEmployeContratProjection.getClauseId(), iEmployeContratProjection.getClauseReference(), iEmployeContratProjection.getClauseDescription()));
+    public List<EmployerVM> getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
+        List<EmployerVM> listEmployer = new ArrayList<>();
+        List<IEmployeContratProjection> listIEmployeContratProjections = this.employeService.getAllEmployeArticleClauseBySocieteId(id);
+        EmployerVM employerVM = new EmployerVM();
+        List<ArticleVM> listArticle = new ArrayList<>();
+        List<ClauseVm> listClause = new ArrayList<>();
+
+        int index=1;
+int tour=1;
+        for (IEmployeContratProjection iEmployeContratProjection : listIEmployeContratProjections) { //*19
+            ArticleVM articleVM = new ArticleVM();
+            ClauseVm clauseVm = new ClauseVm();
+            System.err.println("DANS LA BOUCLE"+tour);
+            employerVM.setEmployerId(iEmployeContratProjection.getEmployerId());
+            employerVM.setEmployerNom(iEmployeContratProjection.getEmployerNom());
+            employerVM.setEmployerPrenom(iEmployeContratProjection.getEmployerPrenom());
+            employerVM.setSocieteId(iEmployeContratProjection.getSocieteId());
+            articleVM.setArticleId(iEmployeContratProjection.getArticleId());
+            System.err.println("ID ARTICLE ="+articleVM.getArticleId());
+            articleVM.setArticleTitre(iEmployeContratProjection.getArticleTitre());
+            articleVM.setArticleDescription(iEmployeContratProjection.getArticleDescription());
+            articleVM.setListClauses(new ArrayList<>());
+            if(articleVM.getArticleId()==index){
+                listArticle.add(articleVM);
+                System.err.println("Contenu de listArticle DANS LA BOUCLE");
+                for(ArticleVM article: listArticle){
+                    System.err.println(article.getArticleId());
+                }
+                index++;
+            }
+
+
+            clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
+            clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
+            System.err.println("ID CLAUSE ="+clauseVm.getClauseId());
+            clauseVm.setClauseReference(iEmployeContratProjection.getClauseReference());
+            clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
+
+            listClause.add(clauseVm);
+
+            tour++;
+
         }
-        return employerArticleClauseVMS;
+        System.err.println("Taille de listArticle");
+        System.err.println(listArticle.size());
+        System.err.println("Contenu de listArticle");
+        for(ArticleVM article: listArticle){
+            System.err.println(article.getArticleId());
+        }
+
+
+        for (ClauseVm clause : listClause) {
+            System.err.println(clause.getArticleId());
+            int integ = Math.toIntExact(clause.getArticleId());
+            listArticle.get(integ-1).getListClauses().add(clause);
+        }
+
+
+        employerVM.setListArticles(listArticle);
+        listEmployer.add(employerVM);
+        return listEmployer;
     }
 
     /**
@@ -173,20 +221,38 @@ public class EmployeResource {
     }
 
     /**
-     * {@code POST  /employes} : Create a new employe.
+     * {@code POST  /wrapperEmploye} : Create a new wrapperEmploye.
      *
-     * @param wrapperEmploye the employeDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new employeDTO, or with status {@code 400 (Bad Request)} if the employe has already an ID.
+     * @param wrapperEmploye the wrapperEmploye to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/wrapperemployes")
     public ResponseEntity<WrapperEmploye> createWrapperEmploye(@Valid @RequestBody WrapperEmploye wrapperEmploye) throws URISyntaxException {
-        log.debug("REST request to save Employe : {}", wrapperEmploye);
+        log.debug("REST request to save WrapperEmploye : {}", wrapperEmploye);
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
         WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
-        return ResponseEntity.created(new URI("/api/employes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-                        .body(result);
+        return ResponseEntity.created(new URI("/api/wrapperemployes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PUT  /wrapperEmploye} : Updates an existing wrapperEmploye.
+     *
+     * @param wrapperEmploye the wrapperEmploye to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye is not valid, or with status
+     * {@code 500 (Internal Server Error)} if the wrapperEmploye couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/wrapperemployes")
+    public ResponseEntity<WrapperEmploye> updateWrapperEmploye(@Valid @RequestBody WrapperEmploye wrapperEmploye) throws URISyntaxException {
+        log.debug("REST request to update WrapperEmploye : {}", wrapperEmploye);
+        if (wrapperEmploye.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        WrapperEmploye result = employeService.updateWrapperEmploye(wrapperEmploye);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
 }

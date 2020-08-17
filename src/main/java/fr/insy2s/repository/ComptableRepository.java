@@ -16,4 +16,6 @@ import java.util.Optional;
 public interface ComptableRepository extends JpaRepository<Comptable, Long> {
 
     Optional<Comptable> findComptableByUserId(Long ui);
+
+    Optional<Comptable> findByUserId(Long id);
 }

@@ -2,6 +2,12 @@ package fr.insy2s.utils.wrapper;
 
 import java.time.LocalDate;
 
+import fr.insy2s.service.dto.AdresseDTO;
+import fr.insy2s.service.dto.EmployeDTO;
+import fr.insy2s.service.dto.InfoEntrepriseDTO;
+import fr.insy2s.service.dto.SocieteDTO;
+import fr.insy2s.service.dto.StatutEmployeDTO;
+
 public class WrapperEmploye {
 
     //Employe
@@ -102,50 +108,51 @@ public class WrapperEmploye {
      * @param infoEntrepriseId
      * @param raisonSociale
      */
-    public WrapperEmploye(Long id, String matricule, String civilite, String nomNaissance, String nomUsage, String prenom, LocalDate dateNaissance, String villeNaissance, String departementNaissance,
-                    String paysNaisance, String numeroSecuriteSociale, String email, String telephoneFix, String telephonePortable, String fax, Double salaireHoraire, Double salaireBrutMensuelle,
-                    Double heuresMensuelle, String categorie, String poste, LocalDate dateEmbauche, LocalDate dateSortie, String typeContrat, String situationFamiliale, Integer enfantsACharge,
-                    Long adresseId, String numeroRue, String nomRue, String boitePostale, String codePostal, String ville, String pays, Long statutEmployeId, String codeRef, String libelle,
-                    Long societeId, Long infoEntrepriseId, String raisonSociale) {
+    public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO) {
         super();
-        this.id = id;
-        this.matricule = matricule;
-        this.civilite = civilite;
-        this.nomNaissance = nomNaissance;
-        this.nomUsage = nomUsage;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.villeNaissance = villeNaissance;
-        this.departementNaissance = departementNaissance;
-        this.paysNaisance = paysNaisance;
-        this.numeroSecuriteSociale = numeroSecuriteSociale;
-        this.email = email;
-        this.telephoneFix = telephoneFix;
-        this.telephonePortable = telephonePortable;
-        this.fax = fax;
-        this.salaireHoraire = salaireHoraire;
-        this.salaireBrutMensuelle = salaireBrutMensuelle;
-        this.heuresMensuelle = heuresMensuelle;
-        this.categorie = categorie;
-        this.poste = poste;
-        this.dateEmbauche = dateEmbauche;
-        this.dateSortie = dateSortie;
-        this.typeContrat = typeContrat;
-        this.situationFamiliale = situationFamiliale;
-        this.enfantsACharge = enfantsACharge;
-        this.adresseId = adresseId;
-        this.numeroRue = numeroRue;
-        this.nomRue = nomRue;
-        this.boitePostale = boitePostale;
-        this.codePostal = codePostal;
-        this.ville = ville;
-        this.pays = pays;
-        this.statutEmployeId = statutEmployeId;
-        this.codeRef = codeRef;
-        this.libelle = libelle;
-        this.societeId = societeId;
-        this.infoEntrepriseId = infoEntrepriseId;
-        this.raisonSociale = raisonSociale;
+        //employe
+        this.id = employeDTO.getAdresseId();
+        this.matricule = employeDTO.getMatricule();
+        this.civilite = employeDTO.getCivilite();
+        this.nomNaissance = employeDTO.getNomNaissance();
+        this.nomUsage = employeDTO.getNomUsage();
+        this.prenom = employeDTO.getPrenom();
+        this.dateNaissance = employeDTO.getDateNaissance();
+        this.villeNaissance = employeDTO.getVilleNaissance();
+        this.departementNaissance = employeDTO.getDepartementNaissance();
+        this.paysNaisance = employeDTO.getPaysNaisance();
+        this.numeroSecuriteSociale = employeDTO.getNumeroSecuriteSociale();
+        this.email = employeDTO.getEmail();
+        this.telephoneFix = employeDTO.getTelephoneFix();
+        this.telephonePortable = employeDTO.getTelephonePortable();
+        this.fax = employeDTO.getFax();
+        this.salaireHoraire = employeDTO.getSalaireHoraire();
+        this.salaireBrutMensuelle = employeDTO.getSalaireBrutMensuelle();
+        this.heuresMensuelle = employeDTO.getHeuresMensuelle();
+        this.categorie = employeDTO.getCategorie();
+        this.poste = employeDTO.getPoste();
+        this.dateEmbauche = employeDTO.getDateEmbauche();
+        this.dateSortie = employeDTO.getDateSortie();
+        this.typeContrat = employeDTO.getTypeContrat();
+        this.situationFamiliale = employeDTO.getSituationFamiliale();
+        this.enfantsACharge = employeDTO.getEnfantsACharge();
+        //adresse
+        this.adresseId = employeDTO.getAdresseId();
+        this.numeroRue = adresseDTO.getNumeroRue();
+        this.nomRue = adresseDTO.getNomRue();
+        this.boitePostale = adresseDTO.getBoitePostale();
+        this.codePostal = adresseDTO.getCodePostal();
+        this.ville = adresseDTO.getVille();
+        this.pays = adresseDTO.getPays();
+        //statutEmploye
+        this.statutEmployeId = employeDTO.getStatutEmployeId();
+        this.codeRef = statutEmployeDTO.getCodeRef();
+        this.libelle = statutEmployeDTO.getLibelle();
+        //societe
+        this.societeId = employeDTO.getSocieteId();
+        //infoEntreprise
+        this.infoEntrepriseId = societeDTO.getInfoEntrepriseId();
+        this.raisonSociale = infoEntrepriseDTO.getRaisonSociale();
     }
 
     public Long getId() {

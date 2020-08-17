@@ -180,9 +180,7 @@ public class ContratResource {
     @GetMapping("/contrats/employer/{id}")
     public List<ContratEmployerVM> getAllContratEmployerByIdSociete(@PathVariable Long id) {
         List<ContratEmployerVM> contratEmployerVMS = new ArrayList<>();
-        System.err.println(contratEmployerVMS);
         List<IContratEmployerProjection> iContratEmployerProjections = this.contratService.getAllContratEmployerById(id);
-        System.err.println(this.contratService.getAllContratEmployerById(id));
         for (IContratEmployerProjection iContratEmployerProjection: iContratEmployerProjections) {
             System.err.println(contratEmployerVMS);
             contratEmployerVMS.add(new ContratEmployerVM(iContratEmployerProjection.getEmployerId(), iContratEmployerProjection.getContratTitre(), iContratEmployerProjection.getEmployerNom(), iContratEmployerProjection.getEmployerPrenom(), iContratEmployerProjection.getContratSigner(), iContratEmployerProjection.getContratArchiver()));
