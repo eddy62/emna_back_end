@@ -50,4 +50,13 @@ public interface ProduitService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+
+
+    /**
+     * Get all the produits.
+     *
+     * @return the list of entities.
+     */
+    List<ProduitDTO>findAllBySocieteId(Long id );
 }

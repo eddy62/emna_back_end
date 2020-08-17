@@ -114,4 +114,16 @@ public class ProduitResource {
         produitService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /produits/societe/id} : get all the produits.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of produits in body.
+     */
+    @GetMapping("/produits/societe/{id}")
+    public List<ProduitDTO> getAllProduitBySociete(@PathVariable Long id) {
+        log.debug("REST request to get all Produit");
+        return produitService.findAllBySocieteId(id);
+    }
+
 }

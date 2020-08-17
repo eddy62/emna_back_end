@@ -71,4 +71,13 @@ public class ProduitServiceImpl implements ProduitService {
         log.debug("Request to delete Produit : {}", id);
         produitRepository.deleteById(id);
     }
+
+    @Override
+    public List<ProduitDTO>findAllBySocieteId(Long id){
+        log.debug("Request to get all produit");
+        List<Produit> listeProduit = produitRepository.findBySocieteId(id);
+        return listeProduit.stream()
+            .map(produitMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 }
