@@ -1,9 +1,6 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.User;
-import fr.insy2s.repository.AdresseRepository;
-import fr.insy2s.repository.InfoEntrepriseRepository;
-import fr.insy2s.repository.UserRepository;
 import fr.insy2s.service.AdresseService;
 import fr.insy2s.service.ComptableService;
 import fr.insy2s.domain.Comptable;
@@ -116,7 +113,7 @@ public class ComptableServiceImpl implements ComptableService {
 
             }
             ComptableDTO c = save(comptableDTO);
-            //it should return ud in the else statement when the callingMethode is update.
+            //it should return ud in the else statement when the calling Methode is update.
             return new WrapperComptable(c,a,iES,userMapper.userToUserDTO(u));
 
         }catch (Exception e){
