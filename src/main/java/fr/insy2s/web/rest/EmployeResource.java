@@ -220,4 +220,46 @@ public class EmployeResource {
         employeService.deleteWrapperEmploye(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+    
+    /**
+     * {@code GET /wrapperemployes/society/:id/typecontrat/:type} : get all the wrapperEmployes by society and by type of contract.
+     *
+     * @param id of the society
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of society's wrapperEmployes in body.
+     */
+    @GetMapping("/wrapperemployes/society/{id}/typecontrat/{type}")
+    public List<WrapperEmploye> getAllWrapperEmployesBySocietyAndTypeContrat(@PathVariable Long id, @PathVariable String type) {
+        log.debug("REST request to get all WrapperEmployes by society and by type of Contract : {}", id, type);
+        List<WrapperEmploye> list = employeService.findAllWrapperEmployeBySociete(id);
+        List<WrapperEmploye> listeSelect = new ArrayList<WrapperEmploye>();
+        for (WrapperEmploye wrapperEmploye : list) {
+            if (wrapperEmploye.getTypeContrat().equals(type)) {
+                listeSelect.add(wrapperEmploye);
+            }
+        }
+       
+        return listeSelect;
+    }
+    
+    /**
+     * {@code GET /wrapperemployes/society/:id/typecontrat/:type} : get all the wrapperEmployes by society and by type of contract.
+     *
+     * @param id of the society
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of society's wrapperEmployes in body.
+     */
+    @GetMapping("/wrapperemployes/society/{id}/statutemploye/{codestatut}")
+    public List<WrapperEmploye> getAllWrapperEmployesBySocietyAndSatutEmploye(@PathVariable Long id, @PathVariable String codestatut) {
+        log.debug("REST request to get all WrapperEmployes by society and by type of Contract : {}", id, codestatut);
+        List<WrapperEmploye> list = employeService.findAllWrapperEmployeBySociete(id);
+        List<WrapperEmploye> listeSelect = new ArrayList<WrapperEmploye>();
+        for (WrapperEmploye wrapperEmploye : list) {
+            if (wrapperEmploye.getCodeRef().equals(codestatut)) {
+                listeSelect.add(wrapperEmploye);
+            }
+        }
+       
+        return listeSelect;
+    }
+    
+    
 }
