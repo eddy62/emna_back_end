@@ -4,13 +4,18 @@ import fr.insy2s.domain.Adresse;
 import fr.insy2s.domain.Societe;
 import fr.insy2s.repository.AdresseRepository;
 import fr.insy2s.repository.SocieteRepository;
+import fr.insy2s.repository.UserRepository;
+import fr.insy2s.security.AuthoritiesConstants;
+import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.repository.ClientFournisseurRepository;
 import fr.insy2s.service.dto.AdresseDTO;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
+import fr.insy2s.service.dto.UserDTO;
 import fr.insy2s.service.mapper.AdresseMapper;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
+import fr.insy2s.service.mapper.UserMapper;
 import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +47,18 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
 
     private final AdresseMapper adresseMapper ;
 
-    public ClientFournisseurServiceImpl(ClientFournisseurRepository clientFournisseurRepository, ClientFournisseurMapper clientFournisseurMapper , SocieteRepository societeRepository , AdresseRepository adresseRepository , AdresseMapper adresseMapper) {
+    private final UserMapper userMapper ;
+
+    private final UserRepository userRepository ;
+
+    public ClientFournisseurServiceImpl(ClientFournisseurRepository clientFournisseurRepository, ClientFournisseurMapper clientFournisseurMapper , SocieteRepository societeRepository , AdresseRepository adresseRepository , AdresseMapper adresseMapper , UserMapper userMapper , UserRepository userRepository) {
         this.clientFournisseurRepository = clientFournisseurRepository;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.societeRepository = societeRepository;
         this.adresseRepository = adresseRepository;
         this.adresseMapper = adresseMapper;
+        this.userMapper = userMapper;
+        this.userRepository =userRepository;
     }
 
     /**
@@ -267,6 +278,33 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         log.debug("Request to get ClientFournisseur : {}",nom);
         return clientFournisseurRepository.findByNom(nom)
             .map(clientFournisseurMapper::toDto);
+    }
+
+    /**
+     * Récupère un user à partir de son login
+     *
+     * @param loginUser
+     * @return
+     */
+    public UserDTO findOneByLogin(final String loginUser) {
+        return userMapper.userToUserDTO(userRepository.findOneByLogin(loginUser).get());
+    }
+
+    @Override
+    public Boolean connectedUserIsSociete(){
+        UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        for(String auth:currentUser.getAuthorities()){
+            if(AuthoritiesConstants.SOCIETY.equals(auth))return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public Boolean verfyIdOfUserConnected(Long id){
+        UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if(currentUser.getId()==id)return true;
+        else return false;
     }
 
     }
