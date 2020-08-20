@@ -1,5 +1,6 @@
 package fr.insy2s.service;
 
+import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
 
 import java.util.List;
@@ -39,4 +40,11 @@ public interface StatutEmployeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the "codeRef" statutEmploye
+     * @param codeRef
+     * @return
+     */
+    StatutEmployeDTO findByCodeRef(String codeRef);
 }

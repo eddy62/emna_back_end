@@ -22,6 +22,7 @@ public class ComptableInfoEntrepriseAdresseUserDTO {
     private String nomRue;
     private String codePostal;
     private String ville;
+    private String pays;
 
     //info entreprise
     private Long idInfoEntreprise;
@@ -51,6 +52,14 @@ public class ComptableInfoEntrepriseAdresseUserDTO {
     private String lastModifiedBy;
     private Instant lastModifiedDate;
     private Set<String> authorities;
+
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
 
     public Long getId() {
         return id;

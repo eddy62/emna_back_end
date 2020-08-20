@@ -133,47 +133,8 @@ public class ContratResource {
         log.debug("REST request to get details Contrat : {}", id);
         List<IContratAllInfoProjection> iContratAllInfoProjections = this.contratService.getContratAllInfos(id);
         Optional<ContratAllInfoVM> contratAllInfoVM = Optional.of(new ContratAllInfoVM());
+        if(!iContratAllInfoProjections.isEmpty())
         contratAllInfoVM.get().setContratId(iContratAllInfoProjections.get(0).getContratId());
-        contratAllInfoVM.get().setContratTitre(iContratAllInfoProjections.get(0).getContratTitre());
-        contratAllInfoVM.get().setContratDateCreation(iContratAllInfoProjections.get(0).getContratDateCreation());
-        contratAllInfoVM.get().setContratSigner(iContratAllInfoProjections.get(0).getContratSigner());
-        contratAllInfoVM.get().setContratArchiver(iContratAllInfoProjections.get(0).getContratArchiver());
-        contratAllInfoVM.get().setEmployerMatricule(iContratAllInfoProjections.get(0).getEmployerMatricule());
-        contratAllInfoVM.get().setEmployerCivilite(iContratAllInfoProjections.get(0).getEmployerCivilite());
-        contratAllInfoVM.get().setEmployerNomNaissance(iContratAllInfoProjections.get(0).getEmployerNomNaissance());
-        contratAllInfoVM.get().setEmployerNomUsage(iContratAllInfoProjections.get(0).getEmployerNomUsage());
-        contratAllInfoVM.get().setEmployerPrenom(iContratAllInfoProjections.get(0).getEmployerPrenom());
-        contratAllInfoVM.get().setEmployerDateNaissance(iContratAllInfoProjections.get(0).getEmployerDateNaissance());
-        contratAllInfoVM.get().setEmployerVilleNaissance(iContratAllInfoProjections.get(0).getEmployerVilleNaissance());
-        contratAllInfoVM.get().setEmployerDepartementNaissance(iContratAllInfoProjections.get(0).getEmployerDepartementNaissance());
-        contratAllInfoVM.get().setEmployerPaysNaissance(iContratAllInfoProjections.get(0).getEmployerPaysNaissance());
-        contratAllInfoVM.get().setEmployerNumeroSecuriteSociale(iContratAllInfoProjections.get(0).getEmployerNumeroSecuriteSociale());
-        contratAllInfoVM.get().setEmployerEmail(iContratAllInfoProjections.get(0).getEmployerEmail());
-        contratAllInfoVM.get().setEmployerTelephonFixe(iContratAllInfoProjections.get(0).getEmployerTelephonFixe());
-        contratAllInfoVM.get().setEmployerTelephonePortable(iContratAllInfoProjections.get(0).getEmployerTelephonePortable());
-        contratAllInfoVM.get().setEmployerFax(iContratAllInfoProjections.get(0).getEmployerFax());
-        contratAllInfoVM.get().setEmployerAdresseBoitePostale(iContratAllInfoProjections.get(0).getEmployerAdresseBoitePostale());
-        contratAllInfoVM.get().setEmployerAdresseCodePostal(iContratAllInfoProjections.get(0).getEmployerAdresseCodePostal());
-        contratAllInfoVM.get().setEmployerAdresseNomRue(iContratAllInfoProjections.get(0).getEmployerAdresseNomRue());
-        contratAllInfoVM.get().setEmployerAdresseNumeroRue(iContratAllInfoProjections.get(0).getEmployerAdresseNumeroRue());
-        contratAllInfoVM.get().setEmployerAdresseVille(iContratAllInfoProjections.get(0).getEmployerAdresseVille());
-        contratAllInfoVM.get().setInfoSocieteRaisonSociale(iContratAllInfoProjections.get(0).getInfoSocieteRaisonSociale());
-        contratAllInfoVM.get().setInfoSocieteTelephone(iContratAllInfoProjections.get(0).getInfoSocieteTelephone());
-        contratAllInfoVM.get().setInfoSocieterFax(iContratAllInfoProjections.get(0).getInfoSocieterFax());
-        contratAllInfoVM.get().setInfoSocieterFormeJuridique(iContratAllInfoProjections.get(0).getInfoSocieterFormeJuridique());
-        contratAllInfoVM.get().setInfoSocieterSiren(iContratAllInfoProjections.get(0).getInfoSocieterSiren());
-        contratAllInfoVM.get().setInfoSocieterSiret(iContratAllInfoProjections.get(0).getInfoSocieterSiret());
-        contratAllInfoVM.get().setInfoSocieterEmail(iContratAllInfoProjections.get(0).getInfoSocieterEmail());
-        contratAllInfoVM.get().setInfoSocieterAdresseBoitePostale(iContratAllInfoProjections.get(0).getInfoSocieterAdresseBoitePostale());
-        contratAllInfoVM.get().setInfoSocieterAdresseCodePostale(iContratAllInfoProjections.get(0).getInfoSocieterAdresseCodePostale());
-        contratAllInfoVM.get().setInfoSocieterAdresseNomRue(iContratAllInfoProjections.get(0).getInfoSocieterAdresseNomRue());
-        contratAllInfoVM.get().setInfoSocieterAdresseNumeroRue(iContratAllInfoProjections.get(0).getInfoSocieterAdresseNumeroRue());
-        contratAllInfoVM.get().setInfoSocieterAdresseVille(iContratAllInfoProjections.get(0).getInfoSocieterAdresseVille());
-        List<ClauseEtArticleVM> clauseEtArticleVMS = new ArrayList<>();
-        for (IContratAllInfoProjection clause : iContratAllInfoProjections) {
-            clauseEtArticleVMS.add(new ClauseEtArticleVM(clause.getArticleTitre(), clause.getClauseDescription()));
-        }
-        contratAllInfoVM.get().setClauseEtArticleList(clauseEtArticleVMS);
         return ResponseEntity.ok(contratAllInfoVM.get());
     }
 

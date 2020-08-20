@@ -118,6 +118,7 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public Optional<WrapperEmploye> findById(final Long id) {
+        log.debug("Request to get WrapperEmploye : {}", id);
         final EmployeDTO employeDTO = findOne(id).get();
         final AdresseDTO adresseDTO = adresseService.findOne(employeDTO.getAdresseId()).get();
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
@@ -129,45 +130,40 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
+        final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
+        final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+        final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
+        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
-        final AdresseDTO adresseDTO = wrapperEmployeMapper.toAdresseDto(wrapperEmploye);
-        final StatutEmployeDTO statutEmployeDTO = wrapperEmployeMapper.toStatutEmploye(wrapperEmploye);
-        final SocieteDTO societeDTO = wrapperEmployeMapper.toSociteDto(wrapperEmploye);
-        final InfoEntrepriseDTO infoEntrepriseDTO = wrapperEmployeMapper.toInfoEntrepriseDto(wrapperEmploye);
-
+        employeDTO.setAdresseId(newAdresseDTO.getId());
+        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
-        final AdresseDTO newAdresseDTO = adresseService.save(adresseDTO);
-        final StatutEmployeDTO newStatutEmployeDTO = statutEmployeService.save(statutEmployeDTO);
-        final InfoEntrepriseDTO newInfoEntrepriseDTO = infoEntrepriseService.save(infoEntrepriseDTO);
-        final SocieteDTO newSocieteDTO = societeService.save(societeDTO);
-
-        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, newStatutEmployeDTO, newSocieteDTO, newInfoEntrepriseDTO);
-
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
         return newWrapperEmploye;
     }
 
     @Override
     public WrapperEmploye updateWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
+        final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
+        final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+        final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
+        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
-        final AdresseDTO adresseDTO = wrapperEmployeMapper.toAdresseDto(wrapperEmploye);
-        final StatutEmployeDTO statutEmployeDTO = wrapperEmployeMapper.toStatutEmploye(wrapperEmploye);
-        final SocieteDTO societeDTO = wrapperEmployeMapper.toSociteDto(wrapperEmploye);
-        final InfoEntrepriseDTO infoEntrepriseDTO = wrapperEmployeMapper.toInfoEntrepriseDto(wrapperEmploye);
-
+        employeDTO.setAdresseId(newAdresseDTO.getId());
+        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
-        final AdresseDTO newAdresseDTO = adresseService.save(adresseDTO);
-        final StatutEmployeDTO newStatutEmployeDTO = statutEmployeService.save(statutEmployeDTO);
-        final InfoEntrepriseDTO newInfoEntrepriseDTO = infoEntrepriseService.save(infoEntrepriseDTO);
-        final SocieteDTO newSocieteDTO = societeService.save(societeDTO);
-
-        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, newStatutEmployeDTO, newSocieteDTO, newInfoEntrepriseDTO);
-
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
         return newWrapperEmploye;
     }
 
     @Override
     public void deleteWrapperEmploye(Long id) {
-        // TODO Auto-generated method stub
+        log.debug("Request to delete WrapperEmploye : {}", id);
+        final Employe employe = employeRepository.getOne(id);
+        final AdresseDTO adresseDTO = adresseService.findOne(employe.getAdresse().getId()).get();
+        adresseService.delete(adresseDTO.getId());
+        employeRepository.delete(employe);
+
 
     }
 

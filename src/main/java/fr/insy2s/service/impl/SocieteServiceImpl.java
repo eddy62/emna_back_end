@@ -1,18 +1,15 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.User;
 import fr.insy2s.service.AdresseService;
 import fr.insy2s.service.InfoEntrepriseService;
 import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.UserService;
 import fr.insy2s.domain.Societe;
 import fr.insy2s.repository.SocieteRepository;
-import fr.insy2s.service.dto.AdresseDTO;
-import fr.insy2s.service.dto.InfoEntrepriseDTO;
-import fr.insy2s.service.dto.SocieteDTO;
-import fr.insy2s.service.dto.UserDTO;
-import fr.insy2s.service.mapper.AdresseMapper;
-import fr.insy2s.service.mapper.SocieteMapper;
-import fr.insy2s.service.mapper.UserMapper;
+import fr.insy2s.service.dto.*;
+import fr.insy2s.service.mapper.*;
+import fr.insy2s.utils.wrapper.WrapperComptable;
 import fr.insy2s.utils.wrapper.WrapperSociete;
 
 import org.slf4j.Logger;
@@ -104,9 +101,72 @@ public class SocieteServiceImpl implements SocieteService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+
+    @Override
+    public WrapperSociete creerOuModifierSociete(SocieteInfoEntrepriseAdresseUserDTO societeInfoEntrepriseAdresseUserDTO, String callingMethode) {
+
+        SocieteInfoEntrepriseAdresseUserMapper so = new SocieteInfoEntrepriseAdresseUserMapper();
+        UserDTO userDTO = so.SocieteInfoEntrepriseAdresseUserDtoToUserDto(societeInfoEntrepriseAdresseUserDTO);
+        SocieteDTO societeDTO = so.SocieteInfoEntrepriseAdresseUserDtoToSocieteDto(societeInfoEntrepriseAdresseUserDTO);
+        InfoEntrepriseDTO infoEntrepriseDTO = so.SocieteInfoEntrepriseAdresseUserDtoToInfoEntrepriseDto(societeInfoEntrepriseAdresseUserDTO);
+        AdresseDTO adresseDTO = so.SocieteInfoEntrepriseAdresseUserDtoToAdresseDto(societeInfoEntrepriseAdresseUserDTO);
+
+        try{
+
+            InfoEntrepriseDTO iES = infoEntrepriseService.save(infoEntrepriseDTO);
+            AdresseDTO a = adresseService.save(adresseDTO);
+            User u = null;
+
+            //Before saving comptable, we should link the IDs of the created object.
+            if(callingMethode.equals("create")){
+                u = userService.createUser(userDTO);
+                societeDTO.setInfoEntrepriseId(iES.getId());
+                societeDTO.setUserId(u.getId());
+                societeDTO.setAdresseId(a.getId());
+            }else {
+                Optional<UserDTO> ud = userService.updateUser(userDTO);
+
+                //For now is only to avoid null
+                SocieteDTO s = save(societeDTO);
+                return new WrapperSociete(s,a,iES,userDTO);
+            }
+
+            SocieteDTO s = save(societeDTO);
+            //it should return ud in the else statement when the calling Methode is update.
+            return new WrapperSociete(s,a,iES,userMapper.userToUserDTO(u));
+
+        }catch (Exception e){
+            System.out.println("Error in creeComptable : "+e);
+        }
+        return null;
+    }
+
+
+    @Override
+    public WrapperSociete getSociete(Long id) {
+        SocieteDTO sd = findOne(id).get();
+        AdresseDTO ad = new AdresseDTO();
+        InfoEntrepriseDTO ied = new InfoEntrepriseDTO();
+        User ud = new User();
+
+        if(sd.getAdresseId() != null){
+            ad = adresseService.findOne(sd.getAdresseId()).get();
+        }
+
+        if(sd.getInfoEntrepriseId() != null){
+            ied = infoEntrepriseService.findOne(sd.getInfoEntrepriseId()).get();
+        }
+
+        if(sd.getInfoEntrepriseId() != null){
+            ud = userService.getUserWithAuthorities (sd.getUserId()).get();
+        }
+        return new WrapperSociete(sd,ad,ied, userMapper.userToUserDTO(ud));
+    }
+
     @Override
     public Optional<SocieteDTO> findByUser(Long id) {
         log.debug("Request to get Society from a specific User id : {}", id);
         return societeRepository.findByUserId(id).map(societeMapper::toDto);
     }
+
 }
