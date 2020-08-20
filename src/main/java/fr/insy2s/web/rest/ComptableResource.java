@@ -134,7 +134,7 @@ public class ComptableResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of comptables in body.
      */
-    @GetMapping("/comptables")
+    @GetMapping("/comptables/all")
     public List<ComptableDTO> getAllComptables() {
         log.debug("REST request to get all Comptables");
         return comptableService.findAll();
