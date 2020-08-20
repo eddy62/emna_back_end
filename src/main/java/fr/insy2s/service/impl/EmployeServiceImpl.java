@@ -159,11 +159,8 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     public void deleteWrapperEmploye(Long id) {
         log.debug("Request to delete WrapperEmploye : {}", id);
-        final Employe employe = employeRepository.getOne(id);
-        final AdresseDTO adresseDTO = adresseService.findOne(employe.getAdresse().getId()).get();
-        adresseService.delete(adresseDTO.getId());
-        employeRepository.delete(employe);
 
+        employeRepository.deleteById(id);;
 
     }
 
