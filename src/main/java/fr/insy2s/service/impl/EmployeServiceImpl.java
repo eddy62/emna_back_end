@@ -159,9 +159,7 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     public void deleteWrapperEmploye(Long id) {
         log.debug("Request to delete WrapperEmploye : {}", id);
-
-        employeRepository.deleteById(id);;
-
+        employeRepository.deleteById(id);
     }
 
     @Override
