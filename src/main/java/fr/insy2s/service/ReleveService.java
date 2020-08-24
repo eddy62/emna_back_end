@@ -40,4 +40,7 @@ public interface ReleveService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    List <ReleveDTO> findAllBySocieteId(Long id);
+    List <ReleveDTO> findAllByEtatReleveId(Long id);
+    List <ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
 }

@@ -42,7 +42,7 @@ public class Releve implements Serializable {
     @Column(name = "chemin_fichier")
     private String cheminFichier;
 
-    @OneToMany(mappedBy = "releve")
+    @OneToMany(mappedBy = "releve",  cascade =CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Operation> listeOperations = new HashSet<>();
 
