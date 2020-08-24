@@ -65,4 +65,9 @@ public class OperationServiceImpl implements OperationService {
         log.debug("Request to delete Operation : {}", id);
         operationRepository.deleteById(id);
     }
+    public List<OperationDTO> findAllByReleveId(Long id) {
+		 log.debug("Request to get all Operations by Releve Id");
+		return operationRepository.findAllByReleveId(id).stream().map(operationMapper::toDto)
+	            .collect(Collectors.toCollection(LinkedList::new));
+	}
 }

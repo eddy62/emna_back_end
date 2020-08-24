@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.insy2s.domain.Employe;
 import fr.insy2s.repository.EmployeRepository;
+import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.AdresseService;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.InfoEntrepriseService;
@@ -117,6 +118,7 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public Optional<WrapperEmploye> findById(final Long id) {
+        log.debug("Request to get WrapperEmploye : {}", id);
         final EmployeDTO employeDTO = findOne(id).get();
         final AdresseDTO adresseDTO = adresseService.findOne(employeDTO.getAdresseId()).get();
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
@@ -124,24 +126,45 @@ public class EmployeServiceImpl implements EmployeService {
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final Optional<WrapperEmploye> wrapperEmploye = Optional.of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
-        // client.isPresent() ? Optional.of(toWrapperCLientFournisseur(client.get())) : Optional.empty();
     }
 
     @Override
     public WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
-        // TODO Auto-generated method stub
-        return null;
+        final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
+        final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+        final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
+        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
+        final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
+        employeDTO.setAdresseId(newAdresseDTO.getId());
+        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
+        return newWrapperEmploye;
     }
 
     @Override
     public WrapperEmploye updateWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
-        // TODO Auto-generated method stub
-        return null;
+        final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
+        final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+        final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
+        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
+        final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
+        employeDTO.setAdresseId(newAdresseDTO.getId());
+        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
+        return newWrapperEmploye;
     }
 
     @Override
     public void deleteWrapperEmploye(Long id) {
-        // TODO Auto-generated method stub
-
+        log.debug("Request to delete WrapperEmploye : {}", id);
+        employeRepository.deleteById(id);
     }
+
+    @Override
+    public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
+        return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
+    }
+
 }

@@ -4,6 +4,7 @@ import fr.insy2s.domain.Comptable;
 import fr.insy2s.repository.ComptableRepository;
 import fr.insy2s.service.ComptableService;
 import fr.insy2s.service.dto.ComptableInfoEntrepriseAdresseUserDTO;
+import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.mapper.ComptableMapper;
 import fr.insy2s.utils.wrapper.WrapperComptable;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
@@ -37,23 +39,21 @@ public class ComptableResource {
     private String applicationName;
 
     private final ComptableService comptableService;
-    private  final  ComptableRepository comptableRepository;
     private  final ComptableMapper comptableMapper;
 
-    public ComptableResource(ComptableService comptableService, ComptableRepository comptableRepository, ComptableMapper comptableMapper) {
+    public ComptableResource(ComptableService comptableService,ComptableMapper comptableMapper) {
         this.comptableService = comptableService;
-        this.comptableRepository = comptableRepository;
         this.comptableMapper = comptableMapper;
     }
 
-/*    *//**
+    /**
      * {@code POST  /comptables} : Create a new comptable.
      *
      * @param comptableDTO the comptableDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new comptableDTO, or with status {@code 400 (Bad Request)} if the comptable has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
-     *//*
-    @PostMapping("/comptables/add")
+     */
+    @PostMapping("/comptables/")
     public ResponseEntity<ComptableDTO> createComptable(@Valid @RequestBody ComptableDTO comptableDTO) throws URISyntaxException {
         log.debug("REST request to save Comptable : {}", comptableDTO);
         if (comptableDTO.getId() != null) {
@@ -63,17 +63,18 @@ public class ComptableResource {
         return ResponseEntity.created(new URI("/api/comptables/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }*/
+    }
+
 
     /**
-     * {@code POST  /comptables} : Create a new comptable.
+     * {@code POST  /wrappercomptable/add} : Create a new comptable, adresse, infoEntreprise et user.
      *
-     * @param comptableInfoEntrepriseAdresseUserDTO the comptableDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new comptableDTO, or with status {@code 400 (Bad Request)} if the comptable has already an ID.
+     * @param comptableInfoEntrepriseAdresseUserDTO the wrapperComptable to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wrapperComptable, or with status {@code 400 (Bad Request)} if the comptable, Adresse, User,infoEntreprise has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/comptables/add")
-    public ResponseEntity<WrapperComptable> createComptable(@Valid @RequestBody ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO) throws URISyntaxException {
+    @PostMapping("/wrappercomptable/add")
+    public ResponseEntity<WrapperComptable> createWrapperComptable(@Valid @RequestBody ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO) throws URISyntaxException {
         log.debug("REST request to save Comptable : {}", comptableInfoEntrepriseAdresseUserDTO);
         verificationsComptable(comptableInfoEntrepriseAdresseUserDTO,"create");
         WrapperComptable result = comptableService.creerOuModifierComptable(comptableInfoEntrepriseAdresseUserDTO,"create");
@@ -87,29 +88,17 @@ public class ComptableResource {
     }
 
 
-
     /**
      * {@code PUT  /comptables} : Updates an existing comptable.
      *
-     * @param comptableInfoEntrepriseAdresseUserDTO the comptableDTO to update.
+     * @param comptableDTO the comptableDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated comptableDTO,
      * or with status {@code 400 (Bad Request)} if the comptableDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the comptableDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/comptables/edit")
-    public ResponseEntity<WrapperComptable> updateComptable(@Valid @RequestBody ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO) throws URISyntaxException {
-        log.debug("REST request to update Comptable : {}", comptableInfoEntrepriseAdresseUserDTO);
-        verificationsComptable(comptableInfoEntrepriseAdresseUserDTO,"update");
-        WrapperComptable result = comptableService.creerOuModifierComptable(comptableInfoEntrepriseAdresseUserDTO,"update");
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /*
-        @PutMapping("/comptables")
-        public ResponseEntity<ComptableDTO> updateComptable(@Valid @RequestBody ComptableDTO comptableDTO) throws URISyntaxException {
+    @PutMapping("/comptables")
+    public ResponseEntity<ComptableDTO> updateComptable(@Valid @RequestBody ComptableDTO comptableDTO) throws URISyntaxException {
         log.debug("REST request to update Comptable : {}", comptableDTO);
         if (comptableDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -119,17 +108,38 @@ public class ComptableResource {
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, comptableDTO.getId().toString()))
             .body(result);
     }
+
+    /**
+     * {@code PUT  /comptables/edit} : Updates an existing comptable.
+     *
+     * @param comptableInfoEntrepriseAdresseUserDTO the wrapperComptable to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated comptableInfoEntrepriseAdresseUserDTO ,
+     * or with status {@code 400 (Bad Request)} if the comptable, Adreese, User, or InfoEntreprise is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the comptableInfoEntrepriseAdresseUserDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PutMapping("/wrappercomptable/edit")
+    public ResponseEntity<WrapperComptable> updateWrapperComptable(@Valid @RequestBody ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO) throws URISyntaxException {
+        log.debug("REST request to update Comptable : {}", comptableInfoEntrepriseAdresseUserDTO);
+        verificationsComptable(comptableInfoEntrepriseAdresseUserDTO,"update");
+        WrapperComptable result = comptableService.creerOuModifierComptable(comptableInfoEntrepriseAdresseUserDTO,"update");
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+
     /**
      * {@code GET  /comptables} : get all the comptables.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of comptables in body.
      */
-    @GetMapping("/comptables")
+    @GetMapping("/comptables/all")
     public List<ComptableDTO> getAllComptables() {
         log.debug("REST request to get all Comptables");
         return comptableService.findAll();
     }
+
 
     /**
      * {@code GET  /comptables/:id} : get the "id" comptable.
@@ -137,19 +147,41 @@ public class ComptableResource {
      * @param id the id of the comptableDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the comptableDTO, or with status {@code 404 (Not Found)}.
      */
-   /* @GetMapping("/comptables/{id}")
+    @GetMapping("/comptables/{id}")
     public ResponseEntity<ComptableDTO> getComptable(@PathVariable Long id) {
         log.debug("REST request to get Comptable : {}", id);
         Optional<ComptableDTO> comptableDTO = comptableService.findOne(id);
         return ResponseUtil.wrapOrNotFound(comptableDTO);
-    } */
+    }
 
-    @GetMapping("/comptables/{id}")
-    public ResponseEntity<WrapperComptable> getComptable(@PathVariable Long id) {
+
+    /**
+     * {@code GET  /wrappercomptable/:id} : get the "id" comptable.
+     *
+     * @param id the id of the wrapperComptable to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperComptable, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/wrappercomptable/{id}")
+    public ResponseEntity<WrapperComptable> getWrapperComptable(@PathVariable Long id) {
         log.debug("REST request to get Comptable : {}", id);
         Optional<WrapperComptable> result = Optional.ofNullable(comptableService.getComptable(id));
         return ResponseUtil.wrapOrNotFound(result);
     }
+
+
+    /**
+     * {@code GET  /comptables/user/:id} : get the "id" user.
+     *
+     * @param id the id of the user to get it's comptable.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @GetMapping("/comptables/user/{id}")
+    public ResponseEntity<ComptableDTO> getComptableByUserId(@PathVariable Long id) {
+        log.debug("REST request to get Comptable from user ID : {}", id);
+        Optional<ComptableDTO> comptableDTO = comptableService.findByUser(id);
+        return ResponseUtil.wrapOrNotFound(comptableDTO);
+    }
+
 
     /**
      * {@code DELETE  /comptables/:id} : delete the "id" comptable.
@@ -162,15 +194,6 @@ public class ComptableResource {
         log.debug("REST request to delete Comptable : {}", id);
         comptableService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
-    }
-
-    @GetMapping("/comptables/refuser/{id}")
-    public ResponseEntity<ComptableDTO> getComptableByUserID(@PathVariable Long id) {
-        log.debug("REST request to get Comptable : {}", id);
-        Optional<Comptable> result = comptableRepository.findComptableByUserId(id);
-        ComptableDTO res = comptableMapper.toDto(result.get());
-        Optional<ComptableDTO> resS = Optional.ofNullable(res);
-        return ResponseUtil.wrapOrNotFound(resS);
     }
 
     private void verificationsComptable(ComptableInfoEntrepriseAdresseUserDTO comptable, String callingMethode ) {
@@ -244,10 +267,6 @@ public class ComptableResource {
             if (comptable.getRaisonSociale() == null || "".equals(comptable.getRaisonSociale())) {
                 throw new BadRequestAlertException("RaisonSociale is empty", ENTITY_NAME, "CodePostal null");
             }
-
-
-
-
 
         }
 

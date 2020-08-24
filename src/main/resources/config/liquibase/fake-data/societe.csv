@@ -1,11 +1,4 @@
-id;civilite;info_entreprise_id
-1;Entreprise;1
-2;Entreprise;2
-3;Entreprise;3
-4;Entreprise;10
-5;Entreprise;4
-6;Entreprise;5
-7;Entreprise;6
-8;Entreprise;7
-9;Entreprise;8
-10;Entreprise;9
+id;civilite;info_entreprise_id;user_id;comptable_id
+1;Carrefour;1;5;1
+2;Auchan;2;6;1
+3;Monoprix;3;7;1

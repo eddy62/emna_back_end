@@ -1,11 +1,10 @@
 package fr.insy2s.service;
 
+import fr.insy2s.repository.projection.IEmployeContratProjection;
+import fr.insy2s.service.dto.EmployeDTO;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
-import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
 /**
@@ -43,23 +42,26 @@ public interface EmployeService {
      */
     void delete(Long id);
 
+
+    List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id);
+
     /**
      * Get all the WrapperEmploye
-     * 
+     *
      * @return the list of wrapperEmploye
      */
     List<WrapperEmploye> findAllWrapperEmploye();
 
     /**
      * Get all the WrapperEmploye by society
-     * 
+     *
      * @return
      */
     List<WrapperEmploye> findAllWrapperEmployeBySociete(final Long societeId);
 
     /**
      * Get the "id" wripperEmploye
-     * 
+     *
      * @param id
      * @return the wrapperEmploye
      */
@@ -67,7 +69,7 @@ public interface EmployeService {
 
     /**
      * Create a WrapperEmploye
-     * 
+     *
      * @param wrapperEmploye
      * @return the created WrapperEmploye
      */
@@ -75,7 +77,7 @@ public interface EmployeService {
 
     /**
      * Update the WrapperEmploye
-     * 
+     *
      * @param wrapperEmploye
      * @return the updated WrapperEmploye
      */
@@ -83,8 +85,9 @@ public interface EmployeService {
 
     /**
      * Delete the "id" WrapperEmploye
-     * 
+     *
      * @param id
      */
     void deleteWrapperEmploye(Long id);
+
 }

@@ -3,6 +3,7 @@ package fr.insy2s.service.impl;
 import fr.insy2s.service.StatutEmployeService;
 import fr.insy2s.domain.StatutEmploye;
 import fr.insy2s.repository.StatutEmployeRepository;
+import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
 import fr.insy2s.service.mapper.StatutEmployeMapper;
 import org.slf4j.Logger;
@@ -85,5 +86,20 @@ public class StatutEmployeServiceImpl implements StatutEmployeService {
     public void delete(Long id) {
         log.debug("Request to delete StatutEmploye : {}", id);
         statutEmployeRepository.deleteById(id);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public StatutEmployeDTO findByCodeRef(String codeRef) {
+        log.debug("Request to get StatutEmploye : {}", codeRef);
+        List<StatutEmployeDTO> liste = findAll();
+        
+        for (StatutEmployeDTO statutEmployeDTO : liste) {
+            if (statutEmployeDTO.getCodeRef().equals(codeRef)) {
+                return statutEmployeDTO;
+            }
+        }
+        
+        return null;
     }
 }

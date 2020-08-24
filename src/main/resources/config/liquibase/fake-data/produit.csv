@@ -1,11 +1,11 @@
 id;nom;reference;tva;prix;unite;quantite;description
-1;conglomeration Marketing solutions;70855;1822;47384;Assimilated deliverables Stand-alone;Representative SCSI;Iowa Missouri Movies
-2;users Trafficway auxiliary;54352;60931;91188;Internal Wooden;Enterprise-wide Fantastic Plastic Shirt;calculate sexy
-3;Credit Card Account;16952;92924;76882;web-readiness;navigate Handmade Steel Table Sleek Fresh Cheese;THX Computer Land
-4;emulation;91017;51676;60225;sensor;Pennsylvania Fresh Iraqi Dinar;Steel
-5;override clear-thinking;1228;9660;74623;Practical;Valley;Implementation
-6;24/365 metrics;61022;23524;45411;supply-chains;Graphical User Interface;transmitting
-7;Netherlands Antillian Guilder FTP;18839;48347;13378;Keyboard platforms Liaison;Incredible Steel Bike;Steel instruction set
-8;compress;11196;23246;61158;synergistic;Alaska Handcrafted connect;Bedfordshire invoice
-9;National Computers;14975;16048;76969;navigating niches;Coordinator Cambridgeshire;calculate enterprise
-10;Boliviano Mvdol calculate Designer;64075;16355;14517;Gibraltar Pound;Texas;Avon
+1;produit1;70855;20;473.50;m²;2;description1
+2;produit2;54352;5.5;911.99;km;5;description 2
+3;produit3;16952;10;76.88;h;10;description 3
+4;produit4;91017;20;60.22;j;9;description 4
+5;produit5;1228;5.5;74.78;kg;8;Implementation 5
+6;produit6;61022;10;454.0;pc;1;transmitting 6
+7;produit7;18839;20;133.78;m;2;description 7
+8;produit8;11196;20;611;km;3;descriptionn 8
+9;produit9;14975;1.5;76.99;j;9;calculate enterprise 9
+10;produit10;64075;15;14.5;h;1;description 10

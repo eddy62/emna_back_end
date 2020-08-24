@@ -2,13 +2,9 @@ package fr.insy2s.service.mapper;
 
 import fr.insy2s.service.dto.*;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Set;
+;
 
 public class ComptableInfoEntrepriseAdresseUserMapper {
-
-
 
     public UserDTO comptableInfoEntrepriseAdresseUserDtoToUserDto(ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO){
         UserDTO userDTO = new UserDTO();
@@ -29,7 +25,6 @@ public class ComptableInfoEntrepriseAdresseUserMapper {
     }
 
     public ComptableDTO comptableInfoEntrepriseAdresseUserDtoToComptableDto(ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO){
-
         ComptableDTO comptableDTO = new ComptableDTO();
         comptableDTO.setId(comptableInfoEntrepriseAdresseUserDTO.getId());
         comptableDTO.setAdresseId(comptableInfoEntrepriseAdresseUserDTO.getIdAdresse());
@@ -39,6 +34,7 @@ public class ComptableInfoEntrepriseAdresseUserMapper {
 
         return  comptableDTO;
     }
+
 
 
     public InfoEntrepriseDTO comptableInfoEntrepriseAdresseUserDtoToInfoEntrepriseDto(ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO){
@@ -68,6 +64,7 @@ public class ComptableInfoEntrepriseAdresseUserMapper {
         adresseDTO.setNumeroRue(comptableInfoEntrepriseAdresseUserDTO.getNumeroRue());
         adresseDTO.setCodePostal(comptableInfoEntrepriseAdresseUserDTO.getCodePostal());
         adresseDTO.setVille(comptableInfoEntrepriseAdresseUserDTO.getVille());
+        adresseDTO.setPays(comptableInfoEntrepriseAdresseUserDTO.getPays());
         return adresseDTO;
 
     }

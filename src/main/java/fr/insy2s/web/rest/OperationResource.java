@@ -113,4 +113,9 @@ public class OperationResource {
         operationService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+    @GetMapping("/operations/releve/{id}")
+    public List<OperationDTO> getAllOperationsByReleveId(@PathVariable Long id) {
+        log.debug("REST request to get all Operations by Releve id ");
+        return operationService.findAllByReleveId(id);
+    }
 }
