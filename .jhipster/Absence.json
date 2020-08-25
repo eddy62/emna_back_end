@@ -1,51 +1,54 @@
 {
-    "name": "Absence",
-    "fields": [
-        {
-            "fieldName": "debutAbsence",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "finAbsence",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "justificatif",
-            "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "typeAbsence",
-            "otherEntityRelationshipName": "absence",
-            "relationshipValidateRules": "required",
-            "relationshipName": "typeAbsence",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "employe",
-            "otherEntityRelationshipName": "listeAbsences",
-            "relationshipName": "employe",
-            "otherEntityField": "id"
-        }
-    ],
-    "changelogDate": "20200722091904",
-    "entityTableName": "absence",
-    "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "embedded": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Absence",
+  "fields": [
+    {
+      "fieldName": "debutAbsence",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "finAbsence",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "justificatif",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "typeAbsence",
+      "otherEntityRelationshipName": "absence",
+      "relationshipValidateRules": "required",
+      "relationshipName": "typeAbsence",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "etatVariablePaie",
+      "otherEntityRelationshipName": "absence",
+      "relationshipName": "etatVariablePaie",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "employe",
+      "otherEntityRelationshipName": "listeAbsences",
+      "relationshipName": "employe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722091904",
+  "entityTableName": "absence",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
 }

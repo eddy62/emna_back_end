@@ -37,6 +37,10 @@ public class AutresVariable implements Serializable {
     private String justificatif;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = "autresVariables", allowSetters = true)
+    private EtatVariablePaie etatVariablePaie;
+
+    @ManyToOne
     @JsonIgnoreProperties(value = "listeAutresVariables", allowSetters = true)
     private Employe employe;
 
@@ -99,6 +103,19 @@ public class AutresVariable implements Serializable {
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
+    }
+
+    public EtatVariablePaie getEtatVariablePaie() {
+        return etatVariablePaie;
+    }
+
+    public AutresVariable etatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+        return this;
+    }
+
+    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
     }
 
     public Employe getEmploye() {

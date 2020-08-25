@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
+import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './note-de-frais.reducer';
@@ -17,10 +19,11 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface INoteDeFraisUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const NoteDeFraisUpdate = (props: INoteDeFraisUpdateProps) => {
+  const [etatVariablePaieId, setEtatVariablePaieId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { noteDeFraisEntity, employes, loading, updating } = props;
+  const { noteDeFraisEntity, etatVariablePaies, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/note-de-frais');
@@ -33,6 +36,7 @@ export const NoteDeFraisUpdate = (props: INoteDeFraisUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
+    props.getEtatVariablePaies();
     props.getEmployes();
   }, []);
 
@@ -129,6 +133,21 @@ export const NoteDeFraisUpdate = (props: INoteDeFraisUpdateProps) => {
                 <AvField id="note-de-frais-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
+                <Label for="note-de-frais-etatVariablePaie">
+                  <Translate contentKey="emnaBackEndApp.noteDeFrais.etatVariablePaie">Etat Variable Paie</Translate>
+                </Label>
+                <AvInput id="note-de-frais-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
+                  <option value="" key="0" />
+                  {etatVariablePaies
+                    ? etatVariablePaies.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
                 <Label for="note-de-frais-employe">
                   <Translate contentKey="emnaBackEndApp.noteDeFrais.employe">Employe</Translate>
                 </Label>
@@ -165,6 +184,7 @@ export const NoteDeFraisUpdate = (props: INoteDeFraisUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  etatVariablePaies: storeState.etatVariablePaie.entities,
   employes: storeState.employe.entities,
   noteDeFraisEntity: storeState.noteDeFrais.entity,
   loading: storeState.noteDeFrais.loading,
@@ -173,6 +193,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getEtatVariablePaies,
   getEmployes,
   getEntity,
   updateEntity,

@@ -17,11 +17,11 @@ public interface DevisMapper extends EntityMapper<DevisDTO, Devis> {
     @Mapping(source = "clientFournisseur.id", target = "clientFournisseurId")
     DevisDTO toDto(Devis devis);
 
+    @Mapping(target = "listeLigneProduits", ignore = true)
+    @Mapping(target = "removeListeLigneProduit", ignore = true)
     @Mapping(source = "etatDevisId", target = "etatDevis")
     @Mapping(source = "societeId", target = "societe")
     @Mapping(source = "clientFournisseurId", target = "clientFournisseur")
-    @Mapping(target = "listeProduits", ignore = true)
-    @Mapping(target = "removeListeProduits", ignore = true)
     Devis toEntity(DevisDTO devisDTO);
 
     default Devis fromId(Long id) {

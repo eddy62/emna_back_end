@@ -40,13 +40,13 @@ export const Comptable = (props: IComptableProps) => {
                   <Translate contentKey="emnaBackEndApp.comptable.civilite">Civilite</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.comptable.adresse">Adresse</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.comptable.infoEntreprise">Info Entreprise</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.comptable.user">User</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.comptable.adresse">Adresse</Translate>
                 </th>
                 <th />
               </tr>
@@ -60,7 +60,6 @@ export const Comptable = (props: IComptableProps) => {
                     </Button>
                   </td>
                   <td>{comptable.civilite}</td>
-                  <td>{comptable.adresseId ? <Link to={`adresse/${comptable.adresseId}`}>{comptable.adresseId}</Link> : ''}</td>
                   <td>
                     {comptable.infoEntrepriseId ? (
                       <Link to={`info-entreprise/${comptable.infoEntrepriseId}`}>{comptable.infoEntrepriseId}</Link>
@@ -69,6 +68,7 @@ export const Comptable = (props: IComptableProps) => {
                     )}
                   </td>
                   <td>{comptable.userId ? comptable.userId : ''}</td>
+                  <td>{comptable.adresseId ? <Link to={`adresse/${comptable.adresseId}`}>{comptable.adresseId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${comptable.id}`} color="info" size="sm">

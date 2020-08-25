@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity AvanceRappelSalaire.
+    -->
+    <changeSet id="20200825122431-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id"
+                                 baseTableName="avance_rappel_salaire"
+                                 constraintName="fk_avance_rappel_salaire_etat_variable_paie_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="etat_variable_paie"/>
+
+        <addForeignKeyConstraint baseColumnNames="employe_id"
+                                 baseTableName="avance_rappel_salaire"
+                                 constraintName="fk_avance_rappel_salaire_employe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employe"/>
+
+    </changeSet>
+</databaseChangeLog>

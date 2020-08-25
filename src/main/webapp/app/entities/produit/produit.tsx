@@ -52,16 +52,7 @@ export const Produit = (props: IProduitProps) => {
                   <Translate contentKey="emnaBackEndApp.produit.unite">Unite</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.produit.quantite">Quantite</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.produit.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.produit.listeFactures">Liste Factures</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.produit.listeDevis">Liste Devis</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.produit.societe">Societe</Translate>
@@ -82,28 +73,7 @@ export const Produit = (props: IProduitProps) => {
                   <td>{produit.tva}</td>
                   <td>{produit.prix}</td>
                   <td>{produit.unite}</td>
-                  <td>{produit.quantite}</td>
                   <td>{produit.description}</td>
-                  <td>
-                    {produit.listeFactures
-                      ? produit.listeFactures.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`facture/${val.id}`}>{val.id}</Link>
-                            {j === produit.listeFactures.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
-                  <td>
-                    {produit.listeDevis
-                      ? produit.listeDevis.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`devis/${val.id}`}>{val.id}</Link>
-                            {j === produit.listeDevis.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
                   <td>{produit.societeId ? <Link to={`societe/${produit.societeId}`}>{produit.societeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

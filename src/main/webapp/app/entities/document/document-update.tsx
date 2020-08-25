@@ -7,6 +7,12 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IAbsence } from 'app/shared/model/absence.model';
+import { getEntities as getAbsences } from 'app/entities/absence/absence.reducer';
+import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
+import { getEntities as getNoteDeFrais } from 'app/entities/note-de-frais/note-de-frais.reducer';
+import { IAutresVariable } from 'app/shared/model/autres-variable.model';
+import { getEntities as getAutresVariables } from 'app/entities/autres-variable/autres-variable.reducer';
 import { IFacture } from 'app/shared/model/facture.model';
 import { getEntities as getFactures } from 'app/entities/facture/facture.reducer';
 import { IReleve } from 'app/shared/model/releve.model';
@@ -23,13 +29,16 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IDocumentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const DocumentUpdate = (props: IDocumentUpdateProps) => {
+  const [absenceId, setAbsenceId] = useState('0');
+  const [noteDeFraisId, setNoteDeFraisId] = useState('0');
+  const [autresVariablesId, setAutresVariablesId] = useState('0');
   const [factureId, setFactureId] = useState('0');
   const [releveId, setReleveId] = useState('0');
   const [contratId, setContratId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { documentEntity, factures, releves, contrats, employes, loading, updating } = props;
+  const { documentEntity, absences, noteDeFrais, autresVariables, factures, releves, contrats, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/document');
@@ -42,6 +51,9 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
+    props.getAbsences();
+    props.getNoteDeFrais();
+    props.getAutresVariables();
     props.getFactures();
     props.getReleves();
     props.getContrats();
@@ -58,7 +70,7 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...documentEntity,
-        ...values
+        ...values,
       };
 
       if (isNew) {
@@ -109,6 +121,51 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
                   <Translate contentKey="emnaBackEndApp.document.nom">Nom</Translate>
                 </Label>
                 <AvField id="document-nom" type="text" name="nom" />
+              </AvGroup>
+              <AvGroup>
+                <Label for="document-absence">
+                  <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
+                </Label>
+                <AvInput id="document-absence" type="select" className="form-control" name="absenceId">
+                  <option value="" key="0" />
+                  {absences
+                    ? absences.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="document-noteDeFrais">
+                  <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
+                </Label>
+                <AvInput id="document-noteDeFrais" type="select" className="form-control" name="noteDeFraisId">
+                  <option value="" key="0" />
+                  {noteDeFrais
+                    ? noteDeFrais.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="document-autresVariables">
+                  <Translate contentKey="emnaBackEndApp.document.autresVariables">Autres Variables</Translate>
+                </Label>
+                <AvInput id="document-autresVariables" type="select" className="form-control" name="autresVariablesId">
+                  <option value="" key="0" />
+                  {autresVariables
+                    ? autresVariables.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="document-facture">
@@ -192,6 +249,9 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  absences: storeState.absence.entities,
+  noteDeFrais: storeState.noteDeFrais.entities,
+  autresVariables: storeState.autresVariable.entities,
   factures: storeState.facture.entities,
   releves: storeState.releve.entities,
   contrats: storeState.contrat.entities,
@@ -199,10 +259,13 @@ const mapStateToProps = (storeState: IRootState) => ({
   documentEntity: storeState.document.entity,
   loading: storeState.document.loading,
   updating: storeState.document.updating,
-  updateSuccess: storeState.document.updateSuccess
+  updateSuccess: storeState.document.updateSuccess,
 });
 
 const mapDispatchToProps = {
+  getAbsences,
+  getNoteDeFrais,
+  getAutresVariables,
   getFactures,
   getReleves,
   getContrats,
@@ -210,7 +273,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

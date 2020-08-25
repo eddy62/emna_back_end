@@ -9,15 +9,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Employe} and its DTO {@link EmployeDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AdresseMapper.class, StatutEmployeMapper.class, SocieteMapper.class})
+@Mapper(componentModel = "spring", uses = {StatutEmployeMapper.class, AdresseMapper.class, TypeContratMapper.class, SocieteMapper.class})
 public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
 
-    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "statutEmploye.id", target = "statutEmployeId")
+    @Mapping(source = "adresse.id", target = "adresseId")
+    @Mapping(source = "typeContrat.id", target = "typeContratId")
     @Mapping(source = "societe.id", target = "societeId")
     EmployeDTO toDto(Employe employe);
 
-    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(target = "listeContrats", ignore = true)
     @Mapping(target = "removeListeContrats", ignore = true)
     @Mapping(target = "listeAbsences", ignore = true)
@@ -30,11 +30,17 @@ public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
     @Mapping(target = "removeListeHeureSupplementaires", ignore = true)
     @Mapping(target = "listeNoteDeFrais", ignore = true)
     @Mapping(target = "removeListeNoteDeFrais", ignore = true)
+    @Mapping(target = "listeAvanceRappelSalaires", ignore = true)
+    @Mapping(target = "removeListeAvanceRappelSalaire", ignore = true)
     @Mapping(target = "listeAutresVariables", ignore = true)
     @Mapping(target = "removeListeAutresVariables", ignore = true)
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
+    @Mapping(target = "listeDpaes", ignore = true)
+    @Mapping(target = "removeListeDpae", ignore = true)
     @Mapping(source = "statutEmployeId", target = "statutEmploye")
+    @Mapping(source = "adresseId", target = "adresse")
+    @Mapping(source = "typeContratId", target = "typeContrat")
     @Mapping(source = "societeId", target = "societe")
     Employe toEntity(EmployeDTO employeDTO);
 

@@ -1,6 +1,5 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ProduitService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ProduitDTO;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -82,11 +80,10 @@ public class ProduitResource {
     /**
      * {@code GET  /produits} : get all the produits.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of produits in body.
      */
     @GetMapping("/produits")
-    public List<ProduitDTO> getAllProduits(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<ProduitDTO> getAllProduits() {
         log.debug("REST request to get all Produits");
         return produitService.findAll();
     }
@@ -115,56 +112,5 @@ public class ProduitResource {
         log.debug("REST request to delete Produit : {}", id);
         produitService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * {@code GET  /produits/societe/id} : get all the produits.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of produits in body.
-     */
-    @GetMapping("/produits/societe/{id}")
-    public List<ProduitDTO> getAllProduitBySociete(@PathVariable Long id) {
-        log.debug("REST request to get all Produit");
-        return produitService.findAllBySocieteId(id);
-    }
-
-
-    /**
-     * {@code PUT  /produits/update} : Updates an existing produit.
-     *
-     * @param produitDTO the produitDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated produitDTO,
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/produits/update")
-    public ResponseEntity<ProduitDTO> update(@RequestBody ProduitDTO produitDTO) throws URISyntaxException {
-        log.debug("REST request to update Produit : {}", produitDTO);
-        if (produitDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-
-        //TODO verification que l'user est a role société et que le societe à le droit de modifier
-        ProduitDTO result = produitService.save(produitDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produitDTO.getId().toString()))
-            .body(result);
-    }
-
-
-    /**
-     * {@code DELETE  /produits/:produitId/user/:userId} : delete the "id" produit.
-     *
-     * @param produitId the id of the produitDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.SOCIETY + "\")")
-    @DeleteMapping("/produits/{produitId}/user/{userId}")
-    public ResponseEntity<Void> delete(@PathVariable Long produitId,@PathVariable Long userId) {
-        log.debug("REST request to delete Produit : {}", produitId);
-       if(!produitService.connectedUserIsSociete() || !produitService.verfyIdOfUserConnected(userId)){
-           throw new BadRequestAlertException("Vous n'avez pas le droit de supprimer ", ENTITY_NAME, "pas le droit");
-       }
-        produitService.delete(produitId);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, produitId.toString())).build();
     }
 }

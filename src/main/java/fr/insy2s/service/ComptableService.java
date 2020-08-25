@@ -1,8 +1,6 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ComptableDTO;
-import fr.insy2s.service.dto.ComptableInfoEntrepriseAdresseUserDTO;
-import fr.insy2s.utils.wrapper.WrapperComptable;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,14 +40,4 @@ public interface ComptableService {
      * @param id the id of the entity.
      */
     void delete(Long id);
-
-    /**
-     * Wrappe a  comptable.
-     *
-     * @param comptableInfoEntrepriseAdresseUserDTO the compable with the objects needed to wrrape.
-     */
-    WrapperComptable creerOuModifierComptable(ComptableInfoEntrepriseAdresseUserDTO comptableInfoEntrepriseAdresseUserDTO, String callingMethode);
-    WrapperComptable getComptable(Long id);
-
-    Optional<ComptableDTO> findByUser(Long id);
 }

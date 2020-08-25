@@ -1,61 +1,60 @@
 {
-    "name": "ClientFournisseur",
-    "fields": [
-        {
-            "fieldName": "nom",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "siren",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "telephone",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "email",
-            "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "adresse",
-            "otherEntityRelationshipName": "clientFournisseur",
-            "relationshipName": "adresse",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "facture",
-            "otherEntityRelationshipName": "clientFournisseur",
-            "relationshipName": "listeFactures"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "devis",
-            "otherEntityRelationshipName": "clientFournisseur",
-            "relationshipName": "listeDevis"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "societe",
-            "otherEntityRelationshipName": "listeClientsFournisseurs",
-            "relationshipName": "societe",
-            "otherEntityField": "id"
-        }
-    ],
-    "changelogDate": "20200722090604",
-    "entityTableName": "client_fournisseur",
-    "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "embedded": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "ClientFournisseur",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "siren",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "facture",
+      "otherEntityRelationshipName": "clientFournisseur",
+      "relationshipName": "listeFactures"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "devis",
+      "otherEntityRelationshipName": "clientFournisseur",
+      "relationshipName": "listeDevis"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "adresse",
+      "otherEntityRelationshipName": "clientFournisseur",
+      "relationshipName": "adresse",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "societe",
+      "otherEntityRelationshipName": "listeClientsFournisseurs",
+      "relationshipName": "societe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722090604",
+  "entityTableName": "client_fournisseur",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
 }

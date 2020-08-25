@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link FactureResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
-
 @AutoConfigureMockMvc
 @WithMockUser
 public class FactureResourceIT {
@@ -40,6 +39,9 @@ public class FactureResourceIT {
 
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
     private static final String DEFAULT_MESSAGE = "AAAAAAAAAA";
     private static final String UPDATED_MESSAGE = "BBBBBBBBBB";
@@ -89,6 +91,7 @@ public class FactureResourceIT {
         Facture facture = new Facture()
             .numfact(DEFAULT_NUMFACT)
             .nom(DEFAULT_NOM)
+            .type(DEFAULT_TYPE)
             .message(DEFAULT_MESSAGE)
             .date(DEFAULT_DATE)
             .dateEcheance(DEFAULT_DATE_ECHEANCE)
@@ -108,6 +111,7 @@ public class FactureResourceIT {
         Facture facture = new Facture()
             .numfact(UPDATED_NUMFACT)
             .nom(UPDATED_NOM)
+            .type(UPDATED_TYPE)
             .message(UPDATED_MESSAGE)
             .date(UPDATED_DATE)
             .dateEcheance(UPDATED_DATE_ECHEANCE)
@@ -127,7 +131,6 @@ public class FactureResourceIT {
     @Transactional
     public void createFacture() throws Exception {
         int databaseSizeBeforeCreate = factureRepository.findAll().size();
-
         // Create the Facture
         FactureDTO factureDTO = factureMapper.toDto(facture);
         restFactureMockMvc.perform(post("/api/factures")
@@ -141,6 +144,7 @@ public class FactureResourceIT {
         Facture testFacture = factureList.get(factureList.size() - 1);
         assertThat(testFacture.getNumfact()).isEqualTo(DEFAULT_NUMFACT);
         assertThat(testFacture.getNom()).isEqualTo(DEFAULT_NOM);
+        assertThat(testFacture.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testFacture.getMessage()).isEqualTo(DEFAULT_MESSAGE);
         assertThat(testFacture.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testFacture.getDateEcheance()).isEqualTo(DEFAULT_DATE_ECHEANCE);
@@ -184,6 +188,7 @@ public class FactureResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(facture.getId().intValue())))
             .andExpect(jsonPath("$.[*].numfact").value(hasItem(DEFAULT_NUMFACT.intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].dateEcheance").value(hasItem(DEFAULT_DATE_ECHEANCE.toString())))
@@ -206,6 +211,7 @@ public class FactureResourceIT {
             .andExpect(jsonPath("$.id").value(facture.getId().intValue()))
             .andExpect(jsonPath("$.numfact").value(DEFAULT_NUMFACT.intValue()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.dateEcheance").value(DEFAULT_DATE_ECHEANCE.toString()))
@@ -214,7 +220,6 @@ public class FactureResourceIT {
             .andExpect(jsonPath("$.tva").value(DEFAULT_TVA.doubleValue()))
             .andExpect(jsonPath("$.moyenDePaiement").value(DEFAULT_MOYEN_DE_PAIEMENT));
     }
-
     @Test
     @Transactional
     public void getNonExistingFacture() throws Exception {
@@ -238,6 +243,7 @@ public class FactureResourceIT {
         updatedFacture
             .numfact(UPDATED_NUMFACT)
             .nom(UPDATED_NOM)
+            .type(UPDATED_TYPE)
             .message(UPDATED_MESSAGE)
             .date(UPDATED_DATE)
             .dateEcheance(UPDATED_DATE_ECHEANCE)
@@ -258,6 +264,7 @@ public class FactureResourceIT {
         Facture testFacture = factureList.get(factureList.size() - 1);
         assertThat(testFacture.getNumfact()).isEqualTo(UPDATED_NUMFACT);
         assertThat(testFacture.getNom()).isEqualTo(UPDATED_NOM);
+        assertThat(testFacture.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testFacture.getMessage()).isEqualTo(UPDATED_MESSAGE);
         assertThat(testFacture.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testFacture.getDateEcheance()).isEqualTo(UPDATED_DATE_ECHEANCE);

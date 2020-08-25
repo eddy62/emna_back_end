@@ -46,6 +46,9 @@ export const Prime = (props: IPrimeProps) => {
                   <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.prime.etatVariablePaie">Etat Variable Paie</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.prime.employe">Employe</Translate>
                 </th>
                 <th />
@@ -62,6 +65,13 @@ export const Prime = (props: IPrimeProps) => {
                   <td>{prime.type}</td>
                   <td>{prime.montant}</td>
                   <td>{prime.typePrimeId ? <Link to={`type-prime/${prime.typePrimeId}`}>{prime.typePrimeId}</Link> : ''}</td>
+                  <td>
+                    {prime.etatVariablePaieId ? (
+                      <Link to={`etat-variable-paie/${prime.etatVariablePaieId}`}>{prime.etatVariablePaieId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>{prime.employeId ? <Link to={`employe/${prime.employeId}`}>{prime.employeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -103,11 +113,11 @@ export const Prime = (props: IPrimeProps) => {
 
 const mapStateToProps = ({ prime }: IRootState) => ({
   primeList: prime.entities,
-  loading: prime.loading
+  loading: prime.loading,
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

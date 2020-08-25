@@ -56,43 +56,11 @@ export const ProduitDetail = (props: IProduitDetailProps) => {
           </dt>
           <dd>{produitEntity.unite}</dd>
           <dt>
-            <span id="quantite">
-              <Translate contentKey="emnaBackEndApp.produit.quantite">Quantite</Translate>
-            </span>
-          </dt>
-          <dd>{produitEntity.quantite}</dd>
-          <dt>
             <span id="description">
               <Translate contentKey="emnaBackEndApp.produit.description">Description</Translate>
             </span>
           </dt>
           <dd>{produitEntity.description}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.produit.listeFactures">Liste Factures</Translate>
-          </dt>
-          <dd>
-            {produitEntity.listeFactures
-              ? produitEntity.listeFactures.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {produitEntity.listeFactures && i === produitEntity.listeFactures.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.produit.listeDevis">Liste Devis</Translate>
-          </dt>
-          <dd>
-            {produitEntity.listeDevis
-              ? produitEntity.listeDevis.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {produitEntity.listeDevis && i === produitEntity.listeDevis.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.produit.societe">Societe</Translate>
           </dt>

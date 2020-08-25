@@ -1,13 +1,14 @@
 entity Facture{
     numfact Long
     nom String
+    type String
     message String
     date LocalDate
     dateEcheance LocalDate
     prixHT Integer
     prixTTC Integer
     tva Float
-    moyenDePaiement String
+    moyenDePaiement String    
 }
 
 entity ClientFournisseur {
@@ -16,6 +17,10 @@ entity ClientFournisseur {
     telephone String 
 	email String
 }
+
+entity LigneProduit{
+	quantite Integer required
+}
  
 entity Produit {
     nom String
@@ -23,7 +28,6 @@ entity Produit {
     tva Float
     prix Double
     unite String
-    quantite String
     description String
 }
 
@@ -117,6 +121,7 @@ entity Employe{
     periodeEssai Double required
     situationFamiliale String required
     enfantsACharge Integer required
+    
 }
 
 entity StatutEmploye{
@@ -233,8 +238,6 @@ entity Dpae {
 }
 
 
-
-
 relationship OneToMany{
     Societe{listeFactures} to Facture{societe} 
     Operation{listeFactures} to Facture{operation}
@@ -273,8 +276,9 @@ relationship OneToMany{
 	Contrat{listeDocuments} to Document{contrat}
 	Employe{listeDocuments} to Document{employe}
     Employe{listeDpae} to Dpae{employe}
-    Societe{listeDpae} to Dpae{employe}
-    	
+    Societe{listeDpae} to Dpae{societe}
+    Facture{listeLigneProduit} to LigneProduit{facture}
+    Devis{listeLigneProduit} to LigneProduit{devis}  
 }
 
 relationship ManyToOne{
@@ -299,6 +303,7 @@ relationship ManyToOne{
     HeuresSupplementaires{etatVariablePaie} to EtatVariablePaie
     AutresVariable{etatVariablePaie} to EtatVariablePaie
     Document{autresVariables} to AutresVariable
+  	LigneProduit{produit required} to Produit   
 }
 
 relationship ManyToMany{
@@ -306,8 +311,6 @@ relationship ManyToMany{
     Article{listeContrats} to Contrat{listeArticles}
     Clause{listeContrats} to Contrat{listeClauses}
     Clause{listeAvenants} to Avenant{listeClauses}
-    Produit{listeFactures} to Facture{listeProduits}
-    Produit{listeDevis} to Devis{listeProduits}
 }
 
 relationship OneToOne{

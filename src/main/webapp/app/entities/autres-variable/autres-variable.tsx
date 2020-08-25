@@ -49,6 +49,9 @@ export const AutresVariable = (props: IAutresVariableProps) => {
                   <Translate contentKey="emnaBackEndApp.autresVariable.justificatif">Justificatif</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.autresVariable.etatVariablePaie">Etat Variable Paie</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.autresVariable.employe">Employe</Translate>
                 </th>
                 <th />
@@ -68,6 +71,13 @@ export const AutresVariable = (props: IAutresVariableProps) => {
                   </td>
                   <td>{autresVariable.montant}</td>
                   <td>{autresVariable.justificatif}</td>
+                  <td>
+                    {autresVariable.etatVariablePaieId ? (
+                      <Link to={`etat-variable-paie/${autresVariable.etatVariablePaieId}`}>{autresVariable.etatVariablePaieId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>
                     {autresVariable.employeId ? <Link to={`employe/${autresVariable.employeId}`}>{autresVariable.employeId}</Link> : ''}
                   </td>

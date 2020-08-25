@@ -68,7 +68,7 @@ public class WrapperEmploye {
 
     /**
      * Constructeur avec field
-     * 
+     *
      * @param employeDTO
      * @param adresseDTO
      * @param statutEmployeDTO
@@ -100,7 +100,6 @@ public class WrapperEmploye {
         this.poste = employeDTO.getPoste();
         this.dateEmbauche = employeDTO.getDateEmbauche();
         this.dateSortie = employeDTO.getDateSortie();
-        this.typeContrat = employeDTO.getTypeContrat();
         this.situationFamiliale = employeDTO.getSituationFamiliale();
         this.enfantsACharge = employeDTO.getEnfantsACharge();
         //adresse
