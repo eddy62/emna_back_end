@@ -13,11 +13,11 @@ public interface IEmployeContratProjection {
 
     String getArticleDescription();
 
+    String getArticleReference();
+
     Long getArticleId();
 
     Long getClauseId();
-
-    String getClauseReference();
 
     String getClauseDescription();
 

@@ -80,7 +80,7 @@ public class FactureServiceImpl implements FactureService {
     }
 
     @Override
-    public ResponseEntity<Facture> postFactureWithFile(FactureTemp factureTemp) {
+    public FactureDTO postFactureWithFile(FactureTemp factureTemp) {
         Set<Document> documents = documentService.multiPartFilesToDocuments(Arrays.asList(factureTemp.getListeFiles()));
         Facture facture = factureTemp.toFacture();
         for (Document document: documents
@@ -90,7 +90,15 @@ public class FactureServiceImpl implements FactureService {
         }
         facture.setListeDocuments(documents);
         facture.setSociete(societeRepository.getOne(factureTemp.getSocieteId()));
-        factureRepository.save(facture);
-        return null;
+        facture.set
+        Facture mafacture = factureRepository.save(facture);
+        return this.factureMapper.toDto(mafacture);
+    }
+
+    @Override
+    public List<FactureDTO> findAllBySocieteId(Long id) {
+        return factureRepository.findAllBySocieteId(id).stream()
+            .map(factureMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }

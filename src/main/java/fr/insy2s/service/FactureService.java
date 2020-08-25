@@ -44,5 +44,7 @@ public interface FactureService {
      */
     void delete(Long id);
 
-    ResponseEntity<Facture> postFactureWithFile(FactureTemp factureTemp);
+    FactureDTO postFactureWithFile(FactureTemp factureTemp);
+
+    List<FactureDTO> findAllBySocieteId(Long id);
 }
