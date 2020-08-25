@@ -3,7 +3,7 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     
@@ -19,9 +19,6 @@
                 <constraints nullable="true" />
             </column>
             <column name="nom" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="message" type="varchar(255)">
@@ -45,10 +42,10 @@
             <column name="moyen_de_paiement" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="etat_facture_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="adresse_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_facture_adresse_id" />
+            </column>
+            <column name="etat_facture_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="societe_id" type="bigint">
@@ -60,14 +57,14 @@
             <column name="client_fournisseur_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
     </changeSet>
 
     <changeSet id="20200722090504-1-relations" author="jhipster">
 
     </changeSet>
-    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
     <!--
         Load sample data generated with Faker.js
@@ -85,7 +82,6 @@
             <column name="id" type="numeric"/>
             <column name="numfact" type="numeric"/>
             <column name="nom" type="string"/>
-            <column name="type" type="string"/>
             <column name="message" type="string"/>
             <column name="date" type="date"/>
             <column name="date_echeance" type="date"/>
@@ -93,7 +89,7 @@
             <column name="prix_ttc" type="numeric"/>
             <column name="tva" type="numeric"/>
             <column name="moyen_de_paiement" type="string"/>
-            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>
 

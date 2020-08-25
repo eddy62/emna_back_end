@@ -9,14 +9,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link AutresVariable} and its DTO {@link AutresVariableDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EtatVariablePaieMapper.class, EmployeMapper.class})
+@Mapper(componentModel = "spring", uses = {EmployeMapper.class})
 public interface AutresVariableMapper extends EntityMapper<AutresVariableDTO, AutresVariable> {
 
-    @Mapping(source = "etatVariablePaie.id", target = "etatVariablePaieId")
     @Mapping(source = "employe.id", target = "employeId")
     AutresVariableDTO toDto(AutresVariable autresVariable);
 
-    @Mapping(source = "etatVariablePaieId", target = "etatVariablePaie")
     @Mapping(source = "employeId", target = "employe")
     AutresVariable toEntity(AutresVariableDTO autresVariableDTO);
 

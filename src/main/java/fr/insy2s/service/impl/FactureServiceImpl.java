@@ -1,19 +1,23 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.Document;
+import fr.insy2s.repository.DocumentRepository;
+import fr.insy2s.repository.SocieteRepository;
+import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.domain.Facture;
 import fr.insy2s.repository.FactureRepository;
 import fr.insy2s.service.dto.FactureDTO;
+import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.service.mapper.FactureMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,9 +33,18 @@ public class FactureServiceImpl implements FactureService {
 
     private final FactureMapper factureMapper;
 
-    public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper) {
+    private final DocumentService documentService;
+
+    private final DocumentRepository documentRepository;
+
+    private final SocieteRepository societeRepository;
+
+    public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, SocieteRepository societeRepository) {
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
+        this.documentService = documentService;
+        this.documentRepository = documentRepository;
+        this.societeRepository = societeRepository;
     }
 
     @Override
@@ -64,5 +77,28 @@ public class FactureServiceImpl implements FactureService {
     public void delete(Long id) {
         log.debug("Request to delete Facture : {}", id);
         factureRepository.deleteById(id);
+    }
+
+    @Override
+    public FactureDTO postFactureWithFile(FactureTemp factureTemp) {
+        Set<Document> documents = documentService.multiPartFilesToDocuments(Arrays.asList(factureTemp.getListeFiles()));
+        Facture facture = factureTemp.toFacture();
+        for (Document document: documents
+             ) {
+            document.setFacture(facture);
+            documentRepository.save(document);
+        }
+        facture.setListeDocuments(documents);
+        facture.setSociete(societeRepository.getOne(factureTemp.getSocieteId()));
+        facture.set
+        Facture mafacture = factureRepository.save(facture);
+        return this.factureMapper.toDto(mafacture);
+    }
+
+    @Override
+    public List<FactureDTO> findAllBySocieteId(Long id) {
+        return factureRepository.findAllBySocieteId(id).stream()
+            .map(factureMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }

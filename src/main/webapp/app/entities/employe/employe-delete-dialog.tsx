@@ -59,7 +59,7 @@ export const EmployeDeleteDialog = (props: IEmployeDeleteDialogProps) => {
 
 const mapStateToProps = ({ employe }: IRootState) => ({
   employeEntity: employe.entity,
-  updateSuccess: employe.updateSuccess,
+  updateSuccess: employe.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

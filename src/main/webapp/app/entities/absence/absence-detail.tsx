@@ -31,9 +31,7 @@ export const AbsenceDetail = (props: IAbsenceDetailProps) => {
             </span>
           </dt>
           <dd>
-            {absenceEntity.debutAbsence ? (
-              <TextFormat value={absenceEntity.debutAbsence} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            ) : null}
+            <TextFormat value={absenceEntity.debutAbsence} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="finAbsence">
@@ -41,7 +39,7 @@ export const AbsenceDetail = (props: IAbsenceDetailProps) => {
             </span>
           </dt>
           <dd>
-            {absenceEntity.finAbsence ? <TextFormat value={absenceEntity.finAbsence} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
+            <TextFormat value={absenceEntity.finAbsence} type="date" format={APP_LOCAL_DATE_FORMAT} />
           </dd>
           <dt>
             <span id="justificatif">
@@ -53,10 +51,6 @@ export const AbsenceDetail = (props: IAbsenceDetailProps) => {
             <Translate contentKey="emnaBackEndApp.absence.typeAbsence">Type Absence</Translate>
           </dt>
           <dd>{absenceEntity.typeAbsenceId ? absenceEntity.typeAbsenceId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.absence.etatVariablePaie">Etat Variable Paie</Translate>
-          </dt>
-          <dd>{absenceEntity.etatVariablePaieId ? absenceEntity.etatVariablePaieId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.absence.employe">Employe</Translate>
           </dt>
@@ -81,7 +75,7 @@ export const AbsenceDetail = (props: IAbsenceDetailProps) => {
 };
 
 const mapStateToProps = ({ absence }: IRootState) => ({
-  absenceEntity: absence.entity,
+  absenceEntity: absence.entity
 });
 
 const mapDispatchToProps = { getEntity };

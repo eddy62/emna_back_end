@@ -32,11 +32,6 @@ import Societe from './societe';
 import InfoEntreprise from './info-entreprise';
 import StatutEmploye from './statut-employe';
 import Document from './document';
-import LigneProduit from './ligne-produit';
-import TypeContrat from './type-contrat';
-import EtatVariablePaie from './etat-variable-paie';
-import AvanceRappelSalaire from './avance-rappel-salaire';
-import Dpae from './dpae';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -71,11 +66,6 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}info-entreprise`} component={InfoEntreprise} />
       <ErrorBoundaryRoute path={`${match.url}statut-employe`} component={StatutEmploye} />
       <ErrorBoundaryRoute path={`${match.url}document`} component={Document} />
-      <ErrorBoundaryRoute path={`${match.url}ligne-produit`} component={LigneProduit} />
-      <ErrorBoundaryRoute path={`${match.url}type-contrat`} component={TypeContrat} />
-      <ErrorBoundaryRoute path={`${match.url}etat-variable-paie`} component={EtatVariablePaie} />
-      <ErrorBoundaryRoute path={`${match.url}avance-rappel-salaire`} component={AvanceRappelSalaire} />
-      <ErrorBoundaryRoute path={`${match.url}dpae`} component={Dpae} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

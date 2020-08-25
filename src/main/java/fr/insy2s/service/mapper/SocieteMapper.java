@@ -9,15 +9,16 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Societe} and its DTO {@link SocieteDTO}.
  */
-@Mapper(componentModel = "spring", uses = {InfoEntrepriseMapper.class, UserMapper.class, AdresseMapper.class, ComptableMapper.class})
+@Mapper(componentModel = "spring", uses = {AdresseMapper.class, InfoEntrepriseMapper.class, UserMapper.class, ComptableMapper.class})
 public interface SocieteMapper extends EntityMapper<SocieteDTO, Societe> {
 
+    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "infoEntreprise.id", target = "infoEntrepriseId")
     @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "comptable.id", target = "comptableId")
     SocieteDTO toDto(Societe societe);
 
+    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(source = "infoEntrepriseId", target = "infoEntreprise")
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "listeFactures", ignore = true)
@@ -38,9 +39,6 @@ public interface SocieteMapper extends EntityMapper<SocieteDTO, Societe> {
     @Mapping(target = "removeListeArticles", ignore = true)
     @Mapping(target = "listeEmployes", ignore = true)
     @Mapping(target = "removeListeEmployes", ignore = true)
-    @Mapping(target = "listeDpaes", ignore = true)
-    @Mapping(target = "removeListeDpae", ignore = true)
-    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(source = "comptableId", target = "comptable")
     Societe toEntity(SocieteDTO societeDTO);
 

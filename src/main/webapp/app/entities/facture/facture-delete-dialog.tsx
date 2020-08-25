@@ -59,7 +59,7 @@ export const FactureDeleteDialog = (props: IFactureDeleteDialogProps) => {
 
 const mapStateToProps = ({ facture }: IRootState) => ({
   factureEntity: facture.entity,
-  updateSuccess: facture.updateSuccess,
+  updateSuccess: facture.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

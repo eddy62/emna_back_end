@@ -49,9 +49,6 @@ export const NoteDeFrais = (props: INoteDeFraisProps) => {
                   <Translate contentKey="emnaBackEndApp.noteDeFrais.justificatif">Justificatif</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.noteDeFrais.etatVariablePaie">Etat Variable Paie</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.noteDeFrais.employe">Employe</Translate>
                 </th>
                 <th />
@@ -69,13 +66,6 @@ export const NoteDeFrais = (props: INoteDeFraisProps) => {
                   <td>{noteDeFrais.date ? <TextFormat type="date" value={noteDeFrais.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{noteDeFrais.montant}</td>
                   <td>{noteDeFrais.justificatif}</td>
-                  <td>
-                    {noteDeFrais.etatVariablePaieId ? (
-                      <Link to={`etat-variable-paie/${noteDeFrais.etatVariablePaieId}`}>{noteDeFrais.etatVariablePaieId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td>{noteDeFrais.employeId ? <Link to={`employe/${noteDeFrais.employeId}`}>{noteDeFrais.employeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

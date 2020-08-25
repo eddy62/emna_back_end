@@ -37,10 +37,6 @@ public class HeuresSupplementaires implements Serializable {
     private String justificatif;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "heuresSupplementaires", allowSetters = true)
-    private EtatVariablePaie etatVariablePaie;
-
-    @ManyToOne
     @JsonIgnoreProperties(value = "listeHeureSupplementaires", allowSetters = true)
     private Employe employe;
 
@@ -90,19 +86,6 @@ public class HeuresSupplementaires implements Serializable {
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
-    }
-
-    public EtatVariablePaie getEtatVariablePaie() {
-        return etatVariablePaie;
-    }
-
-    public HeuresSupplementaires etatVariablePaie(EtatVariablePaie etatVariablePaie) {
-        this.etatVariablePaie = etatVariablePaie;
-        return this;
-    }
-
-    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
-        this.etatVariablePaie = etatVariablePaie;
     }
 
     public Employe getEmploye() {

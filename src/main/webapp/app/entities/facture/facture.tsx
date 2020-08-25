@@ -43,9 +43,6 @@ export const Facture = (props: IFactureProps) => {
                   <Translate contentKey="emnaBackEndApp.facture.nom">Nom</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.facture.type">Type</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.facture.message">Message</Translate>
                 </th>
                 <th>
@@ -67,10 +64,10 @@ export const Facture = (props: IFactureProps) => {
                   <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
+                  <Translate contentKey="emnaBackEndApp.facture.adresse">Adresse</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.facture.adresse">Adresse</Translate>
+                  <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.facture.societe">Societe</Translate>
@@ -94,18 +91,19 @@ export const Facture = (props: IFactureProps) => {
                   </td>
                   <td>{facture.numfact}</td>
                   <td>{facture.nom}</td>
-                  <td>{facture.type}</td>
                   <td>{facture.message}</td>
-                  <td>{facture.date ? <TextFormat type="date" value={facture.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
-                    {facture.dateEcheance ? <TextFormat type="date" value={facture.dateEcheance} format={APP_LOCAL_DATE_FORMAT} /> : null}
+                    <TextFormat type="date" value={facture.date} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    <TextFormat type="date" value={facture.dateEcheance} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{facture.prixHT}</td>
                   <td>{facture.prixTTC}</td>
                   <td>{facture.tva}</td>
                   <td>{facture.moyenDePaiement}</td>
-                  <td>{facture.etatFactureId ? <Link to={`etat-facture/${facture.etatFactureId}`}>{facture.etatFactureId}</Link> : ''}</td>
                   <td>{facture.adresseId ? <Link to={`adresse/${facture.adresseId}`}>{facture.adresseId}</Link> : ''}</td>
+                  <td>{facture.etatFactureId ? <Link to={`etat-facture/${facture.etatFactureId}`}>{facture.etatFactureId}</Link> : ''}</td>
                   <td>{facture.societeId ? <Link to={`societe/${facture.societeId}`}>{facture.societeId}</Link> : ''}</td>
                   <td>{facture.operationId ? <Link to={`operation/${facture.operationId}`}>{facture.operationId}</Link> : ''}</td>
                   <td>
@@ -155,11 +153,11 @@ export const Facture = (props: IFactureProps) => {
 
 const mapStateToProps = ({ facture }: IRootState) => ({
   factureList: facture.entities,
-  loading: facture.loading,
+  loading: facture.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

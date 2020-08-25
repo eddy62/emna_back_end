@@ -7,11 +7,11 @@ import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
 import { IClause } from 'app/shared/model/clause.model';
 import { IArticle } from 'app/shared/model/article.model';
 import { IEmploye } from 'app/shared/model/employe.model';
-import { IDpae } from 'app/shared/model/dpae.model';
 
 export interface ISociete {
   id?: number;
   civilite?: string;
+  adresseId?: number;
   infoEntrepriseId?: number;
   userId?: number;
   listeFactures?: IFacture[];
@@ -23,8 +23,6 @@ export interface ISociete {
   listeClauses?: IClause[];
   listeArticles?: IArticle[];
   listeEmployes?: IEmploye[];
-  listeDpaes?: IDpae[];
-  adresseId?: number;
   comptableId?: number;
 }
 

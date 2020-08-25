@@ -9,8 +9,6 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ITypePrime } from 'app/shared/model/type-prime.model';
 import { getEntities as getTypePrimes } from 'app/entities/type-prime/type-prime.reducer';
-import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
-import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './prime.reducer';
@@ -22,11 +20,10 @@ export interface IPrimeUpdateProps extends StateProps, DispatchProps, RouteCompo
 
 export const PrimeUpdate = (props: IPrimeUpdateProps) => {
   const [typePrimeId, setTypePrimeId] = useState('0');
-  const [etatVariablePaieId, setEtatVariablePaieId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { primeEntity, typePrimes, etatVariablePaies, employes, loading, updating } = props;
+  const { primeEntity, typePrimes, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/prime');
@@ -40,7 +37,6 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
     }
 
     props.getTypePrimes();
-    props.getEtatVariablePaies();
     props.getEmployes();
   }, []);
 
@@ -54,7 +50,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...primeEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -97,7 +93,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                   type="text"
                   name="type"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -112,7 +108,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                   name="montant"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') }
                   }}
                 />
               </AvGroup>
@@ -132,21 +128,6 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                 <AvFeedback>
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
-              </AvGroup>
-              <AvGroup>
-                <Label for="prime-etatVariablePaie">
-                  <Translate contentKey="emnaBackEndApp.prime.etatVariablePaie">Etat Variable Paie</Translate>
-                </Label>
-                <AvInput id="prime-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
-                  <option value="" key="0" />
-                  {etatVariablePaies
-                    ? etatVariablePaies.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="prime-employe">
@@ -186,22 +167,20 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   typePrimes: storeState.typePrime.entities,
-  etatVariablePaies: storeState.etatVariablePaie.entities,
   employes: storeState.employe.entities,
   primeEntity: storeState.prime.entity,
   loading: storeState.prime.loading,
   updating: storeState.prime.updating,
-  updateSuccess: storeState.prime.updateSuccess,
+  updateSuccess: storeState.prime.updateSuccess
 });
 
 const mapDispatchToProps = {
   getTypePrimes,
-  getEtatVariablePaies,
   getEmployes,
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

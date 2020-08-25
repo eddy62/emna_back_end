@@ -42,10 +42,6 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
           </dt>
           <dd>{primeEntity.typePrimeId ? primeEntity.typePrimeId : ''}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.prime.etatVariablePaie">Etat Variable Paie</Translate>
-          </dt>
-          <dd>{primeEntity.etatVariablePaieId ? primeEntity.etatVariablePaieId : ''}</dd>
-          <dt>
             <Translate contentKey="emnaBackEndApp.prime.employe">Employe</Translate>
           </dt>
           <dd>{primeEntity.employeId ? primeEntity.employeId : ''}</dd>
@@ -69,7 +65,7 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
 };
 
 const mapStateToProps = ({ prime }: IRootState) => ({
-  primeEntity: prime.entity,
+  primeEntity: prime.entity
 });
 
 const mapDispatchToProps = { getEntity };

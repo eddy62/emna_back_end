@@ -23,8 +23,6 @@ public class NoteDeFraisDTO implements Serializable {
     private String justificatif;
 
 
-    private Long etatVariablePaieId;
-
     private Long employeId;
     
     public Long getId() {
@@ -67,14 +65,6 @@ public class NoteDeFraisDTO implements Serializable {
         this.justificatif = justificatif;
     }
 
-    public Long getEtatVariablePaieId() {
-        return etatVariablePaieId;
-    }
-
-    public void setEtatVariablePaieId(Long etatVariablePaieId) {
-        this.etatVariablePaieId = etatVariablePaieId;
-    }
-
     public Long getEmployeId() {
         return employeId;
     }
@@ -109,7 +99,6 @@ public class NoteDeFraisDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
             ", justificatif='" + getJustificatif() + "'" +
-            ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";
     }

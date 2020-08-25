@@ -3,9 +3,6 @@ export interface IDocument {
   cheminFichier?: string;
   type?: string;
   nom?: string;
-  absenceId?: number;
-  noteDeFraisId?: number;
-  autresVariablesId?: number;
   factureId?: number;
   releveId?: number;
   contratId?: number;

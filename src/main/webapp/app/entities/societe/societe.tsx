@@ -40,13 +40,13 @@ export const Societe = (props: ISocieteProps) => {
                   <Translate contentKey="emnaBackEndApp.societe.civilite">Civilite</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.societe.adresse">Adresse</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.societe.infoEntreprise">Info Entreprise</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.societe.user">User</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.societe.adresse">Adresse</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.societe.comptable">Comptable</Translate>
@@ -63,6 +63,7 @@ export const Societe = (props: ISocieteProps) => {
                     </Button>
                   </td>
                   <td>{societe.civilite}</td>
+                  <td>{societe.adresseId ? <Link to={`adresse/${societe.adresseId}`}>{societe.adresseId}</Link> : ''}</td>
                   <td>
                     {societe.infoEntrepriseId ? (
                       <Link to={`info-entreprise/${societe.infoEntrepriseId}`}>{societe.infoEntrepriseId}</Link>
@@ -71,7 +72,6 @@ export const Societe = (props: ISocieteProps) => {
                     )}
                   </td>
                   <td>{societe.userId ? societe.userId : ''}</td>
-                  <td>{societe.adresseId ? <Link to={`adresse/${societe.adresseId}`}>{societe.adresseId}</Link> : ''}</td>
                   <td>{societe.comptableId ? <Link to={`comptable/${societe.comptableId}`}>{societe.comptableId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -113,11 +113,11 @@ export const Societe = (props: ISocieteProps) => {
 
 const mapStateToProps = ({ societe }: IRootState) => ({
   societeList: societe.entities,
-  loading: societe.loading,
+  loading: societe.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

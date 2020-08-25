@@ -2,29 +2,23 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <!--
         Added the constraints for entity Employe.
     -->
     <changeSet id="20200722091704-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="statut_employe_id"
-                                 baseTableName="employe"
-                                 constraintName="fk_employe_statut_employe_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="statut_employe"/>
-
         <addForeignKeyConstraint baseColumnNames="adresse_id"
                                  baseTableName="employe"
                                  constraintName="fk_employe_adresse_id"
                                  referencedColumnNames="id"
                                  referencedTableName="adresse"/>
 
-        <addForeignKeyConstraint baseColumnNames="type_contrat_id"
+        <addForeignKeyConstraint baseColumnNames="statut_employe_id"
                                  baseTableName="employe"
-                                 constraintName="fk_employe_type_contrat_id"
+                                 constraintName="fk_employe_statut_employe_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="type_contrat"/>
+                                 referencedTableName="statut_employe"/>
 
         <addForeignKeyConstraint baseColumnNames="societe_id"
                                  baseTableName="employe"

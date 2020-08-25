@@ -3,7 +3,6 @@ export interface IPrime {
   type?: string;
   montant?: number;
   typePrimeId?: number;
-  etatVariablePaieId?: number;
   employeId?: number;
 }
 

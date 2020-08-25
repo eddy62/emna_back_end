@@ -2,6 +2,7 @@ package fr.insy2s.service.dto;
 
 import java.time.LocalDate;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Facture} entity.
@@ -13,8 +14,6 @@ public class FactureDTO implements Serializable {
     private Long numfact;
 
     private String nom;
-
-    private String type;
 
     private String message;
 
@@ -31,9 +30,9 @@ public class FactureDTO implements Serializable {
     private String moyenDePaiement;
 
 
-    private Long etatFactureId;
-
     private Long adresseId;
+
+    private Long etatFactureId;
 
     private Long societeId;
 
@@ -63,14 +62,6 @@ public class FactureDTO implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getMessage() {
@@ -129,20 +120,20 @@ public class FactureDTO implements Serializable {
         this.moyenDePaiement = moyenDePaiement;
     }
 
-    public Long getEtatFactureId() {
-        return etatFactureId;
-    }
-
-    public void setEtatFactureId(Long etatFactureId) {
-        this.etatFactureId = etatFactureId;
-    }
-
     public Long getAdresseId() {
         return adresseId;
     }
 
     public void setAdresseId(Long adresseId) {
         this.adresseId = adresseId;
+    }
+
+    public Long getEtatFactureId() {
+        return etatFactureId;
+    }
+
+    public void setEtatFactureId(Long etatFactureId) {
+        this.etatFactureId = etatFactureId;
     }
 
     public Long getSocieteId() {
@@ -174,26 +165,28 @@ public class FactureDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof FactureDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((FactureDTO) o).id);
+        FactureDTO factureDTO = (FactureDTO) o;
+        if (factureDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), factureDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "FactureDTO{" +
             "id=" + getId() +
             ", numfact=" + getNumfact() +
             ", nom='" + getNom() + "'" +
-            ", type='" + getType() + "'" +
             ", message='" + getMessage() + "'" +
             ", date='" + getDate() + "'" +
             ", dateEcheance='" + getDateEcheance() + "'" +
@@ -201,8 +194,8 @@ public class FactureDTO implements Serializable {
             ", prixTTC=" + getPrixTTC() +
             ", tva=" + getTva() +
             ", moyenDePaiement='" + getMoyenDePaiement() + "'" +
-            ", etatFactureId=" + getEtatFactureId() +
             ", adresseId=" + getAdresseId() +
+            ", etatFactureId=" + getEtatFactureId() +
             ", societeId=" + getSocieteId() +
             ", operationId=" + getOperationId() +
             ", clientFournisseurId=" + getClientFournisseurId() +

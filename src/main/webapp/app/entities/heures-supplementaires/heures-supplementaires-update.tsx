@@ -7,8 +7,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
-import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './heures-supplementaires.reducer';
@@ -19,11 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IHeuresSupplementairesUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const HeuresSupplementairesUpdate = (props: IHeuresSupplementairesUpdateProps) => {
-  const [etatVariablePaieId, setEtatVariablePaieId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { heuresSupplementairesEntity, etatVariablePaies, employes, loading, updating } = props;
+  const { heuresSupplementairesEntity, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/heures-supplementaires');
@@ -36,7 +33,6 @@ export const HeuresSupplementairesUpdate = (props: IHeuresSupplementairesUpdateP
       props.getEntity(props.match.params.id);
     }
 
-    props.getEtatVariablePaies();
     props.getEmployes();
   }, []);
 
@@ -122,21 +118,6 @@ export const HeuresSupplementairesUpdate = (props: IHeuresSupplementairesUpdateP
                 <AvField id="heures-supplementaires-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
-                <Label for="heures-supplementaires-etatVariablePaie">
-                  <Translate contentKey="emnaBackEndApp.heuresSupplementaires.etatVariablePaie">Etat Variable Paie</Translate>
-                </Label>
-                <AvInput id="heures-supplementaires-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
-                  <option value="" key="0" />
-                  {etatVariablePaies
-                    ? etatVariablePaies.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="heures-supplementaires-employe">
                   <Translate contentKey="emnaBackEndApp.heuresSupplementaires.employe">Employe</Translate>
                 </Label>
@@ -173,7 +154,6 @@ export const HeuresSupplementairesUpdate = (props: IHeuresSupplementairesUpdateP
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  etatVariablePaies: storeState.etatVariablePaie.entities,
   employes: storeState.employe.entities,
   heuresSupplementairesEntity: storeState.heuresSupplementaires.entity,
   loading: storeState.heuresSupplementaires.loading,
@@ -182,7 +162,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getEtatVariablePaies,
   getEmployes,
   getEntity,
   updateEntity,

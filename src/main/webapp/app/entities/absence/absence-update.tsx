@@ -9,8 +9,6 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ITypeAbsence } from 'app/shared/model/type-absence.model';
 import { getEntities as getTypeAbsences } from 'app/entities/type-absence/type-absence.reducer';
-import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
-import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './absence.reducer';
@@ -22,11 +20,10 @@ export interface IAbsenceUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
   const [typeAbsenceId, setTypeAbsenceId] = useState('0');
-  const [etatVariablePaieId, setEtatVariablePaieId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { absenceEntity, typeAbsences, etatVariablePaies, employes, loading, updating } = props;
+  const { absenceEntity, typeAbsences, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/absence');
@@ -40,7 +37,6 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
     }
 
     props.getTypeAbsences();
-    props.getEtatVariablePaies();
     props.getEmployes();
   }, []);
 
@@ -54,7 +50,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...absenceEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -98,7 +94,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                   className="form-control"
                   name="debutAbsence"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -112,7 +108,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                   className="form-control"
                   name="finAbsence"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    required: { value: true, errorMessage: translate('entity.validation.required') }
                   }}
                 />
               </AvGroup>
@@ -138,21 +134,6 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                 <AvFeedback>
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
-              </AvGroup>
-              <AvGroup>
-                <Label for="absence-etatVariablePaie">
-                  <Translate contentKey="emnaBackEndApp.absence.etatVariablePaie">Etat Variable Paie</Translate>
-                </Label>
-                <AvInput id="absence-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
-                  <option value="" key="0" />
-                  {etatVariablePaies
-                    ? etatVariablePaies.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="absence-employe">
@@ -192,22 +173,20 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   typeAbsences: storeState.typeAbsence.entities,
-  etatVariablePaies: storeState.etatVariablePaie.entities,
   employes: storeState.employe.entities,
   absenceEntity: storeState.absence.entity,
   loading: storeState.absence.loading,
   updating: storeState.absence.updating,
-  updateSuccess: storeState.absence.updateSuccess,
+  updateSuccess: storeState.absence.updateSuccess
 });
 
 const mapDispatchToProps = {
   getTypeAbsences,
-  getEtatVariablePaies,
   getEmployes,
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

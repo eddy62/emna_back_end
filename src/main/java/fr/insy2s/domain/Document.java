@@ -7,13 +7,14 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Document.
  */
 @Entity
 @Table(name = "document")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Document implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,34 +34,22 @@ public class Document implements Serializable {
     private String nom;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "documents", allowSetters = true)
-    private Absence absence;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "documents", allowSetters = true)
-    private NoteDeFrais noteDeFrais;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "documents", allowSetters = true)
-    private AutresVariable autresVariables;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    @JsonIgnoreProperties("listeDocuments")
     private Facture facture;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    @JsonIgnoreProperties("listeDocuments")
     private Releve releve;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    @JsonIgnoreProperties("listeDocuments")
     private Contrat contrat;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    @JsonIgnoreProperties("listeDocuments")
     private Employe employe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -106,45 +95,6 @@ public class Document implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public Absence getAbsence() {
-        return absence;
-    }
-
-    public Document absence(Absence absence) {
-        this.absence = absence;
-        return this;
-    }
-
-    public void setAbsence(Absence absence) {
-        this.absence = absence;
-    }
-
-    public NoteDeFrais getNoteDeFrais() {
-        return noteDeFrais;
-    }
-
-    public Document noteDeFrais(NoteDeFrais noteDeFrais) {
-        this.noteDeFrais = noteDeFrais;
-        return this;
-    }
-
-    public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
-        this.noteDeFrais = noteDeFrais;
-    }
-
-    public AutresVariable getAutresVariables() {
-        return autresVariables;
-    }
-
-    public Document autresVariables(AutresVariable autresVariable) {
-        this.autresVariables = autresVariable;
-        return this;
-    }
-
-    public void setAutresVariables(AutresVariable autresVariable) {
-        this.autresVariables = autresVariable;
     }
 
     public Facture getFacture() {
@@ -198,7 +148,7 @@ public class Document implements Serializable {
     public void setEmploye(Employe employe) {
         this.employe = employe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -216,7 +166,6 @@ public class Document implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Document{" +

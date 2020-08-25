@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link DocumentResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+
 @AutoConfigureMockMvc
 @WithMockUser
 public class DocumentResourceIT {
@@ -94,6 +95,7 @@ public class DocumentResourceIT {
     @Transactional
     public void createDocument() throws Exception {
         int databaseSizeBeforeCreate = documentRepository.findAll().size();
+
         // Create the Document
         DocumentDTO documentDTO = documentMapper.toDto(document);
         restDocumentMockMvc.perform(post("/api/documents")
@@ -162,6 +164,7 @@ public class DocumentResourceIT {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM));
     }
+
     @Test
     @Transactional
     public void getNonExistingDocument() throws Exception {

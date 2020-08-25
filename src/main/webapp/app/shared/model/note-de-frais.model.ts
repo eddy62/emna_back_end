@@ -6,7 +6,6 @@ export interface INoteDeFrais {
   date?: string;
   montant?: number;
   justificatif?: string;
-  etatVariablePaieId?: number;
   employeId?: number;
 }
 

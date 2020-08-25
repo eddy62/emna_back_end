@@ -32,6 +32,10 @@ export const ComptableDetail = (props: IComptableDetailProps) => {
           </dt>
           <dd>{comptableEntity.civilite}</dd>
           <dt>
+            <Translate contentKey="emnaBackEndApp.comptable.adresse">Adresse</Translate>
+          </dt>
+          <dd>{comptableEntity.adresseId ? comptableEntity.adresseId : ''}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.comptable.infoEntreprise">Info Entreprise</Translate>
           </dt>
           <dd>{comptableEntity.infoEntrepriseId ? comptableEntity.infoEntrepriseId : ''}</dd>
@@ -39,10 +43,6 @@ export const ComptableDetail = (props: IComptableDetailProps) => {
             <Translate contentKey="emnaBackEndApp.comptable.user">User</Translate>
           </dt>
           <dd>{comptableEntity.userId ? comptableEntity.userId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.comptable.adresse">Adresse</Translate>
-          </dt>
-          <dd>{comptableEntity.adresseId ? comptableEntity.adresseId : ''}</dd>
         </dl>
         <Button tag={Link} to="/comptable" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

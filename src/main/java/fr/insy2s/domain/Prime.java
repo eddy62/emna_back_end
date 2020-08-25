@@ -8,13 +8,14 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Prime.
  */
 @Entity
 @Table(name = "prime")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Prime implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,18 +35,14 @@ public class Prime implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = "primes", allowSetters = true)
+    @JsonIgnoreProperties("primes")
     private TypePrime typePrime;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "primes", allowSetters = true)
-    private EtatVariablePaie etatVariablePaie;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listePrimes", allowSetters = true)
+    @JsonIgnoreProperties("listePrimes")
     private Employe employe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -93,19 +90,6 @@ public class Prime implements Serializable {
         this.typePrime = typePrime;
     }
 
-    public EtatVariablePaie getEtatVariablePaie() {
-        return etatVariablePaie;
-    }
-
-    public Prime etatVariablePaie(EtatVariablePaie etatVariablePaie) {
-        this.etatVariablePaie = etatVariablePaie;
-        return this;
-    }
-
-    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
-        this.etatVariablePaie = etatVariablePaie;
-    }
-
     public Employe getEmploye() {
         return employe;
     }
@@ -118,7 +102,7 @@ public class Prime implements Serializable {
     public void setEmploye(Employe employe) {
         this.employe = employe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -136,7 +120,6 @@ public class Prime implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Prime{" +

@@ -18,7 +18,6 @@
       },
       "numfact": "Numfact",
       "nom": "Nom",
-      "type": "Type",
       "message": "Message",
       "date": "Date",
       "dateEcheance": "Date Echeance",
@@ -26,13 +25,13 @@
       "prixTTC": "Prix TTC",
       "tva": "Tva",
       "moyenDePaiement": "Moyen De Paiement",
-      "listeDocuments": "Liste Documents",
-      "listeLigneProduit": "Liste Ligne Produit",
-      "etatFacture": "Etat Facture",
       "adresse": "Adresse",
+      "listeDocuments": "Liste Documents",
+      "etatFacture": "Etat Facture",
       "societe": "Societe",
       "operation": "Operation",
-      "clientFournisseur": "Client Fournisseur"
+      "clientFournisseur": "Client Fournisseur",
+      "listeProduits": "Liste Produits"
     }
   }
 }

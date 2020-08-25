@@ -7,8 +7,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
-import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './autres-variable.reducer';
@@ -19,11 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IAutresVariableUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AutresVariableUpdate = (props: IAutresVariableUpdateProps) => {
-  const [etatVariablePaieId, setEtatVariablePaieId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { autresVariableEntity, etatVariablePaies, employes, loading, updating } = props;
+  const { autresVariableEntity, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/autres-variable');
@@ -36,7 +33,6 @@ export const AutresVariableUpdate = (props: IAutresVariableUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getEtatVariablePaies();
     props.getEmployes();
   }, []);
 
@@ -109,21 +105,6 @@ export const AutresVariableUpdate = (props: IAutresVariableUpdateProps) => {
                 <AvField id="autres-variable-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
-                <Label for="autres-variable-etatVariablePaie">
-                  <Translate contentKey="emnaBackEndApp.autresVariable.etatVariablePaie">Etat Variable Paie</Translate>
-                </Label>
-                <AvInput id="autres-variable-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
-                  <option value="" key="0" />
-                  {etatVariablePaies
-                    ? etatVariablePaies.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="autres-variable-employe">
                   <Translate contentKey="emnaBackEndApp.autresVariable.employe">Employe</Translate>
                 </Label>
@@ -160,7 +141,6 @@ export const AutresVariableUpdate = (props: IAutresVariableUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  etatVariablePaies: storeState.etatVariablePaie.entities,
   employes: storeState.employe.entities,
   autresVariableEntity: storeState.autresVariable.entity,
   loading: storeState.autresVariable.loading,
@@ -169,7 +149,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getEtatVariablePaies,
   getEmployes,
   getEntity,
   updateEntity,

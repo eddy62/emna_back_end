@@ -1,5 +1,6 @@
 package fr.insy2s.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "facture")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Facture implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,9 +33,6 @@ public class Facture implements Serializable {
 
     @Column(name = "nom")
     private String nom;
-
-    @Column(name = "type")
-    private String type;
 
     @Column(name = "message")
     private String message;
@@ -56,35 +55,36 @@ public class Facture implements Serializable {
     @Column(name = "moyen_de_paiement")
     private String moyenDePaiement;
 
-    @OneToMany(mappedBy = "facture")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Adresse adresse;
+
+    @OneToMany(mappedBy = "facture", cascade =CascadeType.REMOVE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
 
-    @OneToMany(mappedBy = "facture")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<LigneProduit> listeLigneProduits = new HashSet<>();
-
     @ManyToOne
-    @JsonIgnoreProperties(value = "factures", allowSetters = true)
+    @JsonIgnoreProperties("factures")
     private EtatFacture etatFacture;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "factures", allowSetters = true)
-    private Adresse adresse;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeFactures", allowSetters = true)
+    @JsonIgnoreProperties("listeFactures")
     private Societe societe;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeFactures", allowSetters = true)
+    @JsonIgnoreProperties("listeFactures")
     private Operation operation;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "listeFactures", allowSetters = true)
+    @JsonIgnoreProperties("listeFactures")
     private ClientFournisseur clientFournisseur;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    @ManyToMany(mappedBy = "listeFactures")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
+    private Set<Produit> listeProduits = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -117,19 +117,6 @@ public class Facture implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Facture type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getMessage() {
@@ -223,6 +210,19 @@ public class Facture implements Serializable {
         this.moyenDePaiement = moyenDePaiement;
     }
 
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public Facture adresse(Adresse adresse) {
+        this.adresse = adresse;
+        return this;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
     public Set<Document> getListeDocuments() {
         return listeDocuments;
     }
@@ -248,31 +248,6 @@ public class Facture implements Serializable {
         this.listeDocuments = documents;
     }
 
-    public Set<LigneProduit> getListeLigneProduits() {
-        return listeLigneProduits;
-    }
-
-    public Facture listeLigneProduits(Set<LigneProduit> ligneProduits) {
-        this.listeLigneProduits = ligneProduits;
-        return this;
-    }
-
-    public Facture addListeLigneProduit(LigneProduit ligneProduit) {
-        this.listeLigneProduits.add(ligneProduit);
-        ligneProduit.setFacture(this);
-        return this;
-    }
-
-    public Facture removeListeLigneProduit(LigneProduit ligneProduit) {
-        this.listeLigneProduits.remove(ligneProduit);
-        ligneProduit.setFacture(null);
-        return this;
-    }
-
-    public void setListeLigneProduits(Set<LigneProduit> ligneProduits) {
-        this.listeLigneProduits = ligneProduits;
-    }
-
     public EtatFacture getEtatFacture() {
         return etatFacture;
     }
@@ -284,19 +259,6 @@ public class Facture implements Serializable {
 
     public void setEtatFacture(EtatFacture etatFacture) {
         this.etatFacture = etatFacture;
-    }
-
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public Facture adresse(Adresse adresse) {
-        this.adresse = adresse;
-        return this;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
     }
 
     public Societe getSociete() {
@@ -337,7 +299,32 @@ public class Facture implements Serializable {
     public void setClientFournisseur(ClientFournisseur clientFournisseur) {
         this.clientFournisseur = clientFournisseur;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public Set<Produit> getListeProduits() {
+        return listeProduits;
+    }
+
+    public Facture listeProduits(Set<Produit> produits) {
+        this.listeProduits = produits;
+        return this;
+    }
+
+    public Facture addListeProduits(Produit produit) {
+        this.listeProduits.add(produit);
+        produit.getListeFactures().add(this);
+        return this;
+    }
+
+    public Facture removeListeProduits(Produit produit) {
+        this.listeProduits.remove(produit);
+        produit.getListeFactures().remove(this);
+        return this;
+    }
+
+    public void setListeProduits(Set<Produit> produits) {
+        this.listeProduits = produits;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -355,14 +342,12 @@ public class Facture implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Facture{" +
             "id=" + getId() +
             ", numfact=" + getNumfact() +
             ", nom='" + getNom() + "'" +
-            ", type='" + getType() + "'" +
             ", message='" + getMessage() + "'" +
             ", date='" + getDate() + "'" +
             ", dateEcheance='" + getDateEcheance() + "'" +

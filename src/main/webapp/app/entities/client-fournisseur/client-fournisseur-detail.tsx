@@ -78,7 +78,7 @@ export const ClientFournisseurDetail = (props: IClientFournisseurDetailProps) =>
 };
 
 const mapStateToProps = ({ clientFournisseur }: IRootState) => ({
-  clientFournisseurEntity: clientFournisseur.entity,
+  clientFournisseurEntity: clientFournisseur.entity
 });
 
 const mapDispatchToProps = { getEntity };

@@ -24,9 +24,6 @@
             <column name="justificatif" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="etat_variable_paie_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="employe_id" type="bigint">
                 <constraints nullable="true" />
             </column>

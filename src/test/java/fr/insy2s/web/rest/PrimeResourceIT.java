@@ -2,7 +2,6 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
 import fr.insy2s.domain.Prime;
-import fr.insy2s.domain.TypePrime;
 import fr.insy2s.repository.PrimeRepository;
 import fr.insy2s.service.PrimeService;
 import fr.insy2s.service.dto.PrimeDTO;
@@ -66,16 +65,6 @@ public class PrimeResourceIT {
         Prime prime = new Prime()
             .type(DEFAULT_TYPE)
             .montant(DEFAULT_MONTANT);
-        // Add required entity
-        TypePrime typePrime;
-        if (TestUtil.findAll(em, TypePrime.class).isEmpty()) {
-            typePrime = TypePrimeResourceIT.createEntity(em);
-            em.persist(typePrime);
-            em.flush();
-        } else {
-            typePrime = TestUtil.findAll(em, TypePrime.class).get(0);
-        }
-        prime.setTypePrime(typePrime);
         return prime;
     }
     /**
@@ -88,16 +77,6 @@ public class PrimeResourceIT {
         Prime prime = new Prime()
             .type(UPDATED_TYPE)
             .montant(UPDATED_MONTANT);
-        // Add required entity
-        TypePrime typePrime;
-        if (TestUtil.findAll(em, TypePrime.class).isEmpty()) {
-            typePrime = TypePrimeResourceIT.createUpdatedEntity(em);
-            em.persist(typePrime);
-            em.flush();
-        } else {
-            typePrime = TestUtil.findAll(em, TypePrime.class).get(0);
-        }
-        prime.setTypePrime(typePrime);
         return prime;
     }
 

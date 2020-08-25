@@ -59,7 +59,7 @@ export const DocumentDeleteDialog = (props: IDocumentDeleteDialogProps) => {
 
 const mapStateToProps = ({ document }: IRootState) => ({
   documentEntity: document.entity,
-  updateSuccess: document.updateSuccess,
+  updateSuccess: document.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

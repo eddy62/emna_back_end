@@ -1,6 +1,5 @@
 package fr.insy2s.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,6 +28,11 @@ public class Comptable implements Serializable {
     @Column(name = "civilite")
     private String civilite;
 
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(unique = true)
+    private Adresse adresse;
+
     @OneToOne
     @JoinColumn(unique = true)
     private InfoEntreprise infoEntreprise;
@@ -40,11 +44,6 @@ public class Comptable implements Serializable {
     @OneToMany(mappedBy = "comptable")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Societe> listeSocietes = new HashSet<>();
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = "comptables", allowSetters = true)
-    private Adresse adresse;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -66,6 +65,19 @@ public class Comptable implements Serializable {
 
     public void setCivilite(String civilite) {
         this.civilite = civilite;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public Comptable adresse(Adresse adresse) {
+        this.adresse = adresse;
+        return this;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 
     public InfoEntreprise getInfoEntreprise() {
@@ -117,19 +129,6 @@ public class Comptable implements Serializable {
 
     public void setListeSocietes(Set<Societe> societes) {
         this.listeSocietes = societes;
-    }
-
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public Comptable adresse(Adresse adresse) {
-        this.adresse = adresse;
-        return this;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

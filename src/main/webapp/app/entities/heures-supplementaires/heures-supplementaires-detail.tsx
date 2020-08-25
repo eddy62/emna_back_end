@@ -49,10 +49,6 @@ export const HeuresSupplementairesDetail = (props: IHeuresSupplementairesDetailP
           </dt>
           <dd>{heuresSupplementairesEntity.justificatif}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.heuresSupplementaires.etatVariablePaie">Etat Variable Paie</Translate>
-          </dt>
-          <dd>{heuresSupplementairesEntity.etatVariablePaieId ? heuresSupplementairesEntity.etatVariablePaieId : ''}</dd>
-          <dt>
             <Translate contentKey="emnaBackEndApp.heuresSupplementaires.employe">Employe</Translate>
           </dt>
           <dd>{heuresSupplementairesEntity.employeId ? heuresSupplementairesEntity.employeId : ''}</dd>

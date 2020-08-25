@@ -8,12 +8,6 @@
     -->
     <changeSet id="20200722092404-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id"
-                                 baseTableName="note_de_frais"
-                                 constraintName="fk_note_de_frais_etat_variable_paie_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="etat_variable_paie"/>
-
         <addForeignKeyConstraint baseColumnNames="employe_id"
                                  baseTableName="note_de_frais"
                                  constraintName="fk_note_de_frais_employe_id"

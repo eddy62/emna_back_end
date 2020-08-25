@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "client_fournisseur")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ClientFournisseur implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,23 +38,23 @@ public class ClientFournisseur implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Adresse adresse;
+
     @OneToMany(mappedBy = "clientFournisseur")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Facture> listeFactures = new HashSet<>();
 
     @OneToMany(mappedBy = "clientFournisseur")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Devis> listeDevis = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "clientFournisseurs", allowSetters = true)
-    private Adresse adresse;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeClientsFournisseurs", allowSetters = true)
+    @JsonIgnoreProperties("listeClientsFournisseurs")
     private Societe societe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -114,6 +115,19 @@ public class ClientFournisseur implements Serializable {
         this.email = email;
     }
 
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public ClientFournisseur adresse(Adresse adresse) {
+        this.adresse = adresse;
+        return this;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
     public Set<Facture> getListeFactures() {
         return listeFactures;
     }
@@ -164,19 +178,6 @@ public class ClientFournisseur implements Serializable {
         this.listeDevis = devis;
     }
 
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public ClientFournisseur adresse(Adresse adresse) {
-        this.adresse = adresse;
-        return this;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
-
     public Societe getSociete() {
         return societe;
     }
@@ -189,7 +190,7 @@ public class ClientFournisseur implements Serializable {
     public void setSociete(Societe societe) {
         this.societe = societe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -207,7 +208,6 @@ public class ClientFournisseur implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "ClientFournisseur{" +

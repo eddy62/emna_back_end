@@ -2,7 +2,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <!--
         Added the constraints for entity Prime.
     -->
@@ -13,12 +13,6 @@
                                  constraintName="fk_prime_type_prime_id"
                                  referencedColumnNames="id"
                                  referencedTableName="type_prime"/>
-
-        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id"
-                                 baseTableName="prime"
-                                 constraintName="fk_prime_etat_variable_paie_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="etat_variable_paie"/>
 
         <addForeignKeyConstraint baseColumnNames="employe_id"
                                  baseTableName="prime"

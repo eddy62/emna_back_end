@@ -46,15 +46,6 @@ export const Document = (props: IDocumentProps) => {
                   <Translate contentKey="emnaBackEndApp.document.nom">Nom</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.document.autresVariables">Autres Variables</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.document.facture">Facture</Translate>
                 </th>
                 <th>
@@ -80,17 +71,6 @@ export const Document = (props: IDocumentProps) => {
                   <td>{document.cheminFichier}</td>
                   <td>{document.type}</td>
                   <td>{document.nom}</td>
-                  <td>{document.absenceId ? <Link to={`absence/${document.absenceId}`}>{document.absenceId}</Link> : ''}</td>
-                  <td>
-                    {document.noteDeFraisId ? <Link to={`note-de-frais/${document.noteDeFraisId}`}>{document.noteDeFraisId}</Link> : ''}
-                  </td>
-                  <td>
-                    {document.autresVariablesId ? (
-                      <Link to={`autres-variable/${document.autresVariablesId}`}>{document.autresVariablesId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td>{document.factureId ? <Link to={`facture/${document.factureId}`}>{document.factureId}</Link> : ''}</td>
                   <td>{document.releveId ? <Link to={`releve/${document.releveId}`}>{document.releveId}</Link> : ''}</td>
                   <td>{document.contratId ? <Link to={`contrat/${document.contratId}`}>{document.contratId}</Link> : ''}</td>
@@ -135,11 +115,11 @@ export const Document = (props: IDocumentProps) => {
 
 const mapStateToProps = ({ document }: IRootState) => ({
   documentList: document.entities,
-  loading: document.loading,
+  loading: document.loading
 });
 
 const mapDispatchToProps = {
-  getEntities,
+  getEntities
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

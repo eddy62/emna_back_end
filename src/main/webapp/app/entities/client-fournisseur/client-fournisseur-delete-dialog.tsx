@@ -59,7 +59,7 @@ export const ClientFournisseurDeleteDialog = (props: IClientFournisseurDeleteDia
 
 const mapStateToProps = ({ clientFournisseur }: IRootState) => ({
   clientFournisseurEntity: clientFournisseur.entity,
-  updateSuccess: clientFournisseur.updateSuccess,
+  updateSuccess: clientFournisseur.updateSuccess
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

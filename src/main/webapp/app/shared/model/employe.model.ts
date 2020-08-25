@@ -5,10 +5,8 @@ import { IPrime } from 'app/shared/model/prime.model';
 import { IFichePaie } from 'app/shared/model/fiche-paie.model';
 import { IHeuresSupplementaires } from 'app/shared/model/heures-supplementaires.model';
 import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
-import { IAvanceRappelSalaire } from 'app/shared/model/avance-rappel-salaire.model';
 import { IAutresVariable } from 'app/shared/model/autres-variable.model';
 import { IDocument } from 'app/shared/model/document.model';
-import { IDpae } from 'app/shared/model/dpae.model';
 
 export interface IEmploye {
   id?: number;
@@ -17,7 +15,7 @@ export interface IEmploye {
   nomNaissance?: string;
   nomUsage?: string;
   prenom?: string;
-  dateNaissance?: string;
+  dateNaissance?: Moment;
   villeNaissance?: string;
   departementNaissance?: string;
   paysNaisance?: string;
@@ -31,24 +29,21 @@ export interface IEmploye {
   heuresMensuelle?: number;
   categorie?: string;
   poste?: string;
-  dateEmbauche?: string;
-  dateSortie?: string;
-  periodeEssai?: number;
+  dateEmbauche?: Moment;
+  dateSortie?: Moment;
+  typeContrat?: string;
   situationFamiliale?: string;
   enfantsACharge?: number;
+  adresseId?: number;
   listeContrats?: IContrat[];
   listeAbsences?: IAbsence[];
   listePrimes?: IPrime[];
   listeFichePaies?: IFichePaie[];
   listeHeureSupplementaires?: IHeuresSupplementaires[];
   listeNoteDeFrais?: INoteDeFrais[];
-  listeAvanceRappelSalaires?: IAvanceRappelSalaire[];
   listeAutresVariables?: IAutresVariable[];
   listeDocuments?: IDocument[];
-  listeDpaes?: IDpae[];
   statutEmployeId?: number;
-  adresseId?: number;
-  typeContratId?: number;
   societeId?: number;
 }
 

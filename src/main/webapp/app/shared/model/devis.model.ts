@@ -1,21 +1,21 @@
 import { Moment } from 'moment';
-import { ILigneProduit } from 'app/shared/model/ligne-produit.model';
+import { IProduit } from 'app/shared/model/produit.model';
 
 export interface IDevis {
   id?: number;
   numDevis?: number;
   nom?: string;
   message?: string;
-  dateCreation?: string;
-  dateLimite?: string;
+  dateCreation?: Moment;
+  dateLimite?: Moment;
   prixHT?: number;
   prixTTC?: number;
   tva?: number;
   cheminFichier?: string;
-  listeLigneProduits?: ILigneProduit[];
   etatDevisId?: number;
   societeId?: number;
   clientFournisseurId?: number;
+  listeProduits?: IProduit[];
 }
 
 export const defaultValue: Readonly<IDevis> = {};

@@ -9,14 +9,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link HeuresSupplementaires} and its DTO {@link HeuresSupplementairesDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EtatVariablePaieMapper.class, EmployeMapper.class})
+@Mapper(componentModel = "spring", uses = {EmployeMapper.class})
 public interface HeuresSupplementairesMapper extends EntityMapper<HeuresSupplementairesDTO, HeuresSupplementaires> {
 
-    @Mapping(source = "etatVariablePaie.id", target = "etatVariablePaieId")
     @Mapping(source = "employe.id", target = "employeId")
     HeuresSupplementairesDTO toDto(HeuresSupplementaires heuresSupplementaires);
 
-    @Mapping(source = "etatVariablePaieId", target = "etatVariablePaie")
     @Mapping(source = "employeId", target = "employe")
     HeuresSupplementaires toEntity(HeuresSupplementairesDTO heuresSupplementairesDTO);
 

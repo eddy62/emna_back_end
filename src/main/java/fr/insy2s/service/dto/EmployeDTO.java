@@ -1,69 +1,71 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Employe} entity.
  */
 public class EmployeDTO implements Serializable {
-    
-    private Long id;
+
+    private Long      id;
 
     @NotNull
-    private String matricule;
+    private String    matricule;
 
     @NotNull
-    private String civilite;
+    private String    civilite;
 
-    private String nomNaissance;
-
-    @NotNull
-    private String nomUsage;
+    private String    nomNaissance;
 
     @NotNull
-    private String prenom;
+    private String    nomUsage;
+
+    @NotNull
+    private String    prenom;
 
     @NotNull
     private LocalDate dateNaissance;
 
     @NotNull
-    private String villeNaissance;
+    private String    villeNaissance;
 
-    private String departementNaissance;
-
-    @NotNull
-    private String paysNaisance;
+    private String    departementNaissance;
 
     @NotNull
-    private String numeroSecuriteSociale;
+    private String    paysNaisance;
 
     @NotNull
-    private String email;
-
-    private String telephoneFix;
+    private String    numeroSecuriteSociale;
 
     @NotNull
-    private String telephonePortable;
+    private String    email;
+
+    private String    telephoneFix;
 
     @NotNull
-    private String fax;
+    private String    telephonePortable;
 
     @NotNull
-    private Double salaireHoraire;
+    private String    fax;
 
     @NotNull
-    private Double salaireBrutMensuelle;
+    private Double    salaireHoraire;
 
     @NotNull
-    private Double heuresMensuelle;
+    private Double    salaireBrutMensuelle;
 
     @NotNull
-    private String categorie;
+    private Double    heuresMensuelle;
 
     @NotNull
-    private String poste;
+    private String    categorie;
+
+    @NotNull
+    private String    poste;
 
     @NotNull
     private LocalDate dateEmbauche;
@@ -72,23 +74,20 @@ public class EmployeDTO implements Serializable {
     private LocalDate dateSortie;
 
     @NotNull
-    private Double periodeEssai;
+    private String    typeContrat;
 
     @NotNull
-    private String situationFamiliale;
+    private String    situationFamiliale;
 
     @NotNull
-    private Integer enfantsACharge;
+    private Integer   enfantsACharge;
 
+    private Long      adresseId;
 
-    private Long statutEmployeId;
+    private Long      statutEmployeId;
 
-    private Long adresseId;
+    private Long      societeId;
 
-    private Long typeContratId;
-
-    private Long societeId;
-    
     public Long getId() {
         return id;
     }
@@ -265,12 +264,12 @@ public class EmployeDTO implements Serializable {
         this.dateSortie = dateSortie;
     }
 
-    public Double getPeriodeEssai() {
-        return periodeEssai;
+    public String getTypeContrat() {
+        return typeContrat;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
-        this.periodeEssai = periodeEssai;
+    public void setTypeContrat(String typeContrat) {
+        this.typeContrat = typeContrat;
     }
 
     public String getSituationFamiliale() {
@@ -289,14 +288,6 @@ public class EmployeDTO implements Serializable {
         this.enfantsACharge = enfantsACharge;
     }
 
-    public Long getStatutEmployeId() {
-        return statutEmployeId;
-    }
-
-    public void setStatutEmployeId(Long statutEmployeId) {
-        this.statutEmployeId = statutEmployeId;
-    }
-
     public Long getAdresseId() {
         return adresseId;
     }
@@ -305,12 +296,12 @@ public class EmployeDTO implements Serializable {
         this.adresseId = adresseId;
     }
 
-    public Long getTypeContratId() {
-        return typeContratId;
+    public Long getStatutEmployeId() {
+        return statutEmployeId;
     }
 
-    public void setTypeContratId(Long typeContratId) {
-        this.typeContratId = typeContratId;
+    public void setStatutEmployeId(Long statutEmployeId) {
+        this.statutEmployeId = statutEmployeId;
     }
 
     public Long getSocieteId() {
@@ -326,51 +317,31 @@ public class EmployeDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EmployeDTO)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        return id != null && id.equals(((EmployeDTO) o).id);
+        EmployeDTO employeDTO = (EmployeDTO) o;
+        if (employeDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), employeDTO.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "EmployeDTO{" +
-            "id=" + getId() +
-            ", matricule='" + getMatricule() + "'" +
-            ", civilite='" + getCivilite() + "'" +
-            ", nomNaissance='" + getNomNaissance() + "'" +
-            ", nomUsage='" + getNomUsage() + "'" +
-            ", prenom='" + getPrenom() + "'" +
-            ", dateNaissance='" + getDateNaissance() + "'" +
-            ", villeNaissance='" + getVilleNaissance() + "'" +
-            ", departementNaissance='" + getDepartementNaissance() + "'" +
-            ", paysNaisance='" + getPaysNaisance() + "'" +
-            ", numeroSecuriteSociale='" + getNumeroSecuriteSociale() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", telephoneFix='" + getTelephoneFix() + "'" +
-            ", telephonePortable='" + getTelephonePortable() + "'" +
-            ", fax='" + getFax() + "'" +
-            ", salaireHoraire=" + getSalaireHoraire() +
-            ", salaireBrutMensuelle=" + getSalaireBrutMensuelle() +
-            ", heuresMensuelle=" + getHeuresMensuelle() +
-            ", categorie='" + getCategorie() + "'" +
-            ", poste='" + getPoste() + "'" +
-            ", dateEmbauche='" + getDateEmbauche() + "'" +
-            ", dateSortie='" + getDateSortie() + "'" +
-            ", periodeEssai=" + getPeriodeEssai() +
-            ", situationFamiliale='" + getSituationFamiliale() + "'" +
-            ", enfantsACharge=" + getEnfantsACharge() +
-            ", statutEmployeId=" + getStatutEmployeId() +
-            ", adresseId=" + getAdresseId() +
-            ", typeContratId=" + getTypeContratId() +
-            ", societeId=" + getSocieteId() +
-            "}";
+        return "EmployeDTO{" + "id=" + getId() + ", matricule='" + getMatricule() + "'" + ", civilite='" + getCivilite() + "'" + ", nomNaissance='" + getNomNaissance() + "'" + ", nomUsage='"
+                        + getNomUsage() + "'" + ", prenom='" + getPrenom() + "'" + ", dateNaissance='" + getDateNaissance() + "'" + ", villeNaissance='" + getVilleNaissance() + "'"
+                        + ", departementNaissance='" + getDepartementNaissance() + "'" + ", paysNaisance='" + getPaysNaisance() + "'" + ", numeroSecuriteSociale='" + getNumeroSecuriteSociale() + "'"
+                        + ", email='" + getEmail() + "'" + ", telephoneFix='" + getTelephoneFix() + "'" + ", telephonePortable='" + getTelephonePortable() + "'" + ", fax='" + getFax() + "'"
+                        + ", salaireHoraire=" + getSalaireHoraire() + ", salaireBrutMensuelle=" + getSalaireBrutMensuelle() + ", heuresMensuelle=" + getHeuresMensuelle() + ", categorie='"
+                        + getCategorie() + "'" + ", poste='" + getPoste() + "'" + ", dateEmbauche='" + getDateEmbauche() + "'" + ", dateSortie='" + getDateSortie() + "'" + ", typeContrat='"
+                        + getTypeContrat() + "'" + ", situationFamiliale='" + getSituationFamiliale() + "'" + ", enfantsACharge=" + getEnfantsACharge() + ", adresseId=" + getAdresseId()
+                        + ", statutEmployeId=" + getStatutEmployeId() + ", societeId=" + getSocieteId() + "}";
     }
 }

@@ -2,6 +2,9 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ProduitDTO;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,13 @@ public interface ProduitService {
      */
     List<ProduitDTO> findAll();
 
+    /**
+     * Get all the produits with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    Page<ProduitDTO> findAllWithEagerRelationships(Pageable pageable);
+
 
     /**
      * Get the "id" produit.
@@ -40,4 +50,24 @@ public interface ProduitService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all the produits.
+     *
+     * @return the list of entities.
+     */
+    List<ProduitDTO>findAllBySocieteId(Long id );
+
+    /**
+     * check id of current user
+     * @param id
+     * @return
+     */
+    public Boolean verfyIdOfUserConnected(Long id);
+
+    /**
+     * check role of current user
+     * @return
+     */
+    public Boolean connectedUserIsSociete();
 }

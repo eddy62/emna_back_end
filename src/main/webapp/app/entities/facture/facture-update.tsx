@@ -7,16 +7,18 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IEtatFacture } from 'app/shared/model/etat-facture.model';
-import { getEntities as getEtatFactures } from 'app/entities/etat-facture/etat-facture.reducer';
 import { IAdresse } from 'app/shared/model/adresse.model';
 import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
+import { IEtatFacture } from 'app/shared/model/etat-facture.model';
+import { getEntities as getEtatFactures } from 'app/entities/etat-facture/etat-facture.reducer';
 import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
 import { IOperation } from 'app/shared/model/operation.model';
 import { getEntities as getOperations } from 'app/entities/operation/operation.reducer';
 import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
 import { getEntities as getClientFournisseurs } from 'app/entities/client-fournisseur/client-fournisseur.reducer';
+import { IProduit } from 'app/shared/model/produit.model';
+import { getEntities as getProduits } from 'app/entities/produit/produit.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './facture.reducer';
 import { IFacture } from 'app/shared/model/facture.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -25,14 +27,15 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IFactureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const FactureUpdate = (props: IFactureUpdateProps) => {
-  const [etatFactureId, setEtatFactureId] = useState('0');
   const [adresseId, setAdresseId] = useState('0');
+  const [etatFactureId, setEtatFactureId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
   const [operationId, setOperationId] = useState('0');
   const [clientFournisseurId, setClientFournisseurId] = useState('0');
+  const [listeProduitsId, setListeProduitsId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { factureEntity, etatFactures, adresses, societes, operations, clientFournisseurs, loading, updating } = props;
+  const { factureEntity, adresses, etatFactures, societes, operations, clientFournisseurs, produits, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/facture');
@@ -45,11 +48,12 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getEtatFactures();
     props.getAdresses();
+    props.getEtatFactures();
     props.getSocietes();
     props.getOperations();
     props.getClientFournisseurs();
+    props.getProduits();
   }, []);
 
   useEffect(() => {
@@ -62,7 +66,7 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...factureEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -109,12 +113,6 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
                 <AvField id="facture-nom" type="text" name="nom" />
               </AvGroup>
               <AvGroup>
-                <Label id="typeLabel" for="facture-type">
-                  <Translate contentKey="emnaBackEndApp.facture.type">Type</Translate>
-                </Label>
-                <AvField id="facture-type" type="text" name="type" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="messageLabel" for="facture-message">
                   <Translate contentKey="emnaBackEndApp.facture.message">Message</Translate>
                 </Label>
@@ -157,13 +155,13 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
                 <AvField id="facture-moyenDePaiement" type="text" name="moyenDePaiement" />
               </AvGroup>
               <AvGroup>
-                <Label for="facture-etatFacture">
-                  <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
+                <Label for="facture-adresse">
+                  <Translate contentKey="emnaBackEndApp.facture.adresse">Adresse</Translate>
                 </Label>
-                <AvInput id="facture-etatFacture" type="select" className="form-control" name="etatFactureId">
+                <AvInput id="facture-adresse" type="select" className="form-control" name="adresseId">
                   <option value="" key="0" />
-                  {etatFactures
-                    ? etatFactures.map(otherEntity => (
+                  {adresses
+                    ? adresses.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -172,13 +170,13 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
                 </AvInput>
               </AvGroup>
               <AvGroup>
-                <Label for="facture-adresse">
-                  <Translate contentKey="emnaBackEndApp.facture.adresse">Adresse</Translate>
+                <Label for="facture-etatFacture">
+                  <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
                 </Label>
-                <AvInput id="facture-adresse" type="select" className="form-control" name="adresseId">
+                <AvInput id="facture-etatFacture" type="select" className="form-control" name="etatFactureId">
                   <option value="" key="0" />
-                  {adresses
-                    ? adresses.map(otherEntity => (
+                  {etatFactures
+                    ? etatFactures.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -253,27 +251,29 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  etatFactures: storeState.etatFacture.entities,
   adresses: storeState.adresse.entities,
+  etatFactures: storeState.etatFacture.entities,
   societes: storeState.societe.entities,
   operations: storeState.operation.entities,
   clientFournisseurs: storeState.clientFournisseur.entities,
+  produits: storeState.produit.entities,
   factureEntity: storeState.facture.entity,
   loading: storeState.facture.loading,
   updating: storeState.facture.updating,
-  updateSuccess: storeState.facture.updateSuccess,
+  updateSuccess: storeState.facture.updateSuccess
 });
 
 const mapDispatchToProps = {
-  getEtatFactures,
   getAdresses,
+  getEtatFactures,
   getSocietes,
   getOperations,
   getClientFournisseurs,
+  getProduits,
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

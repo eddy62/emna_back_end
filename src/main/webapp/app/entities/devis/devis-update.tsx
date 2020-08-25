@@ -13,6 +13,8 @@ import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
 import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
 import { getEntities as getClientFournisseurs } from 'app/entities/client-fournisseur/client-fournisseur.reducer';
+import { IProduit } from 'app/shared/model/produit.model';
+import { getEntities as getProduits } from 'app/entities/produit/produit.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './devis.reducer';
 import { IDevis } from 'app/shared/model/devis.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -24,9 +26,10 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
   const [etatDevisId, setEtatDevisId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
   const [clientFournisseurId, setClientFournisseurId] = useState('0');
+  const [listeProduitsId, setListeProduitsId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { devisEntity, etatDevis, societes, clientFournisseurs, loading, updating } = props;
+  const { devisEntity, etatDevis, societes, clientFournisseurs, produits, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/devis');
@@ -42,6 +45,7 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
     props.getEtatDevis();
     props.getSocietes();
     props.getClientFournisseurs();
+    props.getProduits();
   }, []);
 
   useEffect(() => {
@@ -54,7 +58,7 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...devisEntity,
-        ...values,
+        ...values
       };
 
       if (isNew) {
@@ -212,20 +216,22 @@ const mapStateToProps = (storeState: IRootState) => ({
   etatDevis: storeState.etatDevis.entities,
   societes: storeState.societe.entities,
   clientFournisseurs: storeState.clientFournisseur.entities,
+  produits: storeState.produit.entities,
   devisEntity: storeState.devis.entity,
   loading: storeState.devis.loading,
   updating: storeState.devis.updating,
-  updateSuccess: storeState.devis.updateSuccess,
+  updateSuccess: storeState.devis.updateSuccess
 });
 
 const mapDispatchToProps = {
   getEtatDevis,
   getSocietes,
   getClientFournisseurs,
+  getProduits,
   getEntity,
   updateEntity,
   createEntity,
-  reset,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

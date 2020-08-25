@@ -9,18 +9,25 @@ import fr.insy2s.service.mapper.ProduitMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -28,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ProduitResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class ProduitResourceIT {
@@ -47,14 +55,23 @@ public class ProduitResourceIT {
     private static final String DEFAULT_UNITE = "AAAAAAAAAA";
     private static final String UPDATED_UNITE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_QUANTITE = "AAAAAAAAAA";
+    private static final String UPDATED_QUANTITE = "BBBBBBBBBB";
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     @Autowired
     private ProduitRepository produitRepository;
 
+    @Mock
+    private ProduitRepository produitRepositoryMock;
+
     @Autowired
     private ProduitMapper produitMapper;
+
+    @Mock
+    private ProduitService produitServiceMock;
 
     @Autowired
     private ProduitService produitService;
@@ -80,6 +97,7 @@ public class ProduitResourceIT {
             .tva(DEFAULT_TVA)
             .prix(DEFAULT_PRIX)
             .unite(DEFAULT_UNITE)
+            .quantite(DEFAULT_QUANTITE)
             .description(DEFAULT_DESCRIPTION);
         return produit;
     }
@@ -96,6 +114,7 @@ public class ProduitResourceIT {
             .tva(UPDATED_TVA)
             .prix(UPDATED_PRIX)
             .unite(UPDATED_UNITE)
+            .quantite(UPDATED_QUANTITE)
             .description(UPDATED_DESCRIPTION);
         return produit;
     }
@@ -125,6 +144,7 @@ public class ProduitResourceIT {
         assertThat(testProduit.getTva()).isEqualTo(DEFAULT_TVA);
         assertThat(testProduit.getPrix()).isEqualTo(DEFAULT_PRIX);
         assertThat(testProduit.getUnite()).isEqualTo(DEFAULT_UNITE);
+        assertThat(testProduit.getQuantite()).isEqualTo(DEFAULT_QUANTITE);
         assertThat(testProduit.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -165,9 +185,30 @@ public class ProduitResourceIT {
             .andExpect(jsonPath("$.[*].tva").value(hasItem(DEFAULT_TVA.doubleValue())))
             .andExpect(jsonPath("$.[*].prix").value(hasItem(DEFAULT_PRIX.doubleValue())))
             .andExpect(jsonPath("$.[*].unite").value(hasItem(DEFAULT_UNITE)))
+            .andExpect(jsonPath("$.[*].quantite").value(hasItem(DEFAULT_QUANTITE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllProduitsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(produitServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restProduitMockMvc.perform(get("/api/produits?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(produitServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllProduitsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(produitServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restProduitMockMvc.perform(get("/api/produits?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(produitServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getProduit() throws Exception {
@@ -184,6 +225,7 @@ public class ProduitResourceIT {
             .andExpect(jsonPath("$.tva").value(DEFAULT_TVA.doubleValue()))
             .andExpect(jsonPath("$.prix").value(DEFAULT_PRIX.doubleValue()))
             .andExpect(jsonPath("$.unite").value(DEFAULT_UNITE))
+            .andExpect(jsonPath("$.quantite").value(DEFAULT_QUANTITE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
     @Test
@@ -212,6 +254,7 @@ public class ProduitResourceIT {
             .tva(UPDATED_TVA)
             .prix(UPDATED_PRIX)
             .unite(UPDATED_UNITE)
+            .quantite(UPDATED_QUANTITE)
             .description(UPDATED_DESCRIPTION);
         ProduitDTO produitDTO = produitMapper.toDto(updatedProduit);
 
@@ -229,6 +272,7 @@ public class ProduitResourceIT {
         assertThat(testProduit.getTva()).isEqualTo(UPDATED_TVA);
         assertThat(testProduit.getPrix()).isEqualTo(UPDATED_PRIX);
         assertThat(testProduit.getUnite()).isEqualTo(UPDATED_UNITE);
+        assertThat(testProduit.getQuantite()).isEqualTo(UPDATED_QUANTITE);
         assertThat(testProduit.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 

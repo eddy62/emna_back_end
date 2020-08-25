@@ -9,16 +9,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Absence} and its DTO {@link AbsenceDTO}.
  */
-@Mapper(componentModel = "spring", uses = {TypeAbsenceMapper.class, EtatVariablePaieMapper.class, EmployeMapper.class})
+@Mapper(componentModel = "spring", uses = {TypeAbsenceMapper.class, EmployeMapper.class})
 public interface AbsenceMapper extends EntityMapper<AbsenceDTO, Absence> {
 
     @Mapping(source = "typeAbsence.id", target = "typeAbsenceId")
-    @Mapping(source = "etatVariablePaie.id", target = "etatVariablePaieId")
     @Mapping(source = "employe.id", target = "employeId")
     AbsenceDTO toDto(Absence absence);
 
     @Mapping(source = "typeAbsenceId", target = "typeAbsence")
-    @Mapping(source = "etatVariablePaieId", target = "etatVariablePaie")
     @Mapping(source = "employeId", target = "employe")
     Absence toEntity(AbsenceDTO absenceDTO);
 
