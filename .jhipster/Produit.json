@@ -22,31 +22,11 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "quantite",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "description",
       "fieldType": "String"
     }
   ],
   "relationships": [
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "facture",
-      "otherEntityRelationshipName": "listeProduits",
-      "relationshipName": "listeFactures",
-      "otherEntityField": "id",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "devis",
-      "otherEntityRelationshipName": "listeProduits",
-      "relationshipName": "listeDevis",
-      "otherEntityField": "id",
-      "ownerSide": true
-    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "societe",

@@ -124,6 +124,26 @@ import statutEmploye, {
 import document, {
   DocumentState
 } from 'app/entities/document/document.reducer';
+// prettier-ignore
+import ligneProduit, {
+  LigneProduitState
+} from 'app/entities/ligne-produit/ligne-produit.reducer';
+// prettier-ignore
+import typeContrat, {
+  TypeContratState
+} from 'app/entities/type-contrat/type-contrat.reducer';
+// prettier-ignore
+import etatVariablePaie, {
+  EtatVariablePaieState
+} from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
+// prettier-ignore
+import avanceRappelSalaire, {
+  AvanceRappelSalaireState
+} from 'app/entities/avance-rappel-salaire/avance-rappel-salaire.reducer';
+// prettier-ignore
+import dpae, {
+  DpaeState
+} from 'app/entities/dpae/dpae.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -165,6 +185,11 @@ export interface IRootState {
   readonly infoEntreprise: InfoEntrepriseState;
   readonly statutEmploye: StatutEmployeState;
   readonly document: DocumentState;
+  readonly ligneProduit: LigneProduitState;
+  readonly typeContrat: TypeContratState;
+  readonly etatVariablePaie: EtatVariablePaieState;
+  readonly avanceRappelSalaire: AvanceRappelSalaireState;
+  readonly dpae: DpaeState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -208,6 +233,11 @@ const rootReducer = combineReducers<IRootState>({
   infoEntreprise,
   statutEmploye,
   document,
+  ligneProduit,
+  typeContrat,
+  etatVariablePaie,
+  avanceRappelSalaire,
+  dpae,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

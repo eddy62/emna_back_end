@@ -1,6 +1,3 @@
-import { IFacture } from 'app/shared/model/facture.model';
-import { IDevis } from 'app/shared/model/devis.model';
-
 export interface IProduit {
   id?: number;
   nom?: string;
@@ -8,10 +5,7 @@ export interface IProduit {
   tva?: number;
   prix?: number;
   unite?: string;
-  quantite?: string;
   description?: string;
-  listeFactures?: IFacture[];
-  listeDevis?: IDevis[];
   societeId?: number;
 }
 

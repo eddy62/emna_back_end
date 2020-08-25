@@ -11,12 +11,12 @@ import AbsenceDeleteDialog from './absence-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
-      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={AbsenceDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={AbsenceUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={AbsenceUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={AbsenceDetail} />
       <ErrorBoundaryRoute path={match.url} component={Absence} />
     </Switch>
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={AbsenceDeleteDialog} />
   </>
 );
 

@@ -21,10 +21,7 @@
       "tva": "Tva",
       "prix": "Prix",
       "unite": "Unite",
-      "quantite": "Quantite",
       "description": "Description",
-      "listeFactures": "Liste Factures",
-      "listeDevis": "Liste Devis",
       "societe": "Societe"
     }
   }

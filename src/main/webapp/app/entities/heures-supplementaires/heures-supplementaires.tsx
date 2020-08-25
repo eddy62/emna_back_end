@@ -46,6 +46,9 @@ export const HeuresSupplementaires = (props: IHeuresSupplementairesProps) => {
                   <Translate contentKey="emnaBackEndApp.heuresSupplementaires.justificatif">Justificatif</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.heuresSupplementaires.etatVariablePaie">Etat Variable Paie</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.heuresSupplementaires.employe">Employe</Translate>
                 </th>
                 <th />
@@ -66,6 +69,15 @@ export const HeuresSupplementaires = (props: IHeuresSupplementairesProps) => {
                   </td>
                   <td>{heuresSupplementaires.nombreHeure}</td>
                   <td>{heuresSupplementaires.justificatif}</td>
+                  <td>
+                    {heuresSupplementaires.etatVariablePaieId ? (
+                      <Link to={`etat-variable-paie/${heuresSupplementaires.etatVariablePaieId}`}>
+                        {heuresSupplementaires.etatVariablePaieId}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>
                     {heuresSupplementaires.employeId ? (
                       <Link to={`employe/${heuresSupplementaires.employeId}`}>{heuresSupplementaires.employeId}</Link>

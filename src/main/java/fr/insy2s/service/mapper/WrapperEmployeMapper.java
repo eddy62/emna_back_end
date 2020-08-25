@@ -52,7 +52,6 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setPoste(employe.getPoste());
         wrapperEmploye.setDateEmbauche(employe.getDateEmbauche());
         wrapperEmploye.setDateSortie(employe.getDateSortie());
-        wrapperEmploye.setTypeContrat(employe.getTypeContrat());
         wrapperEmploye.setSituationFamiliale(employe.getSituationFamiliale());
         wrapperEmploye.setEnfantsACharge(employe.getEnfantsACharge());
 
@@ -109,7 +108,6 @@ public class WrapperEmployeMapper {
         employeDTO.setPoste(wrapperEmploye.getPoste());
         employeDTO.setDateEmbauche(wrapperEmploye.getDateEmbauche());
         employeDTO.setDateSortie(wrapperEmploye.getDateSortie());
-        employeDTO.setTypeContrat(wrapperEmploye.getTypeContrat());
         employeDTO.setSituationFamiliale(wrapperEmploye.getSituationFamiliale());
         employeDTO.setEnfantsACharge(wrapperEmploye.getEnfantsACharge());
 

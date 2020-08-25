@@ -13,11 +13,11 @@ public class ComptableDTO implements Serializable {
     private String civilite;
 
 
-    private Long adresseId;
-
     private Long infoEntrepriseId;
 
     private Long userId;
+
+    private Long adresseId;
     
     public Long getId() {
         return id;
@@ -35,14 +35,6 @@ public class ComptableDTO implements Serializable {
         this.civilite = civilite;
     }
 
-    public Long getAdresseId() {
-        return adresseId;
-    }
-
-    public void setAdresseId(Long adresseId) {
-        this.adresseId = adresseId;
-    }
-
     public Long getInfoEntrepriseId() {
         return infoEntrepriseId;
     }
@@ -57,6 +49,14 @@ public class ComptableDTO implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getAdresseId() {
+        return adresseId;
+    }
+
+    public void setAdresseId(Long adresseId) {
+        this.adresseId = adresseId;
     }
 
     @Override
@@ -82,9 +82,9 @@ public class ComptableDTO implements Serializable {
         return "ComptableDTO{" +
             "id=" + getId() +
             ", civilite='" + getCivilite() + "'" +
-            ", adresseId=" + getAdresseId() +
             ", infoEntrepriseId=" + getInfoEntrepriseId() +
             ", userId=" + getUserId() +
+            ", adresseId=" + getAdresseId() +
             "}";
     }
 }

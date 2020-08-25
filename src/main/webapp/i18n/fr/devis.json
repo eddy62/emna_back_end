@@ -25,10 +25,10 @@
       "prixTTC": "Prix TTC",
       "tva": "Tva",
       "cheminFichier": "Chemin Fichier",
+      "listeLigneProduit": "Liste Ligne Produit",
       "etatDevis": "Etat Devis",
       "societe": "Societe",
-      "clientFournisseur": "Client Fournisseur",
-      "listeProduits": "Liste Produits"
+      "clientFournisseur": "Client Fournisseur"
     }
   }
 }

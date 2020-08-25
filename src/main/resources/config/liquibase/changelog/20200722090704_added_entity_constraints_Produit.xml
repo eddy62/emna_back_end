@@ -8,30 +8,6 @@
     -->
     <changeSet id="20200722090704-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="produit_id"
-                                 baseTableName="produit_liste_factures"
-                                 constraintName="fk_produit_liste_factures_produit_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="produit"/>
-
-        <addForeignKeyConstraint baseColumnNames="liste_factures_id"
-                                 baseTableName="produit_liste_factures"
-                                 constraintName="fk_produit_liste_factures_liste_factures_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="facture"/>
-        
-        <addForeignKeyConstraint baseColumnNames="produit_id"
-                                 baseTableName="produit_liste_devis"
-                                 constraintName="fk_produit_liste_devis_produit_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="produit"/>
-
-        <addForeignKeyConstraint baseColumnNames="liste_devis_id"
-                                 baseTableName="produit_liste_devis"
-                                 constraintName="fk_produit_liste_devis_liste_devis_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="devis"/>
-        
         <addForeignKeyConstraint baseColumnNames="societe_id"
                                  baseTableName="produit"
                                  constraintName="fk_produit_societe_id"

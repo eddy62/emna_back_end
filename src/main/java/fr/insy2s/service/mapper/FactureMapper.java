@@ -9,25 +9,25 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Facture} and its DTO {@link FactureDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AdresseMapper.class, EtatFactureMapper.class, SocieteMapper.class, OperationMapper.class, ClientFournisseurMapper.class})
+@Mapper(componentModel = "spring", uses = {EtatFactureMapper.class, AdresseMapper.class, SocieteMapper.class, OperationMapper.class, ClientFournisseurMapper.class})
 public interface FactureMapper extends EntityMapper<FactureDTO, Facture> {
 
-    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "etatFacture.id", target = "etatFactureId")
+    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "societe.id", target = "societeId")
     @Mapping(source = "operation.id", target = "operationId")
     @Mapping(source = "clientFournisseur.id", target = "clientFournisseurId")
     FactureDTO toDto(Facture facture);
 
-    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
+    @Mapping(target = "listeLigneProduits", ignore = true)
+    @Mapping(target = "removeListeLigneProduit", ignore = true)
     @Mapping(source = "etatFactureId", target = "etatFacture")
+    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(source = "societeId", target = "societe")
     @Mapping(source = "operationId", target = "operation")
     @Mapping(source = "clientFournisseurId", target = "clientFournisseur")
-    @Mapping(target = "listeProduits", ignore = true)
-    @Mapping(target = "removeListeProduits", ignore = true)
     Facture toEntity(FactureDTO factureDTO);
 
     default Facture fromId(Long id) {

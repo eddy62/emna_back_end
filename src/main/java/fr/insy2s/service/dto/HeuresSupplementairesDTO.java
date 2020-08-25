@@ -20,6 +20,8 @@ public class HeuresSupplementairesDTO implements Serializable {
     private String justificatif;
 
 
+    private Long etatVariablePaieId;
+
     private Long employeId;
     
     public Long getId() {
@@ -52,6 +54,14 @@ public class HeuresSupplementairesDTO implements Serializable {
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
+    }
+
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
     }
 
     public Long getEmployeId() {
@@ -87,6 +97,7 @@ public class HeuresSupplementairesDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", nombreHeure=" + getNombreHeure() +
             ", justificatif='" + getJustificatif() + "'" +
+            ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";
     }

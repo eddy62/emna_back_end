@@ -17,7 +17,6 @@
         "title": "Societe"
       },
       "civilite": "Civilite",
-      "adresse": "Adresse",
       "infoEntreprise": "Info Entreprise",
       "user": "User",
       "listeFactures": "Liste Factures",
@@ -29,6 +28,8 @@
       "listeClauses": "Liste Clauses",
       "listeArticles": "Liste Articles",
       "listeEmployes": "Liste Employes",
+      "listeDpae": "Liste Dpae",
+      "adresse": "Adresse",
       "comptable": "Comptable"
     }
   }
