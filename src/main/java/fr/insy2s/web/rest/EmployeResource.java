@@ -127,51 +127,32 @@ public class EmployeResource {
         List<ClauseVm> listClause = new ArrayList<>();
 
         int index=1;
-int tour=1;
         for (IEmployeContratProjection iEmployeContratProjection : listIEmployeContratProjections) { //*19
             ArticleVM articleVM = new ArticleVM();
             ClauseVm clauseVm = new ClauseVm();
-            System.err.println("DANS LA BOUCLE"+tour);
             employerVM.setEmployerId(iEmployeContratProjection.getEmployerId());
             employerVM.setEmployerNom(iEmployeContratProjection.getEmployerNom());
             employerVM.setEmployerPrenom(iEmployeContratProjection.getEmployerPrenom());
             employerVM.setSocieteId(iEmployeContratProjection.getSocieteId());
             articleVM.setArticleId(iEmployeContratProjection.getArticleId());
-            System.err.println("ID ARTICLE ="+articleVM.getArticleId());
             articleVM.setArticleTitre(iEmployeContratProjection.getArticleTitre());
             articleVM.setArticleDescription(iEmployeContratProjection.getArticleDescription());
+            articleVM.setArticleReference(iEmployeContratProjection.getArticleReference());
             articleVM.setListClauses(new ArrayList<>());
             if(articleVM.getArticleId()==index){
                 listArticle.add(articleVM);
-                System.err.println("Contenu de listArticle DANS LA BOUCLE");
-                for(ArticleVM article: listArticle){
-                    System.err.println(article.getArticleId());
-                }
                 index++;
             }
-
-
             clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
             clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
-            System.err.println("ID CLAUSE ="+clauseVm.getClauseId());
-            clauseVm.setClauseReference(iEmployeContratProjection.getClauseReference());
             clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
 
             listClause.add(clauseVm);
 
-            tour++;
-
-        }
-        System.err.println("Taille de listArticle");
-        System.err.println(listArticle.size());
-        System.err.println("Contenu de listArticle");
-        for(ArticleVM article: listArticle){
-            System.err.println(article.getArticleId());
         }
 
 
         for (ClauseVm clause : listClause) {
-            System.err.println(clause.getArticleId());
             int integ = Math.toIntExact(clause.getArticleId());
             listArticle.get(integ-1).getListClauses().add(clause);
         }
@@ -255,7 +236,7 @@ int tour=1;
         WrapperEmploye result = employeService.updateWrapperEmploye(wrapperEmploye);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
-    
+
     /**
      * {@code DELETE  /wrapperemployes/:id} : delete the "id" wrapperemployes.
      *
@@ -268,7 +249,7 @@ int tour=1;
         employeService.deleteWrapperEmploye(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
-    
+
     /**
      * {@code GET /wrapperemployes/society/:id/typecontrat/:type} : get all the wrapperEmployes by society and by type of contract.
      *
@@ -285,10 +266,10 @@ int tour=1;
                 listeSelect.add(wrapperEmploye);
             }
         }
-       
+
         return listeSelect;
     }
-    
+
     /**
      * {@code GET /wrapperemployes/society/:id/typecontrat/:type} : get all the wrapperEmployes by society and by type of contract.
      *
@@ -305,9 +286,9 @@ int tour=1;
                 listeSelect.add(wrapperEmploye);
             }
         }
-       
+
         return listeSelect;
     }
-    
-    
+
+
 }

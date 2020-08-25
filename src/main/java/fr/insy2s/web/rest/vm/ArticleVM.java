@@ -8,16 +8,26 @@ public class ArticleVM {
 
     String articleTitre;
     String articleDescription;
+    String articleReference;
     List<ClauseVm> listClauses;
 
-    public ArticleVM(Long articleId, String articleTitre, String articleDescription, List<ClauseVm> listClauses) {
+    public ArticleVM(Long articleId, String articleTitre, String articleDescription,String articleReference, List<ClauseVm> listClauses) {
         this.articleId = articleId;
         this.articleTitre = articleTitre;
         this.articleDescription = articleDescription;
+        this.articleReference = articleReference;
         this.listClauses = listClauses;
     }
 
     public ArticleVM() {
+    }
+
+    public String getArticleReference() {
+        return articleReference;
+    }
+
+    public void setArticleReference(String articleReference) {
+        this.articleReference = articleReference;
     }
 
     public Long getArticleId() {
