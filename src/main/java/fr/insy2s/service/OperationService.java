@@ -40,4 +40,5 @@ public interface OperationService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    List<OperationDTO> findAllByReleveId(Long id);
 }

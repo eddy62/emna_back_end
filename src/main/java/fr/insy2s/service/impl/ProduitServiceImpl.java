@@ -1,10 +1,15 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.repository.UserRepository;
+import fr.insy2s.security.AuthoritiesConstants;
+import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.ProduitService;
 import fr.insy2s.domain.Produit;
 import fr.insy2s.repository.ProduitRepository;
 import fr.insy2s.service.dto.ProduitDTO;
+import fr.insy2s.service.dto.UserDTO;
 import fr.insy2s.service.mapper.ProduitMapper;
+import fr.insy2s.service.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +36,15 @@ public class ProduitServiceImpl implements ProduitService {
 
     private final ProduitMapper produitMapper;
 
-    public ProduitServiceImpl(ProduitRepository produitRepository, ProduitMapper produitMapper) {
+    private final UserMapper userMapper ;
+
+    private final UserRepository userRepository ;
+
+    public ProduitServiceImpl(ProduitRepository produitRepository, ProduitMapper produitMapper,  UserMapper userMapper , UserRepository userRepository ) {
         this.produitRepository = produitRepository;
         this.produitMapper = produitMapper;
+        this.userMapper = userMapper;
+        this.userRepository =userRepository;
     }
 
     @Override
@@ -79,5 +90,32 @@ public class ProduitServiceImpl implements ProduitService {
         return listeProduit.stream()
             .map(produitMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Récupère un user à partir de son login
+     *
+     * @param loginUser
+     * @return
+     */
+    public UserDTO findOneByLogin(final String loginUser) {
+        return userMapper.userToUserDTO(userRepository.findOneByLogin(loginUser).get());
+    }
+
+    @Override
+    public Boolean connectedUserIsSociete(){
+        UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        for(String auth:currentUser.getAuthorities()){
+            if(AuthoritiesConstants.SOCIETY.equals(auth))return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public Boolean verfyIdOfUserConnected(Long id){
+        UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if(currentUser.getId()==id)return true;
+        else return false;
     }
 }

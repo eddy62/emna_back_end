@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -232,4 +234,23 @@ public class ClientFournisseurResource {
         Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findByNom(nom);
         return ResponseUtil.wrapOrNotFound(clientFournisseurDTO);
     }
+
+    /**
+     * {@code DELETE  /client-fournisseurs/:clientId/user/:userId} : delete the "clientId" client .
+     *
+     * @param clientId the id of the clientFournisseurDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.SOCIETY + "\")")
+    @DeleteMapping("/client-fournisseurs/{clientId}/user/{userId}")
+    public ResponseEntity<Void> delete(@PathVariable Long clientId,@PathVariable Long userId) {
+        log.debug("REST request to delete client-fournisseur : {}", clientId);
+        if(!clientFournisseurService.connectedUserIsSociete() || !clientFournisseurService.verfyIdOfUserConnected(userId)){
+            throw new BadRequestAlertException("Vous n'avez pas le droit de supprimer ", ENTITY_NAME, "pas le droit");
+        }
+        log.debug("REST request to delete ClientFournisseur : {}", clientId);
+        clientFournisseurService.delete(clientId);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, clientId.toString())).build();
+    }
+
 }

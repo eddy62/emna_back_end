@@ -65,4 +65,19 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("Request to delete Releve : {}", id);
         releveRepository.deleteById(id);
     }
+    public List<ReleveDTO> findAllBySocieteId(Long id) {
+  		 log.debug("Request to get all Releves by Societe Id");
+  		return releveRepository.findAllBySocieteId(id).stream().map(releveMapper::toDto)
+  	            .collect(Collectors.toCollection(LinkedList::new));
+  	}
+   public List<ReleveDTO> findAllByEtatReleveId(Long id) {
+ 		 log.debug("Request to get all Releves by Societe Id");
+ 		return releveRepository.findAllByEtatReleveId(id).stream().map(releveMapper::toDto)
+ 	            .collect(Collectors.toCollection(LinkedList::new));
+ 	}
+   public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete) {
+		 log.debug("Request to get all Releves by Societe Id");
+		return releveRepository.findAllByEtatReleveIdAndSocieteId( idEtat,idSociete).stream().map(releveMapper::toDto)
+	            .collect(Collectors.toCollection(LinkedList::new));
+	}
 }
