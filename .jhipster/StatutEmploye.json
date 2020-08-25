@@ -1,33 +1,27 @@
 {
-    "name": "StatutEmploye",
-    "fields": [
-        {
-            "fieldName": "codeRef",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "unique"
-            ]
-        },
-        {
-            "fieldName": "libelle",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "unique"
-            ]
-        }
-    ],
-    "relationships": [],
-    "changelogDate": "20200731101100",
-    "entityTableName": "statut_employe",
-    "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "embedded": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "StatutEmploye",
+  "fields": [
+    {
+      "fieldName": "codeRef",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "libelle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20200731101100",
+  "entityTableName": "statut_employe",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
 }

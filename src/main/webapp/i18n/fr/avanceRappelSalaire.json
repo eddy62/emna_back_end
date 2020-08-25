@@ -1,0 +1,27 @@
+{
+  "emnaBackEndApp": {
+    "avanceRappelSalaire": {
+      "home": {
+        "title": "AvanceRappelSalaires",
+        "createLabel": "Créer un nouveau Avance Rappel Salaire",
+        "createOrEditLabel": "Créer ou éditer un Avance Rappel Salaire",
+        "notFound": "Aucun Avance Rappel Salaire trouvé"
+      },
+      "created": "Un nouveau Avance Rappel Salaire a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Avance Rappel Salaire avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Avance Rappel Salaire avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Avance Rappel Salaire {{ id }} ?"
+      },
+      "detail": {
+        "title": "Avance Rappel Salaire"
+      },
+      "type": "Type",
+      "debutPeriode": "Debut Periode",
+      "finPeriode": "Fin Periode",
+      "montant": "Montant",
+      "etatVariablePaie": "Etat Variable Paie",
+      "employe": "Employe"
+    }
+  }
+}

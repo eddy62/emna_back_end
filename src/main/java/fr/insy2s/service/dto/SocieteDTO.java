@@ -1,7 +1,6 @@
 package fr.insy2s.service.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Societe} entity.
@@ -12,11 +11,12 @@ public class SocieteDTO implements Serializable {
 
     private String civilite;
 
-    private Long adresseId;
 
     private Long infoEntrepriseId;
 
     private Long userId;
+
+    private Long adresseId;
 
     private Long comptableId;
     
@@ -36,14 +36,6 @@ public class SocieteDTO implements Serializable {
         this.civilite = civilite;
     }
 
-    public Long getAdresseId() {
-        return adresseId;
-    }
-
-    public void setAdresseId(Long adresseId) {
-        this.adresseId = adresseId;
-    }
-
     public Long getInfoEntrepriseId() {
         return infoEntrepriseId;
     }
@@ -60,6 +52,14 @@ public class SocieteDTO implements Serializable {
         this.userId = userId;
     }
 
+    public Long getAdresseId() {
+        return adresseId;
+    }
+
+    public void setAdresseId(Long adresseId) {
+        this.adresseId = adresseId;
+    }
+
     public Long getComptableId() {
         return comptableId;
     }
@@ -73,30 +73,27 @@ public class SocieteDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof SocieteDTO)) {
             return false;
         }
 
-        SocieteDTO societeDTO = (SocieteDTO) o;
-        if (societeDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), societeDTO.getId());
+        return id != null && id.equals(((SocieteDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "SocieteDTO{" +
             "id=" + getId() +
             ", civilite='" + getCivilite() + "'" +
-            ", adresseId=" + getAdresseId() +
             ", infoEntrepriseId=" + getInfoEntrepriseId() +
             ", userId=" + getUserId() +
+            ", adresseId=" + getAdresseId() +
             ", comptableId=" + getComptableId() +
             "}";
     }

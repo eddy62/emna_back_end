@@ -20,9 +20,9 @@
       "siren": "Siren",
       "telephone": "Telephone",
       "email": "Email",
-      "adresse": "Adresse",
       "listeFactures": "Liste Factures",
       "listeDevis": "Liste Devis",
+      "adresse": "Adresse",
       "societe": "Societe"
     }
   }

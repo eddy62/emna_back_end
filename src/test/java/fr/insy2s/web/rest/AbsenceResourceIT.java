@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
 import fr.insy2s.domain.Absence;
+import fr.insy2s.domain.TypeAbsence;
 import fr.insy2s.repository.AbsenceRepository;
 import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.dto.AbsenceDTO;
@@ -71,6 +72,16 @@ public class AbsenceResourceIT {
             .debutAbsence(DEFAULT_DEBUT_ABSENCE)
             .finAbsence(DEFAULT_FIN_ABSENCE)
             .justificatif(DEFAULT_JUSTIFICATIF);
+        // Add required entity
+        TypeAbsence typeAbsence;
+        if (TestUtil.findAll(em, TypeAbsence.class).isEmpty()) {
+            typeAbsence = TypeAbsenceResourceIT.createEntity(em);
+            em.persist(typeAbsence);
+            em.flush();
+        } else {
+            typeAbsence = TestUtil.findAll(em, TypeAbsence.class).get(0);
+        }
+        absence.setTypeAbsence(typeAbsence);
         return absence;
     }
     /**
@@ -84,6 +95,16 @@ public class AbsenceResourceIT {
             .debutAbsence(UPDATED_DEBUT_ABSENCE)
             .finAbsence(UPDATED_FIN_ABSENCE)
             .justificatif(UPDATED_JUSTIFICATIF);
+        // Add required entity
+        TypeAbsence typeAbsence;
+        if (TestUtil.findAll(em, TypeAbsence.class).isEmpty()) {
+            typeAbsence = TypeAbsenceResourceIT.createUpdatedEntity(em);
+            em.persist(typeAbsence);
+            em.flush();
+        } else {
+            typeAbsence = TestUtil.findAll(em, TypeAbsence.class).get(0);
+        }
+        absence.setTypeAbsence(typeAbsence);
         return absence;
     }
 

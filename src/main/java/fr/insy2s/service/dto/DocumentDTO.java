@@ -1,7 +1,6 @@
 package fr.insy2s.service.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Document} entity.
@@ -16,6 +15,12 @@ public class DocumentDTO implements Serializable {
 
     private String nom;
 
+
+    private Long absenceId;
+
+    private Long noteDeFraisId;
+
+    private Long autresVariablesId;
 
     private Long factureId;
 
@@ -57,6 +62,30 @@ public class DocumentDTO implements Serializable {
         this.nom = nom;
     }
 
+    public Long getAbsenceId() {
+        return absenceId;
+    }
+
+    public void setAbsenceId(Long absenceId) {
+        this.absenceId = absenceId;
+    }
+
+    public Long getNoteDeFraisId() {
+        return noteDeFraisId;
+    }
+
+    public void setNoteDeFraisId(Long noteDeFraisId) {
+        this.noteDeFraisId = noteDeFraisId;
+    }
+
+    public Long getAutresVariablesId() {
+        return autresVariablesId;
+    }
+
+    public void setAutresVariablesId(Long autresVariableId) {
+        this.autresVariablesId = autresVariableId;
+    }
+
     public Long getFactureId() {
         return factureId;
     }
@@ -94,22 +123,19 @@ public class DocumentDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DocumentDTO)) {
             return false;
         }
 
-        DocumentDTO documentDTO = (DocumentDTO) o;
-        if (documentDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), documentDTO.getId());
+        return id != null && id.equals(((DocumentDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "DocumentDTO{" +
@@ -117,6 +143,9 @@ public class DocumentDTO implements Serializable {
             ", cheminFichier='" + getCheminFichier() + "'" +
             ", type='" + getType() + "'" +
             ", nom='" + getNom() + "'" +
+            ", absenceId=" + getAbsenceId() +
+            ", noteDeFraisId=" + getNoteDeFraisId() +
+            ", autresVariablesId=" + getAutresVariablesId() +
             ", factureId=" + getFactureId() +
             ", releveId=" + getReleveId() +
             ", contratId=" + getContratId() +

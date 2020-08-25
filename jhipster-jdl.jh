@@ -1,20 +1,23 @@
 entity Facture{
     numfact Long
     nom String
+    type String
     message String
     date LocalDate
     dateEcheance LocalDate
     prixHT Integer
     prixTTC Integer
     tva Float
-    moyenDePaiement String
+    moyenDePaiement String    
 }
-
 entity ClientFournisseur {
-	nom String
-	siren Integer
+    nom String
+    siren Integer
     telephone String 
-	email String
+    email String
+}
+entity LigneProduit{
+    quantite Integer required
 }
  
 entity Produit {
@@ -23,10 +26,8 @@ entity Produit {
     tva Float
     prix Double
     unite String
-    quantite String
     description String
 }
-
 entity Operation{
     date LocalDate
     description String
@@ -34,7 +35,6 @@ entity Operation{
     rapproche Boolean
     solde Double
 }
-
 entity Releve {
     dateDebut LocalDate
     dateFin LocalDate
@@ -42,12 +42,10 @@ entity Releve {
     banque String
     cheminFichier String
 }
-
 entity EtatReleve{
     libelle String
     codeRef String
 }
-
 entity Devis{
     numDevis Long
     nom String
@@ -59,39 +57,33 @@ entity Devis{
     tva Float
     cheminFichier String
 }
-
 entity Contrat {
     titre String required
     dateCreation LocalDate required
     signe Boolean required
     archive Boolean
 }
-
 entity Avenant {
     reference String required
     signe Boolean required
 }
-
 entity Clause {
     reference String required
     description String required
 }
-
 entity Article {
     reference String required
     titre String required
     description String required
 }
-
 entity Adresse{
     numeroRue String 
     boitePostale String
     nomRue String required
     codePostal String required
     ville String required
-	pays String required
+    pays String required
 }
-
 entity Employe{
     matricule String required
     civilite String required
@@ -114,82 +106,69 @@ entity Employe{
     poste String required
     dateEmbauche LocalDate required
     dateSortie LocalDate required
-    typeContrat String required
+    periodeEssai Double required
     situationFamiliale String required
     enfantsACharge Integer required
+    
 }
-
 entity StatutEmploye{
-	codeRef String required unique
-	libelle String required unique
+    codeRef String required unique
+    libelle String required unique
 }
-
 entity TypeAbsence{
     codeRef String required unique
     intitule String required unique
 }
-
 entity Absence{
     debutAbsence LocalDate required
     finAbsence LocalDate required
     justificatif String
 }
-
 entity TypePrime{
     codeRef String required unique
     intitule String required unique
 }
-
 entity Prime{
     type String required
     montant Double required
 }
-
 entity  FichePaie{
     debutPeriode LocalDate required
     finPeriode LocalDate required
     lienDocument String required
 }
-
 //heure en minute
 entity HeuresSupplementaires{
     date LocalDate required,
     nombreHeure Integer required,
     justificatif String
 }
-
 entity NoteDeFrais{
     designation String required,
     date LocalDate required,
     montant Double required,
     justificatif String
 }
-
 entity AutresVariable{
     description String,
     date LocalDate,
     montant Double,
     justificatif String
 }
-
 entity EtatFacture {
     libelle String required unique,
     codeRef String required unique,
 }
-
 entity EtatDevis {
     libelle String required unique,
     codeRef String required unique,
 }
-
 entity Comptable{
     civilite String 
 }
-
 entity Societe {
     civilite String
 }
-
 entity InfoEntreprise{
     raisonSociale String
     telephone String 
@@ -202,15 +181,30 @@ entity InfoEntreprise{
     description String
     email String
 }
-
 entity Document{
-	cheminFichier String
-	type String
-	nom String
+    cheminFichier String
+    type String
+    nom String
 }
-
-
-
+entity TypeContrat {
+    codeRef String required unique
+    intitule String required unique
+}
+entity EtatVariablePaie {
+    codeRef String required unique
+    intitule String required unique
+}
+entity AvanceRappelSalaire{
+    type String required
+    debutPeriode LocalDate required
+    finPeriode LocalDate required
+    montant Double required
+}
+entity Dpae {
+    lieu String required
+    date LocalDate required
+    lienDocument String required
+}
 relationship OneToMany{
     Societe{listeFactures} to Facture{societe} 
     Operation{listeFactures} to Facture{operation}
@@ -238,42 +232,52 @@ relationship OneToMany{
     Employe{listeAbsences} to  Absence{employe}
     Employe{listePrimes} to Prime{employe}
     Employe {listeFichePaies} to FichePaie{employe}
-   	Employe{listeHeureSupplementaires}  to HeuresSupplementaires{employe}
+    Employe{listeHeureSupplementaires}  to HeuresSupplementaires{employe}
     Employe{listeNoteDeFrais}  to NoteDeFrais{employe}
+    Employe{listeAvanceRappelSalaire} to AvanceRappelSalaire{employe}
     Employe{listeAutresVariables} to AutresVariable{employe}
     Article{listeClauses} to Clause{article}
-	
-	Facture{listeDocuments} to Document{facture}
-	Releve{listeDocuments} to Document{releve}
-	Contrat{listeDocuments} to Document{contrat}
-	Employe{listeDocuments} to Document{employe}
-	
-	
+    
+    Facture{listeDocuments} to Document{facture}
+    Releve{listeDocuments} to Document{releve}
+    Contrat{listeDocuments} to Document{contrat}
+    Employe{listeDocuments} to Document{employe}
+    Employe{listeDpae} to Dpae{employe}
+    Societe{listeDpae} to Dpae{societe}
+    Facture{listeLigneProduit} to LigneProduit{facture}
+    Devis{listeLigneProduit} to LigneProduit{devis}  
 }
-
 relationship ManyToOne{
-	Absence{typeAbsence required} to TypeAbsence
+    Absence{typeAbsence required} to TypeAbsence
     Prime{typePrime required} to TypePrime
     Employe{statutEmploye required} to StatutEmploye
     Releve{etatReleve} to EtatReleve
     Facture{etatFacture} to EtatFacture
     Devis{etatDevis} to EtatDevis
+    Employe{adresse required} to Adresse
+    Societe{adresse} to Adresse
+    Facture{adresse} to Adresse    
+    Comptable{adresse required} to Adresse
+    ClientFournisseur{adresse} to Adresse
+    Employe{typeContrat required} to TypeContrat
+    Absence{etatVariablePaie} to EtatVariablePaie
+    Document{absence} to Absence
+    Prime{etatVariablePaie} to EtatVariablePaie
+    NoteDeFrais{etatVariablePaie} to EtatVariablePaie
+    Document{noteDeFrais} to NoteDeFrais
+    AvanceRappelSalaire{etatVariablePaie} to EtatVariablePaie
+    HeuresSupplementaires{etatVariablePaie} to EtatVariablePaie
+    AutresVariable{etatVariablePaie} to EtatVariablePaie
+    Document{autresVariables} to AutresVariable
+    LigneProduit{produit required} to Produit
 }
-
 relationship ManyToMany{
     Article{listeAvenants} to Avenant{listeArticles}
     Article{listeContrats} to Contrat{listeArticles}
     Clause{listeContrats} to Contrat{listeClauses}
     Clause{listeAvenants} to Avenant{listeClauses}
-    Produit{listeFactures} to Facture{listeProduits}
-    Produit{listeDevis} to Devis{listeProduits}
 }
 relationship OneToOne{
-    Facture{adresse} to Adresse
-    Societe{adresse} to Adresse
-    Comptable{adresse required} to Adresse
-    Employe{adresse required} to Adresse
-    ClientFournisseur{adresse} to Adresse
     Societe{infoEntreprise}  to InfoEntreprise
     Comptable{infoEntreprise}  to InfoEntreprise
     Comptable{user} to User

@@ -7,8 +7,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Produit.
@@ -40,25 +38,8 @@ public class Produit implements Serializable {
     @Column(name = "unite")
     private String unite;
 
-    @Column(name = "quantite")
-    private String quantite;
-
     @Column(name = "description")
     private String description;
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JoinTable(name = "produit_liste_factures",
-               joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "liste_factures_id", referencedColumnName = "id"))
-    private Set<Facture> listeFactures = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JoinTable(name = "produit_liste_devis",
-               joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "liste_devis_id", referencedColumnName = "id"))
-    private Set<Devis> listeDevis = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeProduits", allowSetters = true)
@@ -138,19 +119,6 @@ public class Produit implements Serializable {
         this.unite = unite;
     }
 
-    public String getQuantite() {
-        return quantite;
-    }
-
-    public Produit quantite(String quantite) {
-        this.quantite = quantite;
-        return this;
-    }
-
-    public void setQuantite(String quantite) {
-        this.quantite = quantite;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -162,56 +130,6 @@ public class Produit implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<Facture> getListeFactures() {
-        return listeFactures;
-    }
-
-    public Produit listeFactures(Set<Facture> factures) {
-        this.listeFactures = factures;
-        return this;
-    }
-
-    public Produit addListeFactures(Facture facture) {
-        this.listeFactures.add(facture);
-        facture.getListeProduits().add(this);
-        return this;
-    }
-
-    public Produit removeListeFactures(Facture facture) {
-        this.listeFactures.remove(facture);
-        facture.getListeProduits().remove(this);
-        return this;
-    }
-
-    public void setListeFactures(Set<Facture> factures) {
-        this.listeFactures = factures;
-    }
-
-    public Set<Devis> getListeDevis() {
-        return listeDevis;
-    }
-
-    public Produit listeDevis(Set<Devis> devis) {
-        this.listeDevis = devis;
-        return this;
-    }
-
-    public Produit addListeDevis(Devis devis) {
-        this.listeDevis.add(devis);
-        devis.getListeProduits().add(this);
-        return this;
-    }
-
-    public Produit removeListeDevis(Devis devis) {
-        this.listeDevis.remove(devis);
-        devis.getListeProduits().remove(this);
-        return this;
-    }
-
-    public void setListeDevis(Set<Devis> devis) {
-        this.listeDevis = devis;
     }
 
     public Societe getSociete() {
@@ -254,7 +172,6 @@ public class Produit implements Serializable {
             ", tva=" + getTva() +
             ", prix=" + getPrix() +
             ", unite='" + getUnite() + "'" +
-            ", quantite='" + getQuantite() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }

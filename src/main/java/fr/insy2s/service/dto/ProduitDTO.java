@@ -1,8 +1,6 @@
 package fr.insy2s.service.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Produit} entity.
@@ -21,12 +19,8 @@ public class ProduitDTO implements Serializable {
 
     private String unite;
 
-    private String quantite;
-
     private String description;
 
-    private Set<FactureDTO> listeFactures = new HashSet<>();
-    private Set<DevisDTO> listeDevis = new HashSet<>();
 
     private Long societeId;
     
@@ -78,36 +72,12 @@ public class ProduitDTO implements Serializable {
         this.unite = unite;
     }
 
-    public String getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(String quantite) {
-        this.quantite = quantite;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<FactureDTO> getListeFactures() {
-        return listeFactures;
-    }
-
-    public void setListeFactures(Set<FactureDTO> factures) {
-        this.listeFactures = factures;
-    }
-
-    public Set<DevisDTO> getListeDevis() {
-        return listeDevis;
-    }
-
-    public void setListeDevis(Set<DevisDTO> devis) {
-        this.listeDevis = devis;
     }
 
     public Long getSocieteId() {
@@ -145,10 +115,7 @@ public class ProduitDTO implements Serializable {
             ", tva=" + getTva() +
             ", prix=" + getPrix() +
             ", unite='" + getUnite() + "'" +
-            ", quantite='" + getQuantite() + "'" +
             ", description='" + getDescription() + "'" +
-            ", listeFactures='" + getListeFactures() + "'" +
-            ", listeDevis='" + getListeDevis() + "'" +
             ", societeId=" + getSocieteId() +
             "}";
     }

@@ -18,7 +18,7 @@ public class WrapperEmployeMapper {
 
     /**
      * Builder WrapperEmploye
-     * 
+     *
      * @param employe
      * @param adresse
      * @param statutEmploye
@@ -52,7 +52,6 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setPoste(employe.getPoste());
         wrapperEmploye.setDateEmbauche(employe.getDateEmbauche());
         wrapperEmploye.setDateSortie(employe.getDateSortie());
-        wrapperEmploye.setTypeContrat(employe.getTypeContrat());
         wrapperEmploye.setSituationFamiliale(employe.getSituationFamiliale());
         wrapperEmploye.setEnfantsACharge(employe.getEnfantsACharge());
 
@@ -80,7 +79,7 @@ public class WrapperEmployeMapper {
 
     /**
      * Mappe WrapperEmploye to EmployeDto
-     * 
+     *
      * @param wrapperEmploye
      * @return
      */
@@ -109,7 +108,6 @@ public class WrapperEmployeMapper {
         employeDTO.setPoste(wrapperEmploye.getPoste());
         employeDTO.setDateEmbauche(wrapperEmploye.getDateEmbauche());
         employeDTO.setDateSortie(wrapperEmploye.getDateSortie());
-        employeDTO.setTypeContrat(wrapperEmploye.getTypeContrat());
         employeDTO.setSituationFamiliale(wrapperEmploye.getSituationFamiliale());
         employeDTO.setEnfantsACharge(wrapperEmploye.getEnfantsACharge());
 
@@ -136,7 +134,7 @@ public class WrapperEmployeMapper {
         return adresseDTO;
 
     }
-    
+
     //WrapperEmploye to StatutEmployeDTO
     /**
      * Mappe wrapperEmploye to StatutEmploye
@@ -144,17 +142,17 @@ public class WrapperEmployeMapper {
      * @return
      */
     public StatutEmployeDTO toStatutEmploye(final WrapperEmploye wrapperEmploye) {
-        
+
         final StatutEmployeDTO statutEmployeDTO = new StatutEmployeDTO();
-        
+
         statutEmployeDTO.setId(wrapperEmploye.getStatutEmployeId());
         statutEmployeDTO.setCodeRef(wrapperEmploye.getCodeRef());
         statutEmployeDTO.setLibelle(wrapperEmploye.getLibelle());
-        
+
         return statutEmployeDTO;
-        
+
     }
-    
+
     //WrapperEmploye to SocieteDTO
     /**
      * Mappe wrapperEmploye to societeDTO
@@ -163,24 +161,24 @@ public class WrapperEmployeMapper {
      */
     public SocieteDTO toSocieteDto(final WrapperEmploye wrapperEmploye) {
         final SocieteDTO societeDTO = new SocieteDTO();
-        
+
         societeDTO.setId(wrapperEmploye.getSocieteId());
 
         return societeDTO;
-        
+
     }
-    
+
     //WrapperEmploye to InfoEntreprise
     public InfoEntrepriseDTO toInfoEntrepriseDto(final WrapperEmploye wrapperEmploye) {
-        
+
         final InfoEntrepriseDTO infoEntrepriseDTO= new InfoEntrepriseDTO();
-        
+
         infoEntrepriseDTO.setId(wrapperEmploye.getInfoEntrepriseId());
         infoEntrepriseDTO.setRaisonSociale(wrapperEmploye.getRaisonSociale());
-        
+
         return infoEntrepriseDTO;
-        
+
     }
-    
+
 
 }

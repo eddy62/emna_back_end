@@ -30,9 +30,6 @@
             <column name="unite" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="quantite" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -45,28 +42,6 @@
 
     <changeSet id="20200722090704-1-relations" author="jhipster">
 
-        <createTable tableName="produit_liste_factures">
-            <column name="liste_factures_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="produit_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="produit_id, liste_factures_id" tableName="produit_liste_factures"/>
-        
-        <createTable tableName="produit_liste_devis">
-            <column name="liste_devis_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="produit_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="produit_id, liste_devis_id" tableName="produit_liste_devis"/>
-        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
@@ -89,7 +64,6 @@
             <column name="tva" type="numeric"/>
             <column name="prix" type="numeric"/>
             <column name="unite" type="string"/>
-            <column name="quantite" type="string"/>
             <column name="description" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

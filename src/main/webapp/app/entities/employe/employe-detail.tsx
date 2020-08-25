@@ -61,7 +61,9 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
             </span>
           </dt>
           <dd>
-            <TextFormat value={employeEntity.dateNaissance} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            {employeEntity.dateNaissance ? (
+              <TextFormat value={employeEntity.dateNaissance} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
           </dd>
           <dt>
             <span id="villeNaissance">
@@ -147,7 +149,9 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
             </span>
           </dt>
           <dd>
-            <TextFormat value={employeEntity.dateEmbauche} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            {employeEntity.dateEmbauche ? (
+              <TextFormat value={employeEntity.dateEmbauche} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
           </dd>
           <dt>
             <span id="dateSortie">
@@ -155,14 +159,14 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
             </span>
           </dt>
           <dd>
-            <TextFormat value={employeEntity.dateSortie} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            {employeEntity.dateSortie ? <TextFormat value={employeEntity.dateSortie} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
           </dd>
           <dt>
-            <span id="typeContrat">
-              <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
+            <span id="periodeEssai">
+              <Translate contentKey="emnaBackEndApp.employe.periodeEssai">Periode Essai</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.typeContrat}</dd>
+          <dd>{employeEntity.periodeEssai}</dd>
           <dt>
             <span id="situationFamiliale">
               <Translate contentKey="emnaBackEndApp.employe.situationFamiliale">Situation Familiale</Translate>
@@ -176,13 +180,17 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
           </dt>
           <dd>{employeEntity.enfantsACharge}</dd>
           <dt>
+            <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
+          </dt>
+          <dd>{employeEntity.statutEmployeId ? employeEntity.statutEmployeId : ''}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.employe.adresse">Adresse</Translate>
           </dt>
           <dd>{employeEntity.adresseId ? employeEntity.adresseId : ''}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
+            <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
           </dt>
-          <dd>{employeEntity.statutEmployeId ? employeEntity.statutEmployeId : ''}</dd>
+          <dd>{employeEntity.typeContratId ? employeEntity.typeContratId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.employe.societe">Societe</Translate>
           </dt>
@@ -207,7 +215,7 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
 };
 
 const mapStateToProps = ({ employe }: IRootState) => ({
-  employeEntity: employe.entity
+  employeEntity: employe.entity,
 });
 
 const mapDispatchToProps = { getEntity };

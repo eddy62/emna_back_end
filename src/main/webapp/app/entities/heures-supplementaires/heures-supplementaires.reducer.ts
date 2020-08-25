@@ -12,7 +12,7 @@ export const ACTION_TYPES = {
   CREATE_HEURESSUPPLEMENTAIRES: 'heuresSupplementaires/CREATE_HEURESSUPPLEMENTAIRES',
   UPDATE_HEURESSUPPLEMENTAIRES: 'heuresSupplementaires/UPDATE_HEURESSUPPLEMENTAIRES',
   DELETE_HEURESSUPPLEMENTAIRES: 'heuresSupplementaires/DELETE_HEURESSUPPLEMENTAIRES',
-  RESET: 'heuresSupplementaires/RESET'
+  RESET: 'heuresSupplementaires/RESET',
 };
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IHeuresSupplementaires>,
   entity: defaultValue,
   updating: false,
-  updateSuccess: false
+  updateSuccess: false,
 };
 
 export type HeuresSupplementairesState = Readonly<typeof initialState>;
@@ -36,7 +36,7 @@ export default (state: HeuresSupplementairesState = initialState, action): Heure
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        loading: true
+        loading: true,
       };
     case REQUEST(ACTION_TYPES.CREATE_HEURESSUPPLEMENTAIRES):
     case REQUEST(ACTION_TYPES.UPDATE_HEURESSUPPLEMENTAIRES):
@@ -45,7 +45,7 @@ export default (state: HeuresSupplementairesState = initialState, action): Heure
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        updating: true
+        updating: true,
       };
     case FAILURE(ACTION_TYPES.FETCH_HEURESSUPPLEMENTAIRES_LIST):
     case FAILURE(ACTION_TYPES.FETCH_HEURESSUPPLEMENTAIRES):
@@ -57,19 +57,19 @@ export default (state: HeuresSupplementairesState = initialState, action): Heure
         loading: false,
         updating: false,
         updateSuccess: false,
-        errorMessage: action.payload
+        errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.FETCH_HEURESSUPPLEMENTAIRES_LIST):
       return {
         ...state,
         loading: false,
-        entities: action.payload.data
+        entities: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.FETCH_HEURESSUPPLEMENTAIRES):
       return {
         ...state,
         loading: false,
-        entity: action.payload.data
+        entity: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.CREATE_HEURESSUPPLEMENTAIRES):
     case SUCCESS(ACTION_TYPES.UPDATE_HEURESSUPPLEMENTAIRES):
@@ -77,18 +77,18 @@ export default (state: HeuresSupplementairesState = initialState, action): Heure
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: action.payload.data
+        entity: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.DELETE_HEURESSUPPLEMENTAIRES):
       return {
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: {}
+        entity: {},
       };
     case ACTION_TYPES.RESET:
       return {
-        ...initialState
+        ...initialState,
       };
     default:
       return state;
@@ -101,21 +101,21 @@ const apiUrl = 'api/heures-supplementaires';
 
 export const getEntities: ICrudGetAllAction<IHeuresSupplementaires> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_HEURESSUPPLEMENTAIRES_LIST,
-  payload: axios.get<IHeuresSupplementaires>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+  payload: axios.get<IHeuresSupplementaires>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
 });
 
 export const getEntity: ICrudGetAction<IHeuresSupplementaires> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_HEURESSUPPLEMENTAIRES,
-    payload: axios.get<IHeuresSupplementaires>(requestUrl)
+    payload: axios.get<IHeuresSupplementaires>(requestUrl),
   };
 };
 
 export const createEntity: ICrudPutAction<IHeuresSupplementaires> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_HEURESSUPPLEMENTAIRES,
-    payload: axios.post(apiUrl, cleanEntity(entity))
+    payload: axios.post(apiUrl, cleanEntity(entity)),
   });
   dispatch(getEntities());
   return result;
@@ -124,7 +124,7 @@ export const createEntity: ICrudPutAction<IHeuresSupplementaires> = entity => as
 export const updateEntity: ICrudPutAction<IHeuresSupplementaires> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_HEURESSUPPLEMENTAIRES,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(apiUrl, cleanEntity(entity)),
   });
   return result;
 };
@@ -133,12 +133,12 @@ export const deleteEntity: ICrudDeleteAction<IHeuresSupplementaires> = id => asy
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_HEURESSUPPLEMENTAIRES,
-    payload: axios.delete(requestUrl)
+    payload: axios.delete(requestUrl),
   });
   dispatch(getEntities());
   return result;
 };
 
 export const reset = () => ({
-  type: ACTION_TYPES.RESET
+  type: ACTION_TYPES.RESET,
 });

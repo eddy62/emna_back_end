@@ -1,8 +1,6 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Facture;
 import fr.insy2s.service.FactureService;
-import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FactureDTO;
 
@@ -13,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -116,20 +112,5 @@ public class FactureResource {
         log.debug("REST request to delete Facture : {}", id);
         factureService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
-    }
-
-    @PostMapping("/facture/new")
-    public ResponseEntity<FactureDTO> createFactureForSociete(@ModelAttribute FactureTemp factureTemp) throws URISyntaxException, IOException {
-        log.debug("REST request to save Facture : {}", factureTemp);
-        FactureDTO result = factureService.postFactureWithFile(factureTemp);
-        return ResponseEntity.created(new URI("/api/factures/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    @GetMapping("/factures/societe/{id}")
-    public List<FactureDTO> getAllFactureBySocieteId(@PathVariable Long id) {
-        log.debug("REST request to get all Factures By User");
-        return factureService.findAllBySocieteId(id);
     }
 }

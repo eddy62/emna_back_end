@@ -12,7 +12,7 @@ export const ACTION_TYPES = {
   CREATE_CLIENTFOURNISSEUR: 'clientFournisseur/CREATE_CLIENTFOURNISSEUR',
   UPDATE_CLIENTFOURNISSEUR: 'clientFournisseur/UPDATE_CLIENTFOURNISSEUR',
   DELETE_CLIENTFOURNISSEUR: 'clientFournisseur/DELETE_CLIENTFOURNISSEUR',
-  RESET: 'clientFournisseur/RESET'
+  RESET: 'clientFournisseur/RESET',
 };
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IClientFournisseur>,
   entity: defaultValue,
   updating: false,
-  updateSuccess: false
+  updateSuccess: false,
 };
 
 export type ClientFournisseurState = Readonly<typeof initialState>;
@@ -36,7 +36,7 @@ export default (state: ClientFournisseurState = initialState, action): ClientFou
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        loading: true
+        loading: true,
       };
     case REQUEST(ACTION_TYPES.CREATE_CLIENTFOURNISSEUR):
     case REQUEST(ACTION_TYPES.UPDATE_CLIENTFOURNISSEUR):
@@ -45,7 +45,7 @@ export default (state: ClientFournisseurState = initialState, action): ClientFou
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        updating: true
+        updating: true,
       };
     case FAILURE(ACTION_TYPES.FETCH_CLIENTFOURNISSEUR_LIST):
     case FAILURE(ACTION_TYPES.FETCH_CLIENTFOURNISSEUR):
@@ -57,19 +57,19 @@ export default (state: ClientFournisseurState = initialState, action): ClientFou
         loading: false,
         updating: false,
         updateSuccess: false,
-        errorMessage: action.payload
+        errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.FETCH_CLIENTFOURNISSEUR_LIST):
       return {
         ...state,
         loading: false,
-        entities: action.payload.data
+        entities: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.FETCH_CLIENTFOURNISSEUR):
       return {
         ...state,
         loading: false,
-        entity: action.payload.data
+        entity: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.CREATE_CLIENTFOURNISSEUR):
     case SUCCESS(ACTION_TYPES.UPDATE_CLIENTFOURNISSEUR):
@@ -77,18 +77,18 @@ export default (state: ClientFournisseurState = initialState, action): ClientFou
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: action.payload.data
+        entity: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.DELETE_CLIENTFOURNISSEUR):
       return {
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: {}
+        entity: {},
       };
     case ACTION_TYPES.RESET:
       return {
-        ...initialState
+        ...initialState,
       };
     default:
       return state;
@@ -101,21 +101,21 @@ const apiUrl = 'api/client-fournisseurs';
 
 export const getEntities: ICrudGetAllAction<IClientFournisseur> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_CLIENTFOURNISSEUR_LIST,
-  payload: axios.get<IClientFournisseur>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+  payload: axios.get<IClientFournisseur>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
 });
 
 export const getEntity: ICrudGetAction<IClientFournisseur> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_CLIENTFOURNISSEUR,
-    payload: axios.get<IClientFournisseur>(requestUrl)
+    payload: axios.get<IClientFournisseur>(requestUrl),
   };
 };
 
 export const createEntity: ICrudPutAction<IClientFournisseur> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_CLIENTFOURNISSEUR,
-    payload: axios.post(apiUrl, cleanEntity(entity))
+    payload: axios.post(apiUrl, cleanEntity(entity)),
   });
   dispatch(getEntities());
   return result;
@@ -124,7 +124,7 @@ export const createEntity: ICrudPutAction<IClientFournisseur> = entity => async 
 export const updateEntity: ICrudPutAction<IClientFournisseur> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_CLIENTFOURNISSEUR,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(apiUrl, cleanEntity(entity)),
   });
   return result;
 };
@@ -133,11 +133,12 @@ export const deleteEntity: ICrudDeleteAction<IClientFournisseur> = id => async d
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_CLIENTFOURNISSEUR,
-    payload: axios.delete(requestUrl)
+    payload: axios.delete(requestUrl),
   });
+  dispatch(getEntities());
   return result;
 };
 
 export const reset = () => ({
-  type: ACTION_TYPES.RESET
+  type: ACTION_TYPES.RESET,
 });

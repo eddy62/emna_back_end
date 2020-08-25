@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ClientFournisseurResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
-
 @AutoConfigureMockMvc
 @WithMockUser
 public class ClientFournisseurResourceIT {
@@ -100,7 +99,6 @@ public class ClientFournisseurResourceIT {
     @Transactional
     public void createClientFournisseur() throws Exception {
         int databaseSizeBeforeCreate = clientFournisseurRepository.findAll().size();
-
         // Create the ClientFournisseur
         ClientFournisseurDTO clientFournisseurDTO = clientFournisseurMapper.toDto(clientFournisseur);
         restClientFournisseurMockMvc.perform(post("/api/client-fournisseurs")
@@ -172,7 +170,6 @@ public class ClientFournisseurResourceIT {
             .andExpect(jsonPath("$.telephone").value(DEFAULT_TELEPHONE))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
     }
-
     @Test
     @Transactional
     public void getNonExistingClientFournisseur() throws Exception {
