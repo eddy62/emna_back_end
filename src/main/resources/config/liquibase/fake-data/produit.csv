@@ -1,11 +1,11 @@
-id;nom;reference;tva;prix;unite;description
-1;conglomeration Marketing solutions;70855;1822;47384;Assimilated deliverables Stand-alone;Representative SCSI
-2;Iowa Missouri Movies;94621;44007;79392;SAS Beauty;District Internal
-3;Soap;22622;23283;5187;exuding Shores;sexy Soap
-4;Sausages override;43523;2925;79258;integrate back up paradigms;PNG Facilitator
-5;Computer Land;15744;30386;28839;Borders non-volatile Buckinghamshire;hack SMTP
-6;array Beauty;75755;18100;27443;Music;Ergonomic Granite Bike Valley Sausages
-7;Maine;39539;41215;87025;Multi-channelled Shirt;orange synergies
-8;indexing Netherlands Antillian Guilder FTP;18839;48347;13378;Keyboard platforms Liaison;Incredible Steel Bike
-9;Steel instruction set;29677;74451;27024;Polarised;synergistic
-10;Alaska Handcrafted connect;59545;50030;20166;Operations National;Customizable
+id;nom;reference;tva;prix;unite;quantite;description
+1;produit1;70855;20;473.50;m²;2;description1
+2;produit2;54352;5.5;911.99;km;5;description 2
+3;produit3;16952;10;76.88;h;10;description 3
+4;produit4;91017;20;60.22;j;9;description 4
+5;produit5;1228;5.5;74.78;kg;8;Implementation 5
+6;produit6;61022;10;454.0;pc;1;transmitting 6
+7;produit7;18839;20;133.78;m;2;description 7
+8;produit8;11196;20;611;km;3;descriptionn 8
+9;produit9;14975;1.5;76.99;j;9;calculate enterprise 9
+10;produit10;64075;15;14.5;h;1;description 10
