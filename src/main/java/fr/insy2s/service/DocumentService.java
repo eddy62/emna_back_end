@@ -1,9 +1,12 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Document;
 import fr.insy2s.service.dto.DocumentDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service Interface for managing {@link fr.insy2s.domain.Document}.
@@ -25,7 +28,6 @@ public interface DocumentService {
      */
     List<DocumentDTO> findAll();
 
-
     /**
      * Get the "id" document.
      *
@@ -40,4 +42,8 @@ public interface DocumentService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Set<Document> multiPartFilesToDocuments(List<MultipartFile> files);
+
+    Document multiPartFileToDocument(MultipartFile file);
 }

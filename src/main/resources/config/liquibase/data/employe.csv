@@ -1,3 +1,0 @@
-id;matricule;civilite;nom_naissance;nom_usage;prenom;date_naissance;ville_naissance;departement_naissance;pays_naissance;numero_securitte_sociale;email;telephone_fix;telephone_portable;fax;salaire_horaire;salaire_brut_mensuelle;heures_mensuelle;categorie;statut;adresse_id;societe_id
-1;matricule;honorez;honorez;laura;2020-07-21;tourcoing;59;france;12036598;laura@gmail.com;pasDeFix;0640405246;1000.0;1000.0;employe;employe;2;1
-2;matricule;dupont;bois;claude;2020-07-21;roubaix;59;france;12036598;claude@gmail.com;pasDeFix;0640405246;1000.0;1000.0;employe;employe;3;1

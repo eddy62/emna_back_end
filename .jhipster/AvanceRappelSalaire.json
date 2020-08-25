@@ -38,7 +38,7 @@
       "otherEntityField": "id"
     }
   ],
-  "changelogDate": "20200825122431",
+  "changelogDate": "20200825151104",
   "entityTableName": "avance_rappel_salaire",
   "dto": "mapstruct",
   "pagination": "no",

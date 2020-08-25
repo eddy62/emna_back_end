@@ -8,24 +8,24 @@
 
     
     <!--
-        Added the entity EtatVariablePaie.
+        Added the entity TypeContrat.
     -->
-    <changeSet id="20200825122331-1" author="jhipster">
-        <createTable tableName="etat_variable_paie">
+    <changeSet id="20200825150904-1" author="jhipster">
+        <createTable tableName="type_contrat">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="code_ref" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_etat_variable_paie_code_ref" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_type_contrat_code_ref" />
             </column>
             <column name="intitule" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_etat_variable_paie_intitule" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_type_contrat_intitule" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
 
-    <changeSet id="20200825122331-1-relations" author="jhipster">
+    <changeSet id="20200825150904-1-relations" author="jhipster">
 
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -38,11 +38,11 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20200825122331-1-data" author="jhipster" context="faker">
+    <changeSet id="20200825150904-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/etat_variable_paie.csv"
+                  file="config/liquibase/fake-data/type_contrat.csv"
                   separator=";"
-                  tableName="etat_variable_paie">
+                  tableName="type_contrat">
             <column name="id" type="numeric"/>
             <column name="code_ref" type="string"/>
             <column name="intitule" type="string"/>

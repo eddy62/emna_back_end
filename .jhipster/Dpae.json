@@ -33,7 +33,7 @@
       "otherEntityField": "id"
     }
   ],
-  "changelogDate": "20200825122531",
+  "changelogDate": "20200825151204",
   "entityTableName": "dpae",
   "dto": "mapstruct",
   "pagination": "no",
