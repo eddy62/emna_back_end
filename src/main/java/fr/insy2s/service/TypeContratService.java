@@ -1,9 +1,9 @@
 package fr.insy2s.service;
 
-import fr.insy2s.service.dto.TypeContratDTO;
-
 import java.util.List;
 import java.util.Optional;
+
+import fr.insy2s.service.dto.TypeContratDTO;
 
 /**
  * Service Interface for managing {@link fr.insy2s.domain.TypeContrat}.
@@ -25,7 +25,6 @@ public interface TypeContratService {
      */
     List<TypeContratDTO> findAll();
 
-
     /**
      * Get the "id" typeContrat.
      *
@@ -40,4 +39,12 @@ public interface TypeContratService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the "codeRef" typeContrat.
+     * 
+     * @param codeTypeContrat
+     * @return the entity.
+     */
+    TypeContratDTO findByCodeRef(String codeTypeContrat);
 }
