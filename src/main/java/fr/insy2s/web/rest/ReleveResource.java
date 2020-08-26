@@ -113,4 +113,19 @@ public class ReleveResource {
         releveService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+    @GetMapping("/releve/societe/{id}")
+    public List<ReleveDTO> getAllRelevesBySocieteId(@PathVariable Long id) {
+        log.debug("REST request to get all Operations by Releve id ");
+        return releveService.findAllBySocieteId(id);
+    }
+    @GetMapping("/releve/etat/{id}")
+    public List<ReleveDTO> getAllRelevesByEtatReleveId(@PathVariable Long id) {
+        log.debug("REST request to get all Operations by Releve id ");
+        return releveService.findAllByEtatReleveId(id);
+    }
+    @GetMapping("/releve/etat/{idEtat}/societe/{idSociete}")
+    public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat,@PathVariable Long idSociete) {
+        log.debug("REST request to get all Operations by Releve id ");
+        return releveService.findAllByEtatReleveIdAndSocieteId(idEtat,idSociete);
+    }
 }

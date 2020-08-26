@@ -7,8 +7,10 @@ import fr.insy2s.repository.AuthorityRepository;
 import fr.insy2s.repository.UserRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.security.SecurityUtils;
+import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.UserDTO;
 
+import fr.insy2s.service.mapper.UserMapper;
 import io.github.jhipster.security.RandomUtil;
 
 import org.slf4j.Logger;
@@ -302,4 +304,23 @@ public class UserService {
             Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
         }
     }
+
+    /**
+     * Get all the clientUsers.
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<UserDTO> findAll() {
+        log.debug("Request to get all Users");
+        return userRepository.findAll().stream()
+            .map( user -> {
+                UserDTO ud = new UserDTO(user);
+                return  ud;
+            }
+            )
+            .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+
 }

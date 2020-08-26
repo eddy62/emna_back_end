@@ -1,13 +1,14 @@
 entity Facture{
     numfact Long
     nom String
+    type String
     message String
     date LocalDate
     dateEcheance LocalDate
     prixHT Integer
     prixTTC Integer
     tva Float
-    moyenDePaiement String
+    moyenDePaiement String    
 }
 
 entity ClientFournisseur {
@@ -16,6 +17,10 @@ entity ClientFournisseur {
     telephone String 
 	email String
 }
+
+entity LigneProduit{
+	quantite Integer required
+}
  
 entity Produit {
     nom String
@@ -23,7 +28,6 @@ entity Produit {
     tva Float
     prix Double
     unite String
-    quantite String
     description String
 }
 
@@ -114,9 +118,10 @@ entity Employe{
     poste String required
     dateEmbauche LocalDate required
     dateSortie LocalDate required
-    typeContrat String required
+    periodeEssai Double required
     situationFamiliale String required
     enfantsACharge Integer required
+    
 }
 
 entity StatutEmploye{
@@ -209,6 +214,28 @@ entity Document{
 	nom String
 }
 
+entity TypeContrat {
+	codeRef String required unique
+    intitule String required unique
+}
+
+entity EtatVariablePaie {
+	codeRef String required unique
+    intitule String required unique
+}
+
+entity AvanceRappelSalaire{
+	type String required
+	debutPeriode LocalDate required
+    finPeriode LocalDate required
+    montant Double required
+}
+
+entity Dpae {
+	lieu String required
+    date LocalDate required
+    lienDocument String required
+}
 
 
 relationship OneToMany{
@@ -240,6 +267,7 @@ relationship OneToMany{
     Employe {listeFichePaies} to FichePaie{employe}
    	Employe{listeHeureSupplementaires}  to HeuresSupplementaires{employe}
     Employe{listeNoteDeFrais}  to NoteDeFrais{employe}
+    Employe{listeAvanceRappelSalaire} to AvanceRappelSalaire{employe}
     Employe{listeAutresVariables} to AutresVariable{employe}
     Article{listeClauses} to Clause{article}
 	
@@ -247,8 +275,10 @@ relationship OneToMany{
 	Releve{listeDocuments} to Document{releve}
 	Contrat{listeDocuments} to Document{contrat}
 	Employe{listeDocuments} to Document{employe}
-	
-	
+    Employe{listeDpae} to Dpae{employe}
+    Societe{listeDpae} to Dpae{societe}
+    Facture{listeLigneProduit} to LigneProduit{facture}
+    Devis{listeLigneProduit} to LigneProduit{devis}  
 }
 
 relationship ManyToOne{
@@ -258,6 +288,22 @@ relationship ManyToOne{
     Releve{etatReleve} to EtatReleve
     Facture{etatFacture} to EtatFacture
     Devis{etatDevis} to EtatDevis
+    Employe{adresse required} to Adresse
+    Societe{adresse} to Adresse
+    Facture{adresse} to Adresse    
+    Comptable{adresse required} to Adresse
+    ClientFournisseur{adresse} to Adresse
+    Employe{typeContrat required} to TypeContrat
+    Absence{etatVariablePaie} to EtatVariablePaie
+    Document{absence} to Absence
+    Prime{etatVariablePaie} to EtatVariablePaie
+    NoteDeFrais{etatVariablePaie} to EtatVariablePaie
+    Document{noteDeFrais} to NoteDeFrais
+    AvanceRappelSalaire{etatVariablePaie} to EtatVariablePaie
+    HeuresSupplementaires{etatVariablePaie} to EtatVariablePaie
+    AutresVariable{etatVariablePaie} to EtatVariablePaie
+    Document{autresVariables} to AutresVariable
+  	LigneProduit{produit required} to Produit   
 }
 
 relationship ManyToMany{
@@ -265,15 +311,9 @@ relationship ManyToMany{
     Article{listeContrats} to Contrat{listeArticles}
     Clause{listeContrats} to Contrat{listeClauses}
     Clause{listeAvenants} to Avenant{listeClauses}
-    Produit{listeFactures} to Facture{listeProduits}
-    Produit{listeDevis} to Devis{listeProduits}
 }
+
 relationship OneToOne{
-    Facture{adresse} to Adresse
-    Societe{adresse} to Adresse
-    Comptable{adresse required} to Adresse
-    Employe{adresse required} to Adresse
-    ClientFournisseur{adresse} to Adresse
     Societe{infoEntreprise}  to InfoEntreprise
     Comptable{infoEntreprise}  to InfoEntreprise
     Comptable{user} to User

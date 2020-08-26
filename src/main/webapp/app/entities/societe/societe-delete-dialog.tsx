@@ -59,7 +59,7 @@ export const SocieteDeleteDialog = (props: ISocieteDeleteDialogProps) => {
 
 const mapStateToProps = ({ societe }: IRootState) => ({
   societeEntity: societe.entity,
-  updateSuccess: societe.updateSuccess
+  updateSuccess: societe.updateSuccess,
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

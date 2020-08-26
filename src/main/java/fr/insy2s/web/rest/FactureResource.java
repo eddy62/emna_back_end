@@ -118,9 +118,18 @@ public class FactureResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-    @PostMapping("/facture/new/")
-    public ResponseEntity<Facture> createFactures(@ModelAttribute FactureTemp factureTemp) throws URISyntaxException, IOException {
-        log.debug("REST request to save Car : {}", factureTemp);
-        return factureService.postFactureWithFile(factureTemp);
+    @PostMapping("/facture/new")
+    public ResponseEntity<FactureDTO> createFactureForSociete(@ModelAttribute FactureTemp factureTemp) throws URISyntaxException, IOException {
+        log.debug("REST request to save Facture : {}", factureTemp);
+        FactureDTO result = factureService.postFactureWithFile(factureTemp);
+        return ResponseEntity.created(new URI("/api/factures/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    @GetMapping("/factures/societe/{id}")
+    public List<FactureDTO> getAllFactureBySocieteId(@PathVariable Long id) {
+        log.debug("REST request to get all Factures By User");
+        return factureService.findAllBySocieteId(id);
     }
 }

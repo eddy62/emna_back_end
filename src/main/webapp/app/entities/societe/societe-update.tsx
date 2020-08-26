@@ -7,12 +7,12 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
 import { IInfoEntreprise } from 'app/shared/model/info-entreprise.model';
 import { getEntities as getInfoEntreprises } from 'app/entities/info-entreprise/info-entreprise.reducer';
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IAdresse } from 'app/shared/model/adresse.model';
+import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
 import { IComptable } from 'app/shared/model/comptable.model';
 import { getEntities as getComptables } from 'app/entities/comptable/comptable.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './societe.reducer';
@@ -23,13 +23,13 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface ISocieteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const SocieteUpdate = (props: ISocieteUpdateProps) => {
-  const [adresseId, setAdresseId] = useState('0');
   const [infoEntrepriseId, setInfoEntrepriseId] = useState('0');
   const [userId, setUserId] = useState('0');
+  const [adresseId, setAdresseId] = useState('0');
   const [comptableId, setComptableId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { societeEntity, adresses, infoEntreprises, users, comptables, loading, updating } = props;
+  const { societeEntity, infoEntreprises, users, adresses, comptables, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/societe');
@@ -42,9 +42,9 @@ export const SocieteUpdate = (props: ISocieteUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getAdresses();
     props.getInfoEntreprises();
     props.getUsers();
+    props.getAdresses();
     props.getComptables();
   }, []);
 
@@ -58,9 +58,8 @@ export const SocieteUpdate = (props: ISocieteUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...societeEntity,
-        ...values
+        ...values,
       };
-      entity.user = users[values.user];
 
       if (isNew) {
         props.createEntity(entity);
@@ -100,21 +99,6 @@ export const SocieteUpdate = (props: ISocieteUpdateProps) => {
                 <AvField id="societe-civilite" type="text" name="civilite" />
               </AvGroup>
               <AvGroup>
-                <Label for="societe-adresse">
-                  <Translate contentKey="emnaBackEndApp.societe.adresse">Adresse</Translate>
-                </Label>
-                <AvInput id="societe-adresse" type="select" className="form-control" name="adresseId">
-                  <option value="" key="0" />
-                  {adresses
-                    ? adresses.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="societe-infoEntreprise">
                   <Translate contentKey="emnaBackEndApp.societe.infoEntreprise">Info Entreprise</Translate>
                 </Label>
@@ -137,6 +121,21 @@ export const SocieteUpdate = (props: ISocieteUpdateProps) => {
                   <option value="" key="0" />
                   {users
                     ? users.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="societe-adresse">
+                  <Translate contentKey="emnaBackEndApp.societe.adresse">Adresse</Translate>
+                </Label>
+                <AvInput id="societe-adresse" type="select" className="form-control" name="adresseId">
+                  <option value="" key="0" />
+                  {adresses
+                    ? adresses.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -181,25 +180,25 @@ export const SocieteUpdate = (props: ISocieteUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  adresses: storeState.adresse.entities,
   infoEntreprises: storeState.infoEntreprise.entities,
   users: storeState.userManagement.users,
+  adresses: storeState.adresse.entities,
   comptables: storeState.comptable.entities,
   societeEntity: storeState.societe.entity,
   loading: storeState.societe.loading,
   updating: storeState.societe.updating,
-  updateSuccess: storeState.societe.updateSuccess
+  updateSuccess: storeState.societe.updateSuccess,
 });
 
 const mapDispatchToProps = {
-  getAdresses,
   getInfoEntreprises,
   getUsers,
+  getAdresses,
   getComptables,
   getEntity,
   updateEntity,
   createEntity,
-  reset
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

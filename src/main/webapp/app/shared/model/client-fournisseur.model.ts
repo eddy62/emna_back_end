@@ -7,9 +7,9 @@ export interface IClientFournisseur {
   siren?: number;
   telephone?: string;
   email?: string;
-  adresseId?: number;
   listeFactures?: IFacture[];
   listeDevis?: IDevis[];
+  adresseId?: number;
   societeId?: number;
 }
 

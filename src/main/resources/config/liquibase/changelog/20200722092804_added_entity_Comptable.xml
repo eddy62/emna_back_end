@@ -18,14 +18,14 @@
             <column name="civilite" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="adresse_id" type="bigint">
-                <constraints unique="true" nullable="false" uniqueConstraintName="ux_comptable_adresse_id" />
-            </column>
             <column name="info_entreprise_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_comptable_info_entreprise_id" />
             </column>
             <column name="user_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_comptable_user_id" />
+            </column>
+            <column name="adresse_id" type="bigint">
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

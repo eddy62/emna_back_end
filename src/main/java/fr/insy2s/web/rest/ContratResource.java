@@ -8,6 +8,7 @@ import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.ClauseEtArticleVM;
 import fr.insy2s.web.rest.vm.ContratAllInfoVM;
 import fr.insy2s.web.rest.vm.ContratEmployerVM;
+import fr.insy2s.web.rest.vm.ContratVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,17 +54,32 @@ public class ContratResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/contrats")
-    public ResponseEntity<ContratDTO> createContrat(@Valid @RequestBody ContratDTO contratDTO) throws URISyntaxException {
-        System.err.println(contratDTO);
-        log.debug("REST request to save Contrat : {}", contratDTO);
-        if (contratDTO.getId() != null) {
+    public ResponseEntity<ContratDTO> createContrat(@Valid @RequestBody ContratVM contratVM) throws URISyntaxException {
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println(contratVM.toString());
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        System.err.println("################################################");
+        log.debug("REST request to save Contrat : {}", contratVM);
+        if (contratVM.getId() != null) {
             throw new BadRequestAlertException("A new contrat cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        contratDTO.setDateCreation(LocalDate.now());
-        contratDTO.setSigne(false);
-        contratDTO.setArchive(false);
-        contratDTO.setEmployeId(1L);
-        contratDTO.setSocieteId(1L);
+        contratVM.setDateCreation(LocalDate.now());
+        contratVM.setSigne(false);
+        contratVM.setArchive(false);
+        contratVM.setEmployeId(1L);
+        contratVM.setSocieteId(1L);
+        ContratDTO contratDTO = new ContratDTO();
         ContratDTO result = contratService.save(contratDTO);
         return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

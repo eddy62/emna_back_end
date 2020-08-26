@@ -80,4 +80,16 @@ public interface ClientFournisseurService {
      * @return the entity
      */
     Optional<ClientFournisseurDTO> findByNom(String nom);
+    /**
+     * check the id of current user
+     * @param id
+     * @return
+     */
+    public Boolean verfyIdOfUserConnected(Long id);
+
+    /**
+     * check the role of current user
+     * @return
+     */
+    public Boolean connectedUserIsSociete();
 }

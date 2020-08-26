@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "employe")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Employe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -110,8 +109,8 @@ public class Employe implements Serializable {
     private LocalDate dateSortie;
 
     @NotNull
-    @Column(name = "type_contrat", nullable = false)
-    private String typeContrat;
+    @Column(name = "periode_essai", nullable = false)
+    private Double periodeEssai;
 
     @NotNull
     @Column(name = "situation_familiale", nullable = false)
@@ -121,53 +120,66 @@ public class Employe implements Serializable {
     @Column(name = "enfants_a_charge", nullable = false)
     private Integer enfantsACharge;
 
-    @OneToOne(optional = false)
-    @NotNull
-    @JoinColumn(unique = true)
-    private Adresse adresse;
-
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Contrat> listeContrats = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Absence> listeAbsences = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Prime> listePrimes = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<FichePaie> listeFichePaies = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<HeuresSupplementaires> listeHeureSupplementaires = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<NoteDeFrais> listeNoteDeFrais = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<AvanceRappelSalaire> listeAvanceRappelSalaires = new HashSet<>();
+
+    @OneToMany(mappedBy = "employe")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<AutresVariable> listeAutresVariables = new HashSet<>();
 
     @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
+
+    @OneToMany(mappedBy = "employe")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Dpae> listeDpaes = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("employes")
+    @JsonIgnoreProperties(value = "employes", allowSetters = true)
     private StatutEmploye statutEmploye;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "employes", allowSetters = true)
+    private Adresse adresse;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "employes", allowSetters = true)
+    private TypeContrat typeContrat;
+
     @ManyToOne
-    @JsonIgnoreProperties("listeEmployes")
+    @JsonIgnoreProperties(value = "listeEmployes", allowSetters = true)
     private Societe societe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -449,17 +461,17 @@ public class Employe implements Serializable {
         this.dateSortie = dateSortie;
     }
 
-    public String getTypeContrat() {
-        return typeContrat;
+    public Double getPeriodeEssai() {
+        return periodeEssai;
     }
 
-    public Employe typeContrat(String typeContrat) {
-        this.typeContrat = typeContrat;
+    public Employe periodeEssai(Double periodeEssai) {
+        this.periodeEssai = periodeEssai;
         return this;
     }
 
-    public void setTypeContrat(String typeContrat) {
-        this.typeContrat = typeContrat;
+    public void setPeriodeEssai(Double periodeEssai) {
+        this.periodeEssai = periodeEssai;
     }
 
     public String getSituationFamiliale() {
@@ -486,19 +498,6 @@ public class Employe implements Serializable {
 
     public void setEnfantsACharge(Integer enfantsACharge) {
         this.enfantsACharge = enfantsACharge;
-    }
-
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public Employe adresse(Adresse adresse) {
-        this.adresse = adresse;
-        return this;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
     }
 
     public Set<Contrat> getListeContrats() {
@@ -651,6 +650,31 @@ public class Employe implements Serializable {
         this.listeNoteDeFrais = noteDeFrais;
     }
 
+    public Set<AvanceRappelSalaire> getListeAvanceRappelSalaires() {
+        return listeAvanceRappelSalaires;
+    }
+
+    public Employe listeAvanceRappelSalaires(Set<AvanceRappelSalaire> avanceRappelSalaires) {
+        this.listeAvanceRappelSalaires = avanceRappelSalaires;
+        return this;
+    }
+
+    public Employe addListeAvanceRappelSalaire(AvanceRappelSalaire avanceRappelSalaire) {
+        this.listeAvanceRappelSalaires.add(avanceRappelSalaire);
+        avanceRappelSalaire.setEmploye(this);
+        return this;
+    }
+
+    public Employe removeListeAvanceRappelSalaire(AvanceRappelSalaire avanceRappelSalaire) {
+        this.listeAvanceRappelSalaires.remove(avanceRappelSalaire);
+        avanceRappelSalaire.setEmploye(null);
+        return this;
+    }
+
+    public void setListeAvanceRappelSalaires(Set<AvanceRappelSalaire> avanceRappelSalaires) {
+        this.listeAvanceRappelSalaires = avanceRappelSalaires;
+    }
+
     public Set<AutresVariable> getListeAutresVariables() {
         return listeAutresVariables;
     }
@@ -701,6 +725,31 @@ public class Employe implements Serializable {
         this.listeDocuments = documents;
     }
 
+    public Set<Dpae> getListeDpaes() {
+        return listeDpaes;
+    }
+
+    public Employe listeDpaes(Set<Dpae> dpaes) {
+        this.listeDpaes = dpaes;
+        return this;
+    }
+
+    public Employe addListeDpae(Dpae dpae) {
+        this.listeDpaes.add(dpae);
+        dpae.setEmploye(this);
+        return this;
+    }
+
+    public Employe removeListeDpae(Dpae dpae) {
+        this.listeDpaes.remove(dpae);
+        dpae.setEmploye(null);
+        return this;
+    }
+
+    public void setListeDpaes(Set<Dpae> dpaes) {
+        this.listeDpaes = dpaes;
+    }
+
     public StatutEmploye getStatutEmploye() {
         return statutEmploye;
     }
@@ -712,6 +761,32 @@ public class Employe implements Serializable {
 
     public void setStatutEmploye(StatutEmploye statutEmploye) {
         this.statutEmploye = statutEmploye;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public Employe adresse(Adresse adresse) {
+        this.adresse = adresse;
+        return this;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
+    public TypeContrat getTypeContrat() {
+        return typeContrat;
+    }
+
+    public Employe typeContrat(TypeContrat typeContrat) {
+        this.typeContrat = typeContrat;
+        return this;
+    }
+
+    public void setTypeContrat(TypeContrat typeContrat) {
+        this.typeContrat = typeContrat;
     }
 
     public Societe getSociete() {
@@ -726,7 +801,7 @@ public class Employe implements Serializable {
     public void setSociete(Societe societe) {
         this.societe = societe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -744,6 +819,7 @@ public class Employe implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Employe{" +
@@ -769,7 +845,7 @@ public class Employe implements Serializable {
             ", poste='" + getPoste() + "'" +
             ", dateEmbauche='" + getDateEmbauche() + "'" +
             ", dateSortie='" + getDateSortie() + "'" +
-            ", typeContrat='" + getTypeContrat() + "'" +
+            ", periodeEssai=" + getPeriodeEssai() +
             ", situationFamiliale='" + getSituationFamiliale() + "'" +
             ", enfantsACharge=" + getEnfantsACharge() +
             "}";

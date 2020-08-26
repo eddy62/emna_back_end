@@ -8,6 +8,12 @@
     -->
     <changeSet id="20200722092304-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id"
+                                 baseTableName="heures_supplementaires"
+                                 constraintName="fk_heures_supplementaires_etat_variable_paie_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="etat_variable_paie"/>
+
         <addForeignKeyConstraint baseColumnNames="employe_id"
                                  baseTableName="heures_supplementaires"
                                  constraintName="fk_heures_supplementaires_employe_id"

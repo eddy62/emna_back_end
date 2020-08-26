@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "etatVariablePaie": {
+      "home": {
+        "title": "Etat Variable Paies",
+        "createLabel": "Create a new Etat Variable Paie",
+        "createOrEditLabel": "Create or edit a Etat Variable Paie",
+        "notFound": "No Etat Variable Paies found"
+      },
+      "created": "A new Etat Variable Paie is created with identifier {{ param }}",
+      "updated": "A Etat Variable Paie is updated with identifier {{ param }}",
+      "deleted": "A Etat Variable Paie is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Etat Variable Paie {{ id }}?"
+      },
+      "detail": {
+        "title": "Etat Variable Paie"
+      },
+      "codeRef": "Code Ref",
+      "intitule": "Intitule"
+    }
+  }
+}

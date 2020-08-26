@@ -2,10 +2,11 @@ import { Moment } from 'moment';
 
 export interface IAbsence {
   id?: number;
-  debutAbsence?: Moment;
-  finAbsence?: Moment;
+  debutAbsence?: string;
+  finAbsence?: string;
   justificatif?: string;
   typeAbsenceId?: number;
+  etatVariablePaieId?: number;
   employeId?: number;
 }
 

@@ -59,7 +59,7 @@ export const AbsenceDeleteDialog = (props: IAbsenceDeleteDialogProps) => {
 
 const mapStateToProps = ({ absence }: IRootState) => ({
   absenceEntity: absence.entity,
-  updateSuccess: absence.updateSuccess
+  updateSuccess: absence.updateSuccess,
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

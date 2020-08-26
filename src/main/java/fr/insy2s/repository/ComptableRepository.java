@@ -2,6 +2,7 @@ package fr.insy2s.repository;
 
 import fr.insy2s.domain.Comptable;
 
+import fr.insy2s.domain.User;
 import fr.insy2s.service.dto.ComptableDTO;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;

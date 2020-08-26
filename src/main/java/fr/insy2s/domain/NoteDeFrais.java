@@ -41,6 +41,10 @@ public class NoteDeFrais implements Serializable {
     private String justificatif;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = "noteDeFrais", allowSetters = true)
+    private EtatVariablePaie etatVariablePaie;
+
+    @ManyToOne
     @JsonIgnoreProperties(value = "listeNoteDeFrais", allowSetters = true)
     private Employe employe;
 
@@ -103,6 +107,19 @@ public class NoteDeFrais implements Serializable {
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
+    }
+
+    public EtatVariablePaie getEtatVariablePaie() {
+        return etatVariablePaie;
+    }
+
+    public NoteDeFrais etatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+        return this;
+    }
+
+    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
     }
 
     public Employe getEmploye() {

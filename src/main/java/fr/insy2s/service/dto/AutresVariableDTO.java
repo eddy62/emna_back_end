@@ -19,6 +19,8 @@ public class AutresVariableDTO implements Serializable {
     private String justificatif;
 
 
+    private Long etatVariablePaieId;
+
     private Long employeId;
     
     public Long getId() {
@@ -61,6 +63,14 @@ public class AutresVariableDTO implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
+    }
+
     public Long getEmployeId() {
         return employeId;
     }
@@ -95,6 +105,7 @@ public class AutresVariableDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
             ", justificatif='" + getJustificatif() + "'" +
+            ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";
     }

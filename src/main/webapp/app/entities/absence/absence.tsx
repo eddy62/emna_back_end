@@ -49,6 +49,9 @@ export const Absence = (props: IAbsenceProps) => {
                   <Translate contentKey="emnaBackEndApp.absence.typeAbsence">Type Absence</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.absence.etatVariablePaie">Etat Variable Paie</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.absence.employe">Employe</Translate>
                 </th>
                 <th />
@@ -63,13 +66,20 @@ export const Absence = (props: IAbsenceProps) => {
                     </Button>
                   </td>
                   <td>
-                    <TextFormat type="date" value={absence.debutAbsence} format={APP_LOCAL_DATE_FORMAT} />
+                    {absence.debutAbsence ? <TextFormat type="date" value={absence.debutAbsence} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>
-                    <TextFormat type="date" value={absence.finAbsence} format={APP_LOCAL_DATE_FORMAT} />
+                    {absence.finAbsence ? <TextFormat type="date" value={absence.finAbsence} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{absence.justificatif}</td>
                   <td>{absence.typeAbsenceId ? <Link to={`type-absence/${absence.typeAbsenceId}`}>{absence.typeAbsenceId}</Link> : ''}</td>
+                  <td>
+                    {absence.etatVariablePaieId ? (
+                      <Link to={`etat-variable-paie/${absence.etatVariablePaieId}`}>{absence.etatVariablePaieId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>{absence.employeId ? <Link to={`employe/${absence.employeId}`}>{absence.employeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -111,11 +121,11 @@ export const Absence = (props: IAbsenceProps) => {
 
 const mapStateToProps = ({ absence }: IRootState) => ({
   absenceList: absence.entities,
-  loading: absence.loading
+  loading: absence.loading,
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

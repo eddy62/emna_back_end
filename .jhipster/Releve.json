@@ -1,64 +1,64 @@
 {
-    "name": "Releve",
-    "fields": [
-        {
-            "fieldName": "dateDebut",
-            "fieldType": "LocalDate"
-        },
-        {
-            "fieldName": "dateFin",
-            "fieldType": "LocalDate"
-        },
-        {
-            "fieldName": "solde",
-            "fieldType": "Double"
-        },
-        {
-            "fieldName": "banque",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "cheminFichier",
-            "fieldType": "String"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "operation",
-            "otherEntityRelationshipName": "releve",
-            "relationshipName": "listeOperations"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "document",
-            "otherEntityRelationshipName": "releve",
-            "relationshipName": "listeDocuments"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "etatReleve",
-            "otherEntityRelationshipName": "releve",
-            "relationshipName": "etatReleve",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "societe",
-            "otherEntityRelationshipName": "listeReleves",
-            "relationshipName": "societe",
-            "otherEntityField": "id"
-        }
-    ],
-    "changelogDate": "20200722090904",
-    "entityTableName": "releve",
-    "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceImpl",
-    "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "readOnly": false,
-    "embedded": false,
-    "clientRootFolder": "",
-    "applications": "*"
+  "name": "Releve",
+  "fields": [
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "solde",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "banque",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cheminFichier",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "operation",
+      "otherEntityRelationshipName": "releve",
+      "relationshipName": "listeOperations"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "releve",
+      "relationshipName": "listeDocuments"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "etatReleve",
+      "otherEntityRelationshipName": "releve",
+      "relationshipName": "etatReleve",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "societe",
+      "otherEntityRelationshipName": "listeReleves",
+      "relationshipName": "societe",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200722090904",
+  "entityTableName": "releve",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
 }

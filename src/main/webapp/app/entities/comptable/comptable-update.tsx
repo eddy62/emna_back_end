@@ -7,12 +7,12 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
 import { IInfoEntreprise } from 'app/shared/model/info-entreprise.model';
 import { getEntities as getInfoEntreprises } from 'app/entities/info-entreprise/info-entreprise.reducer';
 import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
+import { IAdresse } from 'app/shared/model/adresse.model';
+import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './comptable.reducer';
 import { IComptable } from 'app/shared/model/comptable.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -21,12 +21,12 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IComptableUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ComptableUpdate = (props: IComptableUpdateProps) => {
-  const [adresseId, setAdresseId] = useState('0');
   const [infoEntrepriseId, setInfoEntrepriseId] = useState('0');
   const [userId, setUserId] = useState('0');
+  const [adresseId, setAdresseId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { comptableEntity, adresses, infoEntreprises, users, loading, updating } = props;
+  const { comptableEntity, infoEntreprises, users, adresses, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/comptable');
@@ -39,9 +39,9 @@ export const ComptableUpdate = (props: IComptableUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getAdresses();
     props.getInfoEntreprises();
     props.getUsers();
+    props.getAdresses();
   }, []);
 
   useEffect(() => {
@@ -95,21 +95,6 @@ export const ComptableUpdate = (props: IComptableUpdateProps) => {
                 <AvField id="comptable-civilite" type="text" name="civilite" />
               </AvGroup>
               <AvGroup>
-                <Label for="comptable-adresse">
-                  <Translate contentKey="emnaBackEndApp.comptable.adresse">Adresse</Translate>
-                </Label>
-                <AvInput id="comptable-adresse" type="select" className="form-control" name="adresseId">
-                  <option value="" key="0" />
-                  {adresses
-                    ? adresses.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="comptable-infoEntreprise">
                   <Translate contentKey="emnaBackEndApp.comptable.infoEntreprise">Info Entreprise</Translate>
                 </Label>
@@ -139,6 +124,23 @@ export const ComptableUpdate = (props: IComptableUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
+              <AvGroup>
+                <Label for="comptable-adresse">
+                  <Translate contentKey="emnaBackEndApp.comptable.adresse">Adresse</Translate>
+                </Label>
+                <AvInput id="comptable-adresse" type="select" className="form-control" name="adresseId" required>
+                  {adresses
+                    ? adresses.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/comptable" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -161,9 +163,9 @@ export const ComptableUpdate = (props: IComptableUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  adresses: storeState.adresse.entities,
   infoEntreprises: storeState.infoEntreprise.entities,
   users: storeState.userManagement.users,
+  adresses: storeState.adresse.entities,
   comptableEntity: storeState.comptable.entity,
   loading: storeState.comptable.loading,
   updating: storeState.comptable.updating,
@@ -171,9 +173,9 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getAdresses,
   getInfoEntreprises,
   getUsers,
+  getAdresses,
   getEntity,
   updateEntity,
   createEntity,

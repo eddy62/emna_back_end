@@ -7,10 +7,12 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
 import { IStatutEmploye } from 'app/shared/model/statut-employe.model';
 import { getEntities as getStatutEmployes } from 'app/entities/statut-employe/statut-employe.reducer';
+import { IAdresse } from 'app/shared/model/adresse.model';
+import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
+import { ITypeContrat } from 'app/shared/model/type-contrat.model';
+import { getEntities as getTypeContrats } from 'app/entities/type-contrat/type-contrat.reducer';
 import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './employe.reducer';
@@ -21,12 +23,13 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IEmployeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const EmployeUpdate = (props: IEmployeUpdateProps) => {
-  const [adresseId, setAdresseId] = useState('0');
   const [statutEmployeId, setStatutEmployeId] = useState('0');
+  const [adresseId, setAdresseId] = useState('0');
+  const [typeContratId, setTypeContratId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { employeEntity, adresses, statutEmployes, societes, loading, updating } = props;
+  const { employeEntity, statutEmployes, adresses, typeContrats, societes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/employe');
@@ -39,8 +42,9 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getAdresses();
     props.getStatutEmployes();
+    props.getAdresses();
+    props.getTypeContrats();
     props.getSocietes();
   }, []);
 
@@ -54,7 +58,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...employeEntity,
-        ...values
+        ...values,
       };
 
       if (isNew) {
@@ -97,7 +101,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="matricule"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -110,7 +114,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="civilite"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -129,7 +133,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="nomUsage"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -142,7 +146,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="prenom"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -156,7 +160,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   className="form-control"
                   name="dateNaissance"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -169,7 +173,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="villeNaissance"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -188,7 +192,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="paysNaisance"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -201,7 +205,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="numeroSecuriteSociale"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -214,7 +218,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="email"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -233,7 +237,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="telephonePortable"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -246,7 +250,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="fax"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -261,7 +265,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   name="salaireHoraire"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') }
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
               </AvGroup>
@@ -276,7 +280,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   name="salaireBrutMensuelle"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') }
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
               </AvGroup>
@@ -291,7 +295,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   name="heuresMensuelle"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') }
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
               </AvGroup>
@@ -304,7 +308,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="categorie"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -317,7 +321,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="poste"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -331,7 +335,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   className="form-control"
                   name="dateEmbauche"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -345,20 +349,22 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   className="form-control"
                   name="dateSortie"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="typeContratLabel" for="employe-typeContrat">
-                  <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
+                <Label id="periodeEssaiLabel" for="employe-periodeEssai">
+                  <Translate contentKey="emnaBackEndApp.employe.periodeEssai">Periode Essai</Translate>
                 </Label>
                 <AvField
-                  id="employe-typeContrat"
-                  type="text"
-                  name="typeContrat"
+                  id="employe-periodeEssai"
+                  type="string"
+                  className="form-control"
+                  name="periodeEssai"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
               </AvGroup>
@@ -371,7 +377,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   type="text"
                   name="situationFamiliale"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -386,24 +392,9 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                   name="enfantsACharge"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') }
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
-              </AvGroup>
-              <AvGroup>
-                <Label for="employe-adresse">
-                  <Translate contentKey="emnaBackEndApp.employe.adresse">Adresse</Translate>
-                </Label>
-                <AvInput id="employe-adresse" type="select" className="form-control" name="adresseId">
-                  <option value="" key="0" />
-                  {adresses
-                    ? adresses.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="employe-statutEmploye">
@@ -412,6 +403,40 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <AvInput id="employe-statutEmploye" type="select" className="form-control" name="statutEmployeId" required>
                   {statutEmployes
                     ? statutEmployes.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
+              <AvGroup>
+                <Label for="employe-adresse">
+                  <Translate contentKey="emnaBackEndApp.employe.adresse">Adresse</Translate>
+                </Label>
+                <AvInput id="employe-adresse" type="select" className="form-control" name="adresseId" required>
+                  {adresses
+                    ? adresses.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
+              <AvGroup>
+                <Label for="employe-typeContrat">
+                  <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
+                </Label>
+                <AvInput id="employe-typeContrat" type="select" className="form-control" name="typeContratId" required>
+                  {typeContrats
+                    ? typeContrats.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -459,23 +484,25 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  adresses: storeState.adresse.entities,
   statutEmployes: storeState.statutEmploye.entities,
+  adresses: storeState.adresse.entities,
+  typeContrats: storeState.typeContrat.entities,
   societes: storeState.societe.entities,
   employeEntity: storeState.employe.entity,
   loading: storeState.employe.loading,
   updating: storeState.employe.updating,
-  updateSuccess: storeState.employe.updateSuccess
+  updateSuccess: storeState.employe.updateSuccess,
 });
 
 const mapDispatchToProps = {
-  getAdresses,
   getStatutEmployes,
+  getAdresses,
+  getTypeContrats,
   getSocietes,
   getEntity,
   updateEntity,
   createEntity,
-  reset
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

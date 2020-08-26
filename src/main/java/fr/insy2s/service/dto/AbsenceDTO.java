@@ -3,7 +3,6 @@ package fr.insy2s.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Absence} entity.
@@ -22,6 +21,8 @@ public class AbsenceDTO implements Serializable {
 
 
     private Long typeAbsenceId;
+
+    private Long etatVariablePaieId;
 
     private Long employeId;
     
@@ -65,6 +66,14 @@ public class AbsenceDTO implements Serializable {
         this.typeAbsenceId = typeAbsenceId;
     }
 
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
+    }
+
     public Long getEmployeId() {
         return employeId;
     }
@@ -78,22 +87,19 @@ public class AbsenceDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AbsenceDTO)) {
             return false;
         }
 
-        AbsenceDTO absenceDTO = (AbsenceDTO) o;
-        if (absenceDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), absenceDTO.getId());
+        return id != null && id.equals(((AbsenceDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "AbsenceDTO{" +
@@ -102,6 +108,7 @@ public class AbsenceDTO implements Serializable {
             ", finAbsence='" + getFinAbsence() + "'" +
             ", justificatif='" + getJustificatif() + "'" +
             ", typeAbsenceId=" + getTypeAbsenceId() +
+            ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";
     }
