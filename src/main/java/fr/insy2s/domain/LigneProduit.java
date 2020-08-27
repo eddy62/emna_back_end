@@ -28,10 +28,18 @@ public class LigneProduit implements Serializable {
     @Column(name = "quantite", nullable = false)
     private Integer quantite;
 
-    @ManyToOne(optional = false)
+    @Column(name = "nom")
+    private String nom;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "tva")
+    private Float tva;
+
     @NotNull
-    @JsonIgnoreProperties(value = "ligneProduits", allowSetters = true)
-    private Produit produit;
+    @Column(name = "prix", nullable = false)
+    private Float prix;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeLigneProduits", allowSetters = true)
@@ -63,17 +71,56 @@ public class LigneProduit implements Serializable {
         this.quantite = quantite;
     }
 
-    public Produit getProduit() {
-        return produit;
+    public String getNom() {
+        return nom;
     }
 
-    public LigneProduit produit(Produit produit) {
-        this.produit = produit;
+    public LigneProduit nom(String nom) {
+        this.nom = nom;
         return this;
     }
 
-    public void setProduit(Produit produit) {
-        this.produit = produit;
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LigneProduit description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Float getTva() {
+        return tva;
+    }
+
+    public LigneProduit tva(Float tva) {
+        this.tva = tva;
+        return this;
+    }
+
+    public void setTva(Float tva) {
+        this.tva = tva;
+    }
+
+    public Float getPrix() {
+        return prix;
+    }
+
+    public LigneProduit prix(Float prix) {
+        this.prix = prix;
+        return this;
+    }
+
+    public void setPrix(Float prix) {
+        this.prix = prix;
     }
 
     public Facture getFacture() {
@@ -125,6 +172,10 @@ public class LigneProduit implements Serializable {
         return "LigneProduit{" +
             "id=" + getId() +
             ", quantite=" + getQuantite() +
+            ", nom='" + getNom() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", tva=" + getTva() +
+            ", prix=" + getPrix() +
             "}";
     }
 }

@@ -5,17 +5,26 @@
       "fieldName": "quantite",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tva",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "prix",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "produit",
-      "otherEntityRelationshipName": "ligneProduit",
-      "relationshipValidateRules": "required",
-      "relationshipName": "produit",
-      "otherEntityField": "id"
-    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "facture",
@@ -41,5 +50,7 @@
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": "*"
+  "applications": "*",
+  "searchEngine": false,
+  "databaseType": "sql"
 }
