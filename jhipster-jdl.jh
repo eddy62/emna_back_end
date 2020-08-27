@@ -20,6 +20,10 @@ entity ClientFournisseur {
 
 entity LigneProduit{
 	quantite Integer required
+	nom String
+	description String
+	tva Float
+	prix Float required
 }
  
 entity Produit {
@@ -303,7 +307,6 @@ relationship ManyToOne{
     HeuresSupplementaires{etatVariablePaie} to EtatVariablePaie
     AutresVariable{etatVariablePaie} to EtatVariablePaie
     Document{autresVariables} to AutresVariable
-  	LigneProduit{produit required} to Produit   
 }
 
 relationship ManyToMany{

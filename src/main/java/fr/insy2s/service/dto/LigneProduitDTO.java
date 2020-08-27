@@ -13,8 +13,15 @@ public class LigneProduitDTO implements Serializable {
     @NotNull
     private Integer quantite;
 
+    private String nom;
 
-    private Long produitId;
+    private String description;
+
+    private Float tva;
+
+    @NotNull
+    private Float prix;
+
 
     private Long factureId;
 
@@ -36,12 +43,36 @@ public class LigneProduitDTO implements Serializable {
         this.quantite = quantite;
     }
 
-    public Long getProduitId() {
-        return produitId;
+    public String getNom() {
+        return nom;
     }
 
-    public void setProduitId(Long produitId) {
-        this.produitId = produitId;
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Float getTva() {
+        return tva;
+    }
+
+    public void setTva(Float tva) {
+        this.tva = tva;
+    }
+
+    public Float getPrix() {
+        return prix;
+    }
+
+    public void setPrix(Float prix) {
+        this.prix = prix;
     }
 
     public Long getFactureId() {
@@ -83,7 +114,10 @@ public class LigneProduitDTO implements Serializable {
         return "LigneProduitDTO{" +
             "id=" + getId() +
             ", quantite=" + getQuantite() +
-            ", produitId=" + getProduitId() +
+            ", nom='" + getNom() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", tva=" + getTva() +
+            ", prix=" + getPrix() +
             ", factureId=" + getFactureId() +
             ", devisId=" + getDevisId() +
             "}";

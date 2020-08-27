@@ -1,7 +1,10 @@
 export interface ILigneProduit {
   id?: number;
   quantite?: number;
-  produitId?: number;
+  nom?: string;
+  description?: string;
+  tva?: number;
+  prix?: number;
   factureId?: number;
   devisId?: number;
 }

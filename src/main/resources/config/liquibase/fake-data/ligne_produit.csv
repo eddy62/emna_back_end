@@ -1,11 +1,11 @@
-id;quantite;produit_id
-1;68377;1
-2;99371;2
-3;25880;3
-4;42030;4
-5;14256;5
-6;245;6
-7;8618;7
-8;61355;8
-9;42728;9
-10;63408;10
+id;quantite;nom;description;tva;prix
+1;68377;Managed Steel Generic;invoice Auto Loan Account;60680;31908
+2;15863;Station;indexing Bacon;32065;73106
+3;68915;Operative parse panel;models;55247;68925
+4;31738;Danish Krone;online Electronics;29761;48263
+5;47660;Awesome Frozen Sausages Credit Card Account;Money Market Account indexing;87750;46115
+6;69371;Clothing;TCP Officer;79861;43637
+7;47809;Plastic interactive;Stream;76456;29359
+8;59265;violet wireless;Incredible;65466;79787
+9;67841;pink schemas Generic Frozen Table;Computers;86025;86617
+10;15637;Avon;sensor SAS;50758;26938
