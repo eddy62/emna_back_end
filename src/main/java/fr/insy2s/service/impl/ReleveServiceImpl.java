@@ -1,5 +1,6 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.repository.EtatReleveRepository;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.domain.Releve;
 import fr.insy2s.repository.ReleveRepository;
@@ -29,17 +30,23 @@ public class ReleveServiceImpl implements ReleveService {
 
     private final ReleveMapper releveMapper;
 
-    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper) {
+    private final EtatReleveRepository etatReleveRepository;
+
+
+    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository) {
         this.releveRepository = releveRepository;
         this.releveMapper = releveMapper;
+        this.etatReleveRepository = etatReleveRepository;
     }
 
     @Override
     public ReleveDTO save(ReleveDTO releveDTO) {
         log.debug("Request to save Releve : {}", releveDTO);
         Releve releve = releveMapper.toEntity(releveDTO);
+        releve.setEtatReleve(etatReleveRepository.getOne(1L));
         releve = releveRepository.save(releve);
         return releveMapper.toDto(releve);
+
     }
 
     @Override
