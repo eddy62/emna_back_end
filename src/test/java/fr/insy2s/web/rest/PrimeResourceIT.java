@@ -39,6 +39,12 @@ public class PrimeResourceIT {
     private static final Double DEFAULT_MONTANT = 1D;
     private static final Double UPDATED_MONTANT = 2D;
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private PrimeRepository primeRepository;
 
@@ -65,7 +71,9 @@ public class PrimeResourceIT {
     public static Prime createEntity(EntityManager em) {
         Prime prime = new Prime()
             .type(DEFAULT_TYPE)
-            .montant(DEFAULT_MONTANT);
+            .montant(DEFAULT_MONTANT)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         // Add required entity
         TypePrime typePrime;
         if (TestUtil.findAll(em, TypePrime.class).isEmpty()) {
@@ -87,7 +95,9 @@ public class PrimeResourceIT {
     public static Prime createUpdatedEntity(EntityManager em) {
         Prime prime = new Prime()
             .type(UPDATED_TYPE)
-            .montant(UPDATED_MONTANT);
+            .montant(UPDATED_MONTANT)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         // Add required entity
         TypePrime typePrime;
         if (TestUtil.findAll(em, TypePrime.class).isEmpty()) {
@@ -123,6 +133,8 @@ public class PrimeResourceIT {
         Prime testPrime = primeList.get(primeList.size() - 1);
         assertThat(testPrime.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testPrime.getMontant()).isEqualTo(DEFAULT_MONTANT);
+        assertThat(testPrime.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testPrime.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -188,6 +200,46 @@ public class PrimeResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = primeRepository.findAll().size();
+        // set the field null
+        prime.setMois(null);
+
+        // Create the Prime, which fails.
+        PrimeDTO primeDTO = primeMapper.toDto(prime);
+
+
+        restPrimeMockMvc.perform(post("/api/primes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(primeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Prime> primeList = primeRepository.findAll();
+        assertThat(primeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = primeRepository.findAll().size();
+        // set the field null
+        prime.setAnnee(null);
+
+        // Create the Prime, which fails.
+        PrimeDTO primeDTO = primeMapper.toDto(prime);
+
+
+        restPrimeMockMvc.perform(post("/api/primes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(primeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Prime> primeList = primeRepository.findAll();
+        assertThat(primeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPrimes() throws Exception {
         // Initialize the database
         primeRepository.saveAndFlush(prime);
@@ -198,7 +250,9 @@ public class PrimeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(prime.getId().intValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
-            .andExpect(jsonPath("$.[*].montant").value(hasItem(DEFAULT_MONTANT.doubleValue())));
+            .andExpect(jsonPath("$.[*].montant").value(hasItem(DEFAULT_MONTANT.doubleValue())))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -213,7 +267,9 @@ public class PrimeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(prime.getId().intValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
-            .andExpect(jsonPath("$.montant").value(DEFAULT_MONTANT.doubleValue()));
+            .andExpect(jsonPath("$.montant").value(DEFAULT_MONTANT.doubleValue()))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -237,7 +293,9 @@ public class PrimeResourceIT {
         em.detach(updatedPrime);
         updatedPrime
             .type(UPDATED_TYPE)
-            .montant(UPDATED_MONTANT);
+            .montant(UPDATED_MONTANT)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         PrimeDTO primeDTO = primeMapper.toDto(updatedPrime);
 
         restPrimeMockMvc.perform(put("/api/primes")
@@ -251,6 +309,8 @@ public class PrimeResourceIT {
         Prime testPrime = primeList.get(primeList.size() - 1);
         assertThat(testPrime.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testPrime.getMontant()).isEqualTo(UPDATED_MONTANT);
+        assertThat(testPrime.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testPrime.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

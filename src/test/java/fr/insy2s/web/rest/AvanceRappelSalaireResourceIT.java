@@ -46,6 +46,12 @@ public class AvanceRappelSalaireResourceIT {
     private static final Double DEFAULT_MONTANT = 1D;
     private static final Double UPDATED_MONTANT = 2D;
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private AvanceRappelSalaireRepository avanceRappelSalaireRepository;
 
@@ -74,7 +80,9 @@ public class AvanceRappelSalaireResourceIT {
             .type(DEFAULT_TYPE)
             .debutPeriode(DEFAULT_DEBUT_PERIODE)
             .finPeriode(DEFAULT_FIN_PERIODE)
-            .montant(DEFAULT_MONTANT);
+            .montant(DEFAULT_MONTANT)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         return avanceRappelSalaire;
     }
     /**
@@ -88,7 +96,9 @@ public class AvanceRappelSalaireResourceIT {
             .type(UPDATED_TYPE)
             .debutPeriode(UPDATED_DEBUT_PERIODE)
             .finPeriode(UPDATED_FIN_PERIODE)
-            .montant(UPDATED_MONTANT);
+            .montant(UPDATED_MONTANT)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         return avanceRappelSalaire;
     }
 
@@ -116,6 +126,8 @@ public class AvanceRappelSalaireResourceIT {
         assertThat(testAvanceRappelSalaire.getDebutPeriode()).isEqualTo(DEFAULT_DEBUT_PERIODE);
         assertThat(testAvanceRappelSalaire.getFinPeriode()).isEqualTo(DEFAULT_FIN_PERIODE);
         assertThat(testAvanceRappelSalaire.getMontant()).isEqualTo(DEFAULT_MONTANT);
+        assertThat(testAvanceRappelSalaire.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testAvanceRappelSalaire.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -221,6 +233,46 @@ public class AvanceRappelSalaireResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = avanceRappelSalaireRepository.findAll().size();
+        // set the field null
+        avanceRappelSalaire.setMois(null);
+
+        // Create the AvanceRappelSalaire, which fails.
+        AvanceRappelSalaireDTO avanceRappelSalaireDTO = avanceRappelSalaireMapper.toDto(avanceRappelSalaire);
+
+
+        restAvanceRappelSalaireMockMvc.perform(post("/api/avance-rappel-salaires")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(avanceRappelSalaireDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AvanceRappelSalaire> avanceRappelSalaireList = avanceRappelSalaireRepository.findAll();
+        assertThat(avanceRappelSalaireList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = avanceRappelSalaireRepository.findAll().size();
+        // set the field null
+        avanceRappelSalaire.setAnnee(null);
+
+        // Create the AvanceRappelSalaire, which fails.
+        AvanceRappelSalaireDTO avanceRappelSalaireDTO = avanceRappelSalaireMapper.toDto(avanceRappelSalaire);
+
+
+        restAvanceRappelSalaireMockMvc.perform(post("/api/avance-rappel-salaires")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(avanceRappelSalaireDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AvanceRappelSalaire> avanceRappelSalaireList = avanceRappelSalaireRepository.findAll();
+        assertThat(avanceRappelSalaireList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAvanceRappelSalaires() throws Exception {
         // Initialize the database
         avanceRappelSalaireRepository.saveAndFlush(avanceRappelSalaire);
@@ -233,7 +285,9 @@ public class AvanceRappelSalaireResourceIT {
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].debutPeriode").value(hasItem(DEFAULT_DEBUT_PERIODE.toString())))
             .andExpect(jsonPath("$.[*].finPeriode").value(hasItem(DEFAULT_FIN_PERIODE.toString())))
-            .andExpect(jsonPath("$.[*].montant").value(hasItem(DEFAULT_MONTANT.doubleValue())));
+            .andExpect(jsonPath("$.[*].montant").value(hasItem(DEFAULT_MONTANT.doubleValue())))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -250,7 +304,9 @@ public class AvanceRappelSalaireResourceIT {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.debutPeriode").value(DEFAULT_DEBUT_PERIODE.toString()))
             .andExpect(jsonPath("$.finPeriode").value(DEFAULT_FIN_PERIODE.toString()))
-            .andExpect(jsonPath("$.montant").value(DEFAULT_MONTANT.doubleValue()));
+            .andExpect(jsonPath("$.montant").value(DEFAULT_MONTANT.doubleValue()))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -276,7 +332,9 @@ public class AvanceRappelSalaireResourceIT {
             .type(UPDATED_TYPE)
             .debutPeriode(UPDATED_DEBUT_PERIODE)
             .finPeriode(UPDATED_FIN_PERIODE)
-            .montant(UPDATED_MONTANT);
+            .montant(UPDATED_MONTANT)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         AvanceRappelSalaireDTO avanceRappelSalaireDTO = avanceRappelSalaireMapper.toDto(updatedAvanceRappelSalaire);
 
         restAvanceRappelSalaireMockMvc.perform(put("/api/avance-rappel-salaires")
@@ -292,6 +350,8 @@ public class AvanceRappelSalaireResourceIT {
         assertThat(testAvanceRappelSalaire.getDebutPeriode()).isEqualTo(UPDATED_DEBUT_PERIODE);
         assertThat(testAvanceRappelSalaire.getFinPeriode()).isEqualTo(UPDATED_FIN_PERIODE);
         assertThat(testAvanceRappelSalaire.getMontant()).isEqualTo(UPDATED_MONTANT);
+        assertThat(testAvanceRappelSalaire.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testAvanceRappelSalaire.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

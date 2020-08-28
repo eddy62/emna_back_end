@@ -18,6 +18,8 @@
       },
       "type": "Type",
       "montant": "Montant",
+      "mois": "Mois",
+      "annee": "Annee",
       "typePrime": "Type Prime",
       "etatVariablePaie": "Etat Variable Paie",
       "employe": "Employe"

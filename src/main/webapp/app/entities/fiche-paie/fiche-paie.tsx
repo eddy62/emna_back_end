@@ -46,6 +46,12 @@ export const FichePaie = (props: IFichePaieProps) => {
                   <Translate contentKey="emnaBackEndApp.fichePaie.lienDocument">Lien Document</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.fichePaie.mois">Mois</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.fichePaie.annee">Annee</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.fichePaie.employe">Employe</Translate>
                 </th>
                 <th />
@@ -68,6 +74,8 @@ export const FichePaie = (props: IFichePaieProps) => {
                     {fichePaie.finPeriode ? <TextFormat type="date" value={fichePaie.finPeriode} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{fichePaie.lienDocument}</td>
+                  <td>{fichePaie.mois}</td>
+                  <td>{fichePaie.annee}</td>
                   <td>{fichePaie.employeId ? <Link to={`employe/${fichePaie.employeId}`}>{fichePaie.employeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

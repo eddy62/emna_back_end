@@ -129,56 +129,68 @@ entity Employe{
 }
 
 entity StatutEmploye{
-	codeRef String required unique
-	libelle String required unique
+	codeRef String required unique,
+	libelle String required unique,
 }
 
 entity TypeAbsence{
-    codeRef String required unique
-    intitule String required unique
+    codeRef String required unique,
+    intitule String required unique,
 }
 
 entity Absence{
-    debutAbsence LocalDate required
-    finAbsence LocalDate required
-    justificatif String
+    debutAbsence LocalDate required,
+    finAbsence LocalDate required,
+    justificatif String,
+    mois Integer required,
+    annee Integer required,
 }
 
 entity TypePrime{
-    codeRef String required unique
-    intitule String required unique
+    codeRef String required unique,
+    intitule String required unique,
 }
 
 entity Prime{
-    type String required
-    montant Double required
+    type String required,
+    montant Double required,
+    mois Integer required,
+    annee Integer required,
 }
 
 entity  FichePaie{
-    debutPeriode LocalDate required
-    finPeriode LocalDate required
-    lienDocument String required
+    debutPeriode LocalDate required,
+    finPeriode LocalDate required,
+    lienDocument String required,
+    mois Integer required,
+    annee Integer required,
 }
 
 //heure en minute
 entity HeuresSupplementaires{
     date LocalDate required,
     nombreHeure Integer required,
-    justificatif String
+    justificatif String,
+    mois Integer required,
+    annee Integer required,
 }
 
 entity NoteDeFrais{
     designation String required,
     date LocalDate required,
     montant Double required,
-    justificatif String
+    justificatif String,
+    mois Integer required,
+    annee Integer required,
 }
 
 entity AutresVariable{
     description String,
     date LocalDate,
     montant Double,
-    justificatif String
+    justificatif String,
+    mois Integer required,
+    annee Integer required,
 }
 
 entity EtatFacture {
@@ -229,10 +241,12 @@ entity EtatVariablePaie {
 }
 
 entity AvanceRappelSalaire{
-	type String required
-	debutPeriode LocalDate required
-    finPeriode LocalDate required
-    montant Double required
+	type String required,
+	debutPeriode LocalDate required,
+    finPeriode LocalDate required,
+    montant Double required,
+    mois Integer required,
+    annee Integer required,    
 }
 
 entity Dpae {

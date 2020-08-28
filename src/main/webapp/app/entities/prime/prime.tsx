@@ -43,6 +43,12 @@ export const Prime = (props: IPrimeProps) => {
                   <Translate contentKey="emnaBackEndApp.prime.montant">Montant</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.prime.mois">Mois</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.prime.annee">Annee</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
                 </th>
                 <th>
@@ -64,6 +70,8 @@ export const Prime = (props: IPrimeProps) => {
                   </td>
                   <td>{prime.type}</td>
                   <td>{prime.montant}</td>
+                  <td>{prime.mois}</td>
+                  <td>{prime.annee}</td>
                   <td>{prime.typePrimeId ? <Link to={`type-prime/${prime.typePrimeId}`}>{prime.typePrimeId}</Link> : ''}</td>
                   <td>
                     {prime.etatVariablePaieId ? (

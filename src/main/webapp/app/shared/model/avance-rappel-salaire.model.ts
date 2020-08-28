@@ -6,6 +6,8 @@ export interface IAvanceRappelSalaire {
   debutPeriode?: string;
   finPeriode?: string;
   montant?: number;
+  mois?: number;
+  annee?: number;
   etatVariablePaieId?: number;
   employeId?: number;
 }

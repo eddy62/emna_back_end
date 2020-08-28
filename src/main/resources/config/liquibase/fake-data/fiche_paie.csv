@@ -1,11 +1,2 @@
-id;debut_periode;fin_periode;lien_document
-1;2020-07-21;2020-07-21;Wooden e-services EXE
-2;2020-07-22;2020-07-22;applications ADP
-3;2020-07-21;2020-07-21;RSS
-4;2020-07-21;2020-07-21;azure
-5;2020-07-22;2020-07-22;Bacon AGP forecast
-6;2020-07-21;2020-07-21;Coordinator
-7;2020-07-22;2020-07-21;Unbranded system-worthy
-8;2020-07-22;2020-07-21;ivory Digitized Accountability
-9;2020-07-21;2020-07-21;users
-10;2020-07-21;2020-07-22;Fantastic circuit
+id;debut_periode;fin_periode;lien_document;mois;annee;employe_id
+1;2020-07-01;2020-07-31;"./...";7;2020;1

@@ -123,6 +123,36 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                 <AvField id="absence-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="absence-mois">
+                  <Translate contentKey="emnaBackEndApp.absence.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="absence-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="absence-annee">
+                  <Translate contentKey="emnaBackEndApp.absence.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="absence-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="absence-typeAbsence">
                   <Translate contentKey="emnaBackEndApp.absence.typeAbsence">Type Absence</Translate>
                 </Label>

@@ -19,6 +19,12 @@ public class AbsenceDTO implements Serializable {
 
     private String justificatif;
 
+    @NotNull
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
+
 
     private Long typeAbsenceId;
 
@@ -56,6 +62,22 @@ public class AbsenceDTO implements Serializable {
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
+    }
+
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
     }
 
     public Long getTypeAbsenceId() {
@@ -107,6 +129,8 @@ public class AbsenceDTO implements Serializable {
             ", debutAbsence='" + getDebutAbsence() + "'" +
             ", finAbsence='" + getFinAbsence() + "'" +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", typeAbsenceId=" + getTypeAbsenceId() +
             ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +

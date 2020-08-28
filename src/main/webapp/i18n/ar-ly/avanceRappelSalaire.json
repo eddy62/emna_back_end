@@ -20,6 +20,8 @@
       "debutPeriode": "Debut Periode",
       "finPeriode": "Fin Periode",
       "montant": "Montant",
+      "mois": "Mois",
+      "annee": "Annee",
       "etatVariablePaie": "Etat Variable Paie",
       "employe": "Employe"
     }

@@ -32,6 +32,14 @@ public class Prime implements Serializable {
     @Column(name = "montant", nullable = false)
     private Double montant;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "primes", allowSetters = true)
@@ -78,6 +86,32 @@ public class Prime implements Serializable {
 
     public void setMontant(Double montant) {
         this.montant = montant;
+    }
+
+    public Integer getMois() {
+        return mois;
+    }
+
+    public Prime mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public Prime annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
     }
 
     public TypePrime getTypePrime() {
@@ -143,6 +177,8 @@ public class Prime implements Serializable {
             "id=" + getId() +
             ", type='" + getType() + "'" +
             ", montant=" + getMontant() +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

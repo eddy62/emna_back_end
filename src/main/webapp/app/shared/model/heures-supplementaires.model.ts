@@ -5,6 +5,8 @@ export interface IHeuresSupplementaires {
   date?: string;
   nombreHeure?: number;
   justificatif?: string;
+  mois?: number;
+  annee?: number;
   etatVariablePaieId?: number;
   employeId?: number;
 }
