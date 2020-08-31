@@ -143,6 +143,36 @@ export const AvanceRappelSalaireUpdate = (props: IAvanceRappelSalaireUpdateProps
                 />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="avance-rappel-salaire-mois">
+                  <Translate contentKey="emnaBackEndApp.avanceRappelSalaire.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="avance-rappel-salaire-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="avance-rappel-salaire-annee">
+                  <Translate contentKey="emnaBackEndApp.avanceRappelSalaire.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="avance-rappel-salaire-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="avance-rappel-salaire-etatVariablePaie">
                   <Translate contentKey="emnaBackEndApp.avanceRappelSalaire.etatVariablePaie">Etat Variable Paie</Translate>
                 </Label>

@@ -32,9 +32,29 @@ export const LigneProduitDetail = (props: ILigneProduitDetailProps) => {
           </dt>
           <dd>{ligneProduitEntity.quantite}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.ligneProduit.produit">Produit</Translate>
+            <span id="nom">
+              <Translate contentKey="emnaBackEndApp.ligneProduit.nom">Nom</Translate>
+            </span>
           </dt>
-          <dd>{ligneProduitEntity.produitId ? ligneProduitEntity.produitId : ''}</dd>
+          <dd>{ligneProduitEntity.nom}</dd>
+          <dt>
+            <span id="description">
+              <Translate contentKey="emnaBackEndApp.ligneProduit.description">Description</Translate>
+            </span>
+          </dt>
+          <dd>{ligneProduitEntity.description}</dd>
+          <dt>
+            <span id="tva">
+              <Translate contentKey="emnaBackEndApp.ligneProduit.tva">Tva</Translate>
+            </span>
+          </dt>
+          <dd>{ligneProduitEntity.tva}</dd>
+          <dt>
+            <span id="prix">
+              <Translate contentKey="emnaBackEndApp.ligneProduit.prix">Prix</Translate>
+            </span>
+          </dt>
+          <dd>{ligneProduitEntity.prix}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.ligneProduit.facture">Facture</Translate>
           </dt>

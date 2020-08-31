@@ -43,6 +43,12 @@ public class FichePaieResourceIT {
     private static final String DEFAULT_LIEN_DOCUMENT = "AAAAAAAAAA";
     private static final String UPDATED_LIEN_DOCUMENT = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private FichePaieRepository fichePaieRepository;
 
@@ -70,7 +76,9 @@ public class FichePaieResourceIT {
         FichePaie fichePaie = new FichePaie()
             .debutPeriode(DEFAULT_DEBUT_PERIODE)
             .finPeriode(DEFAULT_FIN_PERIODE)
-            .lienDocument(DEFAULT_LIEN_DOCUMENT);
+            .lienDocument(DEFAULT_LIEN_DOCUMENT)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         return fichePaie;
     }
     /**
@@ -83,7 +91,9 @@ public class FichePaieResourceIT {
         FichePaie fichePaie = new FichePaie()
             .debutPeriode(UPDATED_DEBUT_PERIODE)
             .finPeriode(UPDATED_FIN_PERIODE)
-            .lienDocument(UPDATED_LIEN_DOCUMENT);
+            .lienDocument(UPDATED_LIEN_DOCUMENT)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         return fichePaie;
     }
 
@@ -110,6 +120,8 @@ public class FichePaieResourceIT {
         assertThat(testFichePaie.getDebutPeriode()).isEqualTo(DEFAULT_DEBUT_PERIODE);
         assertThat(testFichePaie.getFinPeriode()).isEqualTo(DEFAULT_FIN_PERIODE);
         assertThat(testFichePaie.getLienDocument()).isEqualTo(DEFAULT_LIEN_DOCUMENT);
+        assertThat(testFichePaie.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testFichePaie.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -195,6 +207,46 @@ public class FichePaieResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = fichePaieRepository.findAll().size();
+        // set the field null
+        fichePaie.setMois(null);
+
+        // Create the FichePaie, which fails.
+        FichePaieDTO fichePaieDTO = fichePaieMapper.toDto(fichePaie);
+
+
+        restFichePaieMockMvc.perform(post("/api/fiche-paies")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(fichePaieDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<FichePaie> fichePaieList = fichePaieRepository.findAll();
+        assertThat(fichePaieList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = fichePaieRepository.findAll().size();
+        // set the field null
+        fichePaie.setAnnee(null);
+
+        // Create the FichePaie, which fails.
+        FichePaieDTO fichePaieDTO = fichePaieMapper.toDto(fichePaie);
+
+
+        restFichePaieMockMvc.perform(post("/api/fiche-paies")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(fichePaieDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<FichePaie> fichePaieList = fichePaieRepository.findAll();
+        assertThat(fichePaieList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllFichePaies() throws Exception {
         // Initialize the database
         fichePaieRepository.saveAndFlush(fichePaie);
@@ -206,7 +258,9 @@ public class FichePaieResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(fichePaie.getId().intValue())))
             .andExpect(jsonPath("$.[*].debutPeriode").value(hasItem(DEFAULT_DEBUT_PERIODE.toString())))
             .andExpect(jsonPath("$.[*].finPeriode").value(hasItem(DEFAULT_FIN_PERIODE.toString())))
-            .andExpect(jsonPath("$.[*].lienDocument").value(hasItem(DEFAULT_LIEN_DOCUMENT)));
+            .andExpect(jsonPath("$.[*].lienDocument").value(hasItem(DEFAULT_LIEN_DOCUMENT)))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -222,7 +276,9 @@ public class FichePaieResourceIT {
             .andExpect(jsonPath("$.id").value(fichePaie.getId().intValue()))
             .andExpect(jsonPath("$.debutPeriode").value(DEFAULT_DEBUT_PERIODE.toString()))
             .andExpect(jsonPath("$.finPeriode").value(DEFAULT_FIN_PERIODE.toString()))
-            .andExpect(jsonPath("$.lienDocument").value(DEFAULT_LIEN_DOCUMENT));
+            .andExpect(jsonPath("$.lienDocument").value(DEFAULT_LIEN_DOCUMENT))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -247,7 +303,9 @@ public class FichePaieResourceIT {
         updatedFichePaie
             .debutPeriode(UPDATED_DEBUT_PERIODE)
             .finPeriode(UPDATED_FIN_PERIODE)
-            .lienDocument(UPDATED_LIEN_DOCUMENT);
+            .lienDocument(UPDATED_LIEN_DOCUMENT)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         FichePaieDTO fichePaieDTO = fichePaieMapper.toDto(updatedFichePaie);
 
         restFichePaieMockMvc.perform(put("/api/fiche-paies")
@@ -262,6 +320,8 @@ public class FichePaieResourceIT {
         assertThat(testFichePaie.getDebutPeriode()).isEqualTo(UPDATED_DEBUT_PERIODE);
         assertThat(testFichePaie.getFinPeriode()).isEqualTo(UPDATED_FIN_PERIODE);
         assertThat(testFichePaie.getLienDocument()).isEqualTo(UPDATED_LIEN_DOCUMENT);
+        assertThat(testFichePaie.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testFichePaie.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

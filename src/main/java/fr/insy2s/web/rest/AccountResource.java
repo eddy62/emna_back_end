@@ -9,6 +9,7 @@ import fr.insy2s.service.dto.PasswordChangeDTO;
 import fr.insy2s.service.dto.UserDTO;
 import fr.insy2s.web.rest.errors.*;
 import fr.insy2s.web.rest.vm.KeyAndPasswordVM;
+import fr.insy2s.web.rest.vm.MailVM;
 import fr.insy2s.web.rest.vm.ManagedUserVM;
 
 import org.apache.commons.lang3.StringUtils;
@@ -148,14 +149,14 @@ public class AccountResource {
      * @param mail the mail of the user.
      */
     @PostMapping(path = "/account/reset-password/init")
-    public void requestPasswordReset(@RequestBody String mail) {
-        Optional<User> user = userService.requestPasswordReset(mail);
+    public void requestPasswordReset(@RequestBody MailVM mailVm) {
+        Optional<User> user = userService.requestPasswordReset(mailVm.getEmail());
         if (user.isPresent()) {
             mailService.sendPasswordResetMail(user.get());
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist
             // but log that an invalid attempt has been made
-            log.warn("Password reset requested for non existing mail '{}'", mail);
+            log.warn("Password reset requested for non existing mail '{}'", mailVm.getEmail());
         }
     }
 

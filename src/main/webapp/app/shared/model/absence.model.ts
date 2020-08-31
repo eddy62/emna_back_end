@@ -5,6 +5,8 @@ export interface IAbsence {
   debutAbsence?: string;
   finAbsence?: string;
   justificatif?: string;
+  mois?: number;
+  annee?: number;
   typeAbsenceId?: number;
   etatVariablePaieId?: number;
   employeId?: number;

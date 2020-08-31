@@ -1,11 +1,14 @@
-id;date;description;type;rapproche;solde
-1;2020-07-22;Mississippi New Mexico Towels;Licensed Wooden Pants Developer actuating;false;72957
-2;2020-07-22;Maine;SMS;true;20948
-3;2020-07-21;Senior;Saint Pierre and Miquelon Malaysia capacitor;false;53281
-4;2020-07-22;architect;Rustic Home Loan Account Credit Card Account;true;56028
-5;2020-07-22;navigate Iraqi Dinar;Customer navigate;false;91165
-6;2020-07-22;Triple-buffered;Metal Cambridgeshire;false;87410
-7;2020-07-22;Leone;Implemented invoice 1080p;true;87394
-8;2020-07-22;withdrawal;Savings Account;true;10462
-9;2020-07-22;salmon Bedfordshire;partnerships Crescent Incredible;false;65571
-10;2020-07-22;holistic Senegal matrix;Ball;false;39907
+id;date;description;type;rapproche;solde;releve_id
+1;2020-07-22;Mississippi New Mexico Towels;Licensed Wooden Pants Developer actuating;false;72957;1
+2;2020-07-22;Maine;SMS;true;20948;2
+3;2020-07-21;Senior;Saint Pierre and Miquelon Malaysia capacitor;false;53281;3
+4;2020-07-22;architect;Rustic Home Loan Account Credit Card Account;true;56028;1
+5;2020-07-22;navigate Iraqi Dinar;Customer navigate;false;91165;2
+6;2020-07-22;Triple-buffered;Metal Cambridgeshire;false;87410;3
+7;2020-07-22;Leone;Implemented invoice 1080p;true;87394;1
+8;2020-07-22;withdrawal;Savings Account;true;10462;2
+9;2020-07-22;salmon Bedfordshire;partnerships Crescent Incredible;false;65571;3
+10;2020-07-22;holistic Senegal matrix;Ball;false;39907;1
+11;2020-08-25;testeOperation;type1;false;50;10
+12;2020-08-25;testeOperation2;type1;true;150;10
+13;2020-08-25;testeOperation3;type1;false;150;10

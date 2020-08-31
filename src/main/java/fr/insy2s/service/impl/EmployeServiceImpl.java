@@ -21,11 +21,13 @@ import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.InfoEntrepriseService;
 import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.StatutEmployeService;
+import fr.insy2s.service.TypeContratService;
 import fr.insy2s.service.dto.AdresseDTO;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.InfoEntrepriseDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
+import fr.insy2s.service.dto.TypeContratDTO;
 import fr.insy2s.service.mapper.EmployeMapper;
 import fr.insy2s.service.mapper.WrapperEmployeMapper;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
@@ -48,9 +50,10 @@ public class EmployeServiceImpl implements EmployeService {
     private final StatutEmployeService  statutEmployeService;
     private final SocieteService        societeService;
     private final InfoEntrepriseService infoEntrepriseService;
+    private final TypeContratService    typeContratService;
 
     public EmployeServiceImpl(EmployeRepository employeRepository, EmployeMapper employeMapper, WrapperEmployeMapper wrapperEmployeMapper, AdresseService adresseService,
-                    StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService) {
+                    StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService) {
         this.employeRepository = employeRepository;
         this.employeMapper = employeMapper;
         this.wrapperEmployeMapper = wrapperEmployeMapper;
@@ -58,6 +61,7 @@ public class EmployeServiceImpl implements EmployeService {
         this.statutEmployeService = statutEmployeService;
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
+        this.typeContratService = typeContratService;
     }
 
     @Override
@@ -124,7 +128,9 @@ public class EmployeServiceImpl implements EmployeService {
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
         final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
-        final Optional<WrapperEmploye> wrapperEmploye = Optional.of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
+        final TypeContratDTO typeContratDTO = typeContratService.findOne(employeDTO.getTypeContratId()).get();
+        final Optional<WrapperEmploye> wrapperEmploye = Optional
+                        .of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
     }
 
@@ -134,11 +140,13 @@ public class EmployeServiceImpl implements EmployeService {
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
+        final TypeContratDTO typeContratDTO = typeContratService.findByCodeRef(wrapperEmploye.getCodeTypeContrat());
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        employeDTO.setTypeContratId(typeContratDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
-        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO);
         return newWrapperEmploye;
     }
 
@@ -148,11 +156,13 @@ public class EmployeServiceImpl implements EmployeService {
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
+        final TypeContratDTO typeContratDTO = typeContratService.findOne(wrapperEmploye.getTypeContratId()).get();
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        employeDTO.setTypeContratId(typeContratDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
-        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
+        final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO);
         return newWrapperEmploye;
     }
 
@@ -165,6 +175,13 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
         return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
+    }
+
+    @Override
+    public WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {        
+       wrapperEmploye.setCodeRef("EMPEND");        
+       final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);        
+       return archivedWrapperemploye;
     }
 
 }

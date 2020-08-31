@@ -37,6 +37,14 @@ public class FichePaie implements Serializable {
     @Column(name = "lien_document", nullable = false)
     private String lienDocument;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne
     @JsonIgnoreProperties(value = "listeFichePaies", allowSetters = true)
     private Employe employe;
@@ -89,6 +97,32 @@ public class FichePaie implements Serializable {
         this.lienDocument = lienDocument;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public FichePaie mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public FichePaie annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public Employe getEmploye() {
         return employe;
     }
@@ -127,6 +161,8 @@ public class FichePaie implements Serializable {
             ", debutPeriode='" + getDebutPeriode() + "'" +
             ", finPeriode='" + getFinPeriode() + "'" +
             ", lienDocument='" + getLienDocument() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

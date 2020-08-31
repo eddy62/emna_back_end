@@ -19,6 +19,8 @@
       "debutAbsence": "Debut Absence",
       "finAbsence": "Fin Absence",
       "justificatif": "Justificatif",
+      "mois": "Mois",
+      "annee": "Annee",
       "typeAbsence": "Type Absence",
       "etatVariablePaie": "Etat Variable Paie",
       "employe": "Employe"

@@ -23,6 +23,12 @@ public class AvanceRappelSalaireDTO implements Serializable {
     @NotNull
     private Double montant;
 
+    @NotNull
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
+
 
     private Long etatVariablePaieId;
 
@@ -68,6 +74,22 @@ public class AvanceRappelSalaireDTO implements Serializable {
         this.montant = montant;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public Long getEtatVariablePaieId() {
         return etatVariablePaieId;
     }
@@ -110,6 +132,8 @@ public class AvanceRappelSalaireDTO implements Serializable {
             ", debutPeriode='" + getDebutPeriode() + "'" +
             ", finPeriode='" + getFinPeriode() + "'" +
             ", montant=" + getMontant() +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";

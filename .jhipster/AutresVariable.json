@@ -16,6 +16,16 @@
     {
       "fieldName": "justificatif",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "mois",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "annee",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [

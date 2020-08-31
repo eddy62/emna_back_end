@@ -1,10 +1,12 @@
 package fr.insy2s.service;
 
-import fr.insy2s.repository.projection.IEmployeContratProjection;
-import fr.insy2s.service.dto.EmployeDTO;
 import java.util.List;
 import java.util.Optional;
+
 import javax.validation.Valid;
+
+import fr.insy2s.repository.projection.IEmployeContratProjection;
+import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
 /**
@@ -89,5 +91,13 @@ public interface EmployeService {
      * @param id
      */
     void deleteWrapperEmploye(Long id);
+    
+    /**
+     * Archive the "id" WrapperEmploye
+     * 
+     * @param id
+     * @return the archived WrapperEmploye
+     */
+    WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
 
 }

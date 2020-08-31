@@ -1,6 +1,7 @@
 package fr.insy2s.service.dto;
 
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +18,12 @@ public class AutresVariableDTO implements Serializable {
     private Double montant;
 
     private String justificatif;
+
+    @NotNull
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
 
 
     private Long etatVariablePaieId;
@@ -63,6 +70,22 @@ public class AutresVariableDTO implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public Long getEtatVariablePaieId() {
         return etatVariablePaieId;
     }
@@ -105,6 +128,8 @@ public class AutresVariableDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";

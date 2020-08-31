@@ -27,6 +27,12 @@
             <column name="montant" type="double">
                 <constraints nullable="false" />
             </column>
+            <column name="mois" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="annee" type="integer">
+                <constraints nullable="false" />
+            </column>
             <column name="etat_variable_paie_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -60,6 +66,8 @@
             <column name="debut_periode" type="date"/>
             <column name="fin_periode" type="date"/>
             <column name="montant" type="numeric"/>
+            <column name="mois" type="numeric"/>
+            <column name="annee" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

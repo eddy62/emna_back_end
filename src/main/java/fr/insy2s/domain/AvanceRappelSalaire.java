@@ -41,6 +41,14 @@ public class AvanceRappelSalaire implements Serializable {
     @Column(name = "montant", nullable = false)
     private Double montant;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne
     @JsonIgnoreProperties(value = "avanceRappelSalaires", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
@@ -110,6 +118,32 @@ public class AvanceRappelSalaire implements Serializable {
         this.montant = montant;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public AvanceRappelSalaire mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public AvanceRappelSalaire annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public EtatVariablePaie getEtatVariablePaie() {
         return etatVariablePaie;
     }
@@ -162,6 +196,8 @@ public class AvanceRappelSalaire implements Serializable {
             ", debutPeriode='" + getDebutPeriode() + "'" +
             ", finPeriode='" + getFinPeriode() + "'" +
             ", montant=" + getMontant() +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

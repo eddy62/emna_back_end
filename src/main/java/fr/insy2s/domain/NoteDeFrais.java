@@ -40,6 +40,14 @@ public class NoteDeFrais implements Serializable {
     @Column(name = "justificatif")
     private String justificatif;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne
     @JsonIgnoreProperties(value = "noteDeFrais", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
@@ -109,6 +117,32 @@ public class NoteDeFrais implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public NoteDeFrais mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public NoteDeFrais annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public EtatVariablePaie getEtatVariablePaie() {
         return etatVariablePaie;
     }
@@ -161,6 +195,8 @@ public class NoteDeFrais implements Serializable {
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

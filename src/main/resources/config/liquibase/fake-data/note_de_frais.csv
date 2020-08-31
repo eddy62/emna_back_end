@@ -1,11 +1,5 @@
-id;designation;date;montant;justificatif
-1;Frais d'Hôtel pour 3 Nuits;2020-07-21;250;Facture
-2;Frais de déplacement en voiture;2020-07-21;170;Facture
-3;Frais d'Hôtel pour 1 nuit;2020-07-21;80;Facture
-4;Logement Professionnel;2020-07-21;600;Quittance de loyer
-5;Billet de train Lille-Strasbourg;2020-07-21;150;Facture
-6;Billet d'avion Paris-Londre;2020-07-21;200;Facture
-7;Frais de repas;2020-07-21;250;Facture
-8;Frais de Parking;2020-07-21;100;Facture
-9;Frais de Péage;2020-07-21;40;Facture
-10;Frais de déplacement en voiture;2020-07-21;250;Facture
+id;designation;date;montant;justificatif;mois;annee;etat_variable_paie_id;employe_id
+1;Frais d'Hôtel pour 3 Nuits;2020-07-21;250;Facture;7;2020;1;1
+2;Frais de déplacement en voiture;2020-07-21;170;Facture;7;2020;1;1
+
+

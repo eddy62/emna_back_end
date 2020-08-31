@@ -40,7 +40,16 @@ export const LigneProduit = (props: ILigneProduitProps) => {
                   <Translate contentKey="emnaBackEndApp.ligneProduit.quantite">Quantite</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.produit">Produit</Translate>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.nom">Nom</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.description">Description</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.tva">Tva</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.prix">Prix</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.ligneProduit.facture">Facture</Translate>
@@ -60,7 +69,10 @@ export const LigneProduit = (props: ILigneProduitProps) => {
                     </Button>
                   </td>
                   <td>{ligneProduit.quantite}</td>
-                  <td>{ligneProduit.produitId ? <Link to={`produit/${ligneProduit.produitId}`}>{ligneProduit.produitId}</Link> : ''}</td>
+                  <td>{ligneProduit.nom}</td>
+                  <td>{ligneProduit.description}</td>
+                  <td>{ligneProduit.tva}</td>
+                  <td>{ligneProduit.prix}</td>
                   <td>{ligneProduit.factureId ? <Link to={`facture/${ligneProduit.factureId}`}>{ligneProduit.factureId}</Link> : ''}</td>
                   <td>{ligneProduit.devisId ? <Link to={`devis/${ligneProduit.devisId}`}>{ligneProduit.devisId}</Link> : ''}</td>
                   <td className="text-right">

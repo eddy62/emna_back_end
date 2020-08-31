@@ -52,6 +52,18 @@ export const FichePaieDetail = (props: IFichePaieDetailProps) => {
           </dt>
           <dd>{fichePaieEntity.lienDocument}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.fichePaie.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{fichePaieEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.fichePaie.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{fichePaieEntity.annee}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.fichePaie.employe">Employe</Translate>
           </dt>
           <dd>{fichePaieEntity.employeId ? fichePaieEntity.employeId : ''}</dd>
