@@ -11,14 +11,11 @@ public class EmployerVM {
 
     Long societeId;
 
-    List<ArticleVM> listArticles;
-
-    public EmployerVM(Long employerId, String employerNom, String employerPrenom, Long societeId, List<ArticleVM> listArticles) {
+    public EmployerVM(Long employerId, String employerNom, String employerPrenom, Long societeId) {
         this.employerId = employerId;
         this.employerNom = employerNom;
         this.employerPrenom = employerPrenom;
         this.societeId = societeId;
-        this.listArticles = listArticles;
     }
 
     public EmployerVM() {
@@ -56,11 +53,13 @@ public class EmployerVM {
         this.societeId = societeId;
     }
 
-    public List<ArticleVM> getListArticles() {
-        return listArticles;
-    }
-
-    public void setListArticles(List<ArticleVM> listArticles) {
-        this.listArticles = listArticles;
+    @Override
+    public String toString() {
+        return "EmployerVM{" +
+            "employerId=" + employerId +
+            ", employerNom='" + employerNom + '\'' +
+            ", employerPrenom='" + employerPrenom + '\'' +
+            ", societeId=" + societeId +
+            '}';
     }
 }

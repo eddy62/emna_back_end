@@ -9,19 +9,19 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Comptable} and its DTO {@link ComptableDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AdresseMapper.class, InfoEntrepriseMapper.class, UserMapper.class})
+@Mapper(componentModel = "spring", uses = {InfoEntrepriseMapper.class, UserMapper.class, AdresseMapper.class})
 public interface ComptableMapper extends EntityMapper<ComptableDTO, Comptable> {
 
-    @Mapping(source = "adresse.id", target = "adresseId")
     @Mapping(source = "infoEntreprise.id", target = "infoEntrepriseId")
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "adresse.id", target = "adresseId")
     ComptableDTO toDto(Comptable comptable);
 
-    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(source = "infoEntrepriseId", target = "infoEntreprise")
     @Mapping(source = "userId", target = "user")
     @Mapping(target = "listeSocietes", ignore = true)
     @Mapping(target = "removeListeSocietes", ignore = true)
+    @Mapping(source = "adresseId", target = "adresse")
     Comptable toEntity(ComptableDTO comptableDTO);
 
     default Comptable fromId(Long id) {

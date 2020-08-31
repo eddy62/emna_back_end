@@ -50,7 +50,7 @@ export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) =>
     if (errors.length === 0) {
       const entity = {
         ...clientFournisseurEntity,
-        ...values
+        ...values,
       };
 
       if (isNew) {
@@ -165,7 +165,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   clientFournisseurEntity: storeState.clientFournisseur.entity,
   loading: storeState.clientFournisseur.loading,
   updating: storeState.clientFournisseur.updating,
-  updateSuccess: storeState.clientFournisseur.updateSuccess
+  updateSuccess: storeState.clientFournisseur.updateSuccess,
 });
 
 const mapDispatchToProps = {
@@ -174,7 +174,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

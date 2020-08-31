@@ -11,12 +11,12 @@ import FactureDeleteDialog from './facture-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
-      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={FactureDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={FactureUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={FactureUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={FactureDetail} />
       <ErrorBoundaryRoute path={match.url} component={Facture} />
     </Switch>
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={FactureDeleteDialog} />
   </>
 );
 

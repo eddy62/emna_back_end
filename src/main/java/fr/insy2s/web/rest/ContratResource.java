@@ -1,14 +1,14 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.domain.Clause;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
+import fr.insy2s.service.ClauseService;
 import fr.insy2s.service.ContratService;
+import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.web.rest.vm.ClauseEtArticleVM;
-import fr.insy2s.web.rest.vm.ContratAllInfoVM;
-import fr.insy2s.web.rest.vm.ContratEmployerVM;
-import fr.insy2s.web.rest.vm.ContratVM;
+import fr.insy2s.web.rest.vm.*;
 import io.github.jhipster.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +20,10 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Contrat}.
@@ -41,35 +40,23 @@ public class ContratResource {
     private String applicationName;
 
     private final ContratService contratService;
+    private final ClauseService clauseService;
 
-    public ContratResource(ContratService contratService) {
+    public ContratResource(ContratService contratService, ClauseService clauseService) {
         this.contratService = contratService;
+        this.clauseService = clauseService;
     }
 
     /**
      * {@code POST  /contrats} : Create a new contrat.
      *
-     * @param contratDTO the contratDTO to create.
+     * @param contratVM the contratVM to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new contratDTO, or with status {@code 400 (Bad Request)} if the contrat has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/contrats")
     public ResponseEntity<ContratDTO> createContrat(@Valid @RequestBody ContratVM contratVM) throws URISyntaxException {
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println(contratVM.toString());
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
-        System.err.println("################################################");
+
         log.debug("REST request to save Contrat : {}", contratVM);
         if (contratVM.getId() != null) {
             throw new BadRequestAlertException("A new contrat cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,10 +64,40 @@ public class ContratResource {
         contratVM.setDateCreation(LocalDate.now());
         contratVM.setSigne(false);
         contratVM.setArchive(false);
-        contratVM.setEmployeId(1L);
-        contratVM.setSocieteId(1L);
+
         ContratDTO contratDTO = new ContratDTO();
+
+        contratDTO.setSocieteId(contratVM.getSocieteId());
+        contratDTO.setEmployeId(contratVM.getEmployeId());
+        contratDTO.setArchive(contratVM.getArchive());
+        contratDTO.setSigne(contratVM.getSigne());
+        contratDTO.setDateCreation(contratVM.getDateCreation());
+        contratDTO.setTitre(contratVM.getTitre());
+        System.err.println("------------------        JE SAVE  MON CONTRA DTO         ------------------");
         ContratDTO result = contratService.save(contratDTO);
+        System.err.println("-----------------------------------------------------------------------------");
+
+
+        List<ClauseVm> listClauseVm = contratVM.getClauses();
+        ClauseDTO clauseDto = null;
+        if (!listClauseVm.isEmpty()) {
+            for (ClauseVm clauseVm : listClauseVm) {
+                System.err.println("------------------        JE RENTRE DANS LA BOUCLE         ------------------");
+                System.err.println("------------------        JE FAIS APPEL AU CLAUSE SERVICE         ------------------");
+                clauseDto = clauseService.findOne(clauseVm.getClauseId()).get();
+                if (clauseDto.getId() != null) {
+                    System.err.println("------------------        J'AJOUTE A LA LISTE DE CONTRAT LA LISTE DANS CLAUSEDTO       ------------------");
+                    Set<ContratDTO> listeContratsDto = clauseDto.getListeContrats();
+                    listeContratsDto.add(contratDTO);
+                    clauseDto.setListeContrats(listeContratsDto);
+                    System.err.println("------------------         CLAUSEDTO TO STRING()    ------------------");
+                    System.err.println(clauseDto);
+                    System.err.println("------------------        JE SAVE CLAUSEDTO        ------------------");
+                }
+            }
+            clauseService.save(clauseDto);
+        }
+
         return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);

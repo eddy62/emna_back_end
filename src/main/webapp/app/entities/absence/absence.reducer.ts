@@ -135,6 +135,7 @@ export const deleteEntity: ICrudDeleteAction<IAbsence> = id => async dispatch =>
     type: ACTION_TYPES.DELETE_ABSENCE,
     payload: axios.delete(requestUrl)
   });
+  dispatch(getEntities());
   return result;
 };
 

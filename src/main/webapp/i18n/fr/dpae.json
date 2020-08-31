@@ -1,0 +1,26 @@
+{
+  "emnaBackEndApp": {
+    "dpae": {
+      "home": {
+        "title": "Dpaes",
+        "createLabel": "Créer un nouveau Dpae",
+        "createOrEditLabel": "Créer ou éditer un Dpae",
+        "notFound": "Aucun Dpae trouvé"
+      },
+      "created": "Un nouveau Dpae a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Dpae avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Dpae avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Dpae {{ id }} ?"
+      },
+      "detail": {
+        "title": "Dpae"
+      },
+      "lieu": "Lieu",
+      "date": "Date",
+      "lienDocument": "Lien Document",
+      "employe": "Employe",
+      "societe": "Societe"
+    }
+  }
+}
