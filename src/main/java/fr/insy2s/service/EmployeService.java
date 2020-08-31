@@ -89,8 +89,9 @@ public interface EmployeService {
      * Delete the "id" WrapperEmploye
      *
      * @param id
+     * @return 
      */
-    void deleteWrapperEmploye(Long id);
+    boolean deleteWrapperEmploye(Long id);
     
     /**
      * Archive the "id" WrapperEmploye

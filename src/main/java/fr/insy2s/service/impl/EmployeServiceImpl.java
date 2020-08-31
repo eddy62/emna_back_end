@@ -1,5 +1,7 @@
 package fr.insy2s.service.impl;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -167,9 +169,17 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
-    public void deleteWrapperEmploye(Long id) {
+    public boolean deleteWrapperEmploye(Long id) {
         log.debug("Request to delete WrapperEmploye : {}", id);
-        employeRepository.deleteById(id);
+        final Employe employe = employeRepository.getOne(id);
+        Period period = Period.between(LocalDate.now(), employe.getDateSortie());
+        int diff = period.getYears();
+        if (diff >= 2) {
+            employeRepository.deleteById(id);
+            return true;
+            
+        }
+        return false;
     }
 
     @Override
@@ -179,7 +189,8 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {        
-       wrapperEmploye.setCodeRef("EMPEND");        
+       wrapperEmploye.setCodeRef("EMPEND"); 
+       wrapperEmploye.setDateSortie(LocalDate.now());
        final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);        
        return archivedWrapperemploye;
     }
