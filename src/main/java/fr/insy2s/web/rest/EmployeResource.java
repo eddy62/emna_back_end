@@ -274,10 +274,10 @@ public class EmployeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/wrapperemployes/{id}")
-    public ResponseEntity<Void> deleteWrapperEmploye(@PathVariable Long id) {
+    public boolean deleteWrapperEmploye(@PathVariable Long id) {
         log.debug("REST request to delete WrapperEmploye : {}", id);
-        employeService.deleteWrapperEmploye(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        boolean result = employeService.deleteWrapperEmploye(id);
+        return result;
     }
 
     /**
