@@ -12,7 +12,7 @@ export const ACTION_TYPES = {
   CREATE_LIGNEPRODUIT: 'ligneProduit/CREATE_LIGNEPRODUIT',
   UPDATE_LIGNEPRODUIT: 'ligneProduit/UPDATE_LIGNEPRODUIT',
   DELETE_LIGNEPRODUIT: 'ligneProduit/DELETE_LIGNEPRODUIT',
-  RESET: 'ligneProduit/RESET',
+  RESET: 'ligneProduit/RESET'
 };
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<ILigneProduit>,
   entity: defaultValue,
   updating: false,
-  updateSuccess: false,
+  updateSuccess: false
 };
 
 export type LigneProduitState = Readonly<typeof initialState>;
@@ -36,7 +36,7 @@ export default (state: LigneProduitState = initialState, action): LigneProduitSt
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        loading: true,
+        loading: true
       };
     case REQUEST(ACTION_TYPES.CREATE_LIGNEPRODUIT):
     case REQUEST(ACTION_TYPES.UPDATE_LIGNEPRODUIT):
@@ -45,7 +45,7 @@ export default (state: LigneProduitState = initialState, action): LigneProduitSt
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        updating: true,
+        updating: true
       };
     case FAILURE(ACTION_TYPES.FETCH_LIGNEPRODUIT_LIST):
     case FAILURE(ACTION_TYPES.FETCH_LIGNEPRODUIT):
@@ -57,19 +57,19 @@ export default (state: LigneProduitState = initialState, action): LigneProduitSt
         loading: false,
         updating: false,
         updateSuccess: false,
-        errorMessage: action.payload,
+        errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.FETCH_LIGNEPRODUIT_LIST):
       return {
         ...state,
         loading: false,
-        entities: action.payload.data,
+        entities: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.FETCH_LIGNEPRODUIT):
       return {
         ...state,
         loading: false,
-        entity: action.payload.data,
+        entity: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.CREATE_LIGNEPRODUIT):
     case SUCCESS(ACTION_TYPES.UPDATE_LIGNEPRODUIT):
@@ -77,18 +77,18 @@ export default (state: LigneProduitState = initialState, action): LigneProduitSt
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: action.payload.data,
+        entity: action.payload.data
       };
     case SUCCESS(ACTION_TYPES.DELETE_LIGNEPRODUIT):
       return {
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: {},
+        entity: {}
       };
     case ACTION_TYPES.RESET:
       return {
-        ...initialState,
+        ...initialState
       };
     default:
       return state;
@@ -101,21 +101,21 @@ const apiUrl = 'api/ligne-produits';
 
 export const getEntities: ICrudGetAllAction<ILigneProduit> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_LIGNEPRODUIT_LIST,
-  payload: axios.get<ILigneProduit>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
+  payload: axios.get<ILigneProduit>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
 });
 
 export const getEntity: ICrudGetAction<ILigneProduit> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_LIGNEPRODUIT,
-    payload: axios.get<ILigneProduit>(requestUrl),
+    payload: axios.get<ILigneProduit>(requestUrl)
   };
 };
 
 export const createEntity: ICrudPutAction<ILigneProduit> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_LIGNEPRODUIT,
-    payload: axios.post(apiUrl, cleanEntity(entity)),
+    payload: axios.post(apiUrl, cleanEntity(entity))
   });
   dispatch(getEntities());
   return result;
@@ -124,7 +124,7 @@ export const createEntity: ICrudPutAction<ILigneProduit> = entity => async dispa
 export const updateEntity: ICrudPutAction<ILigneProduit> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_LIGNEPRODUIT,
-    payload: axios.put(apiUrl, cleanEntity(entity)),
+    payload: axios.put(apiUrl, cleanEntity(entity))
   });
   return result;
 };
@@ -133,12 +133,12 @@ export const deleteEntity: ICrudDeleteAction<ILigneProduit> = id => async dispat
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_LIGNEPRODUIT,
-    payload: axios.delete(requestUrl),
+    payload: axios.delete(requestUrl)
   });
   dispatch(getEntities());
   return result;
 };
 
 export const reset = () => ({
-  type: ACTION_TYPES.RESET,
+  type: ACTION_TYPES.RESET
 });

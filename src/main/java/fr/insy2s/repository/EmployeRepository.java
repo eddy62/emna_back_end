@@ -17,7 +17,7 @@ import java.util.List;
 public interface EmployeRepository extends JpaRepository<Employe, Long> {
 
 
-    @Query(nativeQuery = true, value = "SELECT e.ID AS employerId, e.NOM_USAGE AS employerNom,e.PRENOM AS employerPrenom, e.SOCIETE_ID AS societeId , a.TITRE AS articleTitre ,a.DESCRIPTION AS articleDescription,a.ID AS articleID, a.REFERENCE AS articleReference, c1.ID AS clauseId  , c1.DESCRIPTION AS clauseDescription FROM EMPLOYE e INNER JOIN SOCIETE s ON e.SOCIETE_ID = s.ID INNER JOIN ARTICLE a ON a.SOCIETE_ID = s.ID INNER JOIN CLAUSE c1 ON c1.SOCIETE_ID = s.ID AND c1.ARTICLE_ID = a.ID INNER JOIN CLAUSE_LISTE_CONTRATS clc ON c1.ID = clc.CLAUSE_ID INNER JOIN CONTRAT c2 ON c2.ID = clc.LISTE_CONTRATS_ID WHERE e.SOCIETE_ID=1 AND C2.EMPLOYE_ID = e.ID ;")
+    @Query(nativeQuery = true, value = "SELECT e.ID AS employerId, e.NOM_USAGE AS employerNom,e.PRENOM AS employerPrenom, e.SOCIETE_ID AS societeId , a.TITRE AS articleTitre ,a.DESCRIPTION AS articleDescription,a.ID AS articleID, a.REFERENCE AS articleReference, c1.ID AS clauseId  , c1.DESCRIPTION AS clauseDescription FROM EMPLOYE e INNER JOIN SOCIETE s ON e.SOCIETE_ID = s.ID INNER JOIN ARTICLE a ON a.SOCIETE_ID = s.ID INNER JOIN CLAUSE c1 ON c1.SOCIETE_ID = s.ID AND c1.ARTICLE_ID = a.ID WHERE e.SOCIETE_ID=1 ;")
     List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(@Param("id") Long id);
 
     List<Employe> findBySocieteId(@Param(value = "id") Long id);
