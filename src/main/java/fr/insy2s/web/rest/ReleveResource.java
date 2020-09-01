@@ -144,10 +144,18 @@ public class ReleveResource {
         return releveService.findAllByEtatReleveIdAndSocieteId(idEtat,idSociete);
     }
 
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
-    @PutMapping("/releve/{idReleve}")
-    public ResponseEntity<ReleveDTO> updateEtatRelever(@PathVariable Long idReleve){
+    /**
+     * {@code VALIDATE  /releves/:id} : validate the "id" releve.
+     *
+     * @param id the id of the releveDTO to validate.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
 
-        return ResponseEntity.ok().body(new ReleveDTO());
+    @Secured({AuthoritiesConstants.SOCIETY,AuthoritiesConstants.ADMIN})
+    @PutMapping("/releve/{id}")
+    public ResponseEntity<Void> valideRelever(@PathVariable Long id){
+        log.debug("REST request to validate Releve");
+        releveService.validateReleve(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }
