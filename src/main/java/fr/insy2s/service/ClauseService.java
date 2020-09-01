@@ -50,4 +50,12 @@ public interface ClauseService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get the "id" clause.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    Optional<ClauseDTO> findById(Long id);
 }

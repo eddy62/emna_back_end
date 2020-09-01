@@ -106,6 +106,7 @@ public class FactureServiceImpl implements FactureService {
         }
 
         facture.setSociete(societeRepository.getOne(factureTemp.getSocieteId()));
+
         Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findByNomAndSocieteId(factureTemp.getClient(), factureTemp.getSocieteId());
         if (clientFournisseurDTO.isPresent()) {
             facture.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
@@ -115,6 +116,7 @@ public class FactureServiceImpl implements FactureService {
             clientFournisseur.setSociete(societeRepository.getOne(factureTemp.getSocieteId()));
             facture.setClientFournisseur(clientFournisseurRepository.save(clientFournisseur));
         }
+
         Facture mafacture = factureRepository.save(facture);
         return this.factureMapper.toDto(mafacture);
     }

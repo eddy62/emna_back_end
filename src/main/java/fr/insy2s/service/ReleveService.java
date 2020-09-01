@@ -2,6 +2,7 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ReleveDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,4 +44,6 @@ public interface ReleveService {
     List <ReleveDTO> findAllBySocieteId(Long id);
     List <ReleveDTO> findAllByEtatReleveId(Long id);
     List <ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
+
+    Optional<BigDecimal> getReleveSoldeById(Long id);
 }
