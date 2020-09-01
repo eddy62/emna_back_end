@@ -133,6 +133,36 @@ export const NoteDeFraisUpdate = (props: INoteDeFraisUpdateProps) => {
                 <AvField id="note-de-frais-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="note-de-frais-mois">
+                  <Translate contentKey="emnaBackEndApp.noteDeFrais.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="note-de-frais-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="note-de-frais-annee">
+                  <Translate contentKey="emnaBackEndApp.noteDeFrais.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="note-de-frais-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="note-de-frais-etatVariablePaie">
                   <Translate contentKey="emnaBackEndApp.noteDeFrais.etatVariablePaie">Etat Variable Paie</Translate>
                 </Label>

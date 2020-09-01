@@ -1,4 +1,4 @@
-id;civilite;info_entreprise_id;user_id;comptable_id
-1;Carrefour;1;5;1
-2;Auchan;2;6;1
-3;Monoprix;3;7;1
+id;civilite;info_entreprise_id;user_id;comptable_id;adresse_id
+1;Carrefour;1;5;1;11
+2;Auchan;2;6;1;11
+3;Monoprix;3;7;1;11

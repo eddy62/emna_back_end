@@ -239,7 +239,7 @@ const rootReducer = combineReducers<IRootState>({
   avanceRappelSalaire,
   dpae,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
-  loadingBar,
+  loadingBar
 });
 
 export default rootReducer;

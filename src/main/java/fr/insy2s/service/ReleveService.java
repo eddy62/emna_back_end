@@ -1,8 +1,8 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ReleveDTO;
-import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +51,6 @@ public interface ReleveService {
      * @param id the id of the entity.
      */
     boolean validateReleve(Long id);
+
+    Optional<BigDecimal> getReleveSoldeById(Long id);
 }

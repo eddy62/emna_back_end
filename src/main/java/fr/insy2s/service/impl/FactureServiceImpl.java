@@ -90,7 +90,6 @@ public class FactureServiceImpl implements FactureService {
         }
         facture.setListeDocuments(documents);
         facture.setSociete(societeRepository.getOne(factureTemp.getSocieteId()));
-        //facture.set
         Facture mafacture = factureRepository.save(facture);
         return this.factureMapper.toDto(mafacture);
     }

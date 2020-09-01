@@ -43,6 +43,12 @@ public class HeuresSupplementairesResourceIT {
     private static final String DEFAULT_JUSTIFICATIF = "AAAAAAAAAA";
     private static final String UPDATED_JUSTIFICATIF = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private HeuresSupplementairesRepository heuresSupplementairesRepository;
 
@@ -70,7 +76,9 @@ public class HeuresSupplementairesResourceIT {
         HeuresSupplementaires heuresSupplementaires = new HeuresSupplementaires()
             .date(DEFAULT_DATE)
             .nombreHeure(DEFAULT_NOMBRE_HEURE)
-            .justificatif(DEFAULT_JUSTIFICATIF);
+            .justificatif(DEFAULT_JUSTIFICATIF)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         return heuresSupplementaires;
     }
     /**
@@ -83,7 +91,9 @@ public class HeuresSupplementairesResourceIT {
         HeuresSupplementaires heuresSupplementaires = new HeuresSupplementaires()
             .date(UPDATED_DATE)
             .nombreHeure(UPDATED_NOMBRE_HEURE)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         return heuresSupplementaires;
     }
 
@@ -110,6 +120,8 @@ public class HeuresSupplementairesResourceIT {
         assertThat(testHeuresSupplementaires.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testHeuresSupplementaires.getNombreHeure()).isEqualTo(DEFAULT_NOMBRE_HEURE);
         assertThat(testHeuresSupplementaires.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        assertThat(testHeuresSupplementaires.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testHeuresSupplementaires.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -175,6 +187,46 @@ public class HeuresSupplementairesResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = heuresSupplementairesRepository.findAll().size();
+        // set the field null
+        heuresSupplementaires.setMois(null);
+
+        // Create the HeuresSupplementaires, which fails.
+        HeuresSupplementairesDTO heuresSupplementairesDTO = heuresSupplementairesMapper.toDto(heuresSupplementaires);
+
+
+        restHeuresSupplementairesMockMvc.perform(post("/api/heures-supplementaires")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(heuresSupplementairesDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<HeuresSupplementaires> heuresSupplementairesList = heuresSupplementairesRepository.findAll();
+        assertThat(heuresSupplementairesList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = heuresSupplementairesRepository.findAll().size();
+        // set the field null
+        heuresSupplementaires.setAnnee(null);
+
+        // Create the HeuresSupplementaires, which fails.
+        HeuresSupplementairesDTO heuresSupplementairesDTO = heuresSupplementairesMapper.toDto(heuresSupplementaires);
+
+
+        restHeuresSupplementairesMockMvc.perform(post("/api/heures-supplementaires")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(heuresSupplementairesDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<HeuresSupplementaires> heuresSupplementairesList = heuresSupplementairesRepository.findAll();
+        assertThat(heuresSupplementairesList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllHeuresSupplementaires() throws Exception {
         // Initialize the database
         heuresSupplementairesRepository.saveAndFlush(heuresSupplementaires);
@@ -186,7 +238,9 @@ public class HeuresSupplementairesResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(heuresSupplementaires.getId().intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].nombreHeure").value(hasItem(DEFAULT_NOMBRE_HEURE)))
-            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)));
+            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -202,7 +256,9 @@ public class HeuresSupplementairesResourceIT {
             .andExpect(jsonPath("$.id").value(heuresSupplementaires.getId().intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.nombreHeure").value(DEFAULT_NOMBRE_HEURE))
-            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF));
+            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -227,7 +283,9 @@ public class HeuresSupplementairesResourceIT {
         updatedHeuresSupplementaires
             .date(UPDATED_DATE)
             .nombreHeure(UPDATED_NOMBRE_HEURE)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         HeuresSupplementairesDTO heuresSupplementairesDTO = heuresSupplementairesMapper.toDto(updatedHeuresSupplementaires);
 
         restHeuresSupplementairesMockMvc.perform(put("/api/heures-supplementaires")
@@ -242,6 +300,8 @@ public class HeuresSupplementairesResourceIT {
         assertThat(testHeuresSupplementaires.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testHeuresSupplementaires.getNombreHeure()).isEqualTo(UPDATED_NOMBRE_HEURE);
         assertThat(testHeuresSupplementaires.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        assertThat(testHeuresSupplementaires.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testHeuresSupplementaires.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

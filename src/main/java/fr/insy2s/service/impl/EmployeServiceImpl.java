@@ -177,4 +177,11 @@ public class EmployeServiceImpl implements EmployeService {
         return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
     }
 
+    @Override
+    public WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {        
+       wrapperEmploye.setCodeRef("EMPEND");        
+       final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);        
+       return archivedWrapperemploye;
+    }
+
 }

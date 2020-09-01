@@ -109,6 +109,36 @@ export const AutresVariableUpdate = (props: IAutresVariableUpdateProps) => {
                 <AvField id="autres-variable-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="autres-variable-mois">
+                  <Translate contentKey="emnaBackEndApp.autresVariable.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="autres-variable-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="autres-variable-annee">
+                  <Translate contentKey="emnaBackEndApp.autresVariable.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="autres-variable-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="autres-variable-etatVariablePaie">
                   <Translate contentKey="emnaBackEndApp.autresVariable.etatVariablePaie">Etat Variable Paie</Translate>
                 </Label>

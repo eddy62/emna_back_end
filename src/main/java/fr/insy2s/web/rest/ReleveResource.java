@@ -16,6 +16,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -96,13 +97,25 @@ public class ReleveResource {
      * {@code GET  /releves/:id} : get the "id" releve.
      *
      * @param id the id of the releveDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the releveDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the BigDecimal, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/releves/{id}")
     public ResponseEntity<ReleveDTO> getReleve(@PathVariable Long id) {
         log.debug("REST request to get Releve : {}", id);
         Optional<ReleveDTO> releveDTO = releveService.findOne(id);
         return ResponseUtil.wrapOrNotFound(releveDTO);
+    }
+
+    /**
+     * {@code GET  /releves/:id/solde} : get the "solde" from a releve.
+     *
+     * @param id the id of the releve to process.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the solde amount, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/releves/{id}/solde")
+    public Optional<BigDecimal> getReleveSoldeById(@PathVariable Long id) {
+        log.debug("REST request to get Releve total solde: {}", id);
+        return releveService.getReleveSoldeById(id);
     }
 
     /**

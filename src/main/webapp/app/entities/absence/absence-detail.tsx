@@ -50,6 +50,18 @@ export const AbsenceDetail = (props: IAbsenceDetailProps) => {
           </dt>
           <dd>{absenceEntity.justificatif}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.absence.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{absenceEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.absence.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{absenceEntity.annee}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.absence.typeAbsence">Type Absence</Translate>
           </dt>
           <dd>{absenceEntity.typeAbsenceId ? absenceEntity.typeAbsenceId : ''}</dd>

@@ -122,6 +122,36 @@ export const HeuresSupplementairesUpdate = (props: IHeuresSupplementairesUpdateP
                 <AvField id="heures-supplementaires-justificatif" type="text" name="justificatif" />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="heures-supplementaires-mois">
+                  <Translate contentKey="emnaBackEndApp.heuresSupplementaires.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="heures-supplementaires-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="heures-supplementaires-annee">
+                  <Translate contentKey="emnaBackEndApp.heuresSupplementaires.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="heures-supplementaires-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="heures-supplementaires-etatVariablePaie">
                   <Translate contentKey="emnaBackEndApp.heuresSupplementaires.etatVariablePaie">Etat Variable Paie</Translate>
                 </Label>

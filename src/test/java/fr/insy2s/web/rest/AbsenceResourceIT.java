@@ -44,6 +44,12 @@ public class AbsenceResourceIT {
     private static final String DEFAULT_JUSTIFICATIF = "AAAAAAAAAA";
     private static final String UPDATED_JUSTIFICATIF = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private AbsenceRepository absenceRepository;
 
@@ -71,7 +77,9 @@ public class AbsenceResourceIT {
         Absence absence = new Absence()
             .debutAbsence(DEFAULT_DEBUT_ABSENCE)
             .finAbsence(DEFAULT_FIN_ABSENCE)
-            .justificatif(DEFAULT_JUSTIFICATIF);
+            .justificatif(DEFAULT_JUSTIFICATIF)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         // Add required entity
         TypeAbsence typeAbsence;
         if (TestUtil.findAll(em, TypeAbsence.class).isEmpty()) {
@@ -94,7 +102,9 @@ public class AbsenceResourceIT {
         Absence absence = new Absence()
             .debutAbsence(UPDATED_DEBUT_ABSENCE)
             .finAbsence(UPDATED_FIN_ABSENCE)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         // Add required entity
         TypeAbsence typeAbsence;
         if (TestUtil.findAll(em, TypeAbsence.class).isEmpty()) {
@@ -131,6 +141,8 @@ public class AbsenceResourceIT {
         assertThat(testAbsence.getDebutAbsence()).isEqualTo(DEFAULT_DEBUT_ABSENCE);
         assertThat(testAbsence.getFinAbsence()).isEqualTo(DEFAULT_FIN_ABSENCE);
         assertThat(testAbsence.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        assertThat(testAbsence.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testAbsence.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -196,6 +208,46 @@ public class AbsenceResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = absenceRepository.findAll().size();
+        // set the field null
+        absence.setMois(null);
+
+        // Create the Absence, which fails.
+        AbsenceDTO absenceDTO = absenceMapper.toDto(absence);
+
+
+        restAbsenceMockMvc.perform(post("/api/absences")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(absenceDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Absence> absenceList = absenceRepository.findAll();
+        assertThat(absenceList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = absenceRepository.findAll().size();
+        // set the field null
+        absence.setAnnee(null);
+
+        // Create the Absence, which fails.
+        AbsenceDTO absenceDTO = absenceMapper.toDto(absence);
+
+
+        restAbsenceMockMvc.perform(post("/api/absences")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(absenceDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Absence> absenceList = absenceRepository.findAll();
+        assertThat(absenceList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAbsences() throws Exception {
         // Initialize the database
         absenceRepository.saveAndFlush(absence);
@@ -207,7 +259,9 @@ public class AbsenceResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(absence.getId().intValue())))
             .andExpect(jsonPath("$.[*].debutAbsence").value(hasItem(DEFAULT_DEBUT_ABSENCE.toString())))
             .andExpect(jsonPath("$.[*].finAbsence").value(hasItem(DEFAULT_FIN_ABSENCE.toString())))
-            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)));
+            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -223,7 +277,9 @@ public class AbsenceResourceIT {
             .andExpect(jsonPath("$.id").value(absence.getId().intValue()))
             .andExpect(jsonPath("$.debutAbsence").value(DEFAULT_DEBUT_ABSENCE.toString()))
             .andExpect(jsonPath("$.finAbsence").value(DEFAULT_FIN_ABSENCE.toString()))
-            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF));
+            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -248,7 +304,9 @@ public class AbsenceResourceIT {
         updatedAbsence
             .debutAbsence(UPDATED_DEBUT_ABSENCE)
             .finAbsence(UPDATED_FIN_ABSENCE)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         AbsenceDTO absenceDTO = absenceMapper.toDto(updatedAbsence);
 
         restAbsenceMockMvc.perform(put("/api/absences")
@@ -263,6 +321,8 @@ public class AbsenceResourceIT {
         assertThat(testAbsence.getDebutAbsence()).isEqualTo(UPDATED_DEBUT_ABSENCE);
         assertThat(testAbsence.getFinAbsence()).isEqualTo(UPDATED_FIN_ABSENCE);
         assertThat(testAbsence.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        assertThat(testAbsence.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testAbsence.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

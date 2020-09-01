@@ -8,11 +8,10 @@ import fr.insy2s.service.mapper.ReleveMapper;
 import fr.insy2s.utils.EtatReleveConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -88,5 +87,12 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("REST request to validate Releve");
         Integer result = releveRepository.validateRelever(id, EtatReleveConstants.RELEVE_NON_ARCHIVE);
         return result != 0;
+    }
+
+    @Override
+    public Optional<BigDecimal> getReleveSoldeById(Long id)
+    {
+        log.debug("Request to get solde by Releve Id");
+        return releveRepository.getReleveSoldeById(id);
     }
 }
