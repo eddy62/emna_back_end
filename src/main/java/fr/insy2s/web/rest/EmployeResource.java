@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -312,5 +314,12 @@ public class EmployeResource {
         WrapperEmploye result = employeService.archiveWrapperEmploye(wrapperEmploye);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
+
+    @GetMapping("/wrappervariablespaie/employe/{idEmploye}/annee/{annee}/mois/{mois}")
+    public WrapperVariablesPaie getOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
+        log.debug("REST request to get one WrapperVariablesPaie by employe, annee, mois : {}", idEmploye, annee, mois);
+        return employeService.findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+    }
+
 
 }

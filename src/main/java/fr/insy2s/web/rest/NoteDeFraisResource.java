@@ -1,9 +1,8 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.NoteDeFraisService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.NoteDeFraisDTO;
-
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -113,5 +112,11 @@ public class NoteDeFraisResource {
         log.debug("REST request to delete NoteDeFrais : {}", id);
         noteDeFraisService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/note-de-frais/employe/{idEmploye}/annee/{annee}/mois/{mois}")
+    public List<NoteDeFraisDTO> getAllNoteDeFraisByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
+        log.debug("REST request to get all NoteDeFrais by employe {}, annee {}, mois {}", idEmploye, annee, mois);
+        return noteDeFraisService.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
     }
 }
