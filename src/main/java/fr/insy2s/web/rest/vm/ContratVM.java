@@ -18,9 +18,12 @@ public class ContratVM {
 
     Long societeId;
 
-    String clauses;
+    List<ClauseVm> clauses;
 
-    public ContratVM(Long id, String titre, LocalDate dateCreation, Boolean signe, Boolean archive, Long employeId, Long societeId, String clauses) {
+    public ContratVM() {
+    }
+
+    public ContratVM(Long id, String titre, LocalDate dateCreation, Boolean signe, Boolean archive, Long employeId, Long societeId, List<ClauseVm> clauses) {
         this.id = id;
         this.titre = titre;
         this.dateCreation = dateCreation;
@@ -29,9 +32,6 @@ public class ContratVM {
         this.employeId = employeId;
         this.societeId = societeId;
         this.clauses = clauses;
-    }
-
-    public ContratVM() {
     }
 
     public Long getId() {
@@ -90,25 +90,11 @@ public class ContratVM {
         this.societeId = societeId;
     }
 
-    public String getClauses() {
+    public List<ClauseVm> getClauses() {
         return clauses;
     }
 
-    public void setClauses(String clauses) {
+    public void setClauses(List<ClauseVm> clauses) {
         this.clauses = clauses;
-    }
-
-    @Override
-    public String toString() {
-        return "ContratVM{" +
-            "id=" + id +
-            ", titre='" + titre + '\'' +
-            ", dateCreation=" + dateCreation +
-            ", signe=" + signe +
-            ", archive=" + archive +
-            ", employeId=" + employeId +
-            ", societeId=" + societeId +
-            ", clauses=" + clauses +
-            '}';
     }
 }

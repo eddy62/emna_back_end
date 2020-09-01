@@ -27,6 +27,8 @@ public class FactureTemp {
 
     private String moyenDePaiement;
 
+    private String client;
+
     private Long societeId;
 
     private MultipartFile[] listeFiles;
@@ -111,7 +113,15 @@ public class FactureTemp {
         this.listeFiles = listeFiles;
     }
 
-    public FactureTemp(Long numfact, String message, LocalDate date, LocalDate dateEcheance, Integer prixHT, Integer prixTTC, Float tva, String moyenDePaiement, Long societeId, MultipartFile[] listeFiles) {
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public FactureTemp(Long numfact, String message, LocalDate date, LocalDate dateEcheance, Integer prixHT, Integer prixTTC, Float tva, String moyenDePaiement, String client, Long societeId, MultipartFile[] listeFiles) {
         this.numfact = numfact;
         this.message = message;
         this.date = date;
@@ -120,6 +130,7 @@ public class FactureTemp {
         this.prixTTC = prixTTC;
         this.tva = tva;
         this.moyenDePaiement = moyenDePaiement;
+        this.client = client;
         this.societeId = societeId;
         this.listeFiles = listeFiles;
     }

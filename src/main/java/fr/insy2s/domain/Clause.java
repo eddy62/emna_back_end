@@ -34,7 +34,7 @@ public class Clause implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "clause_liste_contrats",
                joinColumns = @JoinColumn(name = "clause_id", referencedColumnName = "id"),
