@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -80,4 +81,11 @@ public class ReleveServiceImpl implements ReleveService {
 		return releveRepository.findAllByEtatReleveIdAndSocieteId( idEtat,idSociete).stream().map(releveMapper::toDto)
 	            .collect(Collectors.toCollection(LinkedList::new));
 	}
+
+    @Override
+    public Optional<BigDecimal> getReleveSoldeById(Long id)
+    {
+        log.debug("Request to get solde by Releve Id");
+        return releveRepository.getReleveSoldeById(id);
+    }
 }
