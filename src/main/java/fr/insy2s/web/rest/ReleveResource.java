@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ReleveDTO;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -127,5 +129,12 @@ public class ReleveResource {
     public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat,@PathVariable Long idSociete) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveIdAndSocieteId(idEtat,idSociete);
+    }
+
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
+    @PutMapping("/releve/{idReleve}")
+    public ResponseEntity<ReleveDTO> updateEtatRelever(@PathVariable Long idReleve){
+
+        return ResponseEntity.ok().body(new ReleveDTO());
     }
 }
