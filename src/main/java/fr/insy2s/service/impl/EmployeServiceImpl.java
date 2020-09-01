@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.insy2s.domain.Absence;
+import fr.insy2s.domain.AutresVariable;
 import fr.insy2s.domain.Contrat;
+import fr.insy2s.domain.Document;
+import fr.insy2s.domain.Dpae;
 import fr.insy2s.domain.Employe;
 import fr.insy2s.domain.FichePaie;
 import fr.insy2s.domain.HeuresSupplementaires;
@@ -173,7 +176,7 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
-    public WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
+    public Optional<WrapperEmploye> createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
         final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
@@ -183,9 +186,15 @@ public class EmployeServiceImpl implements EmployeService {
         employeDTO.setAdresseId(newAdresseDTO.getId());
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
         employeDTO.setTypeContratId(typeContratDTO.getId());
+        if (employeDTO.getDateSortie()==null) {
+            employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
+        }
+        if (isEmployeExist(employeDTO.getMatricule())) {
+            return Optional.empty();
+        }
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
         final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO);
-        return newWrapperEmploye;
+        return Optional.of(newWrapperEmploye);
     }
 
     @Override
@@ -211,7 +220,7 @@ public class EmployeServiceImpl implements EmployeService {
         final Period period = Period.between(employe.getDateSortie(), LocalDate.now());
         final int diff = period.getYears();
         /** RGPD : Conservation des données pendant 5 ans maximum */
-        if (diff >= 5) {
+        if (diff >= 5 && employe.getStatutEmploye().getId()==3) {
             //listeContrats
             if (!employe.getListeContrats().isEmpty()) {
                 for (final Contrat contrat : employe.getListeContrats()) {
@@ -249,9 +258,24 @@ public class EmployeServiceImpl implements EmployeService {
                 }
             }
             //listeAutresVariables
+            if (!employe.getListeAutresVariables().isEmpty()) {
+                for (AutresVariable autresVariable : employe.getListeAutresVariables()) {
+                    autresVariableService.delete(autresVariable.getId());
+                }
+            }
             //listeDocuments
+            if (!employe.getListeDocuments().isEmpty()) {
+                for (Document document : employe.getListeDocuments()) {
+                    documentService.delete(document.getId());
+                }
+            }
             //listeDpaes
-            //listeSociete
+            if (!employe.getListeDpaes().isEmpty()) {
+                for (Dpae dpae : employe.getListeDpaes()) {
+                    dpaeService.delete(dpae.getId());
+                }
+            }
+
             employeRepository.deleteById(id);
             return true;
 
@@ -270,6 +294,14 @@ public class EmployeServiceImpl implements EmployeService {
         wrapperEmploye.setDateSortie(LocalDate.now());
         final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);
         return archivedWrapperemploye;
+    }
+    
+    private boolean isEmployeExist(final String matricule) {
+        final Employe employe = employeRepository.findByMatricule(matricule);
+        if (employe!=null) {
+            return true;
+        }
+        return false;
     }
 
 }

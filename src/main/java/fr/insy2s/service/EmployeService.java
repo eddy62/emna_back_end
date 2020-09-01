@@ -75,7 +75,7 @@ public interface EmployeService {
      * @param wrapperEmploye
      * @return the created WrapperEmploye
      */
-    WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+    Optional<WrapperEmploye> createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
 
     /**
      * Update the WrapperEmploye

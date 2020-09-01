@@ -244,9 +244,9 @@ public class EmployeResource {
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
-        return ResponseEntity.created(new URI("/api/wrapperemployes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-                        .body(result);
+        Optional<WrapperEmploye> result = employeService.createWrapperEmploye(wrapperEmploye);
+       
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
     /**
