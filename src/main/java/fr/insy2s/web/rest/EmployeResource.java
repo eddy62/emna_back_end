@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +30,7 @@ import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.ArticleVM;
 import fr.insy2s.web.rest.vm.ClauseVm;
+import fr.insy2s.web.rest.vm.EmployeEtArticleVM;
 import fr.insy2s.web.rest.vm.EmployerVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -126,21 +129,35 @@ public class EmployeResource {
     }
 
     @GetMapping("/employer/article/clause/societe/{id}")
-    public List<EmployerVM> getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
+    public EmployeEtArticleVM getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
+        EmployeEtArticleVM employeEtArticleVM = new EmployeEtArticleVM();
         List<EmployerVM> listEmployer = new ArrayList<>();
         List<IEmployeContratProjection> listIEmployeContratProjections = this.employeService.getAllEmployeArticleClauseBySocieteId(id);
-        EmployerVM employerVM = new EmployerVM();
+
         List<ArticleVM> listArticle = new ArrayList<>();
         List<ClauseVm> listClause = new ArrayList<>();
 
-        int index = 1;
+        int index=1;
+        boolean present=false;
+        boolean presentEmploye=false;
         for (IEmployeContratProjection iEmployeContratProjection : listIEmployeContratProjections) { //*19
+            present=false;
+            presentEmploye=false;
             ArticleVM articleVM = new ArticleVM();
             ClauseVm clauseVm = new ClauseVm();
+            EmployerVM employerVM = new EmployerVM();
             employerVM.setEmployerId(iEmployeContratProjection.getEmployerId());
             employerVM.setEmployerNom(iEmployeContratProjection.getEmployerNom());
             employerVM.setEmployerPrenom(iEmployeContratProjection.getEmployerPrenom());
             employerVM.setSocieteId(iEmployeContratProjection.getSocieteId());
+            for (EmployerVM employe : listEmployer) {
+                if (employe.getEmployerId()==iEmployeContratProjection.getEmployerId()){
+                    presentEmploye=true;
+                }
+            }
+            if(!presentEmploye){
+                listEmployer.add(employerVM);
+            }
             articleVM.setArticleId(iEmployeContratProjection.getArticleId());
             articleVM.setArticleTitre(iEmployeContratProjection.getArticleTitre());
             articleVM.setArticleDescription(iEmployeContratProjection.getArticleDescription());
@@ -150,12 +167,19 @@ public class EmployeResource {
                 listArticle.add(articleVM);
                 index++;
             }
-            clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
-            clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
-            clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
+            for(ClauseVm clause : listClause){
+                if(iEmployeContratProjection.getClauseId()==clause.getClauseId()){
+                    present=true;
+                }
+            }
+            if(!present){
+                clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
+                clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
+                clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
 
-            listClause.add(clauseVm);
+                listClause.add(clauseVm);
 
+            }
         }
 
         for (ClauseVm clause : listClause) {
@@ -163,9 +187,12 @@ public class EmployeResource {
             listArticle.get(integ - 1).getListClauses().add(clause);
         }
 
-        employerVM.setListArticles(listArticle);
-        listEmployer.add(employerVM);
-        return listEmployer;
+        employeEtArticleVM.setArticleVMList(listArticle);
+        employeEtArticleVM.setEmployerVMList(listEmployer);
+
+
+        return employeEtArticleVM;
+
     }
 
     /**
@@ -312,5 +339,12 @@ public class EmployeResource {
         WrapperEmploye result = employeService.archiveWrapperEmploye(wrapperEmploye);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
+
+    @GetMapping("/wrappervariablespaie/employe/{idEmploye}/annee/{annee}/mois/{mois}")
+    public WrapperVariablesPaie getOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
+        log.debug("REST request to get one WrapperVariablesPaie by employe, annee, mois : {}", idEmploye, annee, mois);
+        return employeService.findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+    }
+
 
 }

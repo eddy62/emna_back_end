@@ -117,6 +117,36 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="prime-mois">
+                  <Translate contentKey="emnaBackEndApp.prime.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="prime-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="prime-annee">
+                  <Translate contentKey="emnaBackEndApp.prime.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="prime-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="prime-typePrime">
                   <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
                 </Label>

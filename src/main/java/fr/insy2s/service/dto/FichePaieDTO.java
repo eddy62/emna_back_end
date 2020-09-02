@@ -20,6 +20,12 @@ public class FichePaieDTO implements Serializable {
     @NotNull
     private String lienDocument;
 
+    @NotNull
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
+
 
     private Long employeId;
     
@@ -55,6 +61,22 @@ public class FichePaieDTO implements Serializable {
         this.lienDocument = lienDocument;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public Long getEmployeId() {
         return employeId;
     }
@@ -88,6 +110,8 @@ public class FichePaieDTO implements Serializable {
             ", debutPeriode='" + getDebutPeriode() + "'" +
             ", finPeriode='" + getFinPeriode() + "'" +
             ", lienDocument='" + getLienDocument() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", employeId=" + getEmployeId() +
             "}";
     }

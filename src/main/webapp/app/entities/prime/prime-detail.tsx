@@ -38,6 +38,18 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
           </dt>
           <dd>{primeEntity.montant}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.prime.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{primeEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.prime.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{primeEntity.annee}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
           </dt>
           <dd>{primeEntity.typePrimeId ? primeEntity.typePrimeId : ''}</dd>

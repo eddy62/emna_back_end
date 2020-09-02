@@ -122,6 +122,36 @@ export const FichePaieUpdate = (props: IFichePaieUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
+                <Label id="moisLabel" for="fiche-paie-mois">
+                  <Translate contentKey="emnaBackEndApp.fichePaie.mois">Mois</Translate>
+                </Label>
+                <AvField
+                  id="fiche-paie-mois"
+                  type="string"
+                  className="form-control"
+                  name="mois"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="anneeLabel" for="fiche-paie-annee">
+                  <Translate contentKey="emnaBackEndApp.fichePaie.annee">Annee</Translate>
+                </Label>
+                <AvField
+                  id="fiche-paie-annee"
+                  type="string"
+                  className="form-control"
+                  name="annee"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
                 <Label for="fiche-paie-employe">
                   <Translate contentKey="emnaBackEndApp.fichePaie.employe">Employe</Translate>
                 </Label>

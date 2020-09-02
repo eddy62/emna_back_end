@@ -24,6 +24,12 @@
             <column name="lien_document" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="mois" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="annee" type="integer">
+                <constraints nullable="false" />
+            </column>
             <column name="employe_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -53,6 +59,8 @@
             <column name="debut_periode" type="date"/>
             <column name="fin_periode" type="date"/>
             <column name="lien_document" type="string"/>
+            <column name="mois" type="numeric"/>
+            <column name="annee" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

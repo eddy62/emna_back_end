@@ -5,6 +5,8 @@ export interface IFichePaie {
   debutPeriode?: string;
   finPeriode?: string;
   lienDocument?: string;
+  mois?: number;
+  annee?: number;
   employeId?: number;
 }
 

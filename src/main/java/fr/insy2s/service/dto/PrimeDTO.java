@@ -16,6 +16,12 @@ public class PrimeDTO implements Serializable {
     @NotNull
     private Double montant;
 
+    @NotNull
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
+
 
     private Long typePrimeId;
 
@@ -45,6 +51,22 @@ public class PrimeDTO implements Serializable {
 
     public void setMontant(Double montant) {
         this.montant = montant;
+    }
+
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
     }
 
     public Long getTypePrimeId() {
@@ -95,6 +117,8 @@ public class PrimeDTO implements Serializable {
             "id=" + getId() +
             ", type='" + getType() + "'" +
             ", montant=" + getMontant() +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", typePrimeId=" + getTypePrimeId() +
             ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +

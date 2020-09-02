@@ -60,7 +60,7 @@ public class Facture implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
 
-    @OneToMany(mappedBy = "facture")
+    @OneToMany(mappedBy = "facture", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<LigneProduit> listeLigneProduits = new HashSet<>();
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -45,7 +46,7 @@ public class AutresVariableResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/autres-variables")
-    public ResponseEntity<AutresVariableDTO> createAutresVariable(@RequestBody AutresVariableDTO autresVariableDTO) throws URISyntaxException {
+    public ResponseEntity<AutresVariableDTO> createAutresVariable(@Valid @RequestBody AutresVariableDTO autresVariableDTO) throws URISyntaxException {
         log.debug("REST request to save AutresVariable : {}", autresVariableDTO);
         if (autresVariableDTO.getId() != null) {
             throw new BadRequestAlertException("A new autresVariable cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +67,7 @@ public class AutresVariableResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/autres-variables")
-    public ResponseEntity<AutresVariableDTO> updateAutresVariable(@RequestBody AutresVariableDTO autresVariableDTO) throws URISyntaxException {
+    public ResponseEntity<AutresVariableDTO> updateAutresVariable(@Valid @RequestBody AutresVariableDTO autresVariableDTO) throws URISyntaxException {
         log.debug("REST request to update AutresVariable : {}", autresVariableDTO);
         if (autresVariableDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

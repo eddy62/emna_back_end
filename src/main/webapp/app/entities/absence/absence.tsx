@@ -46,6 +46,12 @@ export const Absence = (props: IAbsenceProps) => {
                   <Translate contentKey="emnaBackEndApp.absence.justificatif">Justificatif</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.absence.mois">Mois</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.absence.annee">Annee</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.absence.typeAbsence">Type Absence</Translate>
                 </th>
                 <th>
@@ -72,6 +78,8 @@ export const Absence = (props: IAbsenceProps) => {
                     {absence.finAbsence ? <TextFormat type="date" value={absence.finAbsence} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{absence.justificatif}</td>
+                  <td>{absence.mois}</td>
+                  <td>{absence.annee}</td>
                   <td>{absence.typeAbsenceId ? <Link to={`type-absence/${absence.typeAbsenceId}`}>{absence.typeAbsenceId}</Link> : ''}</td>
                   <td>
                     {absence.etatVariablePaieId ? (

@@ -59,6 +59,18 @@ export const AvanceRappelSalaireDetail = (props: IAvanceRappelSalaireDetailProps
           </dt>
           <dd>{avanceRappelSalaireEntity.montant}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.avanceRappelSalaire.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{avanceRappelSalaireEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.avanceRappelSalaire.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{avanceRappelSalaireEntity.annee}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.avanceRappelSalaire.etatVariablePaie">Etat Variable Paie</Translate>
           </dt>
           <dd>{avanceRappelSalaireEntity.etatVariablePaieId ? avanceRappelSalaireEntity.etatVariablePaieId : ''}</dd>

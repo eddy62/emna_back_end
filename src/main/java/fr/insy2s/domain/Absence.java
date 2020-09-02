@@ -36,6 +36,14 @@ public class Absence implements Serializable {
     @Column(name = "justificatif")
     private String justificatif;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "absences", allowSetters = true)
@@ -95,6 +103,32 @@ public class Absence implements Serializable {
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
+    }
+
+    public Integer getMois() {
+        return mois;
+    }
+
+    public Absence mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public Absence annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
     }
 
     public TypeAbsence getTypeAbsence() {
@@ -161,6 +195,8 @@ public class Absence implements Serializable {
             ", debutAbsence='" + getDebutAbsence() + "'" +
             ", finAbsence='" + getFinAbsence() + "'" +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

@@ -19,6 +19,8 @@
       "debutPeriode": "Debut Periode",
       "finPeriode": "Fin Periode",
       "lienDocument": "Lien Document",
+      "mois": "Mois",
+      "annee": "Annee",
       "employe": "Employe"
     }
   }
