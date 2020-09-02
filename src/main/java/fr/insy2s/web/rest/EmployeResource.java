@@ -246,9 +246,9 @@ public class EmployeResource {
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
-        return ResponseEntity.created(new URI("/api/wrapperemployes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-                        .body(result);
+        Optional<WrapperEmploye> result = employeService.createWrapperEmploye(wrapperEmploye);
+       
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
     /**
@@ -276,10 +276,10 @@ public class EmployeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/wrapperemployes/{id}")
-    public ResponseEntity<Void> deleteWrapperEmploye(@PathVariable Long id) {
+    public boolean deleteWrapperEmploye(@PathVariable Long id) {
         log.debug("REST request to delete WrapperEmploye : {}", id);
-        employeService.deleteWrapperEmploye(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        boolean result = employeService.deleteWrapperEmploye(id);
+        return result;
     }
 
     /**

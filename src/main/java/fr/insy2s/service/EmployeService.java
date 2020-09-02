@@ -75,7 +75,7 @@ public interface EmployeService {
      * @param wrapperEmploye
      * @return the created WrapperEmploye
      */
-    WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+    Optional<WrapperEmploye> createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
 
     /**
      * Update the WrapperEmploye
@@ -89,8 +89,9 @@ public interface EmployeService {
      * Delete the "id" WrapperEmploye
      *
      * @param id
+     * @return 
      */
-    void deleteWrapperEmploye(Long id);
+    boolean deleteWrapperEmploye(Long id);
     
     /**
      * Archive the "id" WrapperEmploye
