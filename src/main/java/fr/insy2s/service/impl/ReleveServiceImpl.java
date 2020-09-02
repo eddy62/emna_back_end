@@ -100,4 +100,11 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("Request to get solde by Releve Id");
         return releveRepository.getReleveSoldeById(id);
     }
+
+    @Override
+    public boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser) {
+        log.debug("Request to get relever by idReleve and loginCurrentUser");
+        releveRepository.checkPermissionForThisReleve(idReleve,loginCurrentUser);
+        return false;
+    }
 }

@@ -53,4 +53,6 @@ public interface ReleveService {
     boolean validateReleve(Long id);
 
     Optional<BigDecimal> getReleveSoldeById(Long id);
+
+    boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser);
 }
