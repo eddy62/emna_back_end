@@ -97,7 +97,8 @@ public class FactureServiceImpl implements FactureService {
 
     @Override
     public List<FactureDTO> findAllBySocieteId(Long id) {
-        return factureRepository.findAllBySocieteId(id).stream()
+        return factureRepository.
+            findAllBySocieteId(id).stream()
             .map(factureMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
