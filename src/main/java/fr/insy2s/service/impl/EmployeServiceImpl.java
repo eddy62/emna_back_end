@@ -105,7 +105,6 @@ public class EmployeServiceImpl implements EmployeService {
     /* Variables de Paie */
     private final AbsenceMapper                   absenceMapper;
     private final TypeAbsenceMapper               typeAbsenceMapper;
-   // private final WrapperAbsenceMapper            wrapperAbsenceMapper;
     private final AbsenceRepository               absenceRepository;
     private final NoteDeFraisMapper               noteDeFraisMapper;
     private final NoteDeFraisRepository           noteDeFraisRepository;
@@ -117,7 +116,6 @@ public class EmployeServiceImpl implements EmployeService {
     private final HeuresSupplementairesRepository heuresSupplementairesRepository;
     private final PrimeMapper                     primeMapper;
     private final TypePrimeMapper                 typePrimeMapper;
-    //private final WrapperPrimeMapper              wrapperPrimeMapper;
     private final PrimeRepository                 primeRepository;
 
     public EmployeServiceImpl(EmployeRepository employeRepository, EmployeMapper employeMapper, WrapperEmployeMapper wrapperEmployeMapper, AdresseService adresseService,
@@ -141,7 +139,6 @@ public class EmployeServiceImpl implements EmployeService {
         // Variables de Paie
         this.absenceMapper = absenceMapper;
         this.typeAbsenceMapper = typeAbsenceMapper;
-        //this.wrapperAbsenceMapper = wrapperAbsenceMapper;
         this.absenceRepository = absenceRepository;
         this.noteDeFraisMapper = noteDeFraisMapper;
         this.noteDeFraisRepository = noteDeFraisRepository;
@@ -153,7 +150,6 @@ public class EmployeServiceImpl implements EmployeService {
         this.heuresSupplementairesRepository = heuresSupplementairesRepository;
         this.primeMapper = primeMapper;
         this.typePrimeMapper = typePrimeMapper;
-       // this.wrapperPrimeMapper = wrapperPrimeMapper;
         this.primeRepository = primeRepository;
         this.absenceService = absenceService;
         this.primeService = primeService;
