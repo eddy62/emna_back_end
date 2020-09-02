@@ -29,14 +29,15 @@ public class ReleveServiceImpl implements ReleveService {
 
     private final ReleveRepository releveRepository;
 
-    private final EtatReleveRepository etatReleveRepository;
-
     private final ReleveMapper releveMapper;
 
-    public ReleveServiceImpl(ReleveRepository releveRepository, EtatReleveRepository etatReleveRepository, ReleveMapper releveMapper) {
+    private final EtatReleveRepository etatReleveRepository;
+
+
+    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository) {
         this.releveRepository = releveRepository;
-        this.etatReleveRepository = etatReleveRepository;
         this.releveMapper = releveMapper;
+        this.etatReleveRepository = etatReleveRepository;
     }
 
     @Override
