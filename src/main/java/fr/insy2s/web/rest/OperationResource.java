@@ -1,6 +1,7 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
+import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.OperationService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.OperationDTO;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -47,8 +47,6 @@ public class OperationResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new operationDTO, or with status {@code 400 (Bad Request)} if the operation has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-//    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")"
-//        + "or hasRole(\"" + AuthoritiesConstants.SOCIETY + "\") ")
     @Secured({AuthoritiesConstants.ADMIN,AuthoritiesConstants.SOCIETY})
     @PostMapping("/operations")
     public ResponseEntity<OperationDTO> createOperation(@RequestBody OperationDTO operationDTO) throws URISyntaxException {
@@ -71,6 +69,7 @@ public class OperationResource {
      * or with status {@code 500 (Internal Server Error)} if the operationDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @Secured({AuthoritiesConstants.ADMIN,AuthoritiesConstants.SOCIETY})
     @PutMapping("/operations")
     public ResponseEntity<OperationDTO> updateOperation(@RequestBody OperationDTO operationDTO) throws URISyntaxException {
         log.debug("REST request to update Operation : {}", operationDTO);

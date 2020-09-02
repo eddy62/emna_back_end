@@ -52,7 +52,6 @@ public class ReleveServiceImpl implements ReleveService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public Optional<ReleveDTO> findOne(Long id) {
