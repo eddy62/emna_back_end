@@ -1,12 +1,15 @@
 package fr.insy2s.service.impl;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+
+
+import fr.insy2s.repository.*;
+import fr.insy2s.service.*;
+import fr.insy2s.service.dto.*;
+import fr.insy2s.service.mapper.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,23 +17,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.insy2s.domain.Employe;
-import fr.insy2s.repository.EmployeRepository;
 import fr.insy2s.repository.projection.IEmployeContratProjection;
-import fr.insy2s.service.AdresseService;
-import fr.insy2s.service.EmployeService;
-import fr.insy2s.service.InfoEntrepriseService;
-import fr.insy2s.service.SocieteService;
-import fr.insy2s.service.StatutEmployeService;
-import fr.insy2s.service.TypeContratService;
-import fr.insy2s.service.dto.AdresseDTO;
-import fr.insy2s.service.dto.EmployeDTO;
-import fr.insy2s.service.dto.InfoEntrepriseDTO;
-import fr.insy2s.service.dto.SocieteDTO;
-import fr.insy2s.service.dto.StatutEmployeDTO;
-import fr.insy2s.service.dto.TypeContratDTO;
-import fr.insy2s.service.mapper.EmployeMapper;
-import fr.insy2s.service.mapper.WrapperEmployeMapper;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
+
+/* Variables de Paie */
+import fr.insy2s.domain.Absence;
+import fr.insy2s.domain.Prime;
+import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperPrime;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 
 /**
  * Service Implementation for managing {@link Employe}.
@@ -52,8 +47,35 @@ public class EmployeServiceImpl implements EmployeService {
     private final InfoEntrepriseService infoEntrepriseService;
     private final TypeContratService    typeContratService;
 
+    /* Variables de Paie  */
+    private final AbsenceMapper absenceMapper;
+    private final TypeAbsenceMapper typeAbsenceMapper;
+    private final WrapperAbsenceMapper wrapperAbsenceMapper;
+    private final AbsenceRepository absenceRepository;
+    private final NoteDeFraisMapper noteDeFraisMapper;
+    private final NoteDeFraisRepository noteDeFraisRepository;
+    private final AutresVariableMapper autresVariableMapper;
+    private final AutresVariableRepository autresVariableRepository;
+    private final AvanceRappelSalaireMapper avanceRappelSalaireMapper;
+    private final AvanceRappelSalaireRepository avanceRappelSalaireRepository;
+    private final HeuresSupplementairesMapper heuresSupplementairesMapper;
+    private final HeuresSupplementairesRepository heuresSupplementairesRepository;
+    private final PrimeMapper primeMapper;
+    private final TypePrimeMapper typePrimeMapper;
+    private final WrapperPrimeMapper wrapperPrimeMapper;
+    private final PrimeRepository primeRepository;
+
+
     public EmployeServiceImpl(EmployeRepository employeRepository, EmployeMapper employeMapper, WrapperEmployeMapper wrapperEmployeMapper, AdresseService adresseService,
-                    StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService) {
+                              StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService,
+                              AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper,
+                              WrapperAbsenceMapper wrapperAbsenceMapper, AbsenceRepository absenceRepository,
+                              NoteDeFraisMapper noteDeFraisMapper, NoteDeFraisRepository noteDeFraisRepository,
+                              AutresVariableMapper autresVariableMapper, AutresVariableRepository autresVariableRepository,
+                              AvanceRappelSalaireMapper avanceRappelSalaireMapper, AvanceRappelSalaireRepository avanceRappelSalaireRepository,
+                              HeuresSupplementairesMapper heuresSupplementairesMapper, HeuresSupplementairesRepository heuresSupplementairesRepository,
+                              PrimeMapper primeMapper, TypePrimeMapper typePrimeMapper,
+                              WrapperPrimeMapper wrapperPrimeMapper, PrimeRepository primeRepository) {
         this.employeRepository = employeRepository;
         this.employeMapper = employeMapper;
         this.wrapperEmployeMapper = wrapperEmployeMapper;
@@ -62,6 +84,24 @@ public class EmployeServiceImpl implements EmployeService {
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
         this.typeContratService = typeContratService;
+
+        // Variables de Paie
+        this.absenceMapper = absenceMapper;
+        this.typeAbsenceMapper = typeAbsenceMapper;
+        this.wrapperAbsenceMapper = wrapperAbsenceMapper;
+        this.absenceRepository = absenceRepository;
+        this.noteDeFraisMapper = noteDeFraisMapper;
+        this.noteDeFraisRepository = noteDeFraisRepository;
+        this.autresVariableMapper = autresVariableMapper;
+        this.autresVariableRepository = autresVariableRepository;
+        this.avanceRappelSalaireMapper = avanceRappelSalaireMapper;
+        this.avanceRappelSalaireRepository = avanceRappelSalaireRepository;
+        this.heuresSupplementairesMapper = heuresSupplementairesMapper;
+        this.heuresSupplementairesRepository = heuresSupplementairesRepository;
+        this.primeMapper = primeMapper;
+        this.typePrimeMapper = typePrimeMapper;
+        this.wrapperPrimeMapper = wrapperPrimeMapper;
+        this.primeRepository = primeRepository;
     }
 
     @Override
@@ -182,6 +222,49 @@ public class EmployeServiceImpl implements EmployeService {
        wrapperEmploye.setCodeRef("EMPEND");        
        final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);        
        return archivedWrapperemploye;
+    }
+
+    @Override
+    public WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
+        log.debug("Request to get all NoteDeFrais by employe {}, annee {}, mois {}", idEmploye, annee, mois);
+        // Absences
+        List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+        List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
+        for (Absence absence : absenceList){
+            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()));
+            wrapperAbsenceList.add(wrapperAbsence);
+        }
+        // Autres Variables
+        List<AutresVariableDTO> autresVariableDTOList = autresVariableRepository.findAllAutresVariableByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
+                .map(autresVariableMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        // Avance/RappelSalaire
+        List<AvanceRappelSalaireDTO> avanceRappelSalaireDTOList = avanceRappelSalaireRepository.findAllAvanceRappelSalaireByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
+                .map(avanceRappelSalaireMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        // Heures supplémentaires
+        List<HeuresSupplementairesDTO> heuresSupplementairesDTOList = heuresSupplementairesRepository.findAllHeuresSupplementairesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
+                .map(heuresSupplementairesMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        // Notes de Frais
+        List<NoteDeFraisDTO> noteDeFraisDTOList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
+                .map(noteDeFraisMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+        // Primes
+        List<Prime> primeList = primeRepository.findAllPrimeByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+        List<WrapperPrime> wrapperPrimeList = new ArrayList<>();
+        for (Prime prime : primeList){
+            WrapperPrime wrapperPrime = new WrapperPrime(primeMapper.toDto(prime), typePrimeMapper.toDto(prime.getTypePrime()));
+            wrapperPrimeList.add(wrapperPrime);
+        }
+
+        WrapperVariablesPaie wrapperVariablesPaie = new WrapperVariablesPaie(wrapperAbsenceList
+                                                                            ,autresVariableDTOList
+                                                                            ,avanceRappelSalaireDTOList
+                                                                            ,heuresSupplementairesDTOList
+                                                                            ,noteDeFraisDTOList
+                                                                            ,wrapperPrimeList);
+        return wrapperVariablesPaie;
     }
 
 }

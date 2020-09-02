@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ReleveDTO;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -140,5 +142,20 @@ public class ReleveResource {
     public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat,@PathVariable Long idSociete) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveIdAndSocieteId(idEtat,idSociete);
+    }
+
+    /**
+     * {@code VALIDATE  /releves/:id} : validate the "id" releve.
+     *
+     * @param id the id of the releveDTO to validate.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+
+    @Secured({AuthoritiesConstants.SOCIETY,AuthoritiesConstants.ADMIN})
+    @PutMapping("/releve/{id}")
+    public ResponseEntity<Void> valideRelever(@PathVariable Long id){
+        log.debug("REST request to validate Releve");
+        releveService.validateReleve(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

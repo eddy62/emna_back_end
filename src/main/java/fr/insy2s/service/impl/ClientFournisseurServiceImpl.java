@@ -207,16 +207,18 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             wrapperCLient.setSiren(clientSaved.getSiren());
             wrapperCLient.setIdSociete(clientSaved.getSocieteId());
 
-            Optional<Adresse> adresse = adresseRepository.findById(client.getAdresse().getId());
-            if(adresse !=null) {
-                AdresseDTO adresseDTO = adresseMapper.toDto(adresse.get());
-                wrapperCLient.setIdAdresse(adresseDTO.getId());
-                wrapperCLient.setNumeroRue(adresseDTO.getNumeroRue());
-                wrapperCLient.setNomRue(adresseDTO.getNomRue());
-                wrapperCLient.setBoitePostale(adresseDTO.getBoitePostale());
-                wrapperCLient.setCodePostal(adresseDTO.getCodePostal());
-                wrapperCLient.setVille(adresseDTO.getVille());
-                wrapperCLient.setPays(adresseDTO.getPays());
+            if (client.getAdresse()!=null) {
+                Optional<Adresse> adresse = adresseRepository.findById(client.getAdresse().getId());
+                if (adresse != null) {
+                    AdresseDTO adresseDTO = adresseMapper.toDto(adresse.get());
+                    wrapperCLient.setIdAdresse(adresseDTO.getId());
+                    wrapperCLient.setNumeroRue(adresseDTO.getNumeroRue());
+                    wrapperCLient.setNomRue(adresseDTO.getNomRue());
+                    wrapperCLient.setBoitePostale(adresseDTO.getBoitePostale());
+                    wrapperCLient.setCodePostal(adresseDTO.getCodePostal());
+                    wrapperCLient.setVille(adresseDTO.getVille());
+                    wrapperCLient.setPays(adresseDTO.getPays());
+                }
             }
 
             return wrapperCLient;
@@ -289,6 +291,19 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
     public UserDTO findOneByLogin(final String loginUser) {
         return userMapper.userToUserDTO(userRepository.findOneByLogin(loginUser).get());
     }
+
+    /**
+     * Get one the clientFounisseur by name and societe id.
+     * @param nom the name of the entity
+     * @return the  entity.
+     */
+    @Override
+    public Optional<ClientFournisseurDTO> findByNomAndSocieteId(String nom, Long id) {
+        log.debug("Request to get ClientFournisseur : {}",nom);
+        return clientFournisseurRepository.findByNomAndSocieteId(nom, id)
+            .map(clientFournisseurMapper::toDto);
+    }
+
 
     @Override
     public Boolean connectedUserIsSociete(){

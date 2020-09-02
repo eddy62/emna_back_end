@@ -80,6 +80,8 @@ public interface ClientFournisseurService {
      * @return the entity
      */
     Optional<ClientFournisseurDTO> findByNom(String nom);
+
+    Optional<ClientFournisseurDTO> findByNomAndSocieteId(String nom, Long id);
     /**
      * check the id of current user
      * @param id

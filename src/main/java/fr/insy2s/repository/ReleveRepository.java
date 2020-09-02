@@ -20,6 +20,10 @@ public interface ReleveRepository extends JpaRepository<Releve, Long> {
 	List <Releve> findAllByEtatReleveId(Long id);
 	List <Releve> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
 
+	@Modifying
+	@Query("update  Releve r set r.etatReleve.id =:idEtat where r.id=:id")
+    Integer validateRelever(@Param("id") Long id,@Param("idEtat") Long idEtat);
+
 	@Query("SELECT SUM(o.solde) FROM Operation o WHERE o.releve.id = :id")
     Optional<BigDecimal> getReleveSoldeById(@Param(value = "id") Long id);
 }
