@@ -247,7 +247,7 @@ public class EmployeServiceImpl implements EmployeService {
         if (employeDTO.getDateSortie() == null) {
             employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
         }
-        if (isEmployeExist(employeDTO.getMatricule())) {
+        if (isEmployeMatriculeExist(employeDTO.getMatricule())) {
             return Optional.empty();
         }
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
@@ -353,8 +353,9 @@ public class EmployeServiceImpl implements EmployeService {
         final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);
         return archivedWrapperemploye;
     }
-
-    private boolean isEmployeExist(final String matricule) {
+    
+    @Override
+    public boolean isEmployeMatriculeExist(final String matricule) {
         final Employe employe = employeRepository.findByMatricule(matricule);
         if (employe != null) {
             return true;
