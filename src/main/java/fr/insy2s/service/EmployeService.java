@@ -1,13 +1,13 @@
 package fr.insy2s.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Service Interface for managing {@link fr.insy2s.domain.Employe}.
@@ -75,7 +75,7 @@ public interface EmployeService {
      * @param wrapperEmploye
      * @return the created WrapperEmploye
      */
-    WrapperEmploye createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+    Optional<WrapperEmploye> createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
 
     /**
      * Update the WrapperEmploye
@@ -89,8 +89,9 @@ public interface EmployeService {
      * Delete the "id" WrapperEmploye
      *
      * @param id
+     * @return 
      */
-    void deleteWrapperEmploye(Long id);
+    boolean deleteWrapperEmploye(Long id);
     
     /**
      * Archive the "id" WrapperEmploye
@@ -99,5 +100,14 @@ public interface EmployeService {
      * @return the archived WrapperEmploye
      */
     WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+    
+    /**
+     * Check si un numero de matricule existe deja
+     * @param matricule
+     * @return
+     */
+    boolean isEmployeMatriculeExist(final String matricule);
+
+    WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 
 }

@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.ArticleVM;
 import fr.insy2s.web.rest.vm.ClauseVm;
@@ -135,12 +137,12 @@ public class EmployeResource {
         List<ArticleVM> listArticle = new ArrayList<>();
         List<ClauseVm> listClause = new ArrayList<>();
 
-        int index=1;
-        boolean present=false;
-        boolean presentEmploye=false;
+        int index = 1;
+        boolean present = false;
+        boolean presentEmploye = false;
         for (IEmployeContratProjection iEmployeContratProjection : listIEmployeContratProjections) { //*19
-            present=false;
-            presentEmploye=false;
+            present = false;
+            presentEmploye = false;
             ArticleVM articleVM = new ArticleVM();
             ClauseVm clauseVm = new ClauseVm();
             EmployerVM employerVM = new EmployerVM();
@@ -149,11 +151,11 @@ public class EmployeResource {
             employerVM.setEmployerPrenom(iEmployeContratProjection.getEmployerPrenom());
             employerVM.setSocieteId(iEmployeContratProjection.getSocieteId());
             for (EmployerVM employe : listEmployer) {
-                if (employe.getEmployerId()==iEmployeContratProjection.getEmployerId()){
-                    presentEmploye=true;
+                if (employe.getEmployerId() == iEmployeContratProjection.getEmployerId()) {
+                    presentEmploye = true;
                 }
             }
-            if(!presentEmploye){
+            if (!presentEmploye) {
                 listEmployer.add(employerVM);
             }
             articleVM.setArticleId(iEmployeContratProjection.getArticleId());
@@ -165,12 +167,12 @@ public class EmployeResource {
                 listArticle.add(articleVM);
                 index++;
             }
-            for(ClauseVm clause : listClause){
-                if(iEmployeContratProjection.getClauseId()==clause.getClauseId()){
-                    present=true;
+            for (ClauseVm clause : listClause) {
+                if (iEmployeContratProjection.getClauseId() == clause.getClauseId()) {
+                    present = true;
                 }
             }
-            if(!present){
+            if (!present) {
                 clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
                 clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
                 clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
@@ -187,7 +189,6 @@ public class EmployeResource {
 
         employeEtArticleVM.setArticleVMList(listArticle);
         employeEtArticleVM.setEmployerVMList(listEmployer);
-
 
         return employeEtArticleVM;
 
@@ -244,9 +245,15 @@ public class EmployeResource {
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
-        return ResponseEntity.created(new URI("/api/wrapperemployes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-                        .body(result);
+        if (employeService.isEmployeMatriculeExist(wrapperEmploye.getMatricule())) {
+            throw new BadRequestAlertException("Le numero de matricule existe déjà !", ENTITY_NAME, " Numero Matricule unique");
+        }
+        if ((LocalDate.now().getYear() - wrapperEmploye.getDateNaissance().getYear()) < 14) {
+            throw new BadRequestAlertException("L'âge minimum pour travailler est de 14 ans !", ENTITY_NAME, " Date de naissance incorrect");
+        }
+        Optional<WrapperEmploye> result = employeService.createWrapperEmploye(wrapperEmploye);
+
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
     /**
@@ -274,10 +281,10 @@ public class EmployeResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/wrapperemployes/{id}")
-    public ResponseEntity<Void> deleteWrapperEmploye(@PathVariable Long id) {
+    public boolean deleteWrapperEmploye(@PathVariable Long id) {
         log.debug("REST request to delete WrapperEmploye : {}", id);
-        employeService.deleteWrapperEmploye(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        boolean result = employeService.deleteWrapperEmploye(id);
+        return result;
     }
 
     /**
@@ -336,6 +343,12 @@ public class EmployeResource {
         }
         WrapperEmploye result = employeService.archiveWrapperEmploye(wrapperEmploye);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
+    }
+
+    @GetMapping("/wrappervariablespaie/employe/{idEmploye}/annee/{annee}/mois/{mois}")
+    public WrapperVariablesPaie getOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
+        log.debug("REST request to get one WrapperVariablesPaie by employe, annee, mois : {}", idEmploye, annee, mois);
+        return employeService.findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
     }
 
 }

@@ -1,15 +1,22 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.domain.Releve;
+import fr.insy2s.repository.ReleveRepository;
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
+import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ReleveDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.models.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -33,9 +40,11 @@ public class ReleveResource {
     private String applicationName;
 
     private final ReleveService releveService;
+    private final ReleveRepository releveRepository;
 
-    public ReleveResource(ReleveService releveService) {
+    public ReleveResource(ReleveService releveService, ReleveRepository releveRepository) {
         this.releveService = releveService;
+        this.releveRepository = releveRepository;
     }
 
     /**
@@ -126,19 +135,59 @@ public class ReleveResource {
         releveService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
     @GetMapping("/releve/societe/{id}")
     public List<ReleveDTO> getAllRelevesBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllBySocieteId(id);
     }
+
     @GetMapping("/releve/etat/{id}")
     public List<ReleveDTO> getAllRelevesByEtatReleveId(@PathVariable Long id) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveId(id);
     }
+
     @GetMapping("/releve/etat/{idEtat}/societe/{idSociete}")
-    public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat,@PathVariable Long idSociete) {
+    public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat, @PathVariable Long idSociete) {
         log.debug("REST request to get all Operations by Releve id ");
-        return releveService.findAllByEtatReleveIdAndSocieteId(idEtat,idSociete);
+        return releveService.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete);
+    }
+
+    /**
+     * {@code VALIDATE  /releves/:id} : validate the "id" releve.
+     *
+     * @param id the id of the releveDTO to validate.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
+
+    @Secured({AuthoritiesConstants.SOCIETY, AuthoritiesConstants.ADMIN})
+    @PutMapping("/releve/{id}")
+    public ResponseEntity<Void> valideRelever(@PathVariable Long id) {
+        log.debug("REST request to validate Releve");
+        releveService.validateReleve(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * {@code PUT  /releve/valider/comptable/{idReleve}} : Updates etatRelever an existing releve.
+     * @param idReleve the id of releveDTO to validate.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated releveDTO
+     */
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
+    @PutMapping("/releve/valider/comptable/{idReleve}")
+    public ResponseEntity<ReleveDTO> updateEtatRelever(@PathVariable Long idReleve) {
+        log.debug("REST request to update etat releve");
+        if (CheckUtil.isAcountant()) {
+            boolean conditionsBeforValidate = releveService.checkPermissionForThisReleve(idReleve, CheckUtil
+                .getLoginCurrentUser());
+        }
+        return ResponseEntity.ok().body(new ReleveDTO());
+    }
+
+    @GetMapping("/releve/valider/comptable/{idReleve}")
+    public ResponseEntity<Releve> getTest(@PathVariable Long idReleve, @Param("login") String loginCurrentUser){
+        log.info("Teste methode: getTest");
+        return ResponseEntity.ok().body(releveRepository.checkPermissionForThisReleve(idReleve,loginCurrentUser));
     }
 }
