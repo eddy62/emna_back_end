@@ -1,8 +1,10 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
-import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.OperationService;
+import fr.insy2s.service.ReleveService;
+import fr.insy2s.service.dto.ReleveDTO;
+import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.OperationDTO;
 
@@ -36,8 +38,11 @@ public class OperationResource {
 
     private final OperationService operationService;
 
-    public OperationResource(OperationService operationService) {
-        this.operationService = operationService;
+    private final ReleveService releveService;
+
+    public OperationResource(OperationService operationService, ReleveService releveService) {
+        this.operationService   = operationService;
+        this.releveService      = releveService;
     }
 
     /**
@@ -54,6 +59,20 @@ public class OperationResource {
         if (operationDTO.getId() != null) {
             throw new BadRequestAlertException("A new operation cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<ReleveDTO> optionalReleveDTO = releveService.findOne(operationDTO.getReleveId());
+
+        if (optionalReleveDTO.isPresent()) {
+            ReleveDTO releve = optionalReleveDTO.get();
+            if (operationDTO.getDate() == null && !CheckUtil.isDateBetween(
+                operationDTO.getDate(),
+                releve.getDateDebut(),
+                releve.getDateFin())
+            ) {
+                throw new BadRequestAlertException("La date de l'opération est invalide", ENTITY_NAME, "dateOutOfRange");
+            }
+        }
+
         OperationDTO result = operationService.save(operationDTO);
         return ResponseEntity.created(new URI("/api/operations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

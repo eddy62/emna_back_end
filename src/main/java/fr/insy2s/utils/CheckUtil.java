@@ -4,8 +4,10 @@ package fr.insy2s.utils;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.dto.UserDTO;
+import jdk.vm.ci.meta.Local;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +27,6 @@ public class CheckUtil {
         return verifyAuthorityCurrentUser(AuthoritiesConstants.ACCOUNTANT);
     }
 
-
     public static Boolean verifyIfCurrentUserHaveOneOfTheAuthorites(List<String> roles) {
         for (String role: roles) {
             if(verifyAuthorityCurrentUser(role)) return true;
@@ -37,4 +38,9 @@ public class CheckUtil {
     }
     public static boolean checkIfUserHaveRightToAccessUserAutresInformation(String loginToTest) { return (isAdmin()); }
     public static boolean loginIsLoginOfCurrentUser(String loginToTest) { return  (loginToTest.equals(getLoginCurrentUser())); }
+
+    public static boolean isDateBetween(LocalDate startingDate, LocalDate firstDate, LocalDate secondDate)
+    {
+        return !firstDate.isAfter(startingDate) && !secondDate.isBefore(startingDate);
+    }
 }
