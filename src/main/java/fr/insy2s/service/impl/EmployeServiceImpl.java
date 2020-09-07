@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.insy2s.domain.Absence;
 import fr.insy2s.domain.AutresVariable;
+import fr.insy2s.domain.AvanceRappelSalaire;
 import fr.insy2s.domain.Contrat;
 import fr.insy2s.domain.Document;
 import fr.insy2s.domain.Dpae;
@@ -36,6 +37,7 @@ import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.AdresseService;
 import fr.insy2s.service.AutresVariableService;
+import fr.insy2s.service.AvanceRappelSalaireService;
 import fr.insy2s.service.ContratService;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.DpaeService;
@@ -101,6 +103,7 @@ public class EmployeServiceImpl implements EmployeService {
     private final DocumentService                 documentService;
     private final DpaeService                     dpaeService;
     private final ContratService                  contratService;
+    private final AvanceRappelSalaireService avanceRappelSalaireService;
 
     /* Variables de Paie */
     private final AbsenceMapper                   absenceMapper;
@@ -126,7 +129,7 @@ public class EmployeServiceImpl implements EmployeService {
                     HeuresSupplementairesRepository heuresSupplementairesRepository, PrimeMapper primeMapper, TypePrimeMapper typePrimeMapper,
                     PrimeRepository primeRepository, AbsenceService absenceService, PrimeService primeService, FichePaieService fichePaieService,
                     HeuresSupplementairesService heuresSupplementairesService, NoteDeFraisService noteDeFraisService, AutresVariableService autresVariableService, DocumentService documentService,
-                    DpaeService dpaeService, ContratService contratService) {
+                    DpaeService dpaeService, ContratService contratService, AvanceRappelSalaireService avanceRappelSalaireService) {
         this.employeRepository = employeRepository;
         this.employeMapper = employeMapper;
         this.wrapperEmployeMapper = wrapperEmployeMapper;
@@ -135,6 +138,7 @@ public class EmployeServiceImpl implements EmployeService {
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
         this.typeContratService = typeContratService;
+        this.avanceRappelSalaireService = avanceRappelSalaireService;
 
         // Variables de Paie
         this.absenceMapper = absenceMapper;
@@ -264,7 +268,10 @@ public class EmployeServiceImpl implements EmployeService {
         final TypeContratDTO typeContratDTO = typeContratService.findOne(wrapperEmploye.getTypeContratId()).get();
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
-        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        if (wrapperEmploye.getStatutEmployeId()==3) {
+            employeDTO.setStatutEmployeId(1L);
+        }else {
+        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());}
         employeDTO.setTypeContratId(typeContratDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
         final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO);
@@ -325,6 +332,12 @@ public class EmployeServiceImpl implements EmployeService {
             if (!employe.getListeDocuments().isEmpty()) {
                 for (Document document : employe.getListeDocuments()) {
                     documentService.delete(document.getId());
+                }
+            }
+            //AvanceRappelSalaire
+            if (!employe.getListeAvanceRappelSalaires().isEmpty()) {
+                for (AvanceRappelSalaire avanceRappelSalaire : employe.getListeAvanceRappelSalaires()) {
+                    avanceRappelSalaireService.delete(avanceRappelSalaire.getId());
                 }
             }
             //listeDpaes
