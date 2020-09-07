@@ -64,7 +64,7 @@ public class OperationResource {
 
         if (optionalReleveDTO.isPresent()) {
             ReleveDTO releve = optionalReleveDTO.get();
-            if (operationDTO.getDate() == null && !CheckUtil.isDateBetween(
+            if (operationDTO.getDate() == null || !CheckUtil.isDateBetween(
                 operationDTO.getDate(),
                 releve.getDateDebut(),
                 releve.getDateFin())
