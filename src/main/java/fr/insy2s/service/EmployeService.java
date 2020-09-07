@@ -100,6 +100,13 @@ public interface EmployeService {
      * @return the archived WrapperEmploye
      */
     WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
+    
+    /**
+     * Check si un numero de matricule existe deja
+     * @param matricule
+     * @return
+     */
+    boolean isEmployeMatriculeExist(final String matricule);
 
     WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 

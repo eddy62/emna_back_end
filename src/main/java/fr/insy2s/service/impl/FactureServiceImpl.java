@@ -49,6 +49,8 @@ public class FactureServiceImpl implements FactureService {
 
     private final ClientFournisseurRepository clientFournisseurRepository;
 
+
+
     public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository) {
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
@@ -58,6 +60,7 @@ public class FactureServiceImpl implements FactureService {
         this.clientFournisseurService = clientFournisseurService;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.clientFournisseurRepository = clientFournisseurRepository;
+
     }
 
     @Override
@@ -128,4 +131,14 @@ public class FactureServiceImpl implements FactureService {
             .map(factureMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+
+    @Override
+    public List<FactureDTO> findAllInvoicesByStatement(Long idReleve) {
+        log.debug("Request to get all Factures for the statement concerned: {}", idReleve);
+        return this.factureRepository.findAllInvoicesByStatement(idReleve)
+                                     .stream()
+                                     .map(factureMapper::toDto)
+                                     .collect(Collectors.toCollection(LinkedList::new));
+    }
+
 }

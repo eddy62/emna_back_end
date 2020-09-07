@@ -2,14 +2,13 @@ package fr.insy2s.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import fr.insy2s.utils.wrapper.WrapperAbsence;
-import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +26,7 @@ import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.ArticleVM;
 import fr.insy2s.web.rest.vm.ClauseVm;
@@ -137,12 +137,12 @@ public class EmployeResource {
         List<ArticleVM> listArticle = new ArrayList<>();
         List<ClauseVm> listClause = new ArrayList<>();
 
-        int index=1;
-        boolean present=false;
-        boolean presentEmploye=false;
+        int index = 1;
+        boolean present = false;
+        boolean presentEmploye = false;
         for (IEmployeContratProjection iEmployeContratProjection : listIEmployeContratProjections) { //*19
-            present=false;
-            presentEmploye=false;
+            present = false;
+            presentEmploye = false;
             ArticleVM articleVM = new ArticleVM();
             ClauseVm clauseVm = new ClauseVm();
             EmployerVM employerVM = new EmployerVM();
@@ -151,11 +151,11 @@ public class EmployeResource {
             employerVM.setEmployerPrenom(iEmployeContratProjection.getEmployerPrenom());
             employerVM.setSocieteId(iEmployeContratProjection.getSocieteId());
             for (EmployerVM employe : listEmployer) {
-                if (employe.getEmployerId()==iEmployeContratProjection.getEmployerId()){
-                    presentEmploye=true;
+                if (employe.getEmployerId() == iEmployeContratProjection.getEmployerId()) {
+                    presentEmploye = true;
                 }
             }
-            if(!presentEmploye){
+            if (!presentEmploye) {
                 listEmployer.add(employerVM);
             }
             articleVM.setArticleId(iEmployeContratProjection.getArticleId());
@@ -167,12 +167,12 @@ public class EmployeResource {
                 listArticle.add(articleVM);
                 index++;
             }
-            for(ClauseVm clause : listClause){
-                if(iEmployeContratProjection.getClauseId()==clause.getClauseId()){
-                    present=true;
+            for (ClauseVm clause : listClause) {
+                if (iEmployeContratProjection.getClauseId() == clause.getClauseId()) {
+                    present = true;
                 }
             }
-            if(!present){
+            if (!present) {
                 clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
                 clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
                 clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
@@ -189,7 +189,6 @@ public class EmployeResource {
 
         employeEtArticleVM.setArticleVMList(listArticle);
         employeEtArticleVM.setEmployerVMList(listEmployer);
-
 
         return employeEtArticleVM;
 
@@ -246,8 +245,14 @@ public class EmployeResource {
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (employeService.isEmployeMatriculeExist(wrapperEmploye.getMatricule())) {
+            throw new BadRequestAlertException("Le numero de matricule existe déjà !", ENTITY_NAME, " Numero Matricule unique");
+        }
+        if ((LocalDate.now().getYear() - wrapperEmploye.getDateNaissance().getYear()) < 14) {
+            throw new BadRequestAlertException("L'âge minimum pour travailler est de 14 ans !", ENTITY_NAME, " Date de naissance incorrect");
+        }
         Optional<WrapperEmploye> result = employeService.createWrapperEmploye(wrapperEmploye);
-       
+
         return ResponseUtil.wrapOrNotFound(result);
     }
 
@@ -345,6 +350,5 @@ public class EmployeResource {
         log.debug("REST request to get one WrapperVariablesPaie by employe, annee, mois : {}", idEmploye, annee, mois);
         return employeService.findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
     }
-
 
 }
