@@ -1,9 +1,9 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.repository.EtatReleveRepository;
-import fr.insy2s.service.ReleveService;
 import fr.insy2s.domain.Releve;
+import fr.insy2s.repository.EtatReleveRepository;
 import fr.insy2s.repository.ReleveRepository;
+import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
 import fr.insy2s.utils.EtatReleveConstants;
@@ -38,6 +38,7 @@ public class ReleveServiceImpl implements ReleveService {
         this.releveRepository = releveRepository;
         this.releveMapper = releveMapper;
         this.etatReleveRepository = etatReleveRepository;
+
     }
 
     @Override
