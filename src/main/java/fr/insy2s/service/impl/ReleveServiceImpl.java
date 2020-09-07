@@ -104,7 +104,12 @@ public class ReleveServiceImpl implements ReleveService {
     @Override
     public boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser) {
         log.debug("Request to get relever by idReleve and loginCurrentUser");
-        releveRepository.checkPermissionForThisReleve(idReleve,loginCurrentUser);
-        return false;
+        if(releveRepository.checkPermissionForThisReleve(idReleve,loginCurrentUser) == null){
+            log.debug("Rest return true");
+            return false;
+        }else{
+            log.debug("Rest return true");
+            return true;
+        }
     }
 }

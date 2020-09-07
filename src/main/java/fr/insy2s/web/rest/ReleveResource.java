@@ -174,20 +174,14 @@ public class ReleveResource {
      * @param idReleve the id of releveDTO to validate.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated releveDTO
      */
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
+//    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
     @PutMapping("/releve/valider/comptable/{idReleve}")
-    public ResponseEntity<ReleveDTO> updateEtatRelever(@PathVariable Long idReleve) {
+    public ResponseEntity<Boolean> updateEtatRelever(@PathVariable Long idReleve) {
         log.debug("REST request to update etat releve");
-        if (CheckUtil.isAcountant()) {
-            boolean conditionsBeforValidate = releveService.checkPermissionForThisReleve(idReleve, CheckUtil
-                .getLoginCurrentUser());
-        }
-        return ResponseEntity.ok().body(new ReleveDTO());
-    }
-
-    @GetMapping("/releve/valider/comptable/{idReleve}")
-    public ResponseEntity<Releve> getTest(@PathVariable Long idReleve, @Param("login") String loginCurrentUser){
-        log.info("Teste methode: getTest");
-        return ResponseEntity.ok().body(releveRepository.checkPermissionForThisReleve(idReleve,loginCurrentUser));
+//        if (CheckUtil.isAcountant()) {
+//            boolean conditionsBeforValidate = releveService.checkPermissionForThisReleve(idReleve, CheckUtil
+//                .getLoginCurrentUser());
+//        }
+        return ResponseEntity.ok().body(releveService.checkPermissionForThisReleve(idReleve, "accountant"));
     }
 }
