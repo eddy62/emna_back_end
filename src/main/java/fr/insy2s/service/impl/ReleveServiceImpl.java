@@ -71,21 +71,33 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("Request to delete Releve : {}", id);
         releveRepository.deleteById(id);
     }
+
     public List<ReleveDTO> findAllBySocieteId(Long id) {
-  		 log.debug("Request to get all Releves by Societe Id");
-  		return releveRepository.findAllBySocieteId(id).stream().map(releveMapper::toDto)
-  	            .collect(Collectors.toCollection(LinkedList::new));
-  	}
-   public List<ReleveDTO> findAllByEtatReleveId(Long id) {
- 		 log.debug("Request to get all Releves by Societe Id");
- 		return releveRepository.findAllByEtatReleveId(id).stream().map(releveMapper::toDto)
- 	            .collect(Collectors.toCollection(LinkedList::new));
- 	}
-   public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete) {
-		 log.debug("Request to get all Releves by Societe Id");
-		return releveRepository.findAllByEtatReleveIdAndSocieteId( idEtat,idSociete).stream().map(releveMapper::toDto)
-	            .collect(Collectors.toCollection(LinkedList::new));
-	}
+        log.debug("Request to get all Releves by Societe Id");
+        return releveRepository.findAllBySocieteId(id).stream().map(releveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public List<ReleveDTO> findAllByEtatReleveId(Long id) {
+        log.debug("Request to get all Releves by Societe Id");
+        return releveRepository.findAllByEtatReleveId(id).stream().map(releveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
+        log.debug("Request to get all Releves by Societe Id");
+        List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
+            .stream().map(releveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+        Optional<BigDecimal> solde;
+        for (ReleveDTO releve : releves) {
+            solde = getReleveSoldeById(releve.getId());
+            releve.setSolde(
+                solde.map(BigDecimal::doubleValue).orElse(0.0)
+             );
+        }
+        return releves;
+    }
 
     @Override
     public boolean validateReleve(Long id) {
@@ -95,8 +107,7 @@ public class ReleveServiceImpl implements ReleveService {
     }
 
     @Override
-    public Optional<BigDecimal> getReleveSoldeById(Long id)
-    {
+    public Optional<BigDecimal> getReleveSoldeById(Long id) {
         log.debug("Request to get solde by Releve Id");
         return releveRepository.getReleveSoldeById(id);
     }
@@ -104,7 +115,7 @@ public class ReleveServiceImpl implements ReleveService {
     @Override
     public boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser) {
         log.debug("Request to get relever by idReleve and loginCurrentUser");
-        releveRepository.checkPermissionForThisReleve(idReleve,loginCurrentUser);
+        releveRepository.checkPermissionForThisReleve(idReleve, loginCurrentUser);
         return false;
     }
 }
