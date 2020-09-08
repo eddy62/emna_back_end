@@ -1,13 +1,12 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.NoteDeFraisService;
 import fr.insy2s.domain.NoteDeFrais;
 import fr.insy2s.repository.NoteDeFraisRepository;
+import fr.insy2s.service.NoteDeFraisService;
 import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.service.mapper.NoteDeFraisMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +63,13 @@ public class NoteDeFraisServiceImpl implements NoteDeFraisService {
     public void delete(Long id) {
         log.debug("Request to delete NoteDeFrais : {}", id);
         noteDeFraisRepository.deleteById(id);
+    }
+
+    @Override
+    public List<NoteDeFraisDTO> findAllNoteDeFraisByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
+        log.debug("Request to get all NoteDeFrais with IdEmploye {} Annee {} Mois {}",idEmploye,annee,mois);
+        return noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
+                .map(noteDeFraisMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 }

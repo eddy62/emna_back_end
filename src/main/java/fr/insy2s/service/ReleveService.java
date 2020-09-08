@@ -45,5 +45,14 @@ public interface ReleveService {
     List <ReleveDTO> findAllByEtatReleveId(Long id);
     List <ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
 
+    /**
+     * Validate the "id" releve.
+     *
+     * @param id the id of the entity.
+     */
+    boolean validateReleve(Long id);
+
     Optional<BigDecimal> getReleveSoldeById(Long id);
+
+    boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser);
 }

@@ -47,7 +47,9 @@ public class FactureServiceImpl implements FactureService {
 
     private final AdresseRepository adresseRepository;
 
+
     public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository, AdresseRepository adresseRepository) {
+
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
         this.documentService = documentService;
@@ -132,12 +134,14 @@ public class FactureServiceImpl implements FactureService {
 
     @Override
     public List<FactureDTO> findAllBySocieteId(Long id) {
-        return factureRepository.findAllBySocieteId(id).stream()
+        return factureRepository.
+            findAllBySocieteId(id).stream()
             .map(factureMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
+
     public List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id) {
         List<Facture> listeFacture = factureRepository.findAllBySocieteId(id);
         List<WrapperListeFacture> wrapperListeFactures = new ArrayList<WrapperListeFacture>();
@@ -149,4 +153,14 @@ public class FactureServiceImpl implements FactureService {
         }
         return wrapperListeFactures;
     }
+
+    public List<FactureDTO> findAllInvoicesByStatement(Long idReleve) {
+        log.debug("Request to get all Factures for the statement concerned: {}", idReleve);
+        return this.factureRepository.findAllInvoicesByStatement(idReleve)
+                                     .stream()
+                                     .map(factureMapper::toDto)
+                                     .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+
 }

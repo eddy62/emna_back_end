@@ -2,6 +2,9 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.OperationService;
+import fr.insy2s.service.ReleveService;
+import fr.insy2s.service.dto.ReleveDTO;
+import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.OperationDTO;
 
@@ -12,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -36,8 +38,11 @@ public class OperationResource {
 
     private final OperationService operationService;
 
-    public OperationResource(OperationService operationService) {
-        this.operationService = operationService;
+    private final ReleveService releveService;
+
+    public OperationResource(OperationService operationService, ReleveService releveService) {
+        this.operationService   = operationService;
+        this.releveService      = releveService;
     }
 
     /**
@@ -47,8 +52,6 @@ public class OperationResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new operationDTO, or with status {@code 400 (Bad Request)} if the operation has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-//    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")"
-//        + "or hasRole(\"" + AuthoritiesConstants.SOCIETY + "\") ")
     @Secured({AuthoritiesConstants.ADMIN,AuthoritiesConstants.SOCIETY})
     @PostMapping("/operations")
     public ResponseEntity<OperationDTO> createOperation(@RequestBody OperationDTO operationDTO) throws URISyntaxException {
@@ -56,6 +59,20 @@ public class OperationResource {
         if (operationDTO.getId() != null) {
             throw new BadRequestAlertException("A new operation cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<ReleveDTO> optionalReleveDTO = releveService.findOne(operationDTO.getReleveId());
+
+        if (optionalReleveDTO.isPresent()) {
+            ReleveDTO releve = optionalReleveDTO.get();
+            if (operationDTO.getDate() == null || !CheckUtil.isDateBetween(
+                operationDTO.getDate(),
+                releve.getDateDebut(),
+                releve.getDateFin())
+            ) {
+                throw new BadRequestAlertException("La date de l'opération est invalide", ENTITY_NAME, "dateOutOfRange");
+            }
+        }
+
         OperationDTO result = operationService.save(operationDTO);
         return ResponseEntity.created(new URI("/api/operations/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -71,6 +88,7 @@ public class OperationResource {
      * or with status {@code 500 (Internal Server Error)} if the operationDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @Secured({AuthoritiesConstants.ADMIN,AuthoritiesConstants.SOCIETY})
     @PutMapping("/operations")
     public ResponseEntity<OperationDTO> updateOperation(@RequestBody OperationDTO operationDTO) throws URISyntaxException {
         log.debug("REST request to update Operation : {}", operationDTO);

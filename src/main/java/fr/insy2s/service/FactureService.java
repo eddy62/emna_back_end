@@ -1,10 +1,8 @@
 package fr.insy2s.service;
 
-import fr.insy2s.domain.Facture;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.utils.wrapper.WrapperListeFacture;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +47,9 @@ public interface FactureService {
 
     List<FactureDTO> findAllBySocieteId(Long id);
 
+
     List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id);
+
+    List<FactureDTO> findAllInvoicesByStatement(Long idReleve);
+
 }

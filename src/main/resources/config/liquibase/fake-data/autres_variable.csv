@@ -1,5 +1,5 @@
 id;description;date;montant;justificatif;mois;annee;etat_variable_paie_id;employe_id
-1;Indemnité de congé payé;2020-07-22;2990;Notification;7;2020;1;6
+1;Indemnité de congé payé;2020-07-22;2990;Notification;7;2020;1;1
 2;Indemnité de licenciement;2020-07-22;46297;Notification;7;2020;1;6
 3;Solde de tous compte;2020-07-22;46297;Notification;7;2020;1;6
 4;Indemnité de congé payé;2020-07-22;46297;Notification;7;2020;1;2

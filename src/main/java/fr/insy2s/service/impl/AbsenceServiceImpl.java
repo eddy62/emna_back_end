@@ -1,16 +1,18 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.AbsenceService;
 import fr.insy2s.domain.Absence;
 import fr.insy2s.repository.AbsenceRepository;
+import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.dto.AbsenceDTO;
 import fr.insy2s.service.mapper.AbsenceMapper;
+import fr.insy2s.service.mapper.TypeAbsenceMapper;
+import fr.insy2s.utils.wrapper.WrapperAbsence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +31,12 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     private final AbsenceMapper absenceMapper;
 
-    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceMapper absenceMapper) {
+    private final TypeAbsenceMapper typeAbsenceMapper;
+
+    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper) {
         this.absenceRepository = absenceRepository;
         this.absenceMapper = absenceMapper;
+        this.typeAbsenceMapper = typeAbsenceMapper;
     }
 
     @Override
@@ -64,5 +69,16 @@ public class AbsenceServiceImpl implements AbsenceService {
     public void delete(Long id) {
         log.debug("Request to delete Absence : {}", id);
         absenceRepository.deleteById(id);
+    }
+
+    @Override
+    public List<WrapperAbsence> findAllWrapperAbsenceByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
+        List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+        List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
+        for (Absence absence : absenceList){
+            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()));
+            wrapperAbsenceList.add(wrapperAbsence);
+        }
+        return wrapperAbsenceList;
     }
 }
