@@ -1,11 +1,9 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Facture;
 import fr.insy2s.service.FactureService;
+import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.FactureDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
@@ -123,8 +120,8 @@ public class FactureResource {
         log.debug("REST request to save Facture : {}", factureTemp);
         FactureDTO result = factureService.postFactureWithFile(factureTemp);
         return ResponseEntity.created(new URI("/api/factures/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     @GetMapping("/factures/societe/{id}")
@@ -132,4 +129,17 @@ public class FactureResource {
         log.debug("REST request to get all Factures By User");
         return factureService.findAllBySocieteId(id);
     }
+
+    /**
+     * {@code GET  /factures/relevé/:id} : get all the factures in statement id.
+     *
+     * @param idReleve the id of the statement concerned
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
+     */
+    @GetMapping("/factures/relevé/{idReleve}")
+    public List<FactureDTO> getAllInvoicesByStatement(@PathVariable Long idReleve) {
+        log.debug("REST request to get all invoices of the statement concerned : {}", idReleve);
+        return factureService.findAllInvoicesByStatement(idReleve);
+    }
+
 }

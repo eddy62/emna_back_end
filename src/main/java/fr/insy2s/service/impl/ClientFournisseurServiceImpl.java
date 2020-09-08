@@ -1,15 +1,15 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.Adresse;
+import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.domain.Societe;
 import fr.insy2s.repository.AdresseRepository;
+import fr.insy2s.repository.ClientFournisseurRepository;
 import fr.insy2s.repository.SocieteRepository;
 import fr.insy2s.repository.UserRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.ClientFournisseurService;
-import fr.insy2s.domain.ClientFournisseur;
-import fr.insy2s.repository.ClientFournisseurRepository;
 import fr.insy2s.service.dto.AdresseDTO;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.UserDTO;
@@ -19,7 +19,6 @@ import fr.insy2s.service.mapper.UserMapper;
 import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,7 +118,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         ClientFournisseur client = new ClientFournisseur();
         try {
             client.setEmail(clientFournisseur.getEmail());
-            client.setNom(clientFournisseur.getNom());
+            client.setNom(clientFournisseur.getNom().toUpperCase());
             client.setSiren(clientFournisseur.getSiren());
             client.setTelephone(clientFournisseur.getTelephone());
             if (clientFournisseur.getIdSociete() != null) {
@@ -277,9 +276,9 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
      */
     @Override
     public Optional<ClientFournisseurDTO> findByNom(String nom ) {
-        log.debug("Request to get ClientFournisseur : {}",nom);
-        return clientFournisseurRepository.findByNom(nom)
-            .map(clientFournisseurMapper::toDto);
+        log.debug("Request to get ClientFournisseur : {}", nom);
+        return clientFournisseurRepository.findByNom(nom.toUpperCase())
+                .map(clientFournisseurMapper::toDto);
     }
 
     /**

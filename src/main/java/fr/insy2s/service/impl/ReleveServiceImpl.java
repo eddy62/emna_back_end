@@ -1,9 +1,9 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.repository.EtatReleveRepository;
-import fr.insy2s.service.ReleveService;
 import fr.insy2s.domain.Releve;
+import fr.insy2s.repository.EtatReleveRepository;
 import fr.insy2s.repository.ReleveRepository;
+import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
 import fr.insy2s.utils.EtatReleveConstants;
@@ -95,9 +95,15 @@ public class ReleveServiceImpl implements ReleveService {
     }
 
     @Override
-    public Optional<BigDecimal> getReleveSoldeById(Long id)
-    {
+    public Optional<BigDecimal> getReleveSoldeById(Long id) {
         log.debug("Request to get solde by Releve Id");
         return releveRepository.getReleveSoldeById(id);
+    }
+
+    @Override
+    public boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser) {
+        log.debug("Request to get relever by idReleve and loginCurrentUser");
+        releveRepository.checkPermissionForThisReleve(idReleve, loginCurrentUser);
+        return false;
     }
 }

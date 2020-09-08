@@ -41,9 +41,12 @@ public interface ReleveService {
      * @param id the id of the entity.
      */
     void delete(Long id);
-    List <ReleveDTO> findAllBySocieteId(Long id);
-    List <ReleveDTO> findAllByEtatReleveId(Long id);
-    List <ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
+
+    List<ReleveDTO> findAllBySocieteId(Long id);
+
+    List<ReleveDTO> findAllByEtatReleveId(Long id);
+
+    List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete);
 
     /**
      * Validate the "id" releve.
@@ -53,4 +56,6 @@ public interface ReleveService {
     boolean validateReleve(Long id);
 
     Optional<BigDecimal> getReleveSoldeById(Long id);
+
+    boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser);
 }

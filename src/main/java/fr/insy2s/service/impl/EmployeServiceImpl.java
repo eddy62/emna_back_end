@@ -41,27 +41,28 @@ public class EmployeServiceImpl implements EmployeService {
     private final AdresseService                  adresseService;
     private final StatutEmployeService            statutEmployeService;
     private final SocieteService                  societeService;
-    private final InfoEntrepriseService           infoEntrepriseService;
-    private final TypeContratService              typeContratService;
-    private final AbsenceService                  absenceService;
-    private final PrimeService                    primeService;
-    private final FichePaieService                fichePaieService;
-    private final HeuresSupplementairesService    heuresSupplementairesService;
-    private final NoteDeFraisService              noteDeFraisService;
-    private final AutresVariableService           autresVariableService;
-    private final DocumentService                 documentService;
-    private final DpaeService                     dpaeService;
-    private final ContratService                  contratService;
+    private final InfoEntrepriseService infoEntrepriseService;
+    private final TypeContratService typeContratService;
+    private final AbsenceService absenceService;
+    private final PrimeService primeService;
+    private final FichePaieService fichePaieService;
+    private final HeuresSupplementairesService heuresSupplementairesService;
+    private final NoteDeFraisService noteDeFraisService;
+    private final AutresVariableService autresVariableService;
+    private final DocumentService documentService;
+    private final DpaeService dpaeService;
+    private final ContratService contratService;
+    private final AvanceRappelSalaireService avanceRappelSalaireService;
 
     /* Variables de Paie */
-    private final AbsenceMapper                   absenceMapper;
-    private final TypeAbsenceMapper               typeAbsenceMapper;
-    private final AbsenceRepository               absenceRepository;
-    private final NoteDeFraisMapper               noteDeFraisMapper;
-    private final NoteDeFraisRepository           noteDeFraisRepository;
-    private final AutresVariableMapper            autresVariableMapper;
-    private final AutresVariableRepository        autresVariableRepository;
-    private final AvanceRappelSalaireMapper       avanceRappelSalaireMapper;
+    private final AbsenceMapper absenceMapper;
+    private final TypeAbsenceMapper typeAbsenceMapper;
+    private final AbsenceRepository absenceRepository;
+    private final NoteDeFraisMapper noteDeFraisMapper;
+    private final NoteDeFraisRepository noteDeFraisRepository;
+    private final AutresVariableMapper autresVariableMapper;
+    private final AutresVariableRepository autresVariableRepository;
+    private final AvanceRappelSalaireMapper avanceRappelSalaireMapper;
     private final AvanceRappelSalaireRepository   avanceRappelSalaireRepository;
     private final HeuresSupplementairesMapper     heuresSupplementairesMapper;
     private final HeuresSupplementairesRepository heuresSupplementairesRepository;
@@ -70,14 +71,14 @@ public class EmployeServiceImpl implements EmployeService {
     private final PrimeRepository                 primeRepository;
 
     public EmployeServiceImpl(EmployeRepository employeRepository, EmployeMapper employeMapper, WrapperEmployeMapper wrapperEmployeMapper, AdresseService adresseService,
-                    StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService,
-                    AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper,  AbsenceRepository absenceRepository,
-                    NoteDeFraisMapper noteDeFraisMapper, NoteDeFraisRepository noteDeFraisRepository, AutresVariableMapper autresVariableMapper, AutresVariableRepository autresVariableRepository,
-                    AvanceRappelSalaireMapper avanceRappelSalaireMapper, AvanceRappelSalaireRepository avanceRappelSalaireRepository, HeuresSupplementairesMapper heuresSupplementairesMapper,
-                    HeuresSupplementairesRepository heuresSupplementairesRepository, PrimeMapper primeMapper, TypePrimeMapper typePrimeMapper,
-                    PrimeRepository primeRepository, AbsenceService absenceService, PrimeService primeService, FichePaieService fichePaieService,
-                    HeuresSupplementairesService heuresSupplementairesService, NoteDeFraisService noteDeFraisService, AutresVariableService autresVariableService, DocumentService documentService,
-                    DpaeService dpaeService, ContratService contratService) {
+                              StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService,
+                              AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper, AbsenceRepository absenceRepository,
+                              NoteDeFraisMapper noteDeFraisMapper, NoteDeFraisRepository noteDeFraisRepository, AutresVariableMapper autresVariableMapper, AutresVariableRepository autresVariableRepository,
+                              AvanceRappelSalaireMapper avanceRappelSalaireMapper, AvanceRappelSalaireRepository avanceRappelSalaireRepository, HeuresSupplementairesMapper heuresSupplementairesMapper,
+                              HeuresSupplementairesRepository heuresSupplementairesRepository, PrimeMapper primeMapper, TypePrimeMapper typePrimeMapper,
+                              PrimeRepository primeRepository, AbsenceService absenceService, PrimeService primeService, FichePaieService fichePaieService,
+                              HeuresSupplementairesService heuresSupplementairesService, NoteDeFraisService noteDeFraisService, AutresVariableService autresVariableService, DocumentService documentService,
+                              DpaeService dpaeService, ContratService contratService, AvanceRappelSalaireService avanceRappelSalaireService) {
         this.employeRepository = employeRepository;
         this.employeMapper = employeMapper;
         this.wrapperEmployeMapper = wrapperEmployeMapper;
@@ -86,6 +87,7 @@ public class EmployeServiceImpl implements EmployeService {
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
         this.typeContratService = typeContratService;
+        this.avanceRappelSalaireService = avanceRappelSalaireService;
 
         // Variables de Paie
         this.absenceMapper = absenceMapper;
@@ -198,7 +200,7 @@ public class EmployeServiceImpl implements EmployeService {
         if (employeDTO.getDateSortie() == null) {
             employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
         }
-        if (isEmployeExist(employeDTO.getMatricule())) {
+        if (isEmployeMatriculeExist(employeDTO.getMatricule())) {
             return Optional.empty();
         }
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
@@ -215,7 +217,11 @@ public class EmployeServiceImpl implements EmployeService {
         final TypeContratDTO typeContratDTO = typeContratService.findOne(wrapperEmploye.getTypeContratId()).get();
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
-        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        if (wrapperEmploye.getStatutEmployeId() == 3) {
+            employeDTO.setStatutEmployeId(1L);
+        } else {
+            employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        }
         employeDTO.setTypeContratId(typeContratDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
         final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO);
@@ -278,6 +284,12 @@ public class EmployeServiceImpl implements EmployeService {
                     documentService.delete(document.getId());
                 }
             }
+            //AvanceRappelSalaire
+            if (!employe.getListeAvanceRappelSalaires().isEmpty()) {
+                for (AvanceRappelSalaire avanceRappelSalaire : employe.getListeAvanceRappelSalaires()) {
+                    avanceRappelSalaireService.delete(avanceRappelSalaire.getId());
+                }
+            }
             //listeDpaes
             if (!employe.getListeDpaes().isEmpty()) {
                 for (Dpae dpae : employe.getListeDpaes()) {
@@ -305,7 +317,8 @@ public class EmployeServiceImpl implements EmployeService {
         return archivedWrapperemploye;
     }
 
-    private boolean isEmployeExist(final String matricule) {
+    @Override
+    public boolean isEmployeMatriculeExist(final String matricule) {
         final Employe employe = employeRepository.findByMatricule(matricule);
         if (employe != null) {
             return true;

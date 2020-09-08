@@ -102,6 +102,14 @@ public interface EmployeService {
     WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
 
     /**
+     * Check si un numero de matricule existe deja
+     *
+     * @param matricule
+     * @return
+     */
+    boolean isEmployeMatriculeExist(final String matricule);
+
+    /**
      * Get one wrapperVariablesPaie by one employe, by one year and by one month.
      *
      * @param idEmploye id of the Employe in all VariablesPaie

@@ -2,14 +2,14 @@ package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.domain.Document;
+import fr.insy2s.domain.Facture;
 import fr.insy2s.repository.ClientFournisseurRepository;
 import fr.insy2s.repository.DocumentRepository;
+import fr.insy2s.repository.FactureRepository;
 import fr.insy2s.repository.SocieteRepository;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.FactureService;
-import fr.insy2s.domain.Facture;
-import fr.insy2s.repository.FactureRepository;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
@@ -17,7 +17,6 @@ import fr.insy2s.service.mapper.ClientFournisseurMapper;
 import fr.insy2s.service.mapper.FactureMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +48,7 @@ public class FactureServiceImpl implements FactureService {
 
     private final ClientFournisseurRepository clientFournisseurRepository;
 
+
     public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository) {
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
@@ -58,6 +58,7 @@ public class FactureServiceImpl implements FactureService {
         this.clientFournisseurService = clientFournisseurService;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.clientFournisseurRepository = clientFournisseurRepository;
+
     }
 
     @Override
@@ -124,8 +125,18 @@ public class FactureServiceImpl implements FactureService {
     @Override
     public List<FactureDTO> findAllBySocieteId(Long id) {
         return factureRepository.
-            findAllBySocieteId(id).stream()
-            .map(factureMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+                findAllBySocieteId(id).stream()
+                .map(factureMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
+
+    @Override
+    public List<FactureDTO> findAllInvoicesByStatement(Long idReleve) {
+        log.debug("Request to get all Factures for the statement concerned: {}", idReleve);
+        return this.factureRepository.findAllInvoicesByStatement(idReleve)
+                .stream()
+                .map(factureMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
 }
