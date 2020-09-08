@@ -26,12 +26,6 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
-            <span id="type">
-              <Translate contentKey="emnaBackEndApp.prime.type">Type</Translate>
-            </span>
-          </dt>
-          <dd>{primeEntity.type}</dd>
-          <dt>
             <span id="montant">
               <Translate contentKey="emnaBackEndApp.prime.montant">Montant</Translate>
             </span>

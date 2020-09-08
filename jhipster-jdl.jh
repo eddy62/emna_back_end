@@ -48,7 +48,6 @@ entity Releve {
     dateFin LocalDate
     solde Double
     banque String
-    cheminFichier String
 }
 
 entity EtatReleve{
@@ -152,7 +151,6 @@ entity TypePrime{
 }
 
 entity Prime{
-    type String required,
     montant Double required,
     mois Integer required,
     annee Integer required,

@@ -25,10 +25,6 @@ public class Prime implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "type", nullable = false)
-    private String type;
-
-    @NotNull
     @Column(name = "montant", nullable = false)
     private Double montant;
 
@@ -60,19 +56,6 @@ public class Prime implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Prime type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Double getMontant() {
@@ -175,7 +158,6 @@ public class Prime implements Serializable {
     public String toString() {
         return "Prime{" +
             "id=" + getId() +
-            ", type='" + getType() + "'" +
             ", montant=" + getMontant() +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +

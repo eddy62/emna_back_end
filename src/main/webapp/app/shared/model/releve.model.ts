@@ -4,11 +4,10 @@ import { IDocument } from 'app/shared/model/document.model';
 
 export interface IReleve {
   id?: number;
-  dateDebut?: Moment;
-  dateFin?: Moment;
+  dateDebut?: string;
+  dateFin?: string;
   solde?: number;
   banque?: string;
-  cheminFichier?: string;
   listeOperations?: IOperation[];
   listeDocuments?: IDocument[];
   etatReleveId?: number;
