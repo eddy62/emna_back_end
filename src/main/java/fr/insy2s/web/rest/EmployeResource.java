@@ -1,32 +1,10 @@
 package fr.insy2s.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
-import fr.insy2s.utils.wrapper.WrapperAbsence;
-import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.ArticleVM;
 import fr.insy2s.web.rest.vm.ClauseVm;
@@ -34,6 +12,18 @@ import fr.insy2s.web.rest.vm.EmployeEtArticleVM;
 import fr.insy2s.web.rest.vm.EmployerVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Employe}.
@@ -340,9 +330,17 @@ public class EmployeResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
 
+    /**
+     * {@code GET /wrappervariablespaie/employe/:idEmploye/annee/:annee/mois/:mois} : get one wrapperVariablesPaie by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in all VariablesPaie
+     * @param annee     year in all VariablesPaie
+     * @param mois      month in all VariablesPaie
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the wrapperVariablesPaie in body
+     */
     @GetMapping("/wrappervariablespaie/employe/{idEmploye}/annee/{annee}/mois/{mois}")
     public WrapperVariablesPaie getOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
-        log.debug("REST request to get one WrapperVariablesPaie by employe, annee, mois : {}", idEmploye, annee, mois);
+        log.debug("REST request to get one WrapperVariablesPaie by employe:{}, annee:{}, mois:{}", idEmploye, annee, mois);
         return employeService.findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
     }
 

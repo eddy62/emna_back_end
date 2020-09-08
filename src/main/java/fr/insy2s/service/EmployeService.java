@@ -57,14 +57,14 @@ public interface EmployeService {
     /**
      * Get all the WrapperEmploye by society
      *
-     * @return
+     * @return the list of wrapperEmploye
      */
     List<WrapperEmploye> findAllWrapperEmployeBySociete(final Long societeId);
 
     /**
-     * Get the "id" wripperEmploye
+     * Get the "id" wrapperEmploye
      *
-     * @param id
+     * @param id id of the wrapperEmploye to return
      * @return the wrapperEmploye
      */
     Optional<WrapperEmploye> findById(final Long id);
@@ -72,7 +72,7 @@ public interface EmployeService {
     /**
      * Create a WrapperEmploye
      *
-     * @param wrapperEmploye
+     * @param wrapperEmploye WrapperEmploye to create
      * @return the created WrapperEmploye
      */
     Optional<WrapperEmploye> createWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
@@ -80,7 +80,7 @@ public interface EmployeService {
     /**
      * Update the WrapperEmploye
      *
-     * @param wrapperEmploye
+     * @param wrapperEmploye WrapperEmploye to update
      * @return the updated WrapperEmploye
      */
     WrapperEmploye updateWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
@@ -88,19 +88,27 @@ public interface EmployeService {
     /**
      * Delete the "id" WrapperEmploye
      *
-     * @param id
-     * @return 
+     * @param id id of the WrapperEmploye to delete
+     * @return a boolean of success of deletion
      */
     boolean deleteWrapperEmploye(Long id);
-    
+
     /**
      * Archive the "id" WrapperEmploye
-     * 
-     * @param id
+     *
+     * @param wrapperEmploye
      * @return the archived WrapperEmploye
      */
     WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye);
 
+    /**
+     * Get one wrapperVariablesPaie by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in all VariablesPaie
+     * @param annee     year in all VariablesPaie
+     * @param mois      month in all VariablesPaie
+     * @return the archived WrapperEmploye
+     */
     WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 
 }

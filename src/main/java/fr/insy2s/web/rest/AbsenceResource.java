@@ -115,9 +115,17 @@ public class AbsenceResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
+    /**
+     * {@code GET /wrapperabsences/employe/:idEmploye/annee/:annee/mois/:mois} : get all wrapperAbsences by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in all Absences
+     * @param annee     year in all Absences
+     * @param mois      month in all Absences
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the wrapperAbsences in body
+     */
     @GetMapping("/wrapperabsences/employe/{idEmploye}/annee/{annee}/mois/{mois}")
     public List<WrapperAbsence> getAllWrapperAbsenceByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
-        log.debug("REST request to get all WrapperAbsence by employe, annee, mois : {}", idEmploye, annee, mois);
+        log.debug("REST request to get all WrapperAbsence by employe:{}, annee:{}, mois:{}", idEmploye, annee, mois);
         return absenceService.findAllWrapperAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
     }
 }
