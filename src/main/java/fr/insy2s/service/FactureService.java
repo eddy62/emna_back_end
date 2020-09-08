@@ -2,6 +2,7 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
+import fr.insy2s.utils.wrapper.WrapperListeFacture;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,12 +47,9 @@ public interface FactureService {
 
     List<FactureDTO> findAllBySocieteId(Long id);
 
-    /**
-     * Get all the factures for the statement concerned.
-     *
-     * @param id the id of the statement
-     * @return the list of entities.
-     */
+
+    List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id);
+
     List<FactureDTO> findAllInvoicesByStatement(Long idReleve);
 
 }

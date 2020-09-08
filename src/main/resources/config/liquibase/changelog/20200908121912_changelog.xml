@@ -1,0 +1,104 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="guizm (generated)" id="1599567570627-2">
+        <addColumn tableName="absence">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-3">
+        <addColumn tableName="autres_variable">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-4">
+        <addColumn tableName="avance_rappel_salaire">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-5">
+        <addColumn tableName="fiche_paie">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-6">
+        <addColumn tableName="heures_supplementaires">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-7">
+        <addColumn tableName="note_de_frais">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-8">
+        <addColumn tableName="prime">
+            <column name="annee" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-9">
+        <addColumn tableName="absence">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-10">
+        <addColumn tableName="autres_variable">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-11">
+        <addColumn tableName="avance_rappel_salaire">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-12">
+        <addColumn tableName="fiche_paie">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-13">
+        <addColumn tableName="heures_supplementaires">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-14">
+        <addColumn tableName="note_de_frais">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-15">
+        <addColumn tableName="prime">
+            <column name="mois" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1599567570627-1">
+        <alterSequence incrementBy="50" sequenceName="sequence_generator"/>
+    </changeSet>
+</databaseChangeLog>

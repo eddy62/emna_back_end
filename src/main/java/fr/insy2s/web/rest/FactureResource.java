@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.FactureTemp;
+import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FactureDTO;
 
@@ -125,10 +126,10 @@ public class FactureResource {
             .body(result);
     }
 
-    @GetMapping("/factures/societe/{id}")
-    public List<FactureDTO> getAllFactureBySocieteId(@PathVariable Long id) {
+    @GetMapping("/facturesvente/societe/{id}")
+    public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
-        return factureService.findAllBySocieteId(id);
+        return factureService.findAllWrapperVenteBySocieteId(id);
     }
 
     /**

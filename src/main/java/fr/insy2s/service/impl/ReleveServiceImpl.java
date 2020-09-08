@@ -40,7 +40,6 @@ public class ReleveServiceImpl implements ReleveService {
 
     private final FactureRepository factureRepository;
 
-
     public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository, OperationRepository operationRepository, FactureRepository factureRepository) {
         this.releveRepository = releveRepository;
         this.releveMapper = releveMapper;
@@ -95,12 +94,29 @@ public class ReleveServiceImpl implements ReleveService {
 
     public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
         log.debug("Request to get all Releves by Societe Id");
-        return releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete).stream().map(releveMapper::toDto)
+        List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
+            .stream().map(releveMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+        Optional<BigDecimal> solde;
+        for (ReleveDTO releve : releves) {
+            solde = getReleveSoldeById(releve.getId());
+            releve.setSolde(
+                solde.map(BigDecimal::doubleValue).orElse(0.0)
+             );
+        }
+        return releves;
     }
 
     @Override
-    public Optional<BigDecimal> getReleveSoldeById(Long id) {
+    public boolean validateReleve(Long id) {
+        log.debug("REST request to validate Releve");
+        Integer result = releveRepository.validateRelever(id, EtatReleveConstants.RELEVE_NON_ARCHIVE);
+        return result != 0;
+    }
+
+    @Override
+    public Optional<BigDecimal> getReleveSoldeById(Long id)
+    {
         log.debug("Request to get solde by Releve Id");
         return releveRepository.getReleveSoldeById(id);
     }

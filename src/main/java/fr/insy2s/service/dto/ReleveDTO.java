@@ -2,7 +2,6 @@ package fr.insy2s.service.dto;
 
 import java.time.LocalDate;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Releve} entity.
@@ -18,8 +17,6 @@ public class ReleveDTO implements Serializable {
     private Double solde;
 
     private String banque;
-
-    private String cheminFichier;
 
 
     private Long etatReleveId;
@@ -66,14 +63,6 @@ public class ReleveDTO implements Serializable {
         this.banque = banque;
     }
 
-    public String getCheminFichier() {
-        return cheminFichier;
-    }
-
-    public void setCheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-    }
-
     public Long getEtatReleveId() {
         return etatReleveId;
     }
@@ -95,22 +84,19 @@ public class ReleveDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ReleveDTO)) {
             return false;
         }
 
-        ReleveDTO releveDTO = (ReleveDTO) o;
-        if (releveDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), releveDTO.getId());
+        return id != null && id.equals(((ReleveDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ReleveDTO{" +
@@ -119,7 +105,6 @@ public class ReleveDTO implements Serializable {
             ", dateFin='" + getDateFin() + "'" +
             ", solde=" + getSolde() +
             ", banque='" + getBanque() + "'" +
-            ", cheminFichier='" + getCheminFichier() + "'" +
             ", etatReleveId=" + getEtatReleveId() +
             ", societeId=" + getSocieteId() +
             "}";

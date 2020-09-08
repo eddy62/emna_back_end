@@ -11,9 +11,6 @@ public class PrimeDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String type;
-
-    @NotNull
     private Double montant;
 
     @NotNull
@@ -35,14 +32,6 @@ public class PrimeDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Double getMontant() {
@@ -115,7 +104,6 @@ public class PrimeDTO implements Serializable {
     public String toString() {
         return "PrimeDTO{" +
             "id=" + getId() +
-            ", type='" + getType() + "'" +
             ", montant=" + getMontant() +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
