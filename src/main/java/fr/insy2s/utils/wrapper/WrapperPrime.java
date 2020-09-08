@@ -14,6 +14,8 @@ public class WrapperPrime {
     private Double montant;
     private Integer annee;
     private Integer mois;
+    private Long employeId;
+    private Long etatVariablePaieId;
 
     // TypePrime
     private Long idTypePrime;
@@ -43,6 +45,8 @@ public class WrapperPrime {
         this.montant = primeDTO.getMontant();
         this.annee = primeDTO.getAnnee();
         this.mois = primeDTO.getMois();
+        this.employeId = primeDTO.getEmployeId();
+        this.etatVariablePaieId = primeDTO.getEtatVariablePaieId();
 
         // TypePrime
         this.idTypePrime = typePrimeDTO.getId();
@@ -91,6 +95,22 @@ public class WrapperPrime {
 
     public void setMois(Integer mois) {
         this.mois = mois;
+    }
+
+    public Long getEmployeId() {
+        return employeId;
+    }
+
+    public void setEmployeId(Long employeId) {
+        this.employeId = employeId;
+    }
+
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
     }
 
     public Long getIdTypePrime() {

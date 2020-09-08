@@ -352,4 +352,14 @@ public class EmployeResource {
     }
 
 
+    @PutMapping("/wrappervariablespaie/confirm-variablespaie")
+    public WrapperVariablesPaie updateConfirmWrapperVariablesPaie(@Valid @RequestBody WrapperVariablesPaie wrapperVariablesPaie){
+        log.debug("REST request to update one WrapperVariablesPaie, state: Confirm {}",wrapperVariablesPaie);
+        // contient abscenceList, avanceRappelList, heuresSupList, primeList, noteDeFraisList, autresVariableList
+
+        WrapperVariablesPaie wrapperVariablesPaieConfirmed = new WrapperVariablesPaie();
+        return wrapperVariablesPaieConfirmed;
+    }
+
+
 }

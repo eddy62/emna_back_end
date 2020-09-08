@@ -18,6 +18,8 @@ public class WrapperAbsence {
     private String justificatif;
     private Integer annee;
     private Integer mois;
+    private Long employeId;
+    private Long etatVariablePaieId;
 
 
     // TypeAbsence
@@ -49,6 +51,8 @@ public class WrapperAbsence {
         this.justificatif = absenceDTO.getJustificatif();
         this.annee = absenceDTO.getAnnee();
         this.mois = absenceDTO.getMois();
+        this.employeId = absenceDTO.getEmployeId();
+        this.etatVariablePaieId = absenceDTO.getEtatVariablePaieId();
 
         // TypeAbsence
         this.idTypeAbsence = typeAbsenceDTO.getId();
@@ -105,6 +109,22 @@ public class WrapperAbsence {
 
     public void setMois(Integer mois) {
         this.mois = mois;
+    }
+
+    public Long getEmployeId() {
+        return employeId;
+    }
+
+    public void setEmployeId(Long employeId) {
+        this.employeId = employeId;
+    }
+
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
     }
 
     public Long getIdTypeAbsence() {
