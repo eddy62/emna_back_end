@@ -7,9 +7,12 @@ import fr.insy2s.service.ClauseService;
 import fr.insy2s.service.ContratService;
 import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
+import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.*;
 import io.github.jhipster.web.util.HeaderUtil;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +23,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Contrat}.
@@ -97,7 +97,15 @@ public class ContratResource {
             }
             clauseService.save(clauseDto);
         }
-
+        System.err.println("------------------        JE GENERE LE PDF        ------------------");
+        PdfUtil pdfUtil =new PdfUtil();
+        String templateUrl = "C:\\Users\\LHono\\JaspersoftWorkspace\\TemplateContrat\\TemplateContrat.jrxml";
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("titre", contratDTO.getTitre());
+        List<Object> objects= new ArrayList<>();
+        JRDataSource datasource = new JREmptyDataSource();
+        objects.add(datasource);
+       // pdfUtil.generatePdfReportAsBytes(templateUrl,params,objects);
         return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);

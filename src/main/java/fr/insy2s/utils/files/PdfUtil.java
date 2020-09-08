@@ -63,7 +63,7 @@ public class PdfUtil {
      * @throws JRException
      * @author Peter Mollet
      */
-    private static byte[] generatePdfReportAsBytes(String templateUrl, Map<String, Object> params, List<Object> objects) throws JRException {
+    public static byte[] generatePdfReportAsBytes(String templateUrl, Map<String, Object> params, List<Object> objects) throws JRException {
         InputStream templateStream = PdfUtil.class.getResourceAsStream(templateUrl);
         JasperPrint jasperPrint;
         if(objects != null)
@@ -72,5 +72,6 @@ public class PdfUtil {
             jasperPrint = JasperFillManager.fillReport(templateStream, params);
         return JasperExportManager.exportReportToPdf(jasperPrint);
     }
+
 
 }
