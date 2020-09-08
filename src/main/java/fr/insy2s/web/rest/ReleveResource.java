@@ -1,20 +1,18 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Releve;
 import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.utils.CheckUtil;
+import fr.insy2s.utils.EtatReleveConstants;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ReleveDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.models.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -165,12 +163,13 @@ public class ReleveResource {
     @PutMapping("/releve/{id}")
     public ResponseEntity<Void> valideRelever(@PathVariable Long id) {
         log.debug("REST request to validate Releve");
-        releveService.validateReleve(id);
+        releveService.changeStatutStatement(id,EtatReleveConstants.RELEVE_NON_ARCHIVE);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
     /**
      * {@code PUT  /releve/valider/comptable/{idReleve}} : Updates etatRelever an existing releve.
+     *
      * @param idReleve the id of releveDTO to validate.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated releveDTO
      */
@@ -178,10 +177,19 @@ public class ReleveResource {
     @PutMapping("/releve/valider/comptable/{idReleve}")
     public ResponseEntity<Boolean> updateEtatRelever(@PathVariable Long idReleve) {
         log.debug("REST request to update etat releve");
-//        if (CheckUtil.isAcountant()) {
-//            boolean conditionsBeforValidate = releveService.checkPermissionForThisReleve(idReleve, CheckUtil
-//                .getLoginCurrentUser());
-//        }
-        return ResponseEntity.ok().body(releveService.checkPermissionForThisReleve(idReleve, "accountant"));
+        boolean conditionsBeforValidate = false;
+        if (/*CheckUtil.isAcountant()*/ true) {
+            conditionsBeforValidate = releveService.hasPermissionForThisReleve(idReleve,"accountant")
+            && releveService.balanceOperationsEqualsInvoices(idReleve);
+        } else if (CheckUtil.isAdmin()) {
+            conditionsBeforValidate = releveService.balanceOperationsEqualsInvoices(idReleve);
+        }
+
+        if (conditionsBeforValidate) {
+            conditionsBeforValidate = releveService.changeStatutStatement(idReleve, EtatReleveConstants.RELEVE_ARCHIVE);
+            return ResponseEntity.ok().body(conditionsBeforValidate);
+        } else {
+            return ResponseEntity.ok().body(conditionsBeforValidate);
+        }
     }
 }
