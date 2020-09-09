@@ -131,6 +131,7 @@ public class OperationResource {
      * @param id the id of the operationDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @Secured({AuthoritiesConstants.SOCIETY, AuthoritiesConstants.ADMIN})
     @DeleteMapping("/operations/{id}")
     public ResponseEntity<Void> deleteOperation(@PathVariable Long id) {
         log.debug("REST request to delete Operation : {}", id);
