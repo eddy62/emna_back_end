@@ -26,4 +26,6 @@ public interface ReleveRepository extends JpaRepository<Releve, Long> {
 
 	@Query("SELECT SUM(o.solde) FROM Operation o WHERE o.releve.id = :id")
     Optional<BigDecimal> getReleveSoldeById(@Param(value = "id") Long id);
+
+
 }
