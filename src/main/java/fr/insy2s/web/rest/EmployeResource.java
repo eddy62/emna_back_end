@@ -245,7 +245,7 @@ public class EmployeResource {
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (employeService.isEmployeMatriculeExist(wrapperEmploye.getMatricule())) {
+        if (employeService.isEmployeMatriculeExist(wrapperEmploye.getMatricule(), wrapperEmploye.getSocieteId())) {
             throw new BadRequestAlertException("Le numero de matricule existe déjà !", ENTITY_NAME, " Numero Matricule unique");
         }
         if ((LocalDate.now().getYear() - wrapperEmploye.getDateNaissance().getYear()) < 14) {
