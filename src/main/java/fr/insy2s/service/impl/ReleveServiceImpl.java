@@ -69,8 +69,13 @@ public class ReleveServiceImpl implements ReleveService {
     @Transactional(readOnly = true)
     public Optional<ReleveDTO> findOne(Long id) {
         log.debug("Request to get Releve : {}", id);
-        return releveRepository.findById(id)
+        Optional<ReleveDTO> releve = releveRepository.findById(id)
             .map(releveMapper::toDto);
+        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
+        releve.get().setSolde(
+            solde.map(BigDecimal::doubleValue).orElse(0.0)
+        );
+        return releve;
     }
 
     @Override
