@@ -270,6 +270,8 @@ public class EmployeServiceImpl implements EmployeService {
         employeDTO.setAdresseId(newAdresseDTO.getId());
         if (wrapperEmploye.getStatutEmployeId()==3) {
             employeDTO.setStatutEmployeId(1L);
+            employeDTO.setDateEmbauche(LocalDate.now());
+            employeDTO.setDateSortie(LocalDate.now());
         }else {
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());}
         employeDTO.setTypeContratId(typeContratDTO.getId());
