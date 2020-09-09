@@ -56,7 +56,7 @@ public class Facture implements Serializable {
     @Column(name = "moyen_de_paiement")
     private String moyenDePaiement;
 
-    @OneToMany(mappedBy = "facture")
+    @OneToMany(mappedBy = "facture", cascade = CascadeType.REMOVE)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
 

@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface FactureRepository extends JpaRepository<Facture, Long> {
 
-    List<Facture> findAllBySocieteId(Long id);
+    List<Facture> findAllBySocieteIdOrderByNumfactDesc(Long id);
 
     @Query("select f From Facture f " +
            "where f.date between (select r.dateDebut from Releve r where r.id=:idReleve) " +
