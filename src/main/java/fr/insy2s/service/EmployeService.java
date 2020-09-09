@@ -106,7 +106,7 @@ public interface EmployeService {
      * @param matricule
      * @return
      */
-    boolean isEmployeMatriculeExist(final String matricule);
+    boolean isEmployeMatriculeExist(final String matricule, final Long idSociete);
 
     WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 
