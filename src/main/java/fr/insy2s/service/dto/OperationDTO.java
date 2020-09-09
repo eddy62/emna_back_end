@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A DTO for the {@link fr.insy2s.domain.Operation} entity.
  */
 public class OperationDTO implements Serializable {
-    
+
     private Long id;
 
     private LocalDate date;
@@ -22,7 +22,7 @@ public class OperationDTO implements Serializable {
 
 
     private Long releveId;
-    
+
     public Long getId() {
         return id;
     }
@@ -78,6 +78,8 @@ public class OperationDTO implements Serializable {
     public void setReleveId(Long releveId) {
         this.releveId = releveId;
     }
+
+    public boolean isEtatReleveRNV() {return releveId == 1;}
 
     @Override
     public boolean equals(Object o) {

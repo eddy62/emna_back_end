@@ -1,8 +1,10 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Authority;
+import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
+import fr.insy2s.utils.CheckUtil;
+import fr.insy2s.utils.EtatReleveConstants;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ReleveDTO;
 
@@ -13,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -37,9 +38,11 @@ public class ReleveResource {
     private String applicationName;
 
     private final ReleveService releveService;
+    private final ReleveRepository releveRepository;
 
-    public ReleveResource(ReleveService releveService) {
+    public ReleveResource(ReleveService releveService, ReleveRepository releveRepository) {
         this.releveService = releveService;
+        this.releveRepository = releveRepository;
     }
 
     /**
@@ -130,20 +133,23 @@ public class ReleveResource {
         releveService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
     @GetMapping("/releve/societe/{id}")
     public List<ReleveDTO> getAllRelevesBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllBySocieteId(id);
     }
+
     @GetMapping("/releve/etat/{id}")
     public List<ReleveDTO> getAllRelevesByEtatReleveId(@PathVariable Long id) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveId(id);
     }
+
     @GetMapping("/releve/etat/{idEtat}/societe/{idSociete}")
-    public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat,@PathVariable Long idSociete) {
+    public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat, @PathVariable Long idSociete) {
         log.debug("REST request to get all Operations by Releve id ");
-        return releveService.findAllByEtatReleveIdAndSocieteId(idEtat,idSociete);
+        return releveService.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete);
     }
 
     /**
@@ -153,12 +159,37 @@ public class ReleveResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
 
-    @Secured({AuthoritiesConstants.SOCIETY,AuthoritiesConstants.ADMIN})
+    @Secured({AuthoritiesConstants.SOCIETY, AuthoritiesConstants.ADMIN})
     @PutMapping("/releve/{id}")
-    public ResponseEntity<Void> valideRelever(@PathVariable Long id){
+    public ResponseEntity<Void> valideRelever(@PathVariable Long id) {
         log.debug("REST request to validate Releve");
-        releveService.validateReleve(id);
+        releveService.changeStatutStatement(id,EtatReleveConstants.RELEVE_NON_ARCHIVE);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
 
+    /**
+     * {@code PUT  /releve/valider/comptable/{idReleve}} : Updates etatRelever an existing releve.
+     *
+     * @param idReleve the id of releveDTO to validate.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated releveDTO
+     */
+//    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
+    @PutMapping("/releve/valider/comptable/{idReleve}")
+    public ResponseEntity<Boolean> updateEtatRelever(@PathVariable Long idReleve) {
+        log.debug("REST request to update etat releve");
+        boolean conditionsBeforValidate = false;
+        if (/*CheckUtil.isAcountant()*/ true) {
+            conditionsBeforValidate = releveService.hasPermissionForThisReleve(idReleve,"accountant")
+            && releveService.balanceOperationsEqualsInvoices(idReleve);
+        } else if (CheckUtil.isAdmin()) {
+            conditionsBeforValidate = releveService.balanceOperationsEqualsInvoices(idReleve);
+        }
+
+        if (conditionsBeforValidate) {
+            conditionsBeforValidate = releveService.changeStatutStatement(idReleve, EtatReleveConstants.RELEVE_ARCHIVE);
+            return ResponseEntity.ok().body(conditionsBeforValidate);
+        } else {
+            return ResponseEntity.ok().body(conditionsBeforValidate);
+        }
     }
 }

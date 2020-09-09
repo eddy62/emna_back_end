@@ -7,7 +7,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "releve")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Releve implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,26 +38,23 @@ public class Releve implements Serializable {
     @Column(name = "banque")
     private String banque;
 
-    @Column(name = "chemin_fichier")
-    private String cheminFichier;
-
-    @OneToMany(mappedBy = "releve",  cascade =CascadeType.REMOVE)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "releve")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Operation> listeOperations = new HashSet<>();
 
     @OneToMany(mappedBy = "releve")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties("releves")
+    @JsonIgnoreProperties(value = "releves", allowSetters = true)
     private EtatReleve etatReleve;
 
     @ManyToOne
-    @JsonIgnoreProperties("listeReleves")
+    @JsonIgnoreProperties(value = "listeReleves", allowSetters = true)
     private Societe societe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -117,19 +113,6 @@ public class Releve implements Serializable {
 
     public void setBanque(String banque) {
         this.banque = banque;
-    }
-
-    public String getCheminFichier() {
-        return cheminFichier;
-    }
-
-    public Releve cheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-        return this;
-    }
-
-    public void setCheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
     }
 
     public Set<Operation> getListeOperations() {
@@ -207,7 +190,7 @@ public class Releve implements Serializable {
     public void setSociete(Societe societe) {
         this.societe = societe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -225,6 +208,7 @@ public class Releve implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Releve{" +
@@ -233,7 +217,6 @@ public class Releve implements Serializable {
             ", dateFin='" + getDateFin() + "'" +
             ", solde=" + getSolde() +
             ", banque='" + getBanque() + "'" +
-            ", cheminFichier='" + getCheminFichier() + "'" +
             "}";
     }
 }

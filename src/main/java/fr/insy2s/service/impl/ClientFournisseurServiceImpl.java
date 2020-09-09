@@ -119,7 +119,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         ClientFournisseur client = new ClientFournisseur();
         try {
             client.setEmail(clientFournisseur.getEmail());
-            client.setNom(clientFournisseur.getNom());
+            client.setNom(clientFournisseur.getNom().toUpperCase());
             client.setSiren(clientFournisseur.getSiren());
             client.setTelephone(clientFournisseur.getTelephone());
             if (clientFournisseur.getIdSociete() != null) {
@@ -278,7 +278,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
     @Override
     public Optional<ClientFournisseurDTO> findByNom(String nom ) {
         log.debug("Request to get ClientFournisseur : {}",nom);
-        return clientFournisseurRepository.findByNom(nom)
+        return clientFournisseurRepository.findByNom(nom.toUpperCase())
             .map(clientFournisseurMapper::toDto);
     }
 

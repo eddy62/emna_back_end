@@ -27,5 +27,11 @@ public interface ReleveRepository extends JpaRepository<Releve, Long> {
 	@Query("SELECT SUM(o.solde) FROM Operation o WHERE o.releve.id = :id")
     Optional<BigDecimal> getReleveSoldeById(@Param(value = "id") Long id);
 
-
+	@Query("select r from Releve r " +
+        "join Societe s on r.societe.id = s.id " +
+        "join Comptable c on s.comptable.id = c.id " +
+        "join User u on c.user.id = u.id " +
+        "where r.id =:idReleve and u.login like :loginCurrentUser")
+    Releve checkPermissionForThisReleve(@Param(value = "idReleve") Long idReleve,
+                                        @Param(value = "loginCurrentUser") String loginCurrentUser);
 }

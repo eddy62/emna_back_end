@@ -12,3 +12,5 @@ id;date;description;type;rapproche;solde;releve_id
 11;2020-08-25;testeOperation;type1;false;50;10
 12;2020-08-25;testeOperation2;type1;true;150;10
 13;2020-08-25;testeOperation3;type1;false;150;10
+14;2020-08-25;testeOperation1;type1;true;100;8
+15;2020-08-25;testeOperation2;type1;true;100;8

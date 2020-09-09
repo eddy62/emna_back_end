@@ -1,8 +1,8 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Facture;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.FactureTemp;
+import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FactureDTO;
 
@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
@@ -127,9 +126,22 @@ public class FactureResource {
             .body(result);
     }
 
-    @GetMapping("/factures/societe/{id}")
-    public List<FactureDTO> getAllFactureBySocieteId(@PathVariable Long id) {
+    @GetMapping("/facturesvente/societe/{id}")
+    public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
-        return factureService.findAllBySocieteId(id);
+        return factureService.findAllWrapperVenteBySocieteId(id);
     }
+
+    /**
+     * {@code GET  /factures/relevé/:id} : get all the factures in statement id.
+     *
+     * @param id the id of the statement concerned
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
+     */
+    @GetMapping("/factures/relevé/{idReleve}")
+    public List<FactureDTO> getAllInvoicesByStatement(@PathVariable Long idReleve) {
+        log.debug("REST request to get all invoices of the statement concerned : {}", idReleve);
+        return factureService.findAllInvoicesByStatement(idReleve);
+    }
+
 }

@@ -1,9 +1,9 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.AbsenceService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.AbsenceDTO;
-
+import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -113,5 +113,11 @@ public class AbsenceResource {
         log.debug("REST request to delete Absence : {}", id);
         absenceService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/wrapperabsences/employe/{idEmploye}/annee/{annee}/mois/{mois}")
+    public List<WrapperAbsence> getAllWrapperAbsenceByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
+        log.debug("REST request to get all WrapperAbsence by employe, annee, mois : {}", idEmploye, annee, mois);
+        return absenceService.findAllWrapperAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
     }
 }
