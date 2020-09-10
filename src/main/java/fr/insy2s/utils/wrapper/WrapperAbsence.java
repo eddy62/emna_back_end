@@ -4,6 +4,7 @@ import fr.insy2s.service.dto.AbsenceDTO;
 import fr.insy2s.service.dto.TypeAbsenceDTO;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Wrapper Absence avec TypeAbsence
@@ -159,5 +160,47 @@ public class WrapperAbsence {
 
     public void setIntitule(String intitule) {
         this.intitule = intitule;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WrapperAbsence that = (WrapperAbsence) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(debutAbsence, that.debutAbsence) &&
+                Objects.equals(finAbsence, that.finAbsence) &&
+                Objects.equals(justificatif, that.justificatif) &&
+                Objects.equals(annee, that.annee) &&
+                Objects.equals(mois, that.mois) &&
+                Objects.equals(employeId, that.employeId) &&
+                Objects.equals(etatVariablePaieId, that.etatVariablePaieId) &&
+                Objects.equals(typeAbsenceId, that.typeAbsenceId) &&
+                Objects.equals(idTypeAbsence, that.idTypeAbsence) &&
+                Objects.equals(codeRef, that.codeRef) &&
+                Objects.equals(intitule, that.intitule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, debutAbsence, finAbsence, justificatif, annee, mois, employeId, etatVariablePaieId, typeAbsenceId, idTypeAbsence, codeRef, intitule);
+    }
+
+    @Override
+    public String toString() {
+        return "WrapperAbsence{" +
+                "id=" + id +
+                ", debutAbsence=" + debutAbsence +
+                ", finAbsence=" + finAbsence +
+                ", justificatif='" + justificatif + '\'' +
+                ", annee=" + annee +
+                ", mois=" + mois +
+                ", employeId=" + employeId +
+                ", etatVariablePaieId=" + etatVariablePaieId +
+                ", typeAbsenceId=" + typeAbsenceId +
+                ", idTypeAbsence=" + idTypeAbsence +
+                ", codeRef='" + codeRef + '\'' +
+                ", intitule='" + intitule + '\'' +
+                '}';
     }
 }

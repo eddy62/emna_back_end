@@ -3,6 +3,8 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.PrimeDTO;
 import fr.insy2s.service.dto.TypePrimeDTO;
 
+import java.util.Objects;
+
 /**
  * Wrapper Prime avec TypePrime
  */
@@ -145,5 +147,45 @@ public class WrapperPrime {
 
     public void setIntitule(String intitule) {
         this.intitule = intitule;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WrapperPrime that = (WrapperPrime) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(montant, that.montant) &&
+                Objects.equals(annee, that.annee) &&
+                Objects.equals(mois, that.mois) &&
+                Objects.equals(employeId, that.employeId) &&
+                Objects.equals(etatVariablePaieId, that.etatVariablePaieId) &&
+                Objects.equals(typePrimeId, that.typePrimeId) &&
+                Objects.equals(idTypePrime, that.idTypePrime) &&
+                Objects.equals(codeRef, that.codeRef) &&
+                Objects.equals(intitule, that.intitule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, montant, annee, mois, employeId, etatVariablePaieId, typePrimeId, idTypePrime, codeRef, intitule);
+    }
+
+    @Override
+    public String toString() {
+        return "WrapperPrime{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", montant=" + montant +
+                ", annee=" + annee +
+                ", mois=" + mois +
+                ", employeId=" + employeId +
+                ", etatVariablePaieId=" + etatVariablePaieId +
+                ", typePrimeId=" + typePrimeId +
+                ", idTypePrime=" + idTypePrime +
+                ", codeRef='" + codeRef + '\'' +
+                ", intitule='" + intitule + '\'' +
+                '}';
     }
 }
