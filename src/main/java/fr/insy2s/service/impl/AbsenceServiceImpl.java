@@ -52,8 +52,8 @@ public class AbsenceServiceImpl implements AbsenceService {
     public List<AbsenceDTO> findAll() {
         log.debug("Request to get all Absences");
         return absenceRepository.findAll().stream()
-            .map(absenceMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+                .map(absenceMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
 
@@ -62,7 +62,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     public Optional<AbsenceDTO> findOne(Long id) {
         log.debug("Request to get Absence : {}", id);
         return absenceRepository.findById(id)
-            .map(absenceMapper::toDto);
+                .map(absenceMapper::toDto);
     }
 
     @Override
