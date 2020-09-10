@@ -20,7 +20,7 @@ public class WrapperAbsenceMapper {
      *
      * @return wrapperAbsence
      */
-    public WrapperAbsence builderWrapperAbsence(final AbsenceDTO absenceDTO, final TypeAbsenceDTO typeAbsenceDTO){
+    public WrapperAbsence builderWrapperAbsence(AbsenceDTO absenceDTO, TypeAbsenceDTO typeAbsenceDTO){
         final WrapperAbsence wrapperAbsence = new WrapperAbsence();
         // Absence
         wrapperAbsence.setId(absenceDTO.getId());
@@ -29,6 +29,9 @@ public class WrapperAbsenceMapper {
         wrapperAbsence.setJustificatif(absenceDTO.getJustificatif());
         wrapperAbsence.setAnnee(absenceDTO.getAnnee());
         wrapperAbsence.setMois(absenceDTO.getMois());
+        wrapperAbsence.setEmployeId(absenceDTO.getEmployeId());
+        wrapperAbsence.setEtatVariablePaieId(absenceDTO.getEtatVariablePaieId());
+        wrapperAbsence.setTypeAbsenceId(absenceDTO.getTypeAbsenceId());
         // TypeAbsence
         wrapperAbsence.setIdTypeAbsence(typeAbsenceDTO.getId());
         wrapperAbsence.setCodeRef(typeAbsenceDTO.getCodeRef());
@@ -53,6 +56,9 @@ public class WrapperAbsenceMapper {
         absenceDTO.setJustificatif(wrapperAbsence.getJustificatif());
         absenceDTO.setAnnee(wrapperAbsence.getAnnee());
         absenceDTO.setMois(wrapperAbsence.getMois());
+        absenceDTO.setEmployeId(wrapperAbsence.getEmployeId());
+        absenceDTO.setEtatVariablePaieId(wrapperAbsence.getEtatVariablePaieId());
+        absenceDTO.setTypeAbsenceId(wrapperAbsence.getTypeAbsenceId());
 
         return absenceDTO;
     }
