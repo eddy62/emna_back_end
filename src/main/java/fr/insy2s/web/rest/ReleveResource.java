@@ -4,13 +4,11 @@ import fr.insy2s.domain.Releve;
 import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
+import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.ReleveDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.models.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
