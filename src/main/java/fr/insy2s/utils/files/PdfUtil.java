@@ -1,15 +1,13 @@
 package fr.insy2s.utils.files;
 
 import fr.insy2s.security.SecurityUtils;
-import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,6 +19,7 @@ public class PdfUtil {
     private static final Logger LOG = LoggerFactory.getLogger(PdfUtil.class);
 
     private static final String URL_TEMPLATE_MACHIN="/templates/pdf/machin/machin.jasper";
+    private static final String URL_TEMPLATE_RELEVE_ARCHIVE="/templates/pdf/statement/archived_statement.jasper";
 
     static {
         LOG.info("ELM static pdfUtils utility init...");
@@ -53,6 +52,26 @@ public class PdfUtil {
 
 
     /**
+     * Methode permettant de générer un PDF d'un relevé archivé à partir d'un objet WrapperReleveArchive
+     *
+     * @param wrapper
+     * @return PDF en byte array
+     * @throws JRException
+     * @author Robin De Ruyck
+     */
+
+    public static byte[] generateArchivedStatementAsBytes(WrapperArchivedStatement wrapper) throws JRException {
+        String userLogin = SecurityUtils.getCurrentUserLogin().get();
+        Map<String, Object> params = new HashMap<>();
+
+        return PdfUtil.generatePdfReportAsBytes(
+                URL_TEMPLATE_RELEVE_ARCHIVE,
+                params,
+                Arrays.asList(wrapper)
+        );
+    }
+
+    /**
      * Methode generique permettant de charger un template pdf jaspersoft, et de lui donner les params et données dont il a besoin
      *
      * @param templateUrl : url du template que l'on veut utiliser
@@ -66,8 +85,9 @@ public class PdfUtil {
     private static byte[] generatePdfReportAsBytes(String templateUrl, Map<String, Object> params, List<Object> objects) throws JRException {
         InputStream templateStream = PdfUtil.class.getResourceAsStream(templateUrl);
         JasperPrint jasperPrint;
-        if(objects != null)
+        if(objects != null) {
             jasperPrint = JasperFillManager.fillReport(templateStream, params, new JRBeanCollectionDataSource(objects));
+        }
         else
             jasperPrint = JasperFillManager.fillReport(templateStream, params);
         return JasperExportManager.exportReportToPdf(jasperPrint);

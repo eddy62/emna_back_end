@@ -1,15 +1,23 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.security.AuthoritiesConstants;
+import fr.insy2s.service.FactureService;
+import fr.insy2s.service.OperationService;
 import fr.insy2s.service.ReleveService;
+import fr.insy2s.service.SocieteService;
+import fr.insy2s.service.dto.FactureDTO;
+import fr.insy2s.service.dto.OperationDTO;
+import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.utils.EtatReleveConstants;
+import fr.insy2s.utils.files.PdfUtil;
+import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ReleveDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,11 +46,16 @@ public class ReleveResource {
     private String applicationName;
 
     private final ReleveService releveService;
-    private final ReleveRepository releveRepository;
+    private final OperationService operationService;
+    private final SocieteService societeService;
+    private final FactureService factureService;
 
-    public ReleveResource(ReleveService releveService, ReleveRepository releveRepository) {
-        this.releveService = releveService;
-        this.releveRepository = releveRepository;
+    public ReleveResource(ReleveService releveService, OperationService operationService,
+                          SocieteService societeService, FactureService factureService) {
+        this.releveService      = releveService;
+        this.operationService   = operationService;
+        this.societeService     = societeService;
+        this.factureService     = factureService;
     }
 
     /**
@@ -144,6 +157,40 @@ public class ReleveResource {
     public List<ReleveDTO> getAllRelevesByEtatReleveId(@PathVariable Long id) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveId(id);
+    }
+
+    /**
+     * {@code GET  /releves/pdf/:id} : get the pdf from a releve.
+     *
+     * @param id the id of the releve to process.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pdf, or with status {@code 404 (Not Found)}.
+     */
+    @Secured({
+        AuthoritiesConstants.SOCIETY,
+        AuthoritiesConstants.ADMIN,
+        AuthoritiesConstants.ACCOUNTANT
+    })
+    @GetMapping("/releves/pdf/{id}")
+    public ResponseEntity getPDFArchivedStatement(@PathVariable Long id) throws JRException {
+        log.debug("REST request to get statement total solde: {}", id);
+        ReleveDTO               releveDTO                   = releveService.findOne(id).get();
+        Optional<SocieteDTO>    societeDTO                  = societeService.findOne(releveDTO.getSocieteId());
+        List<OperationDTO>      operationDTOList            = operationService.findAllByReleveId(id);
+        List<FactureDTO>        factureDTOList              = factureService.findAllInvoicesByStatement(id);
+        WrapperArchivedStatement wrapperArchivedStatement   = new WrapperArchivedStatement(
+            releveDTO.getId(),
+            releveDTO.getDateDebut(),
+            releveDTO.getDateFin(),
+            releveDTO.getSolde().toString(),
+            releveDTO.getBanque(),
+            societeDTO.get().getCivilite()
+        );
+        byte[] bytes    = PdfUtil.generateArchivedStatementAsBytes(wrapperArchivedStatement);
+        String pdfName  = "YOLO";
+        return ResponseEntity.ok()
+            .header("Content-Type", "application/pdf; charset=UTF-8")
+            .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"")
+            .body(bytes);
     }
 
     @GetMapping("/releve/etat/{idEtat}/societe/{idSociete}")
