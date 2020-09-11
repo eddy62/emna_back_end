@@ -25,7 +25,8 @@
       "facture": "Facture",
       "releve": "Releve",
       "contrat": "Contrat",
-      "employe": "Employe"
+      "employe": "Employe",
+      "depense": "Depense"
     }
   }
 }

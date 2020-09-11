@@ -70,7 +70,6 @@ public class PrimeResourceIT {
      */
     public static Prime createEntity(EntityManager em) {
         Prime prime = new Prime()
-            .type(DEFAULT_TYPE)
             .montant(DEFAULT_MONTANT)
             .mois(DEFAULT_MOIS)
             .annee(DEFAULT_ANNEE);
@@ -94,7 +93,6 @@ public class PrimeResourceIT {
      */
     public static Prime createUpdatedEntity(EntityManager em) {
         Prime prime = new Prime()
-            .type(UPDATED_TYPE)
             .montant(UPDATED_MONTANT)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
@@ -131,7 +129,6 @@ public class PrimeResourceIT {
         List<Prime> primeList = primeRepository.findAll();
         assertThat(primeList).hasSize(databaseSizeBeforeCreate + 1);
         Prime testPrime = primeList.get(primeList.size() - 1);
-        assertThat(testPrime.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testPrime.getMontant()).isEqualTo(DEFAULT_MONTANT);
         assertThat(testPrime.getMois()).isEqualTo(DEFAULT_MOIS);
         assertThat(testPrime.getAnnee()).isEqualTo(DEFAULT_ANNEE);
@@ -162,8 +159,6 @@ public class PrimeResourceIT {
     @Transactional
     public void checkTypeIsRequired() throws Exception {
         int databaseSizeBeforeTest = primeRepository.findAll().size();
-        // set the field null
-        prime.setType(null);
 
         // Create the Prime, which fails.
         PrimeDTO primeDTO = primeMapper.toDto(prime);
@@ -254,7 +249,7 @@ public class PrimeResourceIT {
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getPrime() throws Exception {
@@ -292,7 +287,6 @@ public class PrimeResourceIT {
         // Disconnect from session so that the updates on updatedPrime are not directly saved in db
         em.detach(updatedPrime);
         updatedPrime
-            .type(UPDATED_TYPE)
             .montant(UPDATED_MONTANT)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
@@ -307,7 +301,6 @@ public class PrimeResourceIT {
         List<Prime> primeList = primeRepository.findAll();
         assertThat(primeList).hasSize(databaseSizeBeforeUpdate);
         Prime testPrime = primeList.get(primeList.size() - 1);
-        assertThat(testPrime.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testPrime.getMontant()).isEqualTo(UPDATED_MONTANT);
         assertThat(testPrime.getMois()).isEqualTo(UPDATED_MOIS);
         assertThat(testPrime.getAnnee()).isEqualTo(UPDATED_ANNEE);

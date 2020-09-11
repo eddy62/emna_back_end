@@ -79,8 +79,6 @@ public class OperationDTO implements Serializable {
         this.releveId = releveId;
     }
 
-    public boolean isEtatReleveRNV() {return releveId == 1;}
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

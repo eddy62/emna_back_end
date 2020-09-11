@@ -21,6 +21,8 @@ import { IContrat } from 'app/shared/model/contrat.model';
 import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
+import { IDepense } from 'app/shared/model/depense.model';
+import { getEntities as getDepenses } from 'app/entities/depense/depense.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './document.reducer';
 import { IDocument } from 'app/shared/model/document.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -36,9 +38,22 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
   const [releveId, setReleveId] = useState('0');
   const [contratId, setContratId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
+  const [depenseId, setDepenseId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { documentEntity, absences, noteDeFrais, autresVariables, factures, releves, contrats, employes, loading, updating } = props;
+  const {
+    documentEntity,
+    absences,
+    noteDeFrais,
+    autresVariables,
+    factures,
+    releves,
+    contrats,
+    employes,
+    depenses,
+    loading,
+    updating,
+  } = props;
 
   const handleClose = () => {
     props.history.push('/document');
@@ -58,6 +73,7 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
     props.getReleves();
     props.getContrats();
     props.getEmployes();
+    props.getDepenses();
   }, []);
 
   useEffect(() => {
@@ -227,6 +243,21 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
+              <AvGroup>
+                <Label for="document-depense">
+                  <Translate contentKey="emnaBackEndApp.document.depense">Depense</Translate>
+                </Label>
+                <AvInput id="document-depense" type="select" className="form-control" name="depenseId">
+                  <option value="" key="0" />
+                  {depenses
+                    ? depenses.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/document" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -256,6 +287,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   releves: storeState.releve.entities,
   contrats: storeState.contrat.entities,
   employes: storeState.employe.entities,
+  depenses: storeState.depense.entities,
   documentEntity: storeState.document.entity,
   loading: storeState.document.loading,
   updating: storeState.document.updating,
@@ -270,6 +302,7 @@ const mapDispatchToProps = {
   getReleves,
   getContrats,
   getEmployes,
+  getDepenses,
   getEntity,
   updateEntity,
   createEntity,

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TemplateContrat" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72c69b3f-883b-4f36-9800-d611b5ce765f">
+	<subDataset name="article" uuid="39be59fa-9a56-474d-8962-cdf0eed15723">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="DatasetClause" uuid="64e66fde-911d-4e6f-ba18-26b3cee47eb4">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="titre" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONTRAT A DUREE INDETERMINEE A TEMPS PARTIEL"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<textField>
+				<reportElement x="-20" y="20" width="595" height="30" uuid="bdccd749-b72b-407c-9158-7a415dff07af"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titre}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="20" y="10" width="525" height="41" backcolor="rgba(255, 255, 255, 0.0)" uuid="746ab97e-2381-4913-876a-c86ad7b6199e"/>
+			</rectangle>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="370" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="0" width="140" height="21" uuid="a0d55842-d45d-49ee-ba99-01296b952aaf"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Entre les soussignnées :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="21" width="20" height="21" uuid="cb1fa9b1-9f4d-49db-9d2d-5c578cd46b3a"/>
+				<text><![CDATA[La]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="30" width="50" height="21" uuid="68186cee-1c2e-4df9-b7e5-57f20b18070b"/>
+				<text><![CDATA[à l'adresse ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="51" width="81" height="16" uuid="86716dc9-bc82-4566-9862-ccf518cc62e9"/>
+				<text><![CDATA[sous le numéro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="67" width="180" height="38" uuid="eb823537-6b2f-4b0e-b225-b4ec9579f508"/>
+				<text><![CDATA[Ci-dessous désignée: la société
+
+Et, ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="21" width="30" height="21" uuid="8e434585-f998-4a67-9d39-f10170259362"/>
+				<textFieldExpression><![CDATA["SAS"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="30" width="30" height="21" uuid="0373dfe4-57ba-4db3-8d2a-dd64571fbbbc"/>
+				<textFieldExpression><![CDATA["255"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="30" width="91" height="21" uuid="c6470877-8dd7-4c76-9f99-5ab2ac60012b"/>
+				<textFieldExpression><![CDATA["rue des cafés"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="116" width="111" height="21" uuid="dca80982-73cc-4acc-b4df-b5e610fd8d1d"/>
+				<text><![CDATA[Demeurant, ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="116" width="61" height="21" uuid="ef8bc581-7767-49c1-a5d3-9e5ba1088da6"/>
+				<textFieldExpression><![CDATA["186"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="116" width="111" height="21" uuid="afaceda2-2f48-4202-a492-7d8e663e7d07"/>
+				<textFieldExpression><![CDATA["rue des biscuits"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="126" width="51" height="21" uuid="b2523ce2-b66a-46c8-b307-a0ed2703a267"/>
+				<textFieldExpression><![CDATA["59200"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="126" width="51" height="21" uuid="73ffde9e-8f68-43e0-9abd-58ffb84ade3f"/>
+				<textFieldExpression><![CDATA["Tourcoing"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="150" width="101" height="21" uuid="b25526cc-cd28-4f0b-aee8-88320287c58a"/>
+				<textFieldExpression><![CDATA["2970556699448501"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="105" width="51" height="21" uuid="4623886a-df55-4b91-9ee4-b29414a032d3"/>
+				<textFieldExpression><![CDATA["Madame"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="105" width="61" height="21" uuid="d70f0c50-b91f-4930-aec3-9616a368d779"/>
+				<textFieldExpression><![CDATA["HONOREZ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="105" width="71" height="21" uuid="6a01c11c-f4a4-4bc0-b05e-55aba2b83cbd"/>
+				<textFieldExpression><![CDATA["Laura"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="140" width="30" height="21" uuid="779bf36f-b0e7-4540-8ddc-a923cb95c0e8"/>
+				<text><![CDATA[Né(e)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="140" width="61" height="21" uuid="4f82f1fd-4fb4-4dba-b72f-e408ee385c14"/>
+				<textFieldExpression><![CDATA["20/05/1997"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="140" width="31" height="21" uuid="7bde7fdd-e73c-4ad2-ac6b-078fa7ce2395"/>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="121" y="140" width="60" height="21" uuid="c6eea4f9-3e13-4eae-a0ea-4e36282a407f"/>
+				<textFieldExpression><![CDATA["Tourcoing"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="21" width="71" height="21" uuid="79eb41eb-8997-4263-b1ee-bffcd27d9ecb"/>
+				<textFieldExpression><![CDATA["INSY2S"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="40" width="40" height="21" uuid="23fb224a-33bc-4833-b498-eb2a614dc991"/>
+				<textFieldExpression><![CDATA["59000"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="40" width="71" height="21" uuid="ca3153d9-6caa-4dc2-9817-ab2f20079771"/>
+				<textFieldExpression><![CDATA["Lille"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="51" width="71" height="16" uuid="e76f6cd7-5354-4c2e-915e-1133f0e6c0db"/>
+				<textFieldExpression><![CDATA["828204357"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="170" width="260" height="42" uuid="52998c7f-a001-4107-b5b2-b92c70ba944c"/>
+				<text><![CDATA[Ci-après désigné(e): le titulaire du présent contrat 
+
+Il a été convenu ce qui suit:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="20" y="213" width="525" height="157" uuid="60349d61-fc58-4371-8006-351ac0bd9a92"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="article" uuid="0d77ba84-0f0b-473a-a19f-2dec04d81558">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="157" width="525">
+						<textField>
+							<reportElement x="18" y="8" width="92" height="31" uuid="559c9ae3-00e7-48f7-9504-0fb64ec15784"/>
+							<textElement>
+								<font size="16"/>
+							</textElement>
+							<textFieldExpression><![CDATA["article.titre"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="108" y="8" width="181" height="31" uuid="01678dfe-f038-4250-bdef-96eaf2bbe1a2"/>
+							<textElement>
+								<font size="16"/>
+							</textElement>
+							<textFieldExpression><![CDATA["article.description"]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="50" y="250" width="471" height="111" uuid="ec2fe220-c6c9-46a1-b21e-e3021d790c2d"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DatasetClause" uuid="63872a3f-6a60-4343-9a0b-88a691c333cf">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource() ]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="111" width="471">
+						<textField>
+							<reportElement x="8" y="8" width="452" height="21" uuid="8358248f-4f5a-4d2d-a9a4-a61219127f4c"/>
+							<textElement>
+								<font size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA["clause.reference"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="7" y="38" width="452" height="31" uuid="e729dfa0-763c-4609-976f-93ea80e54f06"/>
+							<textElement>
+								<font size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA["clause.description"]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="560" height="90" uuid="1e831aa4-f0aa-40c0-ab2c-2355a5e3020c"/>
+				<text><![CDATA[Pour la bonne règle, nous vous demandons de bien vouloir nous confirmer votre accord sur les termes du présent contrat par la signature d’un exemplaire précédé de la mention « Lu et Approuvé »]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="50" width="30" height="20" uuid="4f0d3eb6-0bbf-4c4c-b285-bdb106c58a63"/>
+				<textFieldExpression><![CDATA["SAS"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="50" width="71" height="21" uuid="042148e6-c9d8-4bb7-be98-7914caae2431"/>
+				<textFieldExpression><![CDATA["Insy2s"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="70" width="101" height="21" uuid="ca1269ff-da43-4eb6-a0db-2bd63d812ab8"/>
+				<text><![CDATA[SIGNATURE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="450" y="50" width="60" height="20" uuid="14d6d66c-c206-4a2b-8c71-e768b7eb252d"/>
+				<textFieldExpression><![CDATA["HONOREZ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="50" width="51" height="21" uuid="a82c6306-782e-4c38-99e4-a9f82b5cfd14"/>
+				<textFieldExpression><![CDATA["Laura"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="450" y="70" width="81" height="21" uuid="1272e0e4-9ad5-46dd-97f0-0d36967a2aea"/>
+				<text><![CDATA[SIGNATURE]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="110" splitType="Stretch">
+			<textField>
+				<reportElement x="500" y="80" width="100" height="30" uuid="ac3e8b4a-5cb0-42b4-8544-247f97b888df"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="520" y="80" width="100" height="30" uuid="9908a946-0a64-48ed-b8f2-e79c568a38f6"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="80" width="100" height="30" uuid="af7e63d2-8add-4302-9815-a2ad98328de6"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

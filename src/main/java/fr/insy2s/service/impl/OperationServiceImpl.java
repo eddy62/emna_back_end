@@ -37,7 +37,6 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public OperationDTO save(OperationDTO operationDTO) {
         log.debug("Request to save Operation : {}", operationDTO);
-        if(!operationDTO.isEtatReleveRNV()) return null;
         Operation operation = operationMapper.toEntity(operationDTO);
         operation = operationRepository.save(operation);
         return operationMapper.toDto(operation);

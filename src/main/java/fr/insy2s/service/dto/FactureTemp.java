@@ -9,6 +9,11 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Model de la facture reçu via le formulaire de création de facture
+ *
+ */
+
 public class FactureTemp {
 
     private Long numfact;
@@ -28,6 +33,16 @@ public class FactureTemp {
     private String moyenDePaiement;
 
     private String client;
+
+    private String numRue;
+
+    private String nomRue;
+
+    private String codePostal;
+
+    private String ville;
+
+    private String pays;
 
     private Long societeId;
 
@@ -97,6 +112,46 @@ public class FactureTemp {
         this.moyenDePaiement = moyenDePaiement;
     }
 
+    public String getNumRue() {
+        return numRue;
+    }
+
+    public void setNumRue(String numRue) {
+        this.numRue = numRue;
+    }
+
+    public String getNomRue() {
+        return nomRue;
+    }
+
+    public void setNomRue(String nomRue) {
+        this.nomRue = nomRue;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
     public Long getSocieteId() {
         return societeId;
     }
@@ -121,7 +176,7 @@ public class FactureTemp {
         this.client = client;
     }
 
-    public FactureTemp(Long numfact, String message, LocalDate date, LocalDate dateEcheance, Integer prixHT, Integer prixTTC, Float tva, String moyenDePaiement, String client, Long societeId, MultipartFile[] listeFiles) {
+    public FactureTemp(Long numfact, String message, LocalDate date, LocalDate dateEcheance, Integer prixHT, Integer prixTTC, Float tva, String moyenDePaiement, String client, String numRue, String nomRue, String codePostal, String ville, String pays, Long societeId, MultipartFile[] listeFiles) {
         this.numfact = numfact;
         this.message = message;
         this.date = date;
@@ -131,6 +186,11 @@ public class FactureTemp {
         this.tva = tva;
         this.moyenDePaiement = moyenDePaiement;
         this.client = client;
+        this.numRue = numRue;
+        this.nomRue = nomRue;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.pays = pays;
         this.societeId = societeId;
         this.listeFiles = listeFiles;
     }

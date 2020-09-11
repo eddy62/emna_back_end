@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "etatDepense": {
+      "home": {
+        "title": "EtatDepenses",
+        "createLabel": "Créer un nouveau Etat Depense",
+        "createOrEditLabel": "Créer ou éditer un Etat Depense",
+        "notFound": "Aucun Etat Depense trouvé"
+      },
+      "created": "Un nouveau Etat Depense a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Etat Depense avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Etat Depense avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Etat Depense {{ id }} ?"
+      },
+      "detail": {
+        "title": "Etat Depense"
+      },
+      "libelle": "Libelle",
+      "codeRef": "Code Ref"
+    }
+  }
+}

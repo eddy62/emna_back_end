@@ -29,6 +29,8 @@ public class DocumentDTO implements Serializable {
     private Long contratId;
 
     private Long employeId;
+
+    private Long depenseId;
     
     public Long getId() {
         return id;
@@ -118,6 +120,14 @@ public class DocumentDTO implements Serializable {
         this.employeId = employeId;
     }
 
+    public Long getDepenseId() {
+        return depenseId;
+    }
+
+    public void setDepenseId(Long depenseId) {
+        this.depenseId = depenseId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -150,6 +160,7 @@ public class DocumentDTO implements Serializable {
             ", releveId=" + getReleveId() +
             ", contratId=" + getContratId() +
             ", employeId=" + getEmployeId() +
+            ", depenseId=" + getDepenseId() +
             "}";
     }
 }
