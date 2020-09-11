@@ -34,10 +34,6 @@ public class FactureServiceImpl implements FactureService {
 
     private final FactureMapper factureMapper;
 
-    private final DocumentService documentService;
-
-    private final DocumentRepository documentRepository;
-
     private final SocieteRepository societeRepository;
 
     private final ClientFournisseurService clientFournisseurService;
@@ -55,8 +51,6 @@ public class FactureServiceImpl implements FactureService {
 
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
-        this.documentService = documentService;
-        this.documentRepository = documentRepository;
         this.societeRepository = societeRepository;
         this.clientFournisseurService = clientFournisseurService;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -173,66 +167,5 @@ public class FactureServiceImpl implements FactureService {
         }
          return max;
     }
-
-    @Override
-    public List<WrapperListeFacture> findAllWrapperAchatBySocieteId(Long id) {
-        List<Facture> listeFacture = factureRepository.findAllBySocieteIdOrderByNumfactDesc(id);
-        List<WrapperListeFacture> wrapperListeFactures = new ArrayList<WrapperListeFacture>();
-        for (Facture facture: listeFacture) {
-            if (facture.getType().equals("Achat")) {
-                WrapperListeFacture wrapperListeFacture = new WrapperListeFacture(facture.getId(), facture.getNumfact(), facture.getType(), facture.getDate(), facture.getPrixTTC(), facture.getClientFournisseur().getNom(), facture.getEtatFacture().getLibelle());
-                wrapperListeFactures.add(wrapperListeFacture);
-            }
-        }
-        return wrapperListeFactures;
-    }
-
-    @Override
-    public FactureDTO postDepenseWithFile(DepenseTemp depenseTemp) {
-        Facture facture = depenseTemp.toFacture();
-        if(depenseTemp.getListeFiles()!=null) {
-            Set<Document> documents = documentService.multiPartFilesToDocuments(Arrays.asList(depenseTemp.getListeFiles()));
-            for (Document document : documents
-            ) {
-                document.setFacture(facture);
-            }
-            facture.setListeDocuments(documents);
-        }
-
-        List<Facture> factureList  = factureRepository.findAllBySocieteIdOrderByNumfactDesc(depenseTemp.getSocieteId());
-        Long max = 0L;
-        for (Facture factureoflist: factureList
-        ) {
-            if (factureoflist.getType().equals("Achat") && factureoflist.getNumfact()>max){
-                max = factureoflist.getNumfact();
-            }
-        }
-        facture.setNumfact(max+1);
-
-        facture.setType("Achat");
-
-        facture.setSociete(societeRepository.getOne(depenseTemp.getSocieteId()));
-
-        facture.setEtatFacture(etatFactureRepository.getOne(1L));
-
-        Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findByNomAndSocieteId(depenseTemp.getClient(), depenseTemp.getSocieteId());
-        if (clientFournisseurDTO.isPresent()) {
-            facture.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
-        } else {
-            ClientFournisseur clientFournisseur = new ClientFournisseur();
-            clientFournisseur.setNom(depenseTemp.getClient());
-            clientFournisseur.setSociete(societeRepository.getOne(depenseTemp.getSocieteId()));
-            facture.setClientFournisseur(clientFournisseurRepository.save(clientFournisseur));
-        }
-
-        Facture mafacture = factureRepository.save(facture);
-
-        if(facture.getListeDocuments()!=null) {
-            documentRepository.saveAll(facture.getListeDocuments());
-        }
-
-        return this.factureMapper.toDto(mafacture);
-    }
-
 
 }

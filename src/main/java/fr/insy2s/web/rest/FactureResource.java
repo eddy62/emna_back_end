@@ -127,25 +127,10 @@ public class FactureResource {
             .body(result);
     }
 
-    @PostMapping("/depense/new")
-    public ResponseEntity<FactureDTO> createDepenseForSociete(@ModelAttribute DepenseTemp depenseTemp) throws URISyntaxException, IOException {
-        log.debug("REST request to save Facture : {}", depenseTemp);
-        FactureDTO result = factureService.postDepenseWithFile(depenseTemp);
-        return ResponseEntity.created(new URI("/api/factures/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
     @GetMapping("/facturesvente/societe/{id}")
-    public List<WrapperListeFacture> getAllFactureVenteBySocieteId(@PathVariable Long id) {
+    public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
         return factureService.findAllWrapperVenteBySocieteId(id);
-    }
-
-    @GetMapping("/facturesachat/societe/{id}")
-    public List<WrapperListeFacture> getAllFactureAchatBySocieteId(@PathVariable Long id) {
-        log.debug("REST request to get all Factures By User");
-        return factureService.findAllWrapperAchatBySocieteId(id);
     }
 
     /**

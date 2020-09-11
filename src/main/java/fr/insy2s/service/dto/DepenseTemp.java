@@ -1,5 +1,6 @@
 package fr.insy2s.service.dto;
 
+import fr.insy2s.domain.Depense;
 import fr.insy2s.domain.Facture;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +13,7 @@ public class DepenseTemp {
 
     private LocalDate date;
 
-    private Integer prixTTC;
+    private Double prixTTC;
 
     private String client;
 
@@ -46,13 +47,6 @@ public class DepenseTemp {
         this.date = date;
     }
 
-    public Integer getPrixTTC() {
-        return prixTTC;
-    }
-
-    public void setPrixTTC(Integer prixTTC) {
-        this.prixTTC = prixTTC;
-    }
 
     public String getClient() {
         return client;
@@ -86,7 +80,15 @@ public class DepenseTemp {
         this.moyenDePaiement = moyenDePaiement;
     }
 
-    public DepenseTemp(Long numfact, String message, LocalDate date, Integer prixTTC, String client, Long societeId, String moyenDePaiement, MultipartFile[] listeFiles) {
+    public Double getPrixTTC() {
+        return prixTTC;
+    }
+
+    public void setPrixTTC(Double prixTTC) {
+        this.prixTTC = prixTTC;
+    }
+
+    public DepenseTemp(Long numfact, String message, LocalDate date, Double prixTTC, String client, Long societeId, String moyenDePaiement, MultipartFile[] listeFiles) {
         this.numfact = numfact;
         this.message = message;
         this.date = date;
@@ -97,13 +99,13 @@ public class DepenseTemp {
         this.listeFiles = listeFiles;
     }
 
-    public Facture toFacture(){
-        Facture facture = new Facture();
-        facture.setDate(this.getDate());
-        facture.setMessage(this.getMessage());
-        facture.setMoyenDePaiement(this.getMoyenDePaiement());
-        facture.setNumfact(this.getNumfact());
-        facture.setPrixTTC(this.getPrixTTC());
-        return facture;
+    public Depense toDepense(){
+        Depense depense = new Depense();
+        depense.setDate(this.getDate());
+        depense.setRaison(this.getMessage());
+        depense.setMoyenDePaiement(this.getMoyenDePaiement());
+        depense.setNumero(this.getNumfact());
+        depense.setPrix(this.getPrixTTC());
+        return depense;
     }
 }

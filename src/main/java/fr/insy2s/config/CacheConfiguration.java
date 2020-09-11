@@ -119,6 +119,10 @@ public class CacheConfiguration {
             createCache(cm, fr.insy2s.domain.EtatVariablePaie.class.getName());
             createCache(cm, fr.insy2s.domain.AvanceRappelSalaire.class.getName());
             createCache(cm, fr.insy2s.domain.Dpae.class.getName());
+            createCache(cm, fr.insy2s.domain.Depense.class.getName());
+            createCache(cm, fr.insy2s.domain.Depense.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Depense.class.getName() + ".as");
+            createCache(cm, fr.insy2s.domain.EtatDepense.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -56,7 +56,4 @@ public interface FactureService {
 
     Long getLastNumFact(Long id);
 
-    List<WrapperListeFacture> findAllWrapperAchatBySocieteId(Long id);
-
-    FactureDTO postDepenseWithFile(DepenseTemp depenseTemp);
 }

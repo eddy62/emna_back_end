@@ -37,6 +37,8 @@ import TypeContrat from './type-contrat';
 import EtatVariablePaie from './etat-variable-paie';
 import AvanceRappelSalaire from './avance-rappel-salaire';
 import Dpae from './dpae';
+import Depense from './depense';
+import EtatDepense from './etat-depense';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -76,6 +78,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}etat-variable-paie`} component={EtatVariablePaie} />
       <ErrorBoundaryRoute path={`${match.url}avance-rappel-salaire`} component={AvanceRappelSalaire} />
       <ErrorBoundaryRoute path={`${match.url}dpae`} component={Dpae} />
+      <ErrorBoundaryRoute path={`${match.url}depense`} component={Depense} />
+      <ErrorBoundaryRoute path={`${match.url}etat-depense`} component={EtatDepense} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

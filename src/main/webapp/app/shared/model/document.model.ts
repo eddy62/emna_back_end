@@ -10,6 +10,7 @@ export interface IDocument {
   releveId?: number;
   contratId?: number;
   employeId?: number;
+  depenseId?: number;
 }
 
 export const defaultValue: Readonly<IDocument> = {};
