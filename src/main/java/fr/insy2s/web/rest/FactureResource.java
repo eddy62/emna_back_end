@@ -127,7 +127,7 @@ public class FactureResource {
             .body(result);
     }
 
-    @GetMapping("/facturesvente/societe/{id}")
+    @GetMapping("/factures/societe/{id}")
     public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
         return factureService.findAllWrapperVenteBySocieteId(id);

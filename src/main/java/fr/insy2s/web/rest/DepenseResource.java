@@ -120,7 +120,7 @@ public class DepenseResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-    @GetMapping("/depense/societe/{id}")
+    @GetMapping("/depenses/societe/{id}")
     public List<WrapperListeDepense> getAllFactureAchatBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
         return depenseService.findAllDepenseBySocieteId(id);
