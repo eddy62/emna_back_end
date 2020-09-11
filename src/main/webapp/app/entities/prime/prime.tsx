@@ -37,9 +37,6 @@ export const Prime = (props: IPrimeProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.prime.type">Type</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.prime.montant">Montant</Translate>
                 </th>
                 <th>
@@ -68,7 +65,6 @@ export const Prime = (props: IPrimeProps) => {
                       {prime.id}
                     </Button>
                   </td>
-                  <td>{prime.type}</td>
                   <td>{prime.montant}</td>
                   <td>{prime.mois}</td>
                   <td>{prime.annee}</td>

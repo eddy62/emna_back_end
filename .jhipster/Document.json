@@ -63,6 +63,13 @@
       "otherEntityRelationshipName": "listeDocuments",
       "relationshipName": "employe",
       "otherEntityField": "id"
+    },
+    {
+      "relationshipName": "depense",
+      "otherEntityName": "depense",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "document"
     }
   ],
   "changelogDate": "20200810074300",
@@ -75,5 +82,7 @@
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": "*"
+  "applications": "*",
+  "searchEngine": false,
+  "databaseType": "sql"
 }

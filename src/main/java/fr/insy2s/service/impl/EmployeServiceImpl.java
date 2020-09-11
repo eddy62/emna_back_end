@@ -24,6 +24,73 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import fr.insy2s.domain.Absence;
+import fr.insy2s.domain.AutresVariable;
+import fr.insy2s.domain.AvanceRappelSalaire;
+import fr.insy2s.domain.Contrat;
+import fr.insy2s.domain.Document;
+import fr.insy2s.domain.Dpae;
+import fr.insy2s.domain.Employe;
+import fr.insy2s.domain.FichePaie;
+import fr.insy2s.domain.HeuresSupplementaires;
+import fr.insy2s.domain.NoteDeFrais;
+import fr.insy2s.domain.Prime;
+import fr.insy2s.repository.AbsenceRepository;
+import fr.insy2s.repository.AutresVariableRepository;
+import fr.insy2s.repository.AvanceRappelSalaireRepository;
+import fr.insy2s.repository.EmployeRepository;
+import fr.insy2s.repository.HeuresSupplementairesRepository;
+import fr.insy2s.repository.NoteDeFraisRepository;
+import fr.insy2s.repository.PrimeRepository;
+import fr.insy2s.repository.projection.IEmployeContratProjection;
+import fr.insy2s.service.AbsenceService;
+import fr.insy2s.service.AdresseService;
+import fr.insy2s.service.AutresVariableService;
+import fr.insy2s.service.AvanceRappelSalaireService;
+import fr.insy2s.service.ContratService;
+import fr.insy2s.service.DocumentService;
+import fr.insy2s.service.DpaeService;
+import fr.insy2s.service.EmployeService;
+import fr.insy2s.service.FichePaieService;
+import fr.insy2s.service.HeuresSupplementairesService;
+import fr.insy2s.service.InfoEntrepriseService;
+import fr.insy2s.service.NoteDeFraisService;
+import fr.insy2s.service.PrimeService;
+import fr.insy2s.service.SocieteService;
+import fr.insy2s.service.StatutEmployeService;
+import fr.insy2s.service.TypeContratService;
+import fr.insy2s.service.dto.AdresseDTO;
+import fr.insy2s.service.dto.AutresVariableDTO;
+import fr.insy2s.service.dto.AvanceRappelSalaireDTO;
+import fr.insy2s.service.dto.EmployeDTO;
+import fr.insy2s.service.dto.HeuresSupplementairesDTO;
+import fr.insy2s.service.dto.InfoEntrepriseDTO;
+import fr.insy2s.service.dto.NoteDeFraisDTO;
+import fr.insy2s.service.dto.SocieteDTO;
+import fr.insy2s.service.dto.StatutEmployeDTO;
+import fr.insy2s.service.dto.TypeContratDTO;
+import fr.insy2s.service.mapper.AbsenceMapper;
+import fr.insy2s.service.mapper.AutresVariableMapper;
+import fr.insy2s.service.mapper.AvanceRappelSalaireMapper;
+import fr.insy2s.service.mapper.EmployeMapper;
+import fr.insy2s.service.mapper.HeuresSupplementairesMapper;
+import fr.insy2s.service.mapper.NoteDeFraisMapper;
+import fr.insy2s.service.mapper.PrimeMapper;
+import fr.insy2s.service.mapper.TypeAbsenceMapper;
+import fr.insy2s.service.mapper.TypePrimeMapper;
+import fr.insy2s.service.mapper.WrapperEmployeMapper;
+import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperPrime;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
+
 /**
  * Service Implementation for managing {@link Employe}.
  */
@@ -200,7 +267,7 @@ public class EmployeServiceImpl implements EmployeService {
         if (employeDTO.getDateSortie() == null) {
             employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
         }
-        if (isEmployeMatriculeExist(employeDTO.getMatricule())) {
+        if (isEmployeMatriculeExist(employeDTO.getMatricule(), employeDTO.getSocieteId())) {
             return Optional.empty();
         }
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
@@ -219,9 +286,10 @@ public class EmployeServiceImpl implements EmployeService {
         employeDTO.setAdresseId(newAdresseDTO.getId());
         if (wrapperEmploye.getStatutEmployeId() == 3) {
             employeDTO.setStatutEmployeId(1L);
-        } else {
-            employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
-        }
+            employeDTO.setDateEmbauche(LocalDate.now());
+            employeDTO.setDateSortie(LocalDate.now());
+        }else {
+        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());}
         employeDTO.setTypeContratId(typeContratDTO.getId());
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
         final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, typeContratDTO);
@@ -318,9 +386,9 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
-    public boolean isEmployeMatriculeExist(final String matricule) {
+    public boolean isEmployeMatriculeExist(final String matricule, final Long idSociete) {
         final Employe employe = employeRepository.findByMatricule(matricule);
-        if (employe != null) {
+        if ((employe != null) && (employe.getSociete().getId()== idSociete)) {
             return true;
         }
         return false;

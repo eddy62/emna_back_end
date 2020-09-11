@@ -1,12 +1,14 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.domain.Releve;
+import fr.insy2s.domain.Operation;
 import fr.insy2s.repository.EtatReleveRepository;
-import fr.insy2s.repository.ReleveRepository;
+import fr.insy2s.repository.FactureRepository;
+import fr.insy2s.repository.OperationRepository;
 import fr.insy2s.service.ReleveService;
+import fr.insy2s.domain.Releve;
+import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
-import fr.insy2s.utils.EtatReleveConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,11 +35,16 @@ public class ReleveServiceImpl implements ReleveService {
 
     private final EtatReleveRepository etatReleveRepository;
 
+    private final OperationRepository operationRepository;
 
-    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository) {
+    private final FactureRepository factureRepository;
+
+    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository, OperationRepository operationRepository, FactureRepository factureRepository) {
         this.releveRepository = releveRepository;
         this.releveMapper = releveMapper;
         this.etatReleveRepository = etatReleveRepository;
+        this.operationRepository = operationRepository;
+        this.factureRepository = factureRepository;
     }
 
     @Override
@@ -62,8 +69,13 @@ public class ReleveServiceImpl implements ReleveService {
     @Transactional(readOnly = true)
     public Optional<ReleveDTO> findOne(Long id) {
         log.debug("Request to get Releve : {}", id);
-        return releveRepository.findById(id)
+        Optional<ReleveDTO> releve = releveRepository.findById(id)
             .map(releveMapper::toDto);
+        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
+        releve.get().setSolde(
+            solde.map(BigDecimal::doubleValue).orElse(0.0)
+        );
+        return releve;
     }
 
     @Override
@@ -71,39 +83,70 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("Request to delete Releve : {}", id);
         releveRepository.deleteById(id);
     }
-    public List<ReleveDTO> findAllBySocieteId(Long id) {
-  		 log.debug("Request to get all Releves by Societe Id");
-  		return releveRepository.findAllBySocieteId(id).stream().map(releveMapper::toDto)
-  	            .collect(Collectors.toCollection(LinkedList::new));
-  	}
-   public List<ReleveDTO> findAllByEtatReleveId(Long id) {
- 		 log.debug("Request to get all Releves by Societe Id");
- 		return releveRepository.findAllByEtatReleveId(id).stream().map(releveMapper::toDto)
- 	            .collect(Collectors.toCollection(LinkedList::new));
- 	}
-   public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete) {
-		 log.debug("Request to get all Releves by Societe Id");
-		return releveRepository.findAllByEtatReleveIdAndSocieteId( idEtat,idSociete).stream().map(releveMapper::toDto)
-	            .collect(Collectors.toCollection(LinkedList::new));
-	}
 
-    @Override
-    public boolean validateReleve(Long id) {
-        log.debug("REST request to validate Releve");
-        Integer result = releveRepository.validateRelever(id, EtatReleveConstants.RELEVE_NON_ARCHIVE);
-        return result != 0;
+    public List<ReleveDTO> findAllBySocieteId(Long id) {
+        log.debug("Request to get all Releves by Societe Id");
+        return releveRepository.findAllBySocieteId(id).stream().map(releveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public List<ReleveDTO> findAllByEtatReleveId(Long id) {
+        log.debug("Request to get all Releves by Societe Id");
+        return releveRepository.findAllByEtatReleveId(id).stream().map(releveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
+        log.debug("Request to get all Releves by Societe Id");
+        List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
+            .stream().map(releveMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+        Optional<BigDecimal> solde;
+        for (ReleveDTO releve : releves) {
+            solde = getReleveSoldeById(releve.getId());
+            releve.setSolde(
+                solde.map(BigDecimal::doubleValue).orElse(0.0)
+             );
+        }
+        return releves;
     }
 
     @Override
-    public Optional<BigDecimal> getReleveSoldeById(Long id) {
+    public Optional<BigDecimal> getReleveSoldeById(Long id)
+    {
         log.debug("Request to get solde by Releve Id");
         return releveRepository.getReleveSoldeById(id);
     }
 
     @Override
-    public boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser) {
+    public boolean hasPermissionForThisReleve(Long idReleve, String loginCurrentUser) {
         log.debug("Request to get relever by idReleve and loginCurrentUser");
-        releveRepository.checkPermissionForThisReleve(idReleve, loginCurrentUser);
-        return false;
+        return releveRepository.checkPermissionForThisReleve(idReleve, loginCurrentUser) != null;
+    }
+
+    @Override
+    public boolean balanceOperationsEqualsInvoices(Long idReleve) {
+        List<Operation> operations = operationRepository.findAllByReleveId(idReleve);
+        boolean isSoldeEquals = false;
+
+        if (operations != null) {
+            int i = 0;
+            do {
+                Long idOperation = operations.get(i).getId();
+                BigDecimal sommeFacture = factureRepository.balanceOfInvoicesByTransaction(idOperation).orElse(new BigDecimal(0));
+                double sommeF = sommeFacture.doubleValue();
+                isSoldeEquals = Double.compare(operations.get(i).getSolde(), sommeF) == 0;
+                i++;
+            }
+            while (isSoldeEquals && i < operations.size());
+        }
+        return isSoldeEquals;
+    }
+
+    @Override
+    public boolean changeStatutStatement(Long idReleve, Long idEtat) {
+        log.debug("REST request to validate Releve");
+        Integer result = releveRepository.validateRelever(idReleve, idEtat);
+        return result != 0;
     }
 }

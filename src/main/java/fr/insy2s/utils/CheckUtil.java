@@ -55,6 +55,11 @@ public class CheckUtil {
     }
 
     public static boolean isDateBetween(LocalDate startingDate, LocalDate firstDate, LocalDate secondDate) {
-        return !firstDate.isAfter(startingDate) && !secondDate.isBefore(startingDate);
+
+        boolean isEqualsOrAfterFirstDate    = startingDate.isAfter(firstDate)   || startingDate.equals(firstDate);
+        boolean isEqualsOrBeforeSecondDate  = startingDate.isBefore(secondDate) || startingDate.equals(secondDate);
+
+        return isEqualsOrAfterFirstDate && isEqualsOrBeforeSecondDate;
+
     }
 }

@@ -144,6 +144,14 @@ import avanceRappelSalaire, {
 import dpae, {
   DpaeState
 } from 'app/entities/dpae/dpae.reducer';
+// prettier-ignore
+import depense, {
+  DepenseState
+} from 'app/entities/depense/depense.reducer';
+// prettier-ignore
+import etatDepense, {
+  EtatDepenseState
+} from 'app/entities/etat-depense/etat-depense.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -190,6 +198,8 @@ export interface IRootState {
   readonly etatVariablePaie: EtatVariablePaieState;
   readonly avanceRappelSalaire: AvanceRappelSalaireState;
   readonly dpae: DpaeState;
+  readonly depense: DepenseState;
+  readonly etatDepense: EtatDepenseState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -238,6 +248,8 @@ const rootReducer = combineReducers<IRootState>({
   etatVariablePaie,
   avanceRappelSalaire,
   dpae,
+  depense,
+  etatDepense,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

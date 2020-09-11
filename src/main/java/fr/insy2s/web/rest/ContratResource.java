@@ -7,9 +7,13 @@ import fr.insy2s.service.ClauseService;
 import fr.insy2s.service.ContratService;
 import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
+import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.*;
 import io.github.jhipster.web.util.HeaderUtil;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +24,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Contrat}.
@@ -55,7 +56,7 @@ public class ContratResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/contrats")
-    public ResponseEntity<ContratDTO> createContrat(@Valid @RequestBody ContratVM contratVM) throws URISyntaxException {
+    public void createContrat(@Valid @RequestBody ContratVM contratVM) throws URISyntaxException, JRException {
 
         log.debug("REST request to save Contrat : {}", contratVM);
         if (contratVM.getId() != null) {
@@ -73,34 +74,35 @@ public class ContratResource {
         contratDTO.setSigne(contratVM.getSigne());
         contratDTO.setDateCreation(contratVM.getDateCreation());
         contratDTO.setTitre(contratVM.getTitre());
-        System.err.println("------------------        JE SAVE  MON CONTRA DTO         ------------------");
-        ContratDTO result = contratService.save(contratDTO);
-        System.err.println("-----------------------------------------------------------------------------");
+        contratDTO  = contratService.save(contratDTO);
 
 
         List<ClauseVm> listClauseVm = contratVM.getClauses();
         ClauseDTO clauseDto = null;
         if (!listClauseVm.isEmpty()) {
             for (ClauseVm clauseVm : listClauseVm) {
-                System.err.println("------------------        JE RENTRE DANS LA BOUCLE         ------------------");
-                System.err.println("------------------        JE FAIS APPEL AU CLAUSE SERVICE         ------------------");
                 clauseDto = clauseService.findOne(clauseVm.getClauseId()).get();
                 if (clauseDto.getId() != null) {
-                    System.err.println("------------------        J'AJOUTE A LA LISTE DE CONTRAT LA LISTE DANS CLAUSEDTO       ------------------");
                     Set<ContratDTO> listeContratsDto = clauseDto.getListeContrats();
                     listeContratsDto.add(contratDTO);
                     clauseDto.setListeContrats(listeContratsDto);
-                    System.err.println("------------------         CLAUSEDTO TO STRING()    ------------------");
-                    System.err.println(clauseDto);
-                    System.err.println("------------------        JE SAVE CLAUSEDTO        ------------------");
+                    clauseDto = clauseService.save(clauseDto);
                 }
             }
-            clauseService.save(clauseDto);
         }
 
-        return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        Long contratId = clauseDto.getListeContrats().stream().findFirst().get().getId();
+
+     //   System.err.println("------------------        JE GENERE LE PDF        ------------------");
+     //   ContratPdfVm contratPdfVm = new ContratPdfVm();
+     //   contratPdfVm.setTitre(contratDTO.getTitre());
+     //   String pdfName = contratDTO.getTitre()+contratDTO.getId();
+     //   byte[] bytes= PdfUtil.generatePDFContrat(contratPdfVm);
+
+    //     return ResponseEntity.ok()
+     //       .header("Content-Type", "application/pdf; charset=UTF-8")
+     //       .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"") //
+      //      .body(bytes);
     }
 
     /**

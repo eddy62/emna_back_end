@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ReleveResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
-
 @AutoConfigureMockMvc
 @WithMockUser
 public class ReleveResourceIT {
@@ -46,9 +45,6 @@ public class ReleveResourceIT {
 
     private static final String DEFAULT_BANQUE = "AAAAAAAAAA";
     private static final String UPDATED_BANQUE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_CHEMIN_FICHIER = "AAAAAAAAAA";
-    private static final String UPDATED_CHEMIN_FICHIER = "BBBBBBBBBB";
 
     @Autowired
     private ReleveRepository releveRepository;
@@ -78,8 +74,7 @@ public class ReleveResourceIT {
             .dateDebut(DEFAULT_DATE_DEBUT)
             .dateFin(DEFAULT_DATE_FIN)
             .solde(DEFAULT_SOLDE)
-            .banque(DEFAULT_BANQUE)
-            .cheminFichier(DEFAULT_CHEMIN_FICHIER);
+            .banque(DEFAULT_BANQUE);
         return releve;
     }
     /**
@@ -93,8 +88,7 @@ public class ReleveResourceIT {
             .dateDebut(UPDATED_DATE_DEBUT)
             .dateFin(UPDATED_DATE_FIN)
             .solde(UPDATED_SOLDE)
-            .banque(UPDATED_BANQUE)
-            .cheminFichier(UPDATED_CHEMIN_FICHIER);
+            .banque(UPDATED_BANQUE);
         return releve;
     }
 
@@ -107,7 +101,6 @@ public class ReleveResourceIT {
     @Transactional
     public void createReleve() throws Exception {
         int databaseSizeBeforeCreate = releveRepository.findAll().size();
-
         // Create the Releve
         ReleveDTO releveDTO = releveMapper.toDto(releve);
         restReleveMockMvc.perform(post("/api/releves")
@@ -123,7 +116,6 @@ public class ReleveResourceIT {
         assertThat(testReleve.getDateFin()).isEqualTo(DEFAULT_DATE_FIN);
         assertThat(testReleve.getSolde()).isEqualTo(DEFAULT_SOLDE);
         assertThat(testReleve.getBanque()).isEqualTo(DEFAULT_BANQUE);
-        assertThat(testReleve.getCheminFichier()).isEqualTo(DEFAULT_CHEMIN_FICHIER);
     }
 
     @Test
@@ -161,8 +153,7 @@ public class ReleveResourceIT {
             .andExpect(jsonPath("$.[*].dateDebut").value(hasItem(DEFAULT_DATE_DEBUT.toString())))
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(DEFAULT_DATE_FIN.toString())))
             .andExpect(jsonPath("$.[*].solde").value(hasItem(DEFAULT_SOLDE.doubleValue())))
-            .andExpect(jsonPath("$.[*].banque").value(hasItem(DEFAULT_BANQUE)))
-            .andExpect(jsonPath("$.[*].cheminFichier").value(hasItem(DEFAULT_CHEMIN_FICHIER)));
+            .andExpect(jsonPath("$.[*].banque").value(hasItem(DEFAULT_BANQUE)));
     }
     
     @Test
@@ -179,10 +170,8 @@ public class ReleveResourceIT {
             .andExpect(jsonPath("$.dateDebut").value(DEFAULT_DATE_DEBUT.toString()))
             .andExpect(jsonPath("$.dateFin").value(DEFAULT_DATE_FIN.toString()))
             .andExpect(jsonPath("$.solde").value(DEFAULT_SOLDE.doubleValue()))
-            .andExpect(jsonPath("$.banque").value(DEFAULT_BANQUE))
-            .andExpect(jsonPath("$.cheminFichier").value(DEFAULT_CHEMIN_FICHIER));
+            .andExpect(jsonPath("$.banque").value(DEFAULT_BANQUE));
     }
-
     @Test
     @Transactional
     public void getNonExistingReleve() throws Exception {
@@ -207,8 +196,7 @@ public class ReleveResourceIT {
             .dateDebut(UPDATED_DATE_DEBUT)
             .dateFin(UPDATED_DATE_FIN)
             .solde(UPDATED_SOLDE)
-            .banque(UPDATED_BANQUE)
-            .cheminFichier(UPDATED_CHEMIN_FICHIER);
+            .banque(UPDATED_BANQUE);
         ReleveDTO releveDTO = releveMapper.toDto(updatedReleve);
 
         restReleveMockMvc.perform(put("/api/releves")
@@ -224,7 +212,6 @@ public class ReleveResourceIT {
         assertThat(testReleve.getDateFin()).isEqualTo(UPDATED_DATE_FIN);
         assertThat(testReleve.getSolde()).isEqualTo(UPDATED_SOLDE);
         assertThat(testReleve.getBanque()).isEqualTo(UPDATED_BANQUE);
-        assertThat(testReleve.getCheminFichier()).isEqualTo(UPDATED_CHEMIN_FICHIER);
     }
 
     @Test

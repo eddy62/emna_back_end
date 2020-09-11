@@ -60,6 +60,10 @@ public class Document implements Serializable {
     @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
     private Employe employe;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private Depense depense;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -197,6 +201,19 @@ public class Document implements Serializable {
 
     public void setEmploye(Employe employe) {
         this.employe = employe;
+    }
+
+    public Depense getDepense() {
+        return depense;
+    }
+
+    public Document depense(Depense depense) {
+        this.depense = depense;
+        return this;
+    }
+
+    public void setDepense(Depense depense) {
+        this.depense = depense;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

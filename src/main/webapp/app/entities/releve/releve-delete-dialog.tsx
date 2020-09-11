@@ -59,7 +59,7 @@ export const ReleveDeleteDialog = (props: IReleveDeleteDialogProps) => {
 
 const mapStateToProps = ({ releve }: IRootState) => ({
   releveEntity: releve.entity,
-  updateSuccess: releve.updateSuccess
+  updateSuccess: releve.updateSuccess,
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

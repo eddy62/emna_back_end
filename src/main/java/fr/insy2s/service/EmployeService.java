@@ -107,7 +107,7 @@ public interface EmployeService {
      * @param matricule
      * @return
      */
-    boolean isEmployeMatriculeExist(final String matricule);
+    boolean isEmployeMatriculeExist(final String matricule, final Long idSociete);
 
     /**
      * Get one wrapperVariablesPaie by one employe, by one year and by one month.

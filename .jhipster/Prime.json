@@ -2,11 +2,6 @@
   "name": "Prime",
   "fields": [
     {
-      "fieldName": "type",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "montant",
       "fieldType": "Double",
       "fieldValidateRules": ["required"]

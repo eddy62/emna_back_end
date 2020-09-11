@@ -1,18 +1,17 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Releve;
 import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.utils.CheckUtil;
+import fr.insy2s.utils.EtatReleveConstants;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -163,7 +162,7 @@ public class ReleveResource {
     @PutMapping("/releve/{id}")
     public ResponseEntity<Void> valideRelever(@PathVariable Long id) {
         log.debug("REST request to validate Releve");
-        releveService.validateReleve(id);
+        releveService.changeStatutStatement(id,EtatReleveConstants.RELEVE_NON_ARCHIVE);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
@@ -173,20 +172,23 @@ public class ReleveResource {
      * @param idReleve the id of releveDTO to validate.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated releveDTO
      */
-    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
+//    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
     @PutMapping("/releve/valider/comptable/{idReleve}")
-    public ResponseEntity<ReleveDTO> updateEtatRelever(@PathVariable Long idReleve) {
+    public ResponseEntity<Boolean> updateEtatRelever(@PathVariable Long idReleve) {
         log.debug("REST request to update etat releve");
-        if (CheckUtil.isAcountant()) {
-            boolean conditionsBeforValidate = releveService.checkPermissionForThisReleve(idReleve, CheckUtil
-                    .getLoginCurrentUser());
+        boolean conditionsBeforValidate = false;
+        if (/*CheckUtil.isAcountant()*/ true) {
+            conditionsBeforValidate = releveService.hasPermissionForThisReleve(idReleve,"accountant")
+            && releveService.balanceOperationsEqualsInvoices(idReleve);
+        } else if (CheckUtil.isAdmin()) {
+            conditionsBeforValidate = releveService.balanceOperationsEqualsInvoices(idReleve);
         }
-        return ResponseEntity.ok().body(new ReleveDTO());
-    }
 
-    @GetMapping("/releve/valider/comptable/{idReleve}")
-    public ResponseEntity<Releve> getTest(@PathVariable Long idReleve, @Param("login") String loginCurrentUser) {
-        log.info("Teste methode: getTest");
-        return ResponseEntity.ok().body(releveRepository.checkPermissionForThisReleve(idReleve, loginCurrentUser));
+        if (conditionsBeforValidate) {
+            conditionsBeforValidate = releveService.changeStatutStatement(idReleve, EtatReleveConstants.RELEVE_ARCHIVE);
+            return ResponseEntity.ok().body(conditionsBeforValidate);
+        } else {
+            return ResponseEntity.ok().body(conditionsBeforValidate);
+        }
     }
 }

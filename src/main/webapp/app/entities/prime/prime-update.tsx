@@ -89,19 +89,6 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label id="typeLabel" for="prime-type">
-                  <Translate contentKey="emnaBackEndApp.prime.type">Type</Translate>
-                </Label>
-                <AvField
-                  id="prime-type"
-                  type="text"
-                  name="type"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
                 <Label id="montantLabel" for="prime-montant">
                   <Translate contentKey="emnaBackEndApp.prime.montant">Montant</Translate>
                 </Label>

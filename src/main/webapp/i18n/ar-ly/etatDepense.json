@@ -1,0 +1,23 @@
+{
+  "emnaBackEndApp": {
+    "etatDepense": {
+      "home": {
+        "title": "Etat Depenses",
+        "createLabel": "Create a new Etat Depense",
+        "createOrEditLabel": "Create or edit a Etat Depense",
+        "notFound": "No Etat Depenses found"
+      },
+      "created": "A new Etat Depense is created with identifier {{ param }}",
+      "updated": "A Etat Depense is updated with identifier {{ param }}",
+      "deleted": "A Etat Depense is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Etat Depense {{ id }}?"
+      },
+      "detail": {
+        "title": "Etat Depense"
+      },
+      "libelle": "Libelle",
+      "codeRef": "Code Ref"
+    }
+  }
+}

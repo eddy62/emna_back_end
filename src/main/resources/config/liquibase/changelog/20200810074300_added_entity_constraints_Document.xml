@@ -50,5 +50,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="employe"/>
 
+        <addForeignKeyConstraint baseColumnNames="depense_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_depense_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="depense"/>
+
     </changeSet>
 </databaseChangeLog>

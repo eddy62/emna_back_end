@@ -42,16 +42,15 @@ public interface FactureService {
      */
     void delete(Long id);
 
-    FactureDTO postFactureWithFile(FactureTemp factureTemp);
+    FactureDTO postFacture(FactureTemp factureTemp);
 
     List<FactureDTO> findAllBySocieteId(Long id);
 
-    /**
-     * Get all the factures for the statement concerned.
-     *
-     * @param idReleve the id of the statement
-     * @return the list of entities.
-     */
+
+    List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id);
+
     List<FactureDTO> findAllInvoicesByStatement(Long idReleve);
+
+    Long getLastNumFact(Long id);
 
 }

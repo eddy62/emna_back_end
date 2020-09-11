@@ -16,10 +16,6 @@
     {
       "fieldName": "banque",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "cheminFichier",
-      "fieldType": "String"
     }
   ],
   "relationships": [

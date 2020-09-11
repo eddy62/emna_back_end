@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Document} and its DTO {@link DocumentDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AbsenceMapper.class, NoteDeFraisMapper.class, AutresVariableMapper.class, FactureMapper.class, ReleveMapper.class, ContratMapper.class, EmployeMapper.class})
+@Mapper(componentModel = "spring", uses = {AbsenceMapper.class, NoteDeFraisMapper.class, AutresVariableMapper.class, FactureMapper.class, ReleveMapper.class, ContratMapper.class, EmployeMapper.class, DepenseMapper.class})
 public interface DocumentMapper extends EntityMapper<DocumentDTO, Document> {
 
     @Mapping(source = "absence.id", target = "absenceId")
@@ -19,6 +19,7 @@ public interface DocumentMapper extends EntityMapper<DocumentDTO, Document> {
     @Mapping(source = "releve.id", target = "releveId")
     @Mapping(source = "contrat.id", target = "contratId")
     @Mapping(source = "employe.id", target = "employeId")
+    @Mapping(source = "depense.id", target = "depenseId")
     DocumentDTO toDto(Document document);
 
     @Mapping(source = "absenceId", target = "absence")
@@ -28,6 +29,7 @@ public interface DocumentMapper extends EntityMapper<DocumentDTO, Document> {
     @Mapping(source = "releveId", target = "releve")
     @Mapping(source = "contratId", target = "contrat")
     @Mapping(source = "employeId", target = "employe")
+    @Mapping(source = "depenseId", target = "depense")
     Document toEntity(DocumentDTO documentDTO);
 
     default Document fromId(Long id) {
