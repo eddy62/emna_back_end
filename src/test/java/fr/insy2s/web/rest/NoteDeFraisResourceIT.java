@@ -46,6 +46,12 @@ public class NoteDeFraisResourceIT {
     private static final String DEFAULT_JUSTIFICATIF = "AAAAAAAAAA";
     private static final String UPDATED_JUSTIFICATIF = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private NoteDeFraisRepository noteDeFraisRepository;
 
@@ -74,7 +80,9 @@ public class NoteDeFraisResourceIT {
             .designation(DEFAULT_DESIGNATION)
             .date(DEFAULT_DATE)
             .montant(DEFAULT_MONTANT)
-            .justificatif(DEFAULT_JUSTIFICATIF);
+            .justificatif(DEFAULT_JUSTIFICATIF)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         return noteDeFrais;
     }
     /**
@@ -88,7 +96,9 @@ public class NoteDeFraisResourceIT {
             .designation(UPDATED_DESIGNATION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         return noteDeFrais;
     }
 
@@ -116,6 +126,8 @@ public class NoteDeFraisResourceIT {
         assertThat(testNoteDeFrais.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testNoteDeFrais.getMontant()).isEqualTo(DEFAULT_MONTANT);
         assertThat(testNoteDeFrais.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        assertThat(testNoteDeFrais.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testNoteDeFrais.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -201,6 +213,46 @@ public class NoteDeFraisResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = noteDeFraisRepository.findAll().size();
+        // set the field null
+        noteDeFrais.setMois(null);
+
+        // Create the NoteDeFrais, which fails.
+        NoteDeFraisDTO noteDeFraisDTO = noteDeFraisMapper.toDto(noteDeFrais);
+
+
+        restNoteDeFraisMockMvc.perform(post("/api/note-de-frais")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(noteDeFraisDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAll();
+        assertThat(noteDeFraisList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = noteDeFraisRepository.findAll().size();
+        // set the field null
+        noteDeFrais.setAnnee(null);
+
+        // Create the NoteDeFrais, which fails.
+        NoteDeFraisDTO noteDeFraisDTO = noteDeFraisMapper.toDto(noteDeFrais);
+
+
+        restNoteDeFraisMockMvc.perform(post("/api/note-de-frais")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(noteDeFraisDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAll();
+        assertThat(noteDeFraisList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllNoteDeFrais() throws Exception {
         // Initialize the database
         noteDeFraisRepository.saveAndFlush(noteDeFrais);
@@ -213,7 +265,9 @@ public class NoteDeFraisResourceIT {
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].montant").value(hasItem(DEFAULT_MONTANT.doubleValue())))
-            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)));
+            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -230,7 +284,9 @@ public class NoteDeFraisResourceIT {
             .andExpect(jsonPath("$.designation").value(DEFAULT_DESIGNATION))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.montant").value(DEFAULT_MONTANT.doubleValue()))
-            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF));
+            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -256,7 +312,9 @@ public class NoteDeFraisResourceIT {
             .designation(UPDATED_DESIGNATION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         NoteDeFraisDTO noteDeFraisDTO = noteDeFraisMapper.toDto(updatedNoteDeFrais);
 
         restNoteDeFraisMockMvc.perform(put("/api/note-de-frais")
@@ -272,6 +330,8 @@ public class NoteDeFraisResourceIT {
         assertThat(testNoteDeFrais.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testNoteDeFrais.getMontant()).isEqualTo(UPDATED_MONTANT);
         assertThat(testNoteDeFrais.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        assertThat(testNoteDeFrais.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testNoteDeFrais.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

@@ -100,7 +100,7 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.dateSortie">Date Sortie</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.periodeEssai">Periode Essai</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.employe.situationFamiliale">Situation Familiale</Translate>
@@ -109,10 +109,13 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.enfantsACharge">Enfants A Charge</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.employe.adresse">Adresse</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.employe.societe">Societe</Translate>
@@ -134,7 +137,7 @@ export const Employe = (props: IEmployeProps) => {
                   <td>{employe.nomUsage}</td>
                   <td>{employe.prenom}</td>
                   <td>
-                    <TextFormat type="date" value={employe.dateNaissance} format={APP_LOCAL_DATE_FORMAT} />
+                    {employe.dateNaissance ? <TextFormat type="date" value={employe.dateNaissance} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{employe.villeNaissance}</td>
                   <td>{employe.departementNaissance}</td>
@@ -150,18 +153,19 @@ export const Employe = (props: IEmployeProps) => {
                   <td>{employe.categorie}</td>
                   <td>{employe.poste}</td>
                   <td>
-                    <TextFormat type="date" value={employe.dateEmbauche} format={APP_LOCAL_DATE_FORMAT} />
+                    {employe.dateEmbauche ? <TextFormat type="date" value={employe.dateEmbauche} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>
-                    <TextFormat type="date" value={employe.dateSortie} format={APP_LOCAL_DATE_FORMAT} />
+                    {employe.dateSortie ? <TextFormat type="date" value={employe.dateSortie} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{employe.typeContrat}</td>
+                  <td>{employe.periodeEssai}</td>
                   <td>{employe.situationFamiliale}</td>
                   <td>{employe.enfantsACharge}</td>
-                  <td>{employe.adresseId ? <Link to={`adresse/${employe.adresseId}`}>{employe.adresseId}</Link> : ''}</td>
                   <td>
                     {employe.statutEmployeId ? <Link to={`statut-employe/${employe.statutEmployeId}`}>{employe.statutEmployeId}</Link> : ''}
                   </td>
+                  <td>{employe.adresseId ? <Link to={`adresse/${employe.adresseId}`}>{employe.adresseId}</Link> : ''}</td>
+                  <td>{employe.typeContratId ? <Link to={`type-contrat/${employe.typeContratId}`}>{employe.typeContratId}</Link> : ''}</td>
                   <td>{employe.societeId ? <Link to={`societe/${employe.societeId}`}>{employe.societeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -203,11 +207,11 @@ export const Employe = (props: IEmployeProps) => {
 
 const mapStateToProps = ({ employe }: IRootState) => ({
   employeList: employe.entities,
-  loading: employe.loading
+  loading: employe.loading,
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

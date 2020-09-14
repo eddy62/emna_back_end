@@ -123,11 +123,11 @@ export const ClientFournisseur = (props: IClientFournisseurProps) => {
 
 const mapStateToProps = ({ clientFournisseur }: IRootState) => ({
   clientFournisseurList: clientFournisseur.entities,
-  loading: clientFournisseur.loading
+  loading: clientFournisseur.loading,
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

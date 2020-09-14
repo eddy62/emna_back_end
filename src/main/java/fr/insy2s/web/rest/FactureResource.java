@@ -1,8 +1,9 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Facture;
 import fr.insy2s.service.FactureService;
+import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureTemp;
+import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FactureDTO;
 
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URI;
@@ -121,15 +121,35 @@ public class FactureResource {
     @PostMapping("/facture/new")
     public ResponseEntity<FactureDTO> createFactureForSociete(@ModelAttribute FactureTemp factureTemp) throws URISyntaxException, IOException {
         log.debug("REST request to save Facture : {}", factureTemp);
-        FactureDTO result = factureService.postFactureWithFile(factureTemp);
+        FactureDTO result = factureService.postFacture(factureTemp);
         return ResponseEntity.created(new URI("/api/factures/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     @GetMapping("/factures/societe/{id}")
-    public List<FactureDTO> getAllFactureBySocieteId(@PathVariable Long id) {
+    public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
-        return factureService.findAllBySocieteId(id);
+        return factureService.findAllWrapperVenteBySocieteId(id);
     }
+
+    /**
+     * {@code GET  /factures/relevé/:id} : get all the factures in statement id.
+     *
+     * @param idReleve id of the statement concerned
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
+     */
+    @GetMapping("/factures/relevé/{idReleve}")
+    public List<FactureDTO> getAllInvoicesByStatement(@PathVariable Long idReleve) {
+        log.debug("REST request to get all invoices of the statement concerned : {}", idReleve);
+        return factureService.findAllInvoicesByStatement(idReleve);
+    }
+
+    @GetMapping("/facture/lastnumfact/{id}")
+    public Long getLastNumFact(@PathVariable Long id) {
+        log.debug("REST request to get Facture : {}", id);
+        return factureService.getLastNumFact(id);
+    }
+
+
 }

@@ -32,10 +32,6 @@ export const SocieteDetail = (props: ISocieteDetailProps) => {
           </dt>
           <dd>{societeEntity.civilite}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.societe.adresse">Adresse</Translate>
-          </dt>
-          <dd>{societeEntity.adresseId ? societeEntity.adresseId : ''}</dd>
-          <dt>
             <Translate contentKey="emnaBackEndApp.societe.infoEntreprise">Info Entreprise</Translate>
           </dt>
           <dd>{societeEntity.infoEntrepriseId ? societeEntity.infoEntrepriseId : ''}</dd>
@@ -43,6 +39,10 @@ export const SocieteDetail = (props: ISocieteDetailProps) => {
             <Translate contentKey="emnaBackEndApp.societe.user">User</Translate>
           </dt>
           <dd>{societeEntity.userId ? societeEntity.userId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.societe.adresse">Adresse</Translate>
+          </dt>
+          <dd>{societeEntity.adresseId ? societeEntity.adresseId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.societe.comptable">Comptable</Translate>
           </dt>
@@ -67,7 +67,7 @@ export const SocieteDetail = (props: ISocieteDetailProps) => {
 };
 
 const mapStateToProps = ({ societe }: IRootState) => ({
-  societeEntity: societe.entity
+  societeEntity: societe.entity,
 });
 
 const mapDispatchToProps = { getEntity };

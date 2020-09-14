@@ -2,7 +2,6 @@ package fr.insy2s.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Prime} entity.
@@ -12,13 +11,18 @@ public class PrimeDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String type;
+    private Double montant;
 
     @NotNull
-    private Double montant;
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
 
 
     private Long typePrimeId;
+
+    private Long etatVariablePaieId;
 
     private Long employeId;
     
@@ -30,14 +34,6 @@ public class PrimeDTO implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Double getMontant() {
         return montant;
     }
@@ -46,12 +42,36 @@ public class PrimeDTO implements Serializable {
         this.montant = montant;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public Long getTypePrimeId() {
         return typePrimeId;
     }
 
     public void setTypePrimeId(Long typePrimeId) {
         this.typePrimeId = typePrimeId;
+    }
+
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
     }
 
     public Long getEmployeId() {
@@ -67,29 +87,28 @@ public class PrimeDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof PrimeDTO)) {
             return false;
         }
 
-        PrimeDTO primeDTO = (PrimeDTO) o;
-        if (primeDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), primeDTO.getId());
+        return id != null && id.equals(((PrimeDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "PrimeDTO{" +
             "id=" + getId() +
-            ", type='" + getType() + "'" +
             ", montant=" + getMontant() +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", typePrimeId=" + getTypePrimeId() +
+            ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";
     }

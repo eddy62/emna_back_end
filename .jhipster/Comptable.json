@@ -9,15 +9,6 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "adresse",
-      "otherEntityRelationshipName": "comptable",
-      "relationshipValidateRules": "required",
-      "relationshipName": "adresse",
-      "otherEntityField": "id",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
       "otherEntityName": "infoEntreprise",
       "otherEntityRelationshipName": "comptable",
       "relationshipName": "infoEntreprise",
@@ -37,6 +28,14 @@
       "otherEntityName": "societe",
       "otherEntityRelationshipName": "comptable",
       "relationshipName": "listeSocietes"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "adresse",
+      "otherEntityRelationshipName": "comptable",
+      "relationshipValidateRules": "required",
+      "relationshipName": "adresse",
+      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20200722092804",

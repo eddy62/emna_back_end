@@ -3,13 +3,11 @@ package fr.insy2s.web.rest.vm;
 public class ClauseVm {
     Long articleId;
     Long clauseId;
-    String clauseReference;
     String clauseDesciption;
 
-    public ClauseVm(Long articleId, Long clauseId, String clauseReference, String clauseDesciption) {
+    public ClauseVm(Long articleId, Long clauseId, String clauseDesciption) {
         this.articleId = articleId;
         this.clauseId = clauseId;
-        this.clauseReference = clauseReference;
         this.clauseDesciption = clauseDesciption;
     }
 
@@ -30,14 +28,6 @@ public class ClauseVm {
 
     public void setClauseId(Long clauseId) {
         this.clauseId = clauseId;
-    }
-
-    public String getClauseReference() {
-        return clauseReference;
-    }
-
-    public void setClauseReference(String clauseReference) {
-        this.clauseReference = clauseReference;
     }
 
     public String getClauseDesciption() {

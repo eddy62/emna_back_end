@@ -35,6 +35,13 @@
         "infoEntreprise": "Info Entreprise",
         "statutEmploye": "Statut Employe",
         "document": "Document",
+        "ligneProduit": "Ligne Produit",
+        "typeContrat": "Type Contrat",
+        "etatVariablePaie": "Etat Variable Paie",
+        "avanceRappelSalaire": "Avance Rappel Salaire",
+        "dpae": "Dpae",
+        "depense": "Depense",
+        "etatDepense": "Etat Depense",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

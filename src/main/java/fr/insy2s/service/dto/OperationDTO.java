@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A DTO for the {@link fr.insy2s.domain.Operation} entity.
  */
 public class OperationDTO implements Serializable {
-    
+
     private Long id;
 
     private LocalDate date;
@@ -22,7 +22,7 @@ public class OperationDTO implements Serializable {
 
 
     private Long releveId;
-    
+
     public Long getId() {
         return id;
     }

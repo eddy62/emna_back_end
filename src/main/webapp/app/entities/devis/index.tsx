@@ -11,12 +11,12 @@ import DevisDeleteDialog from './devis-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
-      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={DevisDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={DevisUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={DevisUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={DevisDetail} />
       <ErrorBoundaryRoute path={match.url} component={Devis} />
     </Switch>
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={DevisDeleteDialog} />
   </>
 );
 

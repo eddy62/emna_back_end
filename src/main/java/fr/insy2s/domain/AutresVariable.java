@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -35,6 +36,18 @@ public class AutresVariable implements Serializable {
 
     @Column(name = "justificatif")
     private String justificatif;
+
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "autresVariables", allowSetters = true)
+    private EtatVariablePaie etatVariablePaie;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeAutresVariables", allowSetters = true)
@@ -101,6 +114,45 @@ public class AutresVariable implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public AutresVariable mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public AutresVariable annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
+    public EtatVariablePaie getEtatVariablePaie() {
+        return etatVariablePaie;
+    }
+
+    public AutresVariable etatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+        return this;
+    }
+
+    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+    }
+
     public Employe getEmploye() {
         return employe;
     }
@@ -140,6 +192,8 @@ public class AutresVariable implements Serializable {
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

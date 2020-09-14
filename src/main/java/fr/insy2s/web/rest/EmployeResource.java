@@ -1,28 +1,39 @@
 package fr.insy2s.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import fr.insy2s.domain.Article;
-import fr.insy2s.repository.projection.IEmployeContratProjection;
-import fr.insy2s.service.EmployeService;
-import fr.insy2s.service.dto.EmployeDTO;
-import fr.insy2s.utils.wrapper.WrapperEmploye;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.web.rest.vm.ArticleVM;
-import fr.insy2s.web.rest.vm.ClauseVm;
-import fr.insy2s.web.rest.vm.EmployerVM;
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-
+import fr.insy2s.repository.projection.IEmployeContratProjection;
+import fr.insy2s.service.EmployeService;
+import fr.insy2s.service.dto.EmployeDTO;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
+import fr.insy2s.web.rest.vm.ArticleVM;
+import fr.insy2s.web.rest.vm.ClauseVm;
+import fr.insy2s.web.rest.vm.EmployeEtArticleVM;
+import fr.insy2s.web.rest.vm.EmployerVM;
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Employe}.
@@ -31,12 +42,12 @@ import java.util.*;
 @RequestMapping("/api")
 public class EmployeResource {
 
-    private final Logger log = LoggerFactory.getLogger(EmployeResource.class);
+    private final Logger         log         = LoggerFactory.getLogger(EmployeResource.class);
 
-    private static final String ENTITY_NAME = "employe";
+    private static final String  ENTITY_NAME = "employe";
 
     @Value("${jhipster.clientApp.name}")
-    private String applicationName;
+    private String               applicationName;
 
     private final EmployeService employeService;
 
@@ -59,7 +70,7 @@ public class EmployeResource {
         }
         EmployeDTO result = employeService.save(employeDTO);
         return ResponseEntity.created(new URI("/api/employes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                        .body(result);
     }
 
     /**
@@ -67,7 +78,7 @@ public class EmployeResource {
      *
      * @param employeDTO the employeDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated employeDTO, or with status {@code 400 (Bad Request)} if the employeDTO is not valid, or with status
-     * {@code 500 (Internal Server Error)} if the employeDTO couldn't be updated.
+     *         {@code 500 (Internal Server Error)} if the employeDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/employes")
@@ -117,69 +128,70 @@ public class EmployeResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-
     @GetMapping("/employer/article/clause/societe/{id}")
-    public List<EmployerVM> getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
+    public EmployeEtArticleVM getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
+        EmployeEtArticleVM employeEtArticleVM = new EmployeEtArticleVM();
         List<EmployerVM> listEmployer = new ArrayList<>();
         List<IEmployeContratProjection> listIEmployeContratProjections = this.employeService.getAllEmployeArticleClauseBySocieteId(id);
-        EmployerVM employerVM = new EmployerVM();
+
         List<ArticleVM> listArticle = new ArrayList<>();
         List<ClauseVm> listClause = new ArrayList<>();
 
-        int index=1;
-int tour=1;
+        int index = 1;
+        boolean present = false;
+        boolean presentEmploye = false;
         for (IEmployeContratProjection iEmployeContratProjection : listIEmployeContratProjections) { //*19
+            present = false;
+            presentEmploye = false;
             ArticleVM articleVM = new ArticleVM();
             ClauseVm clauseVm = new ClauseVm();
-            System.err.println("DANS LA BOUCLE"+tour);
+            EmployerVM employerVM = new EmployerVM();
             employerVM.setEmployerId(iEmployeContratProjection.getEmployerId());
             employerVM.setEmployerNom(iEmployeContratProjection.getEmployerNom());
             employerVM.setEmployerPrenom(iEmployeContratProjection.getEmployerPrenom());
             employerVM.setSocieteId(iEmployeContratProjection.getSocieteId());
+            for (EmployerVM employe : listEmployer) {
+                if (employe.getEmployerId() == iEmployeContratProjection.getEmployerId()) {
+                    presentEmploye = true;
+                }
+            }
+            if (!presentEmploye) {
+                listEmployer.add(employerVM);
+            }
             articleVM.setArticleId(iEmployeContratProjection.getArticleId());
-            System.err.println("ID ARTICLE ="+articleVM.getArticleId());
             articleVM.setArticleTitre(iEmployeContratProjection.getArticleTitre());
             articleVM.setArticleDescription(iEmployeContratProjection.getArticleDescription());
+            articleVM.setArticleReference(iEmployeContratProjection.getArticleReference());
             articleVM.setListClauses(new ArrayList<>());
-            if(articleVM.getArticleId()==index){
+            if (articleVM.getArticleId() == index) {
                 listArticle.add(articleVM);
-                System.err.println("Contenu de listArticle DANS LA BOUCLE");
-                for(ArticleVM article: listArticle){
-                    System.err.println(article.getArticleId());
-                }
                 index++;
             }
+            for (ClauseVm clause : listClause) {
+                if (iEmployeContratProjection.getClauseId() == clause.getClauseId()) {
+                    present = true;
+                }
+            }
+            if (!present) {
+                clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
+                clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
+                clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
 
+                listClause.add(clauseVm);
 
-            clauseVm.setArticleId(iEmployeContratProjection.getArticleId());
-            clauseVm.setClauseId(iEmployeContratProjection.getClauseId());
-            System.err.println("ID CLAUSE ="+clauseVm.getClauseId());
-            clauseVm.setClauseReference(iEmployeContratProjection.getClauseReference());
-            clauseVm.setClauseDesciption(iEmployeContratProjection.getClauseDescription());
-
-            listClause.add(clauseVm);
-
-            tour++;
-
+            }
         }
-        System.err.println("Taille de listArticle");
-        System.err.println(listArticle.size());
-        System.err.println("Contenu de listArticle");
-        for(ArticleVM article: listArticle){
-            System.err.println(article.getArticleId());
-        }
-
 
         for (ClauseVm clause : listClause) {
-            System.err.println(clause.getArticleId());
             int integ = Math.toIntExact(clause.getArticleId());
-            listArticle.get(integ-1).getListClauses().add(clause);
+            listArticle.get(integ - 1).getListClauses().add(clause);
         }
 
+        employeEtArticleVM.setArticleVMList(listArticle);
+        employeEtArticleVM.setEmployerVMList(listEmployer);
 
-        employerVM.setListArticles(listArticle);
-        listEmployer.add(employerVM);
-        return listEmployer;
+        return employeEtArticleVM;
+
     }
 
     /**
@@ -233,17 +245,23 @@ int tour=1;
         if (wrapperEmploye.getId() != null) {
             throw new BadRequestAlertException("A new employe cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        WrapperEmploye result = employeService.createWrapperEmploye(wrapperEmploye);
-        return ResponseEntity.created(new URI("/api/wrapperemployes/" + result.getId())).headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        if (employeService.isEmployeMatriculeExist(wrapperEmploye.getMatricule(), wrapperEmploye.getSocieteId())) {
+            throw new BadRequestAlertException("Le numero de matricule existe déjà !", ENTITY_NAME, " Numero Matricule unique");
+        }
+        if ((LocalDate.now().getYear() - wrapperEmploye.getDateNaissance().getYear()) < 14) {
+            throw new BadRequestAlertException("L'âge minimum pour travailler est de 14 ans !", ENTITY_NAME, " Date de naissance incorrect");
+        }
+        Optional<WrapperEmploye> result = employeService.createWrapperEmploye(wrapperEmploye);
+
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
     /**
-     * {@code PUT  /wrapperEmploye} : Updates an existing wrapperEmploye.
+     * {@code PUT  /wrapperEmploye} : Update an existing wrapperEmploye.
      *
      * @param wrapperEmploye the wrapperEmploye to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye is not valid, or with status
-     * {@code 500 (Internal Server Error)} if the wrapperEmploye couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye is not valid, or with
+     *         status {@code 500 (Internal Server Error)} if the wrapperEmploye couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/wrapperemployes")
@@ -255,7 +273,7 @@ int tour=1;
         WrapperEmploye result = employeService.updateWrapperEmploye(wrapperEmploye);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
     }
-    
+
     /**
      * {@code DELETE  /wrapperemployes/:id} : delete the "id" wrapperemployes.
      *
@@ -263,12 +281,12 @@ int tour=1;
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/wrapperemployes/{id}")
-    public ResponseEntity<Void> deleteWrapperEmploye(@PathVariable Long id) {
+    public boolean deleteWrapperEmploye(@PathVariable Long id) {
         log.debug("REST request to delete WrapperEmploye : {}", id);
-        employeService.deleteWrapperEmploye(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        boolean result = employeService.deleteWrapperEmploye(id);
+        return result;
     }
-    
+
     /**
      * {@code GET /wrapperemployes/society/:id/typecontrat/:type} : get all the wrapperEmployes by society and by type of contract.
      *
@@ -281,14 +299,14 @@ int tour=1;
         List<WrapperEmploye> list = employeService.findAllWrapperEmployeBySociete(id);
         List<WrapperEmploye> listeSelect = new ArrayList<WrapperEmploye>();
         for (WrapperEmploye wrapperEmploye : list) {
-            if (wrapperEmploye.getTypeContrat().equals(type)) {
+            if ((wrapperEmploye.getCodeTypeContrat().equals(type)) && (wrapperEmploye.getStatutEmployeId() == 2)) {
                 listeSelect.add(wrapperEmploye);
             }
         }
-       
+
         return listeSelect;
     }
-    
+
     /**
      * {@code GET /wrapperemployes/society/:id/typecontrat/:type} : get all the wrapperEmployes by society and by type of contract.
      *
@@ -305,9 +323,32 @@ int tour=1;
                 listeSelect.add(wrapperEmploye);
             }
         }
-       
+
         return listeSelect;
     }
-    
-    
+
+    /**
+     * {@code PUT  /wrapperEmploye/archive} : Archive an existing wrapperEmploye.
+     *
+     * @param wrapperEmploye the wrapperEmploye to archive.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated wrapperEmploye, or with status {@code 400 (Bad Request)} if the wrapperEmploye is not valid, or with
+     *         status {@code 500 (Internal Server Error)} if the wrapperEmploye couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PutMapping("/wrapperemploye/archive")
+    public ResponseEntity<WrapperEmploye> archiveWrapperEmploye(@Valid @RequestBody WrapperEmploye wrapperEmploye) throws URISyntaxException {
+        log.debug("REST request to archive WrapperEmploye : {}", wrapperEmploye);
+        if (wrapperEmploye.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        WrapperEmploye result = employeService.archiveWrapperEmploye(wrapperEmploye);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperEmploye.getId().toString())).body(result);
+    }
+
+    @GetMapping("/wrappervariablespaie/employe/{idEmploye}/annee/{annee}/mois/{mois}")
+    public WrapperVariablesPaie getOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
+        log.debug("REST request to get one WrapperVariablesPaie by employe, annee, mois : {}", idEmploye, annee, mois);
+        return employeService.findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+    }
+
 }

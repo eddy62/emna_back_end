@@ -1,7 +1,6 @@
 package fr.insy2s.service.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.ClientFournisseur} entity.
@@ -84,22 +83,19 @@ public class ClientFournisseurDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ClientFournisseurDTO)) {
             return false;
         }
 
-        ClientFournisseurDTO clientFournisseurDTO = (ClientFournisseurDTO) o;
-        if (clientFournisseurDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), clientFournisseurDTO.getId());
+        return id != null && id.equals(((ClientFournisseurDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ClientFournisseurDTO{" +

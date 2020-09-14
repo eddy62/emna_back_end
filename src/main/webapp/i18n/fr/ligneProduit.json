@@ -1,0 +1,28 @@
+{
+  "emnaBackEndApp": {
+    "ligneProduit": {
+      "home": {
+        "title": "LigneProduits",
+        "createLabel": "Créer un nouveau Ligne Produit",
+        "createOrEditLabel": "Créer ou éditer un Ligne Produit",
+        "notFound": "Aucun Ligne Produit trouvé"
+      },
+      "created": "Un nouveau Ligne Produit a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Ligne Produit avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Ligne Produit avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Ligne Produit {{ id }} ?"
+      },
+      "detail": {
+        "title": "Ligne Produit"
+      },
+      "quantite": "Quantite",
+      "nom": "Nom",
+      "description": "Description",
+      "tva": "Tva",
+      "prix": "Prix",
+      "facture": "Facture",
+      "devis": "Devis"
+    }
+  }
+}

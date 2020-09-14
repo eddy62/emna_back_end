@@ -17,10 +17,10 @@
         "title": "Comptable"
       },
       "civilite": "Civilite",
-      "adresse": "Adresse",
       "infoEntreprise": "Info Entreprise",
       "user": "User",
-      "listeSocietes": "Liste Societes"
+      "listeSocietes": "Liste Societes",
+      "adresse": "Adresse"
     }
   }
 }

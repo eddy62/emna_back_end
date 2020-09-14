@@ -2,18 +2,12 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <!--
         Added the constraints for entity Societe.
     -->
     <changeSet id="20200722092904-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="adresse_id"
-                                 baseTableName="societe"
-                                 constraintName="fk_societe_adresse_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="adresse"/>
-
         <addForeignKeyConstraint baseColumnNames="info_entreprise_id"
                                  baseTableName="societe"
                                  constraintName="fk_societe_info_entreprise_id"
@@ -25,6 +19,12 @@
                                  constraintName="fk_societe_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="adresse_id"
+                                 baseTableName="societe"
+                                 constraintName="fk_societe_adresse_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="adresse"/>
 
         <addForeignKeyConstraint baseColumnNames="comptable_id"
                                  baseTableName="societe"

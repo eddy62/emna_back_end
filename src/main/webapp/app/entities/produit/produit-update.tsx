@@ -7,10 +7,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IFacture } from 'app/shared/model/facture.model';
-import { getEntities as getFactures } from 'app/entities/facture/facture.reducer';
-import { IDevis } from 'app/shared/model/devis.model';
-import { getEntities as getDevis } from 'app/entities/devis/devis.reducer';
 import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './produit.reducer';
@@ -21,12 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IProduitUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ProduitUpdate = (props: IProduitUpdateProps) => {
-  const [idslisteFactures, setIdslisteFactures] = useState([]);
-  const [idslisteDevis, setIdslisteDevis] = useState([]);
   const [societeId, setSocieteId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { produitEntity, factures, devis, societes, loading, updating } = props;
+  const { produitEntity, societes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/produit');
@@ -39,8 +33,6 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getFactures();
-    props.getDevis();
     props.getSocietes();
   }, []);
 
@@ -55,8 +47,6 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
       const entity = {
         ...produitEntity,
         ...values,
-        listeFactures: mapIdList(values.listeFactures),
-        listeDevis: mapIdList(values.listeDevis),
       };
 
       if (isNew) {
@@ -121,60 +111,10 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
                 <AvField id="produit-unite" type="text" name="unite" />
               </AvGroup>
               <AvGroup>
-                <Label id="quantiteLabel" for="produit-quantite">
-                  <Translate contentKey="emnaBackEndApp.produit.quantite">Quantite</Translate>
-                </Label>
-                <AvField id="produit-quantite" type="text" name="quantite" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="descriptionLabel" for="produit-description">
                   <Translate contentKey="emnaBackEndApp.produit.description">Description</Translate>
                 </Label>
                 <AvField id="produit-description" type="text" name="description" />
-              </AvGroup>
-              <AvGroup>
-                <Label for="produit-listeFactures">
-                  <Translate contentKey="emnaBackEndApp.produit.listeFactures">Liste Factures</Translate>
-                </Label>
-                <AvInput
-                  id="produit-listeFactures"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="listeFactures"
-                  value={produitEntity.listeFactures && produitEntity.listeFactures.map(e => e.id)}
-                >
-                  <option value="" key="0" />
-                  {factures
-                    ? factures.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="produit-listeDevis">
-                  <Translate contentKey="emnaBackEndApp.produit.listeDevis">Liste Devis</Translate>
-                </Label>
-                <AvInput
-                  id="produit-listeDevis"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="listeDevis"
-                  value={produitEntity.listeDevis && produitEntity.listeDevis.map(e => e.id)}
-                >
-                  <option value="" key="0" />
-                  {devis
-                    ? devis.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="produit-societe">
@@ -213,8 +153,6 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  factures: storeState.facture.entities,
-  devis: storeState.devis.entities,
   societes: storeState.societe.entities,
   produitEntity: storeState.produit.entity,
   loading: storeState.produit.loading,
@@ -223,8 +161,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getFactures,
-  getDevis,
   getSocietes,
   getEntity,
   updateEntity,

@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.LocalDate;
 
 /**
@@ -16,7 +15,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "absence")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Absence implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,16 +36,28 @@ public class Absence implements Serializable {
     @Column(name = "justificatif")
     private String justificatif;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("absences")
+    @JsonIgnoreProperties(value = "absences", allowSetters = true)
     private TypeAbsence typeAbsence;
 
     @ManyToOne
-    @JsonIgnoreProperties("listeAbsences")
+    @JsonIgnoreProperties(value = "absences", allowSetters = true)
+    private EtatVariablePaie etatVariablePaie;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeAbsences", allowSetters = true)
     private Employe employe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -94,6 +105,32 @@ public class Absence implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public Absence mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public Absence annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public TypeAbsence getTypeAbsence() {
         return typeAbsence;
     }
@@ -105,6 +142,19 @@ public class Absence implements Serializable {
 
     public void setTypeAbsence(TypeAbsence typeAbsence) {
         this.typeAbsence = typeAbsence;
+    }
+
+    public EtatVariablePaie getEtatVariablePaie() {
+        return etatVariablePaie;
+    }
+
+    public Absence etatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+        return this;
+    }
+
+    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
     }
 
     public Employe getEmploye() {
@@ -119,7 +169,7 @@ public class Absence implements Serializable {
     public void setEmploye(Employe employe) {
         this.employe = employe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -137,6 +187,7 @@ public class Absence implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Absence{" +
@@ -144,6 +195,8 @@ public class Absence implements Serializable {
             ", debutAbsence='" + getDebutAbsence() + "'" +
             ", finAbsence='" + getFinAbsence() + "'" +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

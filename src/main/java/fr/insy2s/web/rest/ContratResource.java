@@ -1,14 +1,19 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.domain.Clause;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
+import fr.insy2s.service.ClauseService;
 import fr.insy2s.service.ContratService;
+import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
+import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.web.rest.vm.ClauseEtArticleVM;
-import fr.insy2s.web.rest.vm.ContratAllInfoVM;
-import fr.insy2s.web.rest.vm.ContratEmployerVM;
+import fr.insy2s.web.rest.vm.*;
 import io.github.jhipster.web.util.HeaderUtil;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +24,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Contrat}.
@@ -40,34 +41,68 @@ public class ContratResource {
     private String applicationName;
 
     private final ContratService contratService;
+    private final ClauseService clauseService;
 
-    public ContratResource(ContratService contratService) {
+    public ContratResource(ContratService contratService, ClauseService clauseService) {
         this.contratService = contratService;
+        this.clauseService = clauseService;
     }
 
     /**
      * {@code POST  /contrats} : Create a new contrat.
      *
-     * @param contratDTO the contratDTO to create.
+     * @param contratVM the contratVM to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new contratDTO, or with status {@code 400 (Bad Request)} if the contrat has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/contrats")
-    public ResponseEntity<ContratDTO> createContrat(@Valid @RequestBody ContratDTO contratDTO) throws URISyntaxException {
-        System.err.println(contratDTO);
-        log.debug("REST request to save Contrat : {}", contratDTO);
-        if (contratDTO.getId() != null) {
+    public void createContrat(@Valid @RequestBody ContratVM contratVM) throws URISyntaxException, JRException {
+
+        log.debug("REST request to save Contrat : {}", contratVM);
+        if (contratVM.getId() != null) {
             throw new BadRequestAlertException("A new contrat cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        contratDTO.setDateCreation(LocalDate.now());
-        contratDTO.setSigne(false);
-        contratDTO.setArchive(false);
-        contratDTO.setEmployeId(1L);
-        contratDTO.setSocieteId(1L);
-        ContratDTO result = contratService.save(contratDTO);
-        return ResponseEntity.created(new URI("/api/contrats/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        contratVM.setDateCreation(LocalDate.now());
+        contratVM.setSigne(false);
+        contratVM.setArchive(false);
+
+        ContratDTO contratDTO = new ContratDTO();
+
+        contratDTO.setSocieteId(contratVM.getSocieteId());
+        contratDTO.setEmployeId(contratVM.getEmployeId());
+        contratDTO.setArchive(contratVM.getArchive());
+        contratDTO.setSigne(contratVM.getSigne());
+        contratDTO.setDateCreation(contratVM.getDateCreation());
+        contratDTO.setTitre(contratVM.getTitre());
+        contratDTO  = contratService.save(contratDTO);
+
+
+        List<ClauseVm> listClauseVm = contratVM.getClauses();
+        ClauseDTO clauseDto = null;
+        if (!listClauseVm.isEmpty()) {
+            for (ClauseVm clauseVm : listClauseVm) {
+                clauseDto = clauseService.findOne(clauseVm.getClauseId()).get();
+                if (clauseDto.getId() != null) {
+                    Set<ContratDTO> listeContratsDto = clauseDto.getListeContrats();
+                    listeContratsDto.add(contratDTO);
+                    clauseDto.setListeContrats(listeContratsDto);
+                    clauseDto = clauseService.save(clauseDto);
+                }
+            }
+        }
+
+        Long contratId = clauseDto.getListeContrats().stream().findFirst().get().getId();
+
+     //   System.err.println("------------------        JE GENERE LE PDF        ------------------");
+     //   ContratPdfVm contratPdfVm = new ContratPdfVm();
+     //   contratPdfVm.setTitre(contratDTO.getTitre());
+     //   String pdfName = contratDTO.getTitre()+contratDTO.getId();
+     //   byte[] bytes= PdfUtil.generatePDFContrat(contratPdfVm);
+
+    //     return ResponseEntity.ok()
+     //       .header("Content-Type", "application/pdf; charset=UTF-8")
+     //       .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"") //
+      //      .body(bytes);
     }
 
     /**

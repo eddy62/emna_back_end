@@ -38,6 +38,12 @@ export const FactureDetail = (props: IFactureDetailProps) => {
           </dt>
           <dd>{factureEntity.nom}</dd>
           <dt>
+            <span id="type">
+              <Translate contentKey="emnaBackEndApp.facture.type">Type</Translate>
+            </span>
+          </dt>
+          <dd>{factureEntity.type}</dd>
+          <dt>
             <span id="message">
               <Translate contentKey="emnaBackEndApp.facture.message">Message</Translate>
             </span>
@@ -48,16 +54,16 @@ export const FactureDetail = (props: IFactureDetailProps) => {
               <Translate contentKey="emnaBackEndApp.facture.date">Date</Translate>
             </span>
           </dt>
-          <dd>
-            <TextFormat value={factureEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} />
-          </dd>
+          <dd>{factureEntity.date ? <TextFormat value={factureEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
           <dt>
             <span id="dateEcheance">
               <Translate contentKey="emnaBackEndApp.facture.dateEcheance">Date Echeance</Translate>
             </span>
           </dt>
           <dd>
-            <TextFormat value={factureEntity.dateEcheance} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            {factureEntity.dateEcheance ? (
+              <TextFormat value={factureEntity.dateEcheance} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
           </dd>
           <dt>
             <span id="prixHT">
@@ -84,13 +90,13 @@ export const FactureDetail = (props: IFactureDetailProps) => {
           </dt>
           <dd>{factureEntity.moyenDePaiement}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.facture.adresse">Adresse</Translate>
-          </dt>
-          <dd>{factureEntity.adresseId ? factureEntity.adresseId : ''}</dd>
-          <dt>
             <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
           </dt>
           <dd>{factureEntity.etatFactureId ? factureEntity.etatFactureId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.facture.adresse">Adresse</Translate>
+          </dt>
+          <dd>{factureEntity.adresseId ? factureEntity.adresseId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.facture.societe">Societe</Translate>
           </dt>
@@ -123,7 +129,7 @@ export const FactureDetail = (props: IFactureDetailProps) => {
 };
 
 const mapStateToProps = ({ facture }: IRootState) => ({
-  factureEntity: facture.entity
+  factureEntity: facture.entity,
 });
 
 const mapDispatchToProps = { getEntity };

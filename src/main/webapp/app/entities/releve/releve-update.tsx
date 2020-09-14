@@ -50,7 +50,7 @@ export const ReleveUpdate = (props: IReleveUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...releveEntity,
-        ...values
+        ...values,
       };
 
       if (isNew) {
@@ -109,12 +109,6 @@ export const ReleveUpdate = (props: IReleveUpdateProps) => {
                 <AvField id="releve-banque" type="text" name="banque" />
               </AvGroup>
               <AvGroup>
-                <Label id="cheminFichierLabel" for="releve-cheminFichier">
-                  <Translate contentKey="emnaBackEndApp.releve.cheminFichier">Chemin Fichier</Translate>
-                </Label>
-                <AvField id="releve-cheminFichier" type="text" name="cheminFichier" />
-              </AvGroup>
-              <AvGroup>
                 <Label for="releve-etatReleve">
                   <Translate contentKey="emnaBackEndApp.releve.etatReleve">Etat Releve</Translate>
                 </Label>
@@ -171,7 +165,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   releveEntity: storeState.releve.entity,
   loading: storeState.releve.loading,
   updating: storeState.releve.updating,
-  updateSuccess: storeState.releve.updateSuccess
+  updateSuccess: storeState.releve.updateSuccess,
 });
 
 const mapDispatchToProps = {
@@ -180,7 +174,7 @@ const mapDispatchToProps = {
   getEntity,
   updateEntity,
   createEntity,
-  reset
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

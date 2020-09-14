@@ -7,6 +7,7 @@ import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.InfoEntrepriseDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
+import fr.insy2s.service.dto.TypeContratDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
 /**
@@ -27,7 +28,7 @@ public class WrapperEmployeMapper {
      * @return
      */
     public WrapperEmploye builderWrapperEmploye(final EmployeDTO employe, final AdresseDTO adresse, final StatutEmployeDTO statutEmploye, final SocieteDTO societe,
-                    final InfoEntrepriseDTO infoEntreprise) {
+                    final InfoEntrepriseDTO infoEntreprise, final TypeContratDTO typeContratDTO) {
         final WrapperEmploye wrapperEmploye = new WrapperEmploye();
 
         wrapperEmploye.setId(employe.getId());
@@ -52,9 +53,9 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setPoste(employe.getPoste());
         wrapperEmploye.setDateEmbauche(employe.getDateEmbauche());
         wrapperEmploye.setDateSortie(employe.getDateSortie());
-        wrapperEmploye.setTypeContrat(employe.getTypeContrat());
         wrapperEmploye.setSituationFamiliale(employe.getSituationFamiliale());
         wrapperEmploye.setEnfantsACharge(employe.getEnfantsACharge());
+        wrapperEmploye.setPeriodeEssai(employe.getPeriodeEssai());
 
         wrapperEmploye.setAdresseId(adresse.getId());
         wrapperEmploye.setNumeroRue(adresse.getNumeroRue());
@@ -72,6 +73,10 @@ public class WrapperEmployeMapper {
 
         wrapperEmploye.setInfoEntrepriseId(infoEntreprise.getId());
         wrapperEmploye.setRaisonSociale(infoEntreprise.getRaisonSociale());
+        
+        wrapperEmploye.setTypeContratId(typeContratDTO.getId());
+        wrapperEmploye.setCodeTypeContrat(typeContratDTO.getCodeRef());
+        wrapperEmploye.setIntituleTypeContrat(typeContratDTO.getIntitule());
 
         return wrapperEmploye;
     }
@@ -109,19 +114,25 @@ public class WrapperEmployeMapper {
         employeDTO.setPoste(wrapperEmploye.getPoste());
         employeDTO.setDateEmbauche(wrapperEmploye.getDateEmbauche());
         employeDTO.setDateSortie(wrapperEmploye.getDateSortie());
-        employeDTO.setTypeContrat(wrapperEmploye.getTypeContrat());
         employeDTO.setSituationFamiliale(wrapperEmploye.getSituationFamiliale());
         employeDTO.setEnfantsACharge(wrapperEmploye.getEnfantsACharge());
 
         employeDTO.setAdresseId(wrapperEmploye.getAdresseId());
         employeDTO.setStatutEmployeId(wrapperEmploye.getStatutEmployeId());
         employeDTO.setSocieteId(wrapperEmploye.getSocieteId());
+        employeDTO.setTypeContratId(wrapperEmploye.getTypeContratId());
+        employeDTO.setPeriodeEssai(wrapperEmploye.getPeriodeEssai());
 
         return employeDTO;
 
     }
 
     //WrapperEmploye to AdresseDTO
+    /**
+     *  Mappe wrapperEmploye to adresseDto
+     * @param wrapperEmploye
+     * @return adresseDTO
+     */
     public AdresseDTO toAdresseDto(final WrapperEmploye wrapperEmploye) {
         final AdresseDTO adresseDTO = new AdresseDTO();
 
@@ -139,9 +150,9 @@ public class WrapperEmployeMapper {
     
     //WrapperEmploye to StatutEmployeDTO
     /**
-     * Mappe wrapperEmploye to StatutEmploye
+     * Mappe wrapperEmploye to StatutEmployeDto
      * @param wrapperEmploye
-     * @return
+     * @return statutEmployeDTO
      */
     public StatutEmployeDTO toStatutEmploye(final WrapperEmploye wrapperEmploye) {
         
@@ -159,7 +170,7 @@ public class WrapperEmployeMapper {
     /**
      * Mappe wrapperEmploye to societeDTO
      * @param wrapperEmploye
-     * @return
+     * @return societeDTO
      */
     public SocieteDTO toSocieteDto(final WrapperEmploye wrapperEmploye) {
         final SocieteDTO societeDTO = new SocieteDTO();
@@ -171,6 +182,11 @@ public class WrapperEmployeMapper {
     }
     
     //WrapperEmploye to InfoEntreprise
+    /**
+     * Mappe wrapperEmploye to infoEntrepriseDTO
+     * @param wrapperEmploye
+     * @return infoEntrepriseDTO
+     */
     public InfoEntrepriseDTO toInfoEntrepriseDto(final WrapperEmploye wrapperEmploye) {
         
         final InfoEntrepriseDTO infoEntrepriseDTO= new InfoEntrepriseDTO();
@@ -179,6 +195,24 @@ public class WrapperEmployeMapper {
         infoEntrepriseDTO.setRaisonSociale(wrapperEmploye.getRaisonSociale());
         
         return infoEntrepriseDTO;
+        
+    }
+    
+  //WrapperEmploye to TypeContratDTO
+    /**
+     * Mappe wrapperEmploye to typeContratDto
+     * @param wrapperEmploye
+     * @return typeContratDto
+     */
+    public TypeContratDTO toTypeContratDTO(final WrapperEmploye wrapperEmploye) {
+        
+        final TypeContratDTO typeContratDTO= new TypeContratDTO();
+        
+        typeContratDTO.setId(wrapperEmploye.getTypeContratId());
+        typeContratDTO.setCodeRef(wrapperEmploye.getCodeTypeContrat());
+        typeContratDTO.setIntitule(wrapperEmploye.getIntituleTypeContrat());
+        
+        return typeContratDTO;
         
     }
     

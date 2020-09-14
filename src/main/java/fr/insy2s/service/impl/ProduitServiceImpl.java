@@ -59,21 +59,19 @@ public class ProduitServiceImpl implements ProduitService {
     @Transactional(readOnly = true)
     public List<ProduitDTO> findAll() {
         log.debug("Request to get all Produits");
-        return produitRepository.findAllWithEagerRelationships().stream()
+        return produitRepository.findAll().stream()
             .map(produitMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
 
-    public Page<ProduitDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return produitRepository.findAllWithEagerRelationships(pageable).map(produitMapper::toDto);
-    }
+
 
     @Override
     @Transactional(readOnly = true)
     public Optional<ProduitDTO> findOne(Long id) {
         log.debug("Request to get Produit : {}", id);
-        return produitRepository.findOneWithEagerRelationships(id)
+        return produitRepository.findById(id)
             .map(produitMapper::toDto);
     }
 

@@ -3,7 +3,6 @@ package fr.insy2s.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Absence} entity.
@@ -20,8 +19,16 @@ public class AbsenceDTO implements Serializable {
 
     private String justificatif;
 
+    @NotNull
+    private Integer mois;
+
+    @NotNull
+    private Integer annee;
+
 
     private Long typeAbsenceId;
+
+    private Long etatVariablePaieId;
 
     private Long employeId;
     
@@ -57,12 +64,36 @@ public class AbsenceDTO implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public Long getTypeAbsenceId() {
         return typeAbsenceId;
     }
 
     public void setTypeAbsenceId(Long typeAbsenceId) {
         this.typeAbsenceId = typeAbsenceId;
+    }
+
+    public Long getEtatVariablePaieId() {
+        return etatVariablePaieId;
+    }
+
+    public void setEtatVariablePaieId(Long etatVariablePaieId) {
+        this.etatVariablePaieId = etatVariablePaieId;
     }
 
     public Long getEmployeId() {
@@ -78,22 +109,19 @@ public class AbsenceDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AbsenceDTO)) {
             return false;
         }
 
-        AbsenceDTO absenceDTO = (AbsenceDTO) o;
-        if (absenceDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), absenceDTO.getId());
+        return id != null && id.equals(((AbsenceDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "AbsenceDTO{" +
@@ -101,7 +129,10 @@ public class AbsenceDTO implements Serializable {
             ", debutAbsence='" + getDebutAbsence() + "'" +
             ", finAbsence='" + getFinAbsence() + "'" +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             ", typeAbsenceId=" + getTypeAbsenceId() +
+            ", etatVariablePaieId=" + getEtatVariablePaieId() +
             ", employeId=" + getEmployeId() +
             "}";
     }

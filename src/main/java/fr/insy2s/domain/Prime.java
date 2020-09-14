@@ -8,14 +8,13 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A Prime.
  */
 @Entity
 @Table(name = "prime")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Prime implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,42 +25,37 @@ public class Prime implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "type", nullable = false)
-    private String type;
-
-    @NotNull
     @Column(name = "montant", nullable = false)
     private Double montant;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("primes")
+    @JsonIgnoreProperties(value = "primes", allowSetters = true)
     private TypePrime typePrime;
 
     @ManyToOne
-    @JsonIgnoreProperties("listePrimes")
+    @JsonIgnoreProperties(value = "primes", allowSetters = true)
+    private EtatVariablePaie etatVariablePaie;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listePrimes", allowSetters = true)
     private Employe employe;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Prime type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Double getMontant() {
@@ -77,6 +71,32 @@ public class Prime implements Serializable {
         this.montant = montant;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public Prime mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public Prime annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
     public TypePrime getTypePrime() {
         return typePrime;
     }
@@ -88,6 +108,19 @@ public class Prime implements Serializable {
 
     public void setTypePrime(TypePrime typePrime) {
         this.typePrime = typePrime;
+    }
+
+    public EtatVariablePaie getEtatVariablePaie() {
+        return etatVariablePaie;
+    }
+
+    public Prime etatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+        return this;
+    }
+
+    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
     }
 
     public Employe getEmploye() {
@@ -102,7 +135,7 @@ public class Prime implements Serializable {
     public void setEmploye(Employe employe) {
         this.employe = employe;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -120,12 +153,14 @@ public class Prime implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Prime{" +
             "id=" + getId() +
-            ", type='" + getType() + "'" +
             ", montant=" + getMontant() +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

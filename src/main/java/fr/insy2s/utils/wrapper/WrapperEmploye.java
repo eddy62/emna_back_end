@@ -7,7 +7,12 @@ import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.InfoEntrepriseDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.StatutEmployeDTO;
+import fr.insy2s.service.dto.TypeContratDTO;
 
+/**
+ * WrappeurEmploye
+ *
+ */
 public class WrapperEmploye {
 
     //Employe
@@ -33,9 +38,9 @@ public class WrapperEmploye {
     private String    poste;
     private LocalDate dateEmbauche;
     private LocalDate dateSortie;
-    private String    typeContrat;
     private String    situationFamiliale;
     private Integer   enfantsACharge;
+    private Double periodeEssai;
 
     //Adresse
     private Long      adresseId;
@@ -58,6 +63,11 @@ public class WrapperEmploye {
     private Long      infoEntrepriseId;
     private String    raisonSociale;
 
+    //TypeContrat
+    private Long      typeContratId;
+    private String    codeTypeContrat;
+    private String    intituleTypeContrat;
+
     /**
      * Constructeur par defaut
      */
@@ -75,7 +85,8 @@ public class WrapperEmploye {
      * @param societeDTO
      * @param infoEntrepriseDTO
      */
-    public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO) {
+    public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO,
+                    final TypeContratDTO typeContratDTO) {
         super();
         //employe
         this.id = employeDTO.getAdresseId();
@@ -100,9 +111,9 @@ public class WrapperEmploye {
         this.poste = employeDTO.getPoste();
         this.dateEmbauche = employeDTO.getDateEmbauche();
         this.dateSortie = employeDTO.getDateSortie();
-        this.typeContrat = employeDTO.getTypeContrat();
         this.situationFamiliale = employeDTO.getSituationFamiliale();
         this.enfantsACharge = employeDTO.getEnfantsACharge();
+        this.periodeEssai = employeDTO.getPeriodeEssai();
         //adresse
         this.adresseId = employeDTO.getAdresseId();
         this.numeroRue = adresseDTO.getNumeroRue();
@@ -120,6 +131,11 @@ public class WrapperEmploye {
         //infoEntreprise
         this.infoEntrepriseId = societeDTO.getInfoEntrepriseId();
         this.raisonSociale = infoEntrepriseDTO.getRaisonSociale();
+        //typeContrat
+        this.typeContratId = typeContratDTO.getId();
+        this.codeTypeContrat = typeContratDTO.getCodeRef();
+        this.intituleTypeContrat = typeContratDTO.getIntitule();
+
     }
 
     public Long getId() {
@@ -298,14 +314,6 @@ public class WrapperEmploye {
         this.dateSortie = dateSortie;
     }
 
-    public String getTypeContrat() {
-        return typeContrat;
-    }
-
-    public void setTypeContrat(String typeContrat) {
-        this.typeContrat = typeContrat;
-    }
-
     public String getSituationFamiliale() {
         return situationFamiliale;
     }
@@ -425,5 +433,39 @@ public class WrapperEmploye {
     public void setRaisonSociale(String raisonSociale) {
         this.raisonSociale = raisonSociale;
     }
+
+    public Long getTypeContratId() {
+        return typeContratId;
+    }
+
+    public void setTypeContratId(Long typeContratId) {
+        this.typeContratId = typeContratId;
+    }
+
+    public String getCodeTypeContrat() {
+        return codeTypeContrat;
+    }
+
+    public void setCodeTypeContrat(String codeTypeContrat) {
+        this.codeTypeContrat = codeTypeContrat;
+    }
+
+    public String getIntituleTypeContrat() {
+        return intituleTypeContrat;
+    }
+
+    public void setIntituleTypeContrat(String intituleTypeContrat) {
+        this.intituleTypeContrat = intituleTypeContrat;
+    }
+
+    public Double getPeriodeEssai() {
+        return periodeEssai;
+    }
+
+    public void setPeriodeEssai(Double periodeEssai) {
+        this.periodeEssai = periodeEssai;
+    }
+    
+    
 
 }

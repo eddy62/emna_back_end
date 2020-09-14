@@ -11,12 +11,12 @@ import ReleveDeleteDialog from './releve-delete-dialog';
 const Routes = ({ match }) => (
   <>
     <Switch>
-      <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={ReleveDeleteDialog} />
       <ErrorBoundaryRoute exact path={`${match.url}/new`} component={ReleveUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id/edit`} component={ReleveUpdate} />
       <ErrorBoundaryRoute exact path={`${match.url}/:id`} component={ReleveDetail} />
       <ErrorBoundaryRoute path={match.url} component={Releve} />
     </Switch>
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={ReleveDeleteDialog} />
   </>
 );
 

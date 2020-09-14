@@ -2,6 +2,7 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ReleveDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,4 +44,32 @@ public interface ReleveService {
     List <ReleveDTO> findAllBySocieteId(Long id);
     List <ReleveDTO> findAllByEtatReleveId(Long id);
     List <ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
+
+    Optional<BigDecimal> getReleveSoldeById(Long id);
+
+    /**
+     * Checked permission for the releve
+     *
+     * @param idReleve the id of the releve.
+     * @param loginCurrentUser the login of the user.
+     * @return boolean
+     */
+    boolean hasPermissionForThisReleve(Long idReleve, String loginCurrentUser);
+
+    /**
+     * checked solde Invoices equals solde statements
+     *
+     * @param idReleve the id of the releve.
+     * @return boolean
+     */
+    boolean balanceOperationsEqualsInvoices(Long idReleve);
+
+    /**
+     * Validate the "id" releve.
+     *
+     * @param idReleve the id of the statement.
+     * @param idEtat the id of statut.
+     * @return Integer.
+     */
+    boolean changeStatutStatement(Long idReleve, Long idEtat);
 }

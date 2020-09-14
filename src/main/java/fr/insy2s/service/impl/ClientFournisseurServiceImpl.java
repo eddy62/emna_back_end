@@ -119,7 +119,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         ClientFournisseur client = new ClientFournisseur();
         try {
             client.setEmail(clientFournisseur.getEmail());
-            client.setNom(clientFournisseur.getNom());
+            client.setNom(clientFournisseur.getNom().toUpperCase());
             client.setSiren(clientFournisseur.getSiren());
             client.setTelephone(clientFournisseur.getTelephone());
             if (clientFournisseur.getIdSociete() != null) {
@@ -207,16 +207,18 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             wrapperCLient.setSiren(clientSaved.getSiren());
             wrapperCLient.setIdSociete(clientSaved.getSocieteId());
 
-            Optional<Adresse> adresse = adresseRepository.findById(client.getAdresse().getId());
-            if(adresse !=null) {
-                AdresseDTO adresseDTO = adresseMapper.toDto(adresse.get());
-                wrapperCLient.setIdAdresse(adresseDTO.getId());
-                wrapperCLient.setNumeroRue(adresseDTO.getNumeroRue());
-                wrapperCLient.setNomRue(adresseDTO.getNomRue());
-                wrapperCLient.setBoitePostale(adresseDTO.getBoitePostale());
-                wrapperCLient.setCodePostal(adresseDTO.getCodePostal());
-                wrapperCLient.setVille(adresseDTO.getVille());
-                wrapperCLient.setPays(adresseDTO.getPays());
+            if (client.getAdresse()!=null) {
+                Optional<Adresse> adresse = adresseRepository.findById(client.getAdresse().getId());
+                if (adresse != null) {
+                    AdresseDTO adresseDTO = adresseMapper.toDto(adresse.get());
+                    wrapperCLient.setIdAdresse(adresseDTO.getId());
+                    wrapperCLient.setNumeroRue(adresseDTO.getNumeroRue());
+                    wrapperCLient.setNomRue(adresseDTO.getNomRue());
+                    wrapperCLient.setBoitePostale(adresseDTO.getBoitePostale());
+                    wrapperCLient.setCodePostal(adresseDTO.getCodePostal());
+                    wrapperCLient.setVille(adresseDTO.getVille());
+                    wrapperCLient.setPays(adresseDTO.getPays());
+                }
             }
 
             return wrapperCLient;
@@ -276,7 +278,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
     @Override
     public Optional<ClientFournisseurDTO> findByNom(String nom ) {
         log.debug("Request to get ClientFournisseur : {}",nom);
-        return clientFournisseurRepository.findByNom(nom)
+        return clientFournisseurRepository.findByNom(nom.toUpperCase())
             .map(clientFournisseurMapper::toDto);
     }
 
@@ -289,6 +291,19 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
     public UserDTO findOneByLogin(final String loginUser) {
         return userMapper.userToUserDTO(userRepository.findOneByLogin(loginUser).get());
     }
+
+    /**
+     * Get one the clientFounisseur by name and societe id.
+     * @param nom the name of the entity
+     * @return the  entity.
+     */
+    @Override
+    public Optional<ClientFournisseurDTO> findByNomAndSocieteId(String nom, Long id) {
+        log.debug("Request to get ClientFournisseur : {}",nom);
+        return clientFournisseurRepository.findByNomAndSocieteId(nom, id)
+            .map(clientFournisseurMapper::toDto);
+    }
+
 
     @Override
     public Boolean connectedUserIsSociete(){

@@ -6,6 +6,9 @@ export interface IAutresVariable {
   date?: string;
   montant?: number;
   justificatif?: string;
+  mois?: number;
+  annee?: number;
+  etatVariablePaieId?: number;
   employeId?: number;
 }
 

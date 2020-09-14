@@ -44,6 +44,18 @@ export const DocumentDetail = (props: IDocumentDetailProps) => {
           </dt>
           <dd>{documentEntity.nom}</dd>
           <dt>
+            <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
+          </dt>
+          <dd>{documentEntity.absenceId ? documentEntity.absenceId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
+          </dt>
+          <dd>{documentEntity.noteDeFraisId ? documentEntity.noteDeFraisId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.autresVariables">Autres Variables</Translate>
+          </dt>
+          <dd>{documentEntity.autresVariablesId ? documentEntity.autresVariablesId : ''}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.document.facture">Facture</Translate>
           </dt>
           <dd>{documentEntity.factureId ? documentEntity.factureId : ''}</dd>
@@ -59,6 +71,10 @@ export const DocumentDetail = (props: IDocumentDetailProps) => {
             <Translate contentKey="emnaBackEndApp.document.employe">Employe</Translate>
           </dt>
           <dd>{documentEntity.employeId ? documentEntity.employeId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.depense">Depense</Translate>
+          </dt>
+          <dd>{documentEntity.depenseId ? documentEntity.depenseId : ''}</dd>
         </dl>
         <Button tag={Link} to="/document" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
@@ -79,7 +95,7 @@ export const DocumentDetail = (props: IDocumentDetailProps) => {
 };
 
 const mapStateToProps = ({ document }: IRootState) => ({
-  documentEntity: document.entity
+  documentEntity: document.entity,
 });
 
 const mapDispatchToProps = { getEntity };

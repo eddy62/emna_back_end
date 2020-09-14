@@ -16,11 +16,11 @@ public interface ClientFournisseurMapper extends EntityMapper<ClientFournisseurD
     @Mapping(source = "societe.id", target = "societeId")
     ClientFournisseurDTO toDto(ClientFournisseur clientFournisseur);
 
-    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(target = "listeFactures", ignore = true)
     @Mapping(target = "removeListeFactures", ignore = true)
     @Mapping(target = "listeDevis", ignore = true)
     @Mapping(target = "removeListeDevis", ignore = true)
+    @Mapping(source = "adresseId", target = "adresse")
     @Mapping(source = "societeId", target = "societe")
     ClientFournisseur toEntity(ClientFournisseurDTO clientFournisseurDTO);
 

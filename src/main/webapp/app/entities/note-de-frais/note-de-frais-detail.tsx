@@ -52,6 +52,22 @@ export const NoteDeFraisDetail = (props: INoteDeFraisDetailProps) => {
           </dt>
           <dd>{noteDeFraisEntity.justificatif}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.noteDeFrais.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{noteDeFraisEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.noteDeFrais.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{noteDeFraisEntity.annee}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.noteDeFrais.etatVariablePaie">Etat Variable Paie</Translate>
+          </dt>
+          <dd>{noteDeFraisEntity.etatVariablePaieId ? noteDeFraisEntity.etatVariablePaieId : ''}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.noteDeFrais.employe">Employe</Translate>
           </dt>
           <dd>{noteDeFraisEntity.employeId ? noteDeFraisEntity.employeId : ''}</dd>

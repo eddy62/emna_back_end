@@ -1,0 +1,28 @@
+{
+  "emnaBackEndApp": {
+    "ligneProduit": {
+      "home": {
+        "title": "Ligne Produits",
+        "createLabel": "Create a new Ligne Produit",
+        "createOrEditLabel": "Create or edit a Ligne Produit",
+        "notFound": "No Ligne Produits found"
+      },
+      "created": "A new Ligne Produit is created with identifier {{ param }}",
+      "updated": "A Ligne Produit is updated with identifier {{ param }}",
+      "deleted": "A Ligne Produit is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ligne Produit {{ id }}?"
+      },
+      "detail": {
+        "title": "Ligne Produit"
+      },
+      "quantite": "Quantite",
+      "nom": "Nom",
+      "description": "Description",
+      "tva": "Tva",
+      "prix": "Prix",
+      "facture": "Facture",
+      "devis": "Devis"
+    }
+  }
+}

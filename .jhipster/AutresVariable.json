@@ -16,9 +16,26 @@
     {
       "fieldName": "justificatif",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "mois",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "annee",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "etatVariablePaie",
+      "otherEntityRelationshipName": "autresVariable",
+      "relationshipName": "etatVariablePaie",
+      "otherEntityField": "id"
+    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "employe",

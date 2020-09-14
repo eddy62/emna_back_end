@@ -40,4 +40,6 @@ public interface NoteDeFraisService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<NoteDeFraisDTO> findAllNoteDeFraisByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 }

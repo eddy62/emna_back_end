@@ -36,6 +36,18 @@ public class HeuresSupplementaires implements Serializable {
     @Column(name = "justificatif")
     private String justificatif;
 
+    @NotNull
+    @Column(name = "mois", nullable = false)
+    private Integer mois;
+
+    @NotNull
+    @Column(name = "annee", nullable = false)
+    private Integer annee;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "heuresSupplementaires", allowSetters = true)
+    private EtatVariablePaie etatVariablePaie;
+
     @ManyToOne
     @JsonIgnoreProperties(value = "listeHeureSupplementaires", allowSetters = true)
     private Employe employe;
@@ -88,6 +100,45 @@ public class HeuresSupplementaires implements Serializable {
         this.justificatif = justificatif;
     }
 
+    public Integer getMois() {
+        return mois;
+    }
+
+    public HeuresSupplementaires mois(Integer mois) {
+        this.mois = mois;
+        return this;
+    }
+
+    public void setMois(Integer mois) {
+        this.mois = mois;
+    }
+
+    public Integer getAnnee() {
+        return annee;
+    }
+
+    public HeuresSupplementaires annee(Integer annee) {
+        this.annee = annee;
+        return this;
+    }
+
+    public void setAnnee(Integer annee) {
+        this.annee = annee;
+    }
+
+    public EtatVariablePaie getEtatVariablePaie() {
+        return etatVariablePaie;
+    }
+
+    public HeuresSupplementaires etatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+        return this;
+    }
+
+    public void setEtatVariablePaie(EtatVariablePaie etatVariablePaie) {
+        this.etatVariablePaie = etatVariablePaie;
+    }
+
     public Employe getEmploye() {
         return employe;
     }
@@ -126,6 +177,8 @@ public class HeuresSupplementaires implements Serializable {
             ", date='" + getDate() + "'" +
             ", nombreHeure=" + getNombreHeure() +
             ", justificatif='" + getJustificatif() + "'" +
+            ", mois=" + getMois() +
+            ", annee=" + getAnnee() +
             "}";
     }
 }

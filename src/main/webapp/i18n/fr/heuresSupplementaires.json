@@ -19,6 +19,9 @@
       "date": "Date",
       "nombreHeure": "Nombre Heure",
       "justificatif": "Justificatif",
+      "mois": "Mois",
+      "annee": "Annee",
+      "etatVariablePaie": "Etat Variable Paie",
       "employe": "Employe"
     }
   }

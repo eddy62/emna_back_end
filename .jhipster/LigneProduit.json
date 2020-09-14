@@ -1,0 +1,56 @@
+{
+  "name": "LigneProduit",
+  "fields": [
+    {
+      "fieldName": "quantite",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tva",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "prix",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "facture",
+      "otherEntityRelationshipName": "listeLigneProduit",
+      "relationshipName": "facture",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "devis",
+      "otherEntityRelationshipName": "listeLigneProduit",
+      "relationshipName": "devis",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200825144204",
+  "entityTableName": "ligne_produit",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*",
+  "searchEngine": false,
+  "databaseType": "sql"
+}

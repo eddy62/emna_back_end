@@ -135,6 +135,7 @@ export const deleteEntity: ICrudDeleteAction<IFacture> = id => async dispatch =>
     type: ACTION_TYPES.DELETE_FACTURE,
     payload: axios.delete(requestUrl)
   });
+  dispatch(getEntities());
   return result;
 };
 

@@ -37,13 +37,19 @@ export const Prime = (props: IPrimeProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.prime.type">Type</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.prime.montant">Montant</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.prime.mois">Mois</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.prime.annee">Annee</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.prime.etatVariablePaie">Etat Variable Paie</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.prime.employe">Employe</Translate>
@@ -59,9 +65,17 @@ export const Prime = (props: IPrimeProps) => {
                       {prime.id}
                     </Button>
                   </td>
-                  <td>{prime.type}</td>
                   <td>{prime.montant}</td>
+                  <td>{prime.mois}</td>
+                  <td>{prime.annee}</td>
                   <td>{prime.typePrimeId ? <Link to={`type-prime/${prime.typePrimeId}`}>{prime.typePrimeId}</Link> : ''}</td>
+                  <td>
+                    {prime.etatVariablePaieId ? (
+                      <Link to={`etat-variable-paie/${prime.etatVariablePaieId}`}>{prime.etatVariablePaieId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>{prime.employeId ? <Link to={`employe/${prime.employeId}`}>{prime.employeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -103,11 +117,11 @@ export const Prime = (props: IPrimeProps) => {
 
 const mapStateToProps = ({ prime }: IRootState) => ({
   primeList: prime.entities,
-  loading: prime.loading
+  loading: prime.loading,
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

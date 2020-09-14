@@ -26,21 +26,31 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
-            <span id="type">
-              <Translate contentKey="emnaBackEndApp.prime.type">Type</Translate>
-            </span>
-          </dt>
-          <dd>{primeEntity.type}</dd>
-          <dt>
             <span id="montant">
               <Translate contentKey="emnaBackEndApp.prime.montant">Montant</Translate>
             </span>
           </dt>
           <dd>{primeEntity.montant}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.prime.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{primeEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.prime.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{primeEntity.annee}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.prime.typePrime">Type Prime</Translate>
           </dt>
           <dd>{primeEntity.typePrimeId ? primeEntity.typePrimeId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.prime.etatVariablePaie">Etat Variable Paie</Translate>
+          </dt>
+          <dd>{primeEntity.etatVariablePaieId ? primeEntity.etatVariablePaieId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.prime.employe">Employe</Translate>
           </dt>
@@ -65,7 +75,7 @@ export const PrimeDetail = (props: IPrimeDetailProps) => {
 };
 
 const mapStateToProps = ({ prime }: IRootState) => ({
-  primeEntity: prime.entity
+  primeEntity: prime.entity,
 });
 
 const mapDispatchToProps = { getEntity };

@@ -2,12 +2,30 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <!--
         Added the constraints for entity Document.
     -->
     <changeSet id="20200810074300-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="absence_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_absence_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="absence"/>
+
+        <addForeignKeyConstraint baseColumnNames="note_de_frais_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_note_de_frais_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="note_de_frais"/>
+
+        <addForeignKeyConstraint baseColumnNames="autres_variables_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_autres_variables_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="autres_variable"/>
+
         <addForeignKeyConstraint baseColumnNames="facture_id"
                                  baseTableName="document"
                                  constraintName="fk_document_facture_id"
@@ -31,6 +49,12 @@
                                  constraintName="fk_document_employe_id"
                                  referencedColumnNames="id"
                                  referencedTableName="employe"/>
+
+        <addForeignKeyConstraint baseColumnNames="depense_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_depense_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="depense"/>
 
     </changeSet>
 </databaseChangeLog>

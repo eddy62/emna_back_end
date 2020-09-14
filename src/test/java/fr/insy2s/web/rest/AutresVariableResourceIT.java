@@ -46,6 +46,12 @@ public class AutresVariableResourceIT {
     private static final String DEFAULT_JUSTIFICATIF = "AAAAAAAAAA";
     private static final String UPDATED_JUSTIFICATIF = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_MOIS = 1;
+    private static final Integer UPDATED_MOIS = 2;
+
+    private static final Integer DEFAULT_ANNEE = 1;
+    private static final Integer UPDATED_ANNEE = 2;
+
     @Autowired
     private AutresVariableRepository autresVariableRepository;
 
@@ -74,7 +80,9 @@ public class AutresVariableResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .date(DEFAULT_DATE)
             .montant(DEFAULT_MONTANT)
-            .justificatif(DEFAULT_JUSTIFICATIF);
+            .justificatif(DEFAULT_JUSTIFICATIF)
+            .mois(DEFAULT_MOIS)
+            .annee(DEFAULT_ANNEE);
         return autresVariable;
     }
     /**
@@ -88,7 +96,9 @@ public class AutresVariableResourceIT {
             .description(UPDATED_DESCRIPTION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         return autresVariable;
     }
 
@@ -116,6 +126,8 @@ public class AutresVariableResourceIT {
         assertThat(testAutresVariable.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testAutresVariable.getMontant()).isEqualTo(DEFAULT_MONTANT);
         assertThat(testAutresVariable.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        assertThat(testAutresVariable.getMois()).isEqualTo(DEFAULT_MOIS);
+        assertThat(testAutresVariable.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
 
     @Test
@@ -141,6 +153,46 @@ public class AutresVariableResourceIT {
 
     @Test
     @Transactional
+    public void checkMoisIsRequired() throws Exception {
+        int databaseSizeBeforeTest = autresVariableRepository.findAll().size();
+        // set the field null
+        autresVariable.setMois(null);
+
+        // Create the AutresVariable, which fails.
+        AutresVariableDTO autresVariableDTO = autresVariableMapper.toDto(autresVariable);
+
+
+        restAutresVariableMockMvc.perform(post("/api/autres-variables")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(autresVariableDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AutresVariable> autresVariableList = autresVariableRepository.findAll();
+        assertThat(autresVariableList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAnneeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = autresVariableRepository.findAll().size();
+        // set the field null
+        autresVariable.setAnnee(null);
+
+        // Create the AutresVariable, which fails.
+        AutresVariableDTO autresVariableDTO = autresVariableMapper.toDto(autresVariable);
+
+
+        restAutresVariableMockMvc.perform(post("/api/autres-variables")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(autresVariableDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AutresVariable> autresVariableList = autresVariableRepository.findAll();
+        assertThat(autresVariableList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAutresVariables() throws Exception {
         // Initialize the database
         autresVariableRepository.saveAndFlush(autresVariable);
@@ -153,7 +205,9 @@ public class AutresVariableResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].montant").value(hasItem(DEFAULT_MONTANT.doubleValue())))
-            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)));
+            .andExpect(jsonPath("$.[*].justificatif").value(hasItem(DEFAULT_JUSTIFICATIF)))
+            .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
+            .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
     
     @Test
@@ -170,7 +224,9 @@ public class AutresVariableResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.montant").value(DEFAULT_MONTANT.doubleValue()))
-            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF));
+            .andExpect(jsonPath("$.justificatif").value(DEFAULT_JUSTIFICATIF))
+            .andExpect(jsonPath("$.mois").value(DEFAULT_MOIS))
+            .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
     }
     @Test
     @Transactional
@@ -196,7 +252,9 @@ public class AutresVariableResourceIT {
             .description(UPDATED_DESCRIPTION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF);
+            .justificatif(UPDATED_JUSTIFICATIF)
+            .mois(UPDATED_MOIS)
+            .annee(UPDATED_ANNEE);
         AutresVariableDTO autresVariableDTO = autresVariableMapper.toDto(updatedAutresVariable);
 
         restAutresVariableMockMvc.perform(put("/api/autres-variables")
@@ -212,6 +270,8 @@ public class AutresVariableResourceIT {
         assertThat(testAutresVariable.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testAutresVariable.getMontant()).isEqualTo(UPDATED_MONTANT);
         assertThat(testAutresVariable.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        assertThat(testAutresVariable.getMois()).isEqualTo(UPDATED_MOIS);
+        assertThat(testAutresVariable.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }
 
     @Test

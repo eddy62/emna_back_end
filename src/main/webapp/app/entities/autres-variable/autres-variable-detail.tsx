@@ -52,6 +52,22 @@ export const AutresVariableDetail = (props: IAutresVariableDetailProps) => {
           </dt>
           <dd>{autresVariableEntity.justificatif}</dd>
           <dt>
+            <span id="mois">
+              <Translate contentKey="emnaBackEndApp.autresVariable.mois">Mois</Translate>
+            </span>
+          </dt>
+          <dd>{autresVariableEntity.mois}</dd>
+          <dt>
+            <span id="annee">
+              <Translate contentKey="emnaBackEndApp.autresVariable.annee">Annee</Translate>
+            </span>
+          </dt>
+          <dd>{autresVariableEntity.annee}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.autresVariable.etatVariablePaie">Etat Variable Paie</Translate>
+          </dt>
+          <dd>{autresVariableEntity.etatVariablePaieId ? autresVariableEntity.etatVariablePaieId : ''}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.autresVariable.employe">Employe</Translate>
           </dt>
           <dd>{autresVariableEntity.employeId ? autresVariableEntity.employeId : ''}</dd>

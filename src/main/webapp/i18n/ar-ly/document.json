@@ -19,10 +19,14 @@
       "cheminFichier": "Chemin Fichier",
       "type": "Type",
       "nom": "Nom",
+      "absence": "Absence",
+      "noteDeFrais": "Note De Frais",
+      "autresVariables": "Autres Variables",
       "facture": "Facture",
       "releve": "Releve",
       "contrat": "Contrat",
-      "employe": "Employe"
+      "employe": "Employe",
+      "depense": "Depense"
     }
   }
 }

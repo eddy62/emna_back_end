@@ -20,6 +20,9 @@
       "date": "Date",
       "montant": "Montant",
       "justificatif": "Justificatif",
+      "mois": "Mois",
+      "annee": "Annee",
+      "etatVariablePaie": "Etat Variable Paie",
       "employe": "Employe"
     }
   }

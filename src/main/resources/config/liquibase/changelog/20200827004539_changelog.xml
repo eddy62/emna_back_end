@@ -1,0 +1,962 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="guizm (generated)" id="1598489155340-1">
+        <createSequence incrementBy="50" sequenceName="sequence_generator" startValue="1"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-2">
+        <createTable tableName="absence">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="absencePK"/>
+            </column>
+            <column name="debut_absence" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fin_absence" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="justificatif" type="VARCHAR(255)"/>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="etat_variable_paie_id" type="BIGINT"/>
+            <column name="type_absence_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-3">
+        <createTable tableName="adresse">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="adressePK"/>
+            </column>
+            <column name="boite_postale" type="VARCHAR(255)"/>
+            <column name="code_postal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom_rue" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_rue" type="VARCHAR(255)"/>
+            <column name="pays" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ville" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-4">
+        <createTable tableName="article">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="articlePK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reference" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="titre" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-5">
+        <createTable tableName="article_liste_avenants">
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="liste_avenants_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-6">
+        <createTable tableName="article_liste_contrats">
+            <column name="article_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="liste_contrats_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-7">
+        <createTable tableName="autres_variable">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="autres_variablePK"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="justificatif" type="VARCHAR(255)"/>
+            <column name="montant" type="DOUBLE"/>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="etat_variable_paie_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-8">
+        <createTable tableName="avance_rappel_salaire">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="avance_rappel_salairePK"/>
+            </column>
+            <column name="debut_periode" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fin_periode" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="montant" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="etat_variable_paie_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-9">
+        <createTable tableName="avenant">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="avenantPK"/>
+            </column>
+            <column name="reference" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="signe" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contrat_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-10">
+        <createTable tableName="clause">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="clausePK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reference" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-11">
+        <createTable tableName="clause_liste_avenants">
+            <column name="clause_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="liste_avenants_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-12">
+        <createTable tableName="clause_liste_contrats">
+            <column name="clause_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="liste_contrats_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-13">
+        <createTable tableName="client_fournisseur">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="client_fournisseurPK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="nom" type="VARCHAR(255)"/>
+            <column name="siren" type="INT"/>
+            <column name="telephone" type="VARCHAR(255)"/>
+            <column name="adresse_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-14">
+        <createTable tableName="comptable">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="comptablePK"/>
+            </column>
+            <column name="civilite" type="VARCHAR(255)"/>
+            <column name="adresse_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="info_entreprise_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-15">
+        <createTable tableName="contrat">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="contratPK"/>
+            </column>
+            <column name="archive" type="BOOLEAN"/>
+            <column name="date_creation" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="signe" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="titre" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-16">
+        <createTable tableName="devis">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="devisPK"/>
+            </column>
+            <column name="chemin_fichier" type="VARCHAR(255)"/>
+            <column name="date_creation" type="date"/>
+            <column name="date_limite" type="date"/>
+            <column name="message" type="VARCHAR(255)"/>
+            <column name="nom" type="VARCHAR(255)"/>
+            <column name="num_devis" type="BIGINT"/>
+            <column name="prix_ht" type="DOUBLE"/>
+            <column name="prix_ttc" type="DOUBLE"/>
+            <column name="tva" type="FLOAT"/>
+            <column name="client_fournisseur_id" type="BIGINT"/>
+            <column name="etat_devis_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-17">
+        <createTable tableName="document">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="documentPK"/>
+            </column>
+            <column name="chemin_fichier" type="VARCHAR(255)"/>
+            <column name="nom" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="absence_id" type="BIGINT"/>
+            <column name="autres_variables_id" type="BIGINT"/>
+            <column name="contrat_id" type="BIGINT"/>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="facture_id" type="BIGINT"/>
+            <column name="note_de_frais_id" type="BIGINT"/>
+            <column name="releve_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-18">
+        <createTable tableName="dpae">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="dpaePK"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lien_document" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lieu" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-19">
+        <createTable tableName="employe">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="employePK"/>
+            </column>
+            <column name="categorie" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="civilite" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_embauche" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_naissance" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_sortie" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="departement_naissance" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enfants_a_charge" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fax" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="heures_mensuelle" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="matricule" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom_naissance" type="VARCHAR(255)"/>
+            <column name="nom_usage" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_securite_sociale" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pays_naisance" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="periode_essai" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="poste" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prenom" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salaire_brut_mensuelle" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salaire_horaire" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="situation_familiale" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telephone_fix" type="VARCHAR(255)"/>
+            <column name="telephone_portable" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ville_naissance" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adresse_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="societe_id" type="BIGINT"/>
+            <column name="statut_employe_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_contrat_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-20">
+        <createTable tableName="etat_devis">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="etat_devisPK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="libelle" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-21">
+        <createTable tableName="etat_facture">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="etat_facturePK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="libelle" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-22">
+        <createTable tableName="etat_releve">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="etat_relevePK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)"/>
+            <column name="libelle" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-23">
+        <createTable tableName="etat_variable_paie">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="etat_variable_paiePK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="intitule" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-24">
+        <createTable tableName="facture">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="facturePK"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="date_echeance" type="date"/>
+            <column name="message" type="VARCHAR(255)"/>
+            <column name="moyen_de_paiement" type="VARCHAR(255)"/>
+            <column name="nom" type="VARCHAR(255)"/>
+            <column name="numfact" type="BIGINT"/>
+            <column name="prix_ht" type="INT"/>
+            <column name="prix_ttc" type="INT"/>
+            <column name="tva" type="FLOAT"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="adresse_id" type="BIGINT"/>
+            <column name="client_fournisseur_id" type="BIGINT"/>
+            <column name="etat_facture_id" type="BIGINT"/>
+            <column name="operation_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-25">
+        <createTable tableName="fiche_paie">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="fiche_paiePK"/>
+            </column>
+            <column name="debut_periode" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fin_periode" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lien_document" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-26">
+        <createTable tableName="heures_supplementaires">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="heures_supplementairesPK"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="justificatif" type="VARCHAR(255)"/>
+            <column name="nombre_heure" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="etat_variable_paie_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-27">
+        <createTable tableName="info_entreprise">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="info_entreprisePK"/>
+            </column>
+            <column name="date_de_creation" type="date"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="domaine_dactivite" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="fax" type="VARCHAR(255)"/>
+            <column name="forme_juridique" type="VARCHAR(255)"/>
+            <column name="raison_sociale" type="VARCHAR(255)"/>
+            <column name="siren" type="VARCHAR(255)"/>
+            <column name="siret" type="VARCHAR(255)"/>
+            <column name="telephone" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-28">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="jhi_authorityPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-29">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="TIMESTAMP"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-30">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-31">
+        <createTable tableName="jhi_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="jhi_userPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP"/>
+            <column name="activated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="lang_key" type="VARCHAR(10)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reset_date" type="TIMESTAMP"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-32">
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-33">
+        <createTable tableName="ligne_produit">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ligne_produitPK"/>
+            </column>
+            <column name="quantite" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="devis_id" type="BIGINT"/>
+            <column name="facture_id" type="BIGINT"/>
+            <column name="produit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-34">
+        <createTable tableName="note_de_frais">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="note_de_fraisPK"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="designation" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="justificatif" type="VARCHAR(255)"/>
+            <column name="montant" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="etat_variable_paie_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-35">
+        <createTable tableName="operation">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="operationPK"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="rapproche" type="BOOLEAN"/>
+            <column name="solde" type="DOUBLE"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="releve_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-36">
+        <createTable tableName="prime">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="primePK"/>
+            </column>
+            <column name="montant" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="employe_id" type="BIGINT"/>
+            <column name="etat_variable_paie_id" type="BIGINT"/>
+            <column name="type_prime_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-37">
+        <createTable tableName="produit">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="produitPK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="nom" type="VARCHAR(255)"/>
+            <column name="prix" type="DOUBLE"/>
+            <column name="reference" type="INT"/>
+            <column name="tva" type="FLOAT"/>
+            <column name="unite" type="VARCHAR(255)"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-38">
+        <createTable tableName="releve">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="relevePK"/>
+            </column>
+            <column name="banque" type="VARCHAR(255)"/>
+            <column name="chemin_fichier" type="VARCHAR(255)"/>
+            <column name="date_debut" type="date"/>
+            <column name="date_fin" type="date"/>
+            <column name="solde" type="DOUBLE"/>
+            <column name="etat_releve_id" type="BIGINT"/>
+            <column name="societe_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-39">
+        <createTable tableName="societe">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="societePK"/>
+            </column>
+            <column name="civilite" type="VARCHAR(255)"/>
+            <column name="adresse_id" type="BIGINT"/>
+            <column name="comptable_id" type="BIGINT"/>
+            <column name="info_entreprise_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-40">
+        <createTable tableName="statut_employe">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="statut_employePK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="libelle" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-41">
+        <createTable tableName="type_absence">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="type_absencePK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="intitule" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-42">
+        <createTable tableName="type_contrat">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="type_contratPK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="intitule" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-43">
+        <createTable tableName="type_prime">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="type_primePK"/>
+            </column>
+            <column name="code_ref" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="intitule" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-44">
+        <addUniqueConstraint columnNames="info_entreprise_id" constraintName="UC_COMPTABLEINFO_ENTREPRISE_ID_COL" tableName="comptable"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-45">
+        <addUniqueConstraint columnNames="user_id" constraintName="UC_COMPTABLEUSER_ID_COL" tableName="comptable"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-46">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_ETAT_DEVISCODE_REF_COL" tableName="etat_devis"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-47">
+        <addUniqueConstraint columnNames="libelle" constraintName="UC_ETAT_DEVISLIBELLE_COL" tableName="etat_devis"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-48">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_ETAT_FACTURECODE_REF_COL" tableName="etat_facture"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-49">
+        <addUniqueConstraint columnNames="libelle" constraintName="UC_ETAT_FACTURELIBELLE_COL" tableName="etat_facture"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-50">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_ETAT_VARIABLE_PAIECODE_REF_COL" tableName="etat_variable_paie"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-51">
+        <addUniqueConstraint columnNames="intitule" constraintName="UC_ETAT_VARIABLE_PAIEINTITULE_COL" tableName="etat_variable_paie"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-52">
+        <addUniqueConstraint columnNames="email" constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-53">
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-54">
+        <addUniqueConstraint columnNames="info_entreprise_id" constraintName="UC_SOCIETEINFO_ENTREPRISE_ID_COL" tableName="societe"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-55">
+        <addUniqueConstraint columnNames="user_id" constraintName="UC_SOCIETEUSER_ID_COL" tableName="societe"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-56">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_STATUT_EMPLOYECODE_REF_COL" tableName="statut_employe"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-57">
+        <addUniqueConstraint columnNames="libelle" constraintName="UC_STATUT_EMPLOYELIBELLE_COL" tableName="statut_employe"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-58">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_TYPE_ABSENCECODE_REF_COL" tableName="type_absence"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-59">
+        <addUniqueConstraint columnNames="intitule" constraintName="UC_TYPE_ABSENCEINTITULE_COL" tableName="type_absence"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-60">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_TYPE_CONTRATCODE_REF_COL" tableName="type_contrat"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-61">
+        <addUniqueConstraint columnNames="intitule" constraintName="UC_TYPE_CONTRATINTITULE_COL" tableName="type_contrat"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-62">
+        <addUniqueConstraint columnNames="code_ref" constraintName="UC_TYPE_PRIMECODE_REF_COL" tableName="type_prime"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-63">
+        <addUniqueConstraint columnNames="intitule" constraintName="UC_TYPE_PRIMEINTITULE_COL" tableName="type_prime"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-64">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-65">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-66">
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id" baseTableName="avance_rappel_salaire" constraintName="FK2q1cosqwh5mnoxkeppid1twqx" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_variable_paie" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-67">
+        <addForeignKeyConstraint baseColumnNames="facture_id" baseTableName="ligne_produit" constraintName="FK3yunv0mcfmlrp05lbmr7mhnq4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="facture" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-68">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-69">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="facture" constraintName="FK53jxdjm8k2d4yktphj420yml" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-70">
+        <addForeignKeyConstraint baseColumnNames="absence_id" baseTableName="document" constraintName="FK5bgj1syq1wpcii2g5fk6m09rj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="absence" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-71">
+        <addForeignKeyConstraint baseColumnNames="type_contrat_id" baseTableName="employe" constraintName="FK5mxtjmh0fu29gnwhqmb437fg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="type_contrat" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-72">
+        <addForeignKeyConstraint baseColumnNames="contrat_id" baseTableName="document" constraintName="FK5o5r9dgwctsgkn48byqapxm8r" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="contrat" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-73">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="note_de_frais" constraintName="FK5qcsu48qern5yq7y7lrgxspya" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-74">
+        <addForeignKeyConstraint baseColumnNames="adresse_id" baseTableName="client_fournisseur" constraintName="FK64uwxuypnnfanu2c2c935du3p" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="adresse" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-75">
+        <addForeignKeyConstraint baseColumnNames="releve_id" baseTableName="operation" constraintName="FK6uxl1ocnq8sr6n95n0osyrty8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="releve" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-76">
+        <addForeignKeyConstraint baseColumnNames="operation_id" baseTableName="facture" constraintName="FK7gxw232ijl2g960si3tlw86l1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="operation" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-77">
+        <addForeignKeyConstraint baseColumnNames="liste_contrats_id" baseTableName="article_liste_contrats" constraintName="FK7ookn4i6x74n2crscxavjgoo6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="contrat" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-78">
+        <addForeignKeyConstraint baseColumnNames="comptable_id" baseTableName="societe" constraintName="FK80e59vwecy2isp94gm0uskgvs" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="comptable" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-79">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="heures_supplementaires" constraintName="FK80q8ibkevtyu42lfa3hyk0l34" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-80">
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id" baseTableName="note_de_frais" constraintName="FK856aust0vuetgeivtj35o98m0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_variable_paie" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-81">
+        <addForeignKeyConstraint baseColumnNames="autres_variables_id" baseTableName="document" constraintName="FK870as12ovi0as42vqseux3clj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="autres_variable" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-82">
+        <addForeignKeyConstraint baseColumnNames="type_absence_id" baseTableName="absence" constraintName="FK9kri7qq4cvqc96fhmt4oboclc" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="type_absence" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-83">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="employe" constraintName="FK9togt6x8w8huu28vakjw6r9qq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-84">
+        <addForeignKeyConstraint baseColumnNames="client_fournisseur_id" baseTableName="devis" constraintName="FKa1m08rndpj96epm712656mbbr" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="client_fournisseur" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-85">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="document" constraintName="FKaovl6es6m35bppi05ghgep8r1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-86">
+        <addForeignKeyConstraint baseColumnNames="etat_devis_id" baseTableName="devis" constraintName="FKc5eoh3a0pkve75i4akaq836u4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_devis" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-87">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="autres_variable" constraintName="FKco1c0lq7tpecxncc4ei54230c" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-88">
+        <addForeignKeyConstraint baseColumnNames="contrat_id" baseTableName="avenant" constraintName="FKcxak8h6c0bldigfjuvxp3kt68" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="contrat" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-89">
+        <addForeignKeyConstraint baseColumnNames="liste_contrats_id" baseTableName="clause_liste_contrats" constraintName="FKd4e8skd722ncsxbtmr6hkc3hg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="contrat" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-90">
+        <addForeignKeyConstraint baseColumnNames="clause_id" baseTableName="clause_liste_avenants" constraintName="FKd7wdb43l86is8g8yh7vwf4grs" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="clause" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-91">
+        <addForeignKeyConstraint baseColumnNames="liste_avenants_id" baseTableName="article_liste_avenants" constraintName="FKdgpq57ca2vk19e24irc5uykba" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="avenant" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-92">
+        <addForeignKeyConstraint baseColumnNames="statut_employe_id" baseTableName="employe" constraintName="FKdgynwbxtpayw7lw9hcuv3ebot" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="statut_employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-93">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="clause" constraintName="FKdnn7eptc9gaaupy64cifxxhd3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-94">
+        <addForeignKeyConstraint baseColumnNames="adresse_id" baseTableName="facture" constraintName="FKdug573003pyq0bewv7we4dpgx" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="adresse" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-95">
+        <addForeignKeyConstraint baseColumnNames="releve_id" baseTableName="document" constraintName="FKe0j53he79jdp1e4xrfjo4flwi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="releve" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-96">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="comptable" constraintName="FKe0v35h0e3h4cr9hcyp647wdf3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-97">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="releve" constraintName="FKe12yxftimo67fxyeucusapju" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-98">
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id" baseTableName="heures_supplementaires" constraintName="FKekb1kvlyyns7pprnigr3gncjk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_variable_paie" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-99">
+        <addForeignKeyConstraint baseColumnNames="devis_id" baseTableName="ligne_produit" constraintName="FKeoyt6ylnr0mqnpitf6ny0nsfr" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="devis" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-100">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="avance_rappel_salaire" constraintName="FKep3b0jm0r5um615xkbmmc8ptd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-101">
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id" baseTableName="absence" constraintName="FKfr2qoji0chrfbrbv4hvqbvjw7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_variable_paie" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-102">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="devis" constraintName="FKg6q0m2mo4ruedjwrc9sesxfo" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-103">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="absence" constraintName="FKgtwvcca02w9ge7lfcavhao3pl" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-104">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="dpae" constraintName="FKh91ttk6shluvxy7p87llluir2" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-105">
+        <addForeignKeyConstraint baseColumnNames="info_entreprise_id" baseTableName="comptable" constraintName="FKhdoaa8hdbtv2b3kguo2m08edf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="info_entreprise" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-106">
+        <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="clause" constraintName="FKheqmqtympafl56533ymkgcpbt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="article" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-107">
+        <addForeignKeyConstraint baseColumnNames="type_prime_id" baseTableName="prime" constraintName="FKhg7l0tp2klx2y737l4924w0ee" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="type_prime" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-108">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="fiche_paie" constraintName="FKhi9tktq8rq9vn9x7gouktbdo5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-109">
+        <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="article_liste_avenants" constraintName="FKhtpxly1n0qqiib492np030hla" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="article" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-110">
+        <addForeignKeyConstraint baseColumnNames="info_entreprise_id" baseTableName="societe" constraintName="FKi6me2jlvu5lbcaupx0tb992xw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="info_entreprise" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-111">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="contrat" constraintName="FKidi9k1fvw6mma24yqoe2kmtju" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-112">
+        <addForeignKeyConstraint baseColumnNames="adresse_id" baseTableName="comptable" constraintName="FKig565fsntxx4m4nxkiam7v01t" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="adresse" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-113">
+        <addForeignKeyConstraint baseColumnNames="adresse_id" baseTableName="societe" constraintName="FKilx67jg8jng9y9x22ir1f627t" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="adresse" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-114">
+        <addForeignKeyConstraint baseColumnNames="etat_releve_id" baseTableName="releve" constraintName="FKiu09d68nlwdpnc2joqguldtxu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_releve" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-115">
+        <addForeignKeyConstraint baseColumnNames="client_fournisseur_id" baseTableName="facture" constraintName="FKiy7mony0ruph2tvagu1p7gq13" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="client_fournisseur" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-116">
+        <addForeignKeyConstraint baseColumnNames="note_de_frais_id" baseTableName="document" constraintName="FKjcwl45qqynh8bejis3og4mt3r" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="note_de_frais" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-117">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="societe" constraintName="FKjr4ac191yghfq001a5sw92j1m" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-118">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="client_fournisseur" constraintName="FKk2191yrcueus86hcyhqs87s9o" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-119">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="article" constraintName="FKl9gi7a43s34p88igo1cb8jw6v" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-120">
+        <addForeignKeyConstraint baseColumnNames="etat_facture_id" baseTableName="facture" constraintName="FKlg8816qn45ie9yhqf8jbhsxg9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_facture" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-121">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="contrat" constraintName="FKmvaohytpx6k0kxccovxfei75u" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-122">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="dpae" constraintName="FKo5uxypa2egtww9uku4gaast11" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-123">
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id" baseTableName="autres_variable" constraintName="FKpfdx8cse369hfgbrbypqhau5j" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_variable_paie" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-124">
+        <addForeignKeyConstraint baseColumnNames="societe_id" baseTableName="produit" constraintName="FKq92krg6s4i6qwwxrmt6y11x5d" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="societe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-125">
+        <addForeignKeyConstraint baseColumnNames="clause_id" baseTableName="clause_liste_contrats" constraintName="FKqkpd3tpmwfjpcg6ebwf0ogdr6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="clause" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-126">
+        <addForeignKeyConstraint baseColumnNames="adresse_id" baseTableName="employe" constraintName="FKqtg682pwebx09lnx6scd0q5lm" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="adresse" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-127">
+        <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="article_liste_contrats" constraintName="FKr04wbvqi67ywbv9owr2h3hhpi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="article" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-128">
+        <addForeignKeyConstraint baseColumnNames="liste_avenants_id" baseTableName="clause_liste_avenants" constraintName="FKr4688rnetkj4o1gpof68x8ekv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="avenant" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-129">
+        <addForeignKeyConstraint baseColumnNames="produit_id" baseTableName="ligne_produit" constraintName="FKriu2anu7c4kuiov2j4qvsrj39" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="produit" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-130">
+        <addForeignKeyConstraint baseColumnNames="etat_variable_paie_id" baseTableName="prime" constraintName="FKs44mwqsjo3gydqeycqqcfxhlt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="etat_variable_paie" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-131">
+        <addForeignKeyConstraint baseColumnNames="employe_id" baseTableName="prime" constraintName="FKt7gaa7lc5wovngj5v45dnt4n5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employe" validate="true"/>
+    </changeSet>
+    <changeSet author="guizm (generated)" id="1598489155340-132">
+        <addForeignKeyConstraint baseColumnNames="facture_id" baseTableName="document" constraintName="FKtp8enu6xvy5vn39kkyq04dws1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="facture" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

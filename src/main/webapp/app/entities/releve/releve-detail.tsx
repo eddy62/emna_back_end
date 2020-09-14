@@ -31,16 +31,14 @@ export const ReleveDetail = (props: IReleveDetailProps) => {
             </span>
           </dt>
           <dd>
-            <TextFormat value={releveEntity.dateDebut} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            {releveEntity.dateDebut ? <TextFormat value={releveEntity.dateDebut} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
           </dd>
           <dt>
             <span id="dateFin">
               <Translate contentKey="emnaBackEndApp.releve.dateFin">Date Fin</Translate>
             </span>
           </dt>
-          <dd>
-            <TextFormat value={releveEntity.dateFin} type="date" format={APP_LOCAL_DATE_FORMAT} />
-          </dd>
+          <dd>{releveEntity.dateFin ? <TextFormat value={releveEntity.dateFin} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
           <dt>
             <span id="solde">
               <Translate contentKey="emnaBackEndApp.releve.solde">Solde</Translate>
@@ -53,12 +51,6 @@ export const ReleveDetail = (props: IReleveDetailProps) => {
             </span>
           </dt>
           <dd>{releveEntity.banque}</dd>
-          <dt>
-            <span id="cheminFichier">
-              <Translate contentKey="emnaBackEndApp.releve.cheminFichier">Chemin Fichier</Translate>
-            </span>
-          </dt>
-          <dd>{releveEntity.cheminFichier}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.releve.etatReleve">Etat Releve</Translate>
           </dt>
@@ -87,7 +79,7 @@ export const ReleveDetail = (props: IReleveDetailProps) => {
 };
 
 const mapStateToProps = ({ releve }: IRootState) => ({
-  releveEntity: releve.entity
+  releveEntity: releve.entity,
 });
 
 const mapDispatchToProps = { getEntity };
