@@ -26,4 +26,9 @@ public interface ClauseRepository extends JpaRepository<Clause, Long> {
 
     @Query("select clause from Clause clause left join fetch clause.listeContrats left join fetch clause.listeAvenants where clause.id =:id")
     Optional<Clause> findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query("FROM Clause c " +
+           "WHERE c.societe.id=:idSociete")
+    List<Clause> findAllClausesBySocietyId(@Param("idSociete") Long idSociete);
+
 }

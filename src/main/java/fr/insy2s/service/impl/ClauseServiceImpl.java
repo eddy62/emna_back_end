@@ -105,6 +105,15 @@ public class ClauseServiceImpl implements ClauseService {
     }
 
     @Override
+    public List<ClauseDTO> findAllClausesBySocietyId(Long idSociete) {
+        log.debug("Request to get all Factures for the statement concerned: {}", idSociete);
+        return this.clauseRepository.findAllClausesBySocietyId(idSociete)
+            .stream()
+            .map(clauseMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete Clause : {}", id);
         clauseRepository.deleteById(id);
