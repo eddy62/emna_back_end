@@ -1,14 +1,13 @@
 package fr.insy2s.utils;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.dto.UserDTO;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CheckUtil {
     public static String getLoginCurrentUser() {

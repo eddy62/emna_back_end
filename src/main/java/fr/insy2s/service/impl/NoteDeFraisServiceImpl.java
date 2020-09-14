@@ -67,7 +67,7 @@ public class NoteDeFraisServiceImpl implements NoteDeFraisService {
 
     @Override
     public List<NoteDeFraisDTO> findAllNoteDeFraisByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
-        log.debug("Request to get all NoteDeFrais with IdEmploye {} Annee {} Mois {}",idEmploye,annee,mois);
+        log.debug("Request to get all NoteDeFrais with IdEmploye:{}, Annee:{}, Mois:{}", idEmploye, annee, mois);
         return noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
                 .map(noteDeFraisMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
