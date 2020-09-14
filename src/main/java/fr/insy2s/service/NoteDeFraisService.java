@@ -41,5 +41,12 @@ public interface NoteDeFraisService {
      */
     void delete(Long id);
 
+    /**
+     * Get all noteDeFrais by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in Entity
+     * @param annee     year of the Employe in Entity
+     * @param mois      month of the Employe in Entity
+     */
     List<NoteDeFraisDTO> findAllNoteDeFraisByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 }

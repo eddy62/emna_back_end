@@ -42,5 +42,26 @@ public interface AbsenceService {
      */
     void delete(Long id);
 
+    /**
+     * Get all the WrapperAbsence by idEmploye, annee, mois
+     *
+     * @param idEmploye the idEmploye of all the wrapperAbsence to return
+     * @param annee the annee of all the wrapperAbsence to return
+     * @param mois the mois of all the wrapperAbsence to return
+     * @return the list of wrapperAbsence
+     */
     List<WrapperAbsence> findAllWrapperAbsenceByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
+
+/*
+    */
+/**
+     * Update the WrapperAbsence
+     *
+     * @param wrapperAbsence WrapperAbsence to update
+     * @return the updated WrapperAbsence
+     *//*
+
+    WrapperAbsence updateWrapperAbsence(WrapperAbsence wrapperAbsence);
+*/
+
 }

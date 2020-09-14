@@ -3,11 +3,10 @@ package fr.insy2s.web.rest;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.OperationService;
 import fr.insy2s.service.ReleveService;
+import fr.insy2s.service.dto.OperationDTO;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.OperationDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -41,8 +40,8 @@ public class OperationResource {
     private final ReleveService releveService;
 
     public OperationResource(OperationService operationService, ReleveService releveService) {
-        this.operationService   = operationService;
-        this.releveService      = releveService;
+        this.operationService = operationService;
+        this.releveService = releveService;
     }
 
     /**
@@ -52,7 +51,7 @@ public class OperationResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new operationDTO, or with status {@code 400 (Bad Request)} if the operation has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @Secured({AuthoritiesConstants.ADMIN,AuthoritiesConstants.SOCIETY})
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.SOCIETY})
     @PostMapping("/operations")
     public ResponseEntity<OperationDTO> createOperation(@RequestBody OperationDTO operationDTO) throws URISyntaxException {
         log.debug("REST request to save Operation : {}", operationDTO);
@@ -65,9 +64,9 @@ public class OperationResource {
         if (optionalReleveDTO.isPresent()) {
             ReleveDTO releve = optionalReleveDTO.get();
             if (operationDTO.getDate() == null || !CheckUtil.isDateBetween(
-                operationDTO.getDate(),
-                releve.getDateDebut(),
-                releve.getDateFin())
+                    operationDTO.getDate(),
+                    releve.getDateDebut(),
+                    releve.getDateFin())
             ) {
                 throw new BadRequestAlertException("La date de l'opération est invalide", ENTITY_NAME, "dateOutOfRange");
             }
@@ -75,8 +74,8 @@ public class OperationResource {
 
         OperationDTO result = operationService.save(operationDTO);
         return ResponseEntity.created(new URI("/api/operations/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**

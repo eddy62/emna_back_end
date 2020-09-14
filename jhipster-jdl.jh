@@ -201,6 +201,10 @@ entity EtatDevis {
     codeRef String required unique,
 }
 
+entity EtatDepense {
+	libelle String,
+	codeRef String
+}
 entity Comptable{
     civilite String 
 }
@@ -253,7 +257,13 @@ entity Dpae {
     lienDocument String required
 }
 
-
+entity Depense{
+	numero Long required
+	date LocalDate
+	prix Double
+	moyenDePaiement String
+	raison String
+	}
 relationship OneToMany{
     Societe{listeFactures} to Facture{societe} 
     Operation{listeFactures} to Facture{operation}
@@ -294,13 +304,19 @@ relationship OneToMany{
     Employe{listeDpae} to Dpae{employe}
     Societe{listeDpae} to Dpae{societe}
     Facture{listeLigneProduit} to LigneProduit{facture}
-    Devis{listeLigneProduit} to LigneProduit{devis}  
+    Devis{listeLigneProduit} to LigneProduit{devis} 
+
+	Depense{listeDocuments} to Document{depense}
+	Societe{listeDepenses} to Depense{societe}
+	Operation{listeDepenses} to Depense{operation}
+	ClientFournisseur{listeClientsFournisseurs} to Depense{clientFournisseur}
 }
 
 relationship ManyToOne{
 	Absence{typeAbsence required} to TypeAbsence
     Prime{typePrime required} to TypePrime
     Employe{statutEmploye required} to StatutEmploye
+	Depense{etatDepense} to EtatDepense
     Releve{etatReleve} to EtatReleve
     Facture{etatFacture} to EtatFacture
     Devis{etatDevis} to EtatDevis
