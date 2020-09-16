@@ -71,6 +71,10 @@ export const DocumentDetail = (props: IDocumentDetailProps) => {
             <Translate contentKey="emnaBackEndApp.document.employe">Employe</Translate>
           </dt>
           <dd>{documentEntity.employeId ? documentEntity.employeId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.depense">Depense</Translate>
+          </dt>
+          <dd>{documentEntity.depenseId ? documentEntity.depenseId : ''}</dd>
         </dl>
         <Button tag={Link} to="/document" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

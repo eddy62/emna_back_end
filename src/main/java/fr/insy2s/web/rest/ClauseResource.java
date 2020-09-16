@@ -115,4 +115,16 @@ public class ClauseResource {
         clauseService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /clauses/society/:id} : get all the clauses by society id.
+     *
+     * @param idSociete the id of the society.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clauses in body.
+     */
+    @GetMapping("/clauses/society/{idSociete}")
+    public List<ClauseDTO> getAllClausesBySocietyId(@PathVariable Long idSociete) {
+        log.debug("REST request to get all Clauses of a society");
+        return clauseService.findAllClausesBySocietyId(idSociete);
+    }
 }

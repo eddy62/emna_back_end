@@ -1,5 +1,21 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.*;
+import fr.insy2s.repository.*;
+import fr.insy2s.repository.projection.IEmployeContratProjection;
+import fr.insy2s.service.*;
+import fr.insy2s.service.dto.*;
+import fr.insy2s.service.mapper.*;
+import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperPrime;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -92,44 +108,44 @@ public class EmployeServiceImpl implements EmployeService {
     private final AdresseService                  adresseService;
     private final StatutEmployeService            statutEmployeService;
     private final SocieteService                  societeService;
-    private final InfoEntrepriseService           infoEntrepriseService;
-    private final TypeContratService              typeContratService;
-    private final AbsenceService                  absenceService;
-    private final PrimeService                    primeService;
-    private final FichePaieService                fichePaieService;
-    private final HeuresSupplementairesService    heuresSupplementairesService;
-    private final NoteDeFraisService              noteDeFraisService;
-    private final AutresVariableService           autresVariableService;
-    private final DocumentService                 documentService;
-    private final DpaeService                     dpaeService;
-    private final ContratService                  contratService;
-    private final AvanceRappelSalaireService avanceRappelSalaireService;
+    private final InfoEntrepriseService infoEntrepriseService;
+    private final TypeContratService typeContratService;
+    private final FichePaieService fichePaieService;
+    private final DocumentService documentService;
+    private final DpaeService dpaeService;
+    private final ContratService contratService;
 
     /* Variables de Paie */
-    private final AbsenceMapper                   absenceMapper;
-    private final TypeAbsenceMapper               typeAbsenceMapper;
-    private final AbsenceRepository               absenceRepository;
-    private final NoteDeFraisMapper               noteDeFraisMapper;
-    private final NoteDeFraisRepository           noteDeFraisRepository;
-    private final AutresVariableMapper            autresVariableMapper;
-    private final AutresVariableRepository        autresVariableRepository;
-    private final AvanceRappelSalaireMapper       avanceRappelSalaireMapper;
-    private final AvanceRappelSalaireRepository   avanceRappelSalaireRepository;
-    private final HeuresSupplementairesMapper     heuresSupplementairesMapper;
-    private final HeuresSupplementairesRepository heuresSupplementairesRepository;
-    private final PrimeMapper                     primeMapper;
-    private final TypePrimeMapper                 typePrimeMapper;
-    private final PrimeRepository                 primeRepository;
+    private final AbsenceService                    absenceService;
+    private final AbsenceRepository                 absenceRepository;
+    private final AbsenceMapper                     absenceMapper;
+    private final TypeAbsenceMapper                 typeAbsenceMapper;
+    private final AutresVariableService             autresVariableService;
+    private final AutresVariableRepository          autresVariableRepository;
+    private final AutresVariableMapper              autresVariableMapper;
+    private final AvanceRappelSalaireService        avanceRappelSalaireService;
+    private final AvanceRappelSalaireRepository     avanceRappelSalaireRepository;
+    private final AvanceRappelSalaireMapper         avanceRappelSalaireMapper;
+    private final HeuresSupplementairesService      heuresSupplementairesService;
+    private final HeuresSupplementairesRepository   heuresSupplementairesRepository;
+    private final HeuresSupplementairesMapper       heuresSupplementairesMapper;
+    private final NoteDeFraisService                noteDeFraisService;
+    private final NoteDeFraisRepository             noteDeFraisRepository;
+    private final NoteDeFraisMapper                 noteDeFraisMapper;
+    private final PrimeService                      primeService;
+    private final PrimeRepository                   primeRepository;
+    private final PrimeMapper                       primeMapper;
+    private final TypePrimeMapper                   typePrimeMapper;
 
     public EmployeServiceImpl(EmployeRepository employeRepository, EmployeMapper employeMapper, WrapperEmployeMapper wrapperEmployeMapper, AdresseService adresseService,
-                    StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService,
-                    AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper,  AbsenceRepository absenceRepository,
-                    NoteDeFraisMapper noteDeFraisMapper, NoteDeFraisRepository noteDeFraisRepository, AutresVariableMapper autresVariableMapper, AutresVariableRepository autresVariableRepository,
-                    AvanceRappelSalaireMapper avanceRappelSalaireMapper, AvanceRappelSalaireRepository avanceRappelSalaireRepository, HeuresSupplementairesMapper heuresSupplementairesMapper,
-                    HeuresSupplementairesRepository heuresSupplementairesRepository, PrimeMapper primeMapper, TypePrimeMapper typePrimeMapper,
-                    PrimeRepository primeRepository, AbsenceService absenceService, PrimeService primeService, FichePaieService fichePaieService,
-                    HeuresSupplementairesService heuresSupplementairesService, NoteDeFraisService noteDeFraisService, AutresVariableService autresVariableService, DocumentService documentService,
-                    DpaeService dpaeService, ContratService contratService, AvanceRappelSalaireService avanceRappelSalaireService) {
+                              StatutEmployeService statutEmployeService, SocieteService societeService, InfoEntrepriseService infoEntrepriseService, TypeContratService typeContratService,
+                              AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper, AbsenceRepository absenceRepository,
+                              NoteDeFraisMapper noteDeFraisMapper, NoteDeFraisRepository noteDeFraisRepository, AutresVariableMapper autresVariableMapper, AutresVariableRepository autresVariableRepository,
+                              AvanceRappelSalaireMapper avanceRappelSalaireMapper, AvanceRappelSalaireRepository avanceRappelSalaireRepository, HeuresSupplementairesMapper heuresSupplementairesMapper,
+                              HeuresSupplementairesRepository heuresSupplementairesRepository, PrimeMapper primeMapper, TypePrimeMapper typePrimeMapper,
+                              PrimeRepository primeRepository, AbsenceService absenceService, PrimeService primeService, FichePaieService fichePaieService,
+                              HeuresSupplementairesService heuresSupplementairesService, NoteDeFraisService noteDeFraisService, AutresVariableService autresVariableService, DocumentService documentService,
+                              DpaeService dpaeService, ContratService contratService, AvanceRappelSalaireService avanceRappelSalaireService) {
         this.employeRepository = employeRepository;
         this.employeMapper = employeMapper;
         this.wrapperEmployeMapper = wrapperEmployeMapper;
@@ -138,32 +154,32 @@ public class EmployeServiceImpl implements EmployeService {
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
         this.typeContratService = typeContratService;
-        this.avanceRappelSalaireService = avanceRappelSalaireService;
+        this.fichePaieService = fichePaieService;
+        this.documentService = documentService;
+        this.dpaeService = dpaeService;
+        this.contratService = contratService;
 
         // Variables de Paie
         this.absenceMapper = absenceMapper;
         this.typeAbsenceMapper = typeAbsenceMapper;
-        this.absenceRepository = absenceRepository;
-        this.noteDeFraisMapper = noteDeFraisMapper;
-        this.noteDeFraisRepository = noteDeFraisRepository;
         this.autresVariableMapper = autresVariableMapper;
-        this.autresVariableRepository = autresVariableRepository;
         this.avanceRappelSalaireMapper = avanceRappelSalaireMapper;
-        this.avanceRappelSalaireRepository = avanceRappelSalaireRepository;
         this.heuresSupplementairesMapper = heuresSupplementairesMapper;
-        this.heuresSupplementairesRepository = heuresSupplementairesRepository;
+        this.noteDeFraisMapper = noteDeFraisMapper;
         this.primeMapper = primeMapper;
         this.typePrimeMapper = typePrimeMapper;
+        this.absenceRepository = absenceRepository;
+        this.autresVariableRepository = autresVariableRepository;
+        this.avanceRappelSalaireRepository = avanceRappelSalaireRepository;
+        this.heuresSupplementairesRepository = heuresSupplementairesRepository;
+        this.noteDeFraisRepository = noteDeFraisRepository;
         this.primeRepository = primeRepository;
         this.absenceService = absenceService;
-        this.primeService = primeService;
-        this.fichePaieService = fichePaieService;
+        this.autresVariableService = autresVariableService;
+        this.avanceRappelSalaireService = avanceRappelSalaireService;
         this.heuresSupplementairesService = heuresSupplementairesService;
         this.noteDeFraisService = noteDeFraisService;
-        this.autresVariableService = autresVariableService;
-        this.documentService = documentService;
-        this.dpaeService = dpaeService;
-        this.contratService = contratService;
+        this.primeService = primeService;
 
     }
 
@@ -251,7 +267,7 @@ public class EmployeServiceImpl implements EmployeService {
         if (employeDTO.getDateSortie() == null) {
             employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
         }
-        if (isEmployeMatriculeExist(employeDTO.getMatricule())) {
+        if (isEmployeMatriculeExist(employeDTO.getMatricule(), employeDTO.getSocieteId())) {
             return Optional.empty();
         }
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
@@ -268,8 +284,10 @@ public class EmployeServiceImpl implements EmployeService {
         final TypeContratDTO typeContratDTO = typeContratService.findOne(wrapperEmploye.getTypeContratId()).get();
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
-        if (wrapperEmploye.getStatutEmployeId()==3) {
+        if (wrapperEmploye.getStatutEmployeId() == 3) {
             employeDTO.setStatutEmployeId(1L);
+            employeDTO.setDateEmbauche(LocalDate.now());
+            employeDTO.setDateSortie(LocalDate.now());
         }else {
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());}
         employeDTO.setTypeContratId(typeContratDTO.getId());
@@ -366,11 +384,11 @@ public class EmployeServiceImpl implements EmployeService {
         final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);
         return archivedWrapperemploye;
     }
-    
+
     @Override
-    public boolean isEmployeMatriculeExist(final String matricule) {
+    public boolean isEmployeMatriculeExist(final String matricule, final Long idSociete) {
         final Employe employe = employeRepository.findByMatricule(matricule);
-        if (employe != null) {
+        if ((employe != null) && (employe.getSociete().getId()== idSociete)) {
             return true;
         }
         return false;
@@ -378,7 +396,7 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
-        log.debug("Request to get all NoteDeFrais by employe {}, annee {}, mois {}", idEmploye, annee, mois);
+        log.debug("Request to get one WrapperVariablesPaie with Employe:{}, Annee:{}, Mois:{}", idEmploye, annee, mois);
         // Absences
         List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();

@@ -77,19 +77,13 @@ public class ClauseServiceImpl implements ClauseService {
     @Override
     public Optional<ClauseDTO> findById(Long id) {
         log.debug("Request to get Clause : {}", id);
-        System.err.println("------------------        JE SUIS DANS CLAUSE SERVICE         ------------------");
-        System.err.println("------------------        JE CHERCHE UNE CLAUSE PAR ID         ------------------");
         Clause clause = clauseRepository.findById(id).get();
-        System.err.println("------------------        JE CREER UNE CLAUSE DTO         ------------------");
         ClauseDTO clauseDto = new ClauseDTO();
         if(clause.getArticle() != null) {
-            System.err.println("------------------        JE SET ARTICLE A LA CLAUSE         ------------------");
             clauseDto.setArticleId(clause.getArticle().getId());
         }
-        System.err.println("------------------        JE SET ID ET DESCRIPTION A LA CLAUSE         ------------------");
         clauseDto.setDescription(clause.getDescription());
         clauseDto.setId(clause.getId());
-        System.err.println("------------------        PARTIE DES AVENANTS        ------------------");
         Set<AvenantDTO> listAvenantDto = new HashSet<>();
         for (Avenant avenant : clause.getListeAvenants()) {
             Optional<Avenant> optionalAvenant = Optional.of(avenant);
@@ -97,10 +91,8 @@ public class ClauseServiceImpl implements ClauseService {
             listAvenantDto.add(optionalAvenantDTO.get());
         }
 
-        System.err.println("------------------        PARTIE DES CONTRATS        ------------------");
         Set<ContratDTO> listContratDto = new HashSet<>();
         for (Contrat contrat : clause.getListeContrats()) {
-            System.err.println("------------------        BOUCLE MAPPER CONTRAT DANS CLAUSE SERVICE        ------------------");
             Optional<Contrat> optionalContrat = Optional.of(contrat);
             Optional<ContratDTO> optionalContratDTO = optionalContrat.map(contratMapper::toDto);
             listContratDto.add(optionalContratDTO.get());
@@ -110,6 +102,15 @@ public class ClauseServiceImpl implements ClauseService {
         clauseDto.setReference(clause.getReference());
         clauseDto.setSocieteId(clause.getSociete().getId());
         return Optional.of(clauseDto);
+    }
+
+    @Override
+    public List<ClauseDTO> findAllClausesBySocietyId(Long idSociete) {
+        log.debug("Request to get all Factures for the statement concerned: {}", idSociete);
+        return this.clauseRepository.findAllClausesBySocietyId(idSociete)
+            .stream()
+            .map(clauseMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

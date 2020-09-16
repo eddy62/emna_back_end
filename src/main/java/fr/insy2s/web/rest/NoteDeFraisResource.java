@@ -114,6 +114,14 @@ public class NoteDeFraisResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
+    /**
+     * {@code GET /note-de-frais/employe/:idEmploye/annee/:annee/mois/:mois} : get all noteDeFrais by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in all NoteDeFrais
+     * @param annee     year in all NoteDeFrais
+     * @param mois      month in all NoteDeFrais
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of noteDeFrais in body
+     */
     @GetMapping("/note-de-frais/employe/{idEmploye}/annee/{annee}/mois/{mois}")
     public List<NoteDeFraisDTO> getAllNoteDeFraisByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
         log.debug("REST request to get all NoteDeFrais by employe {}, annee {}, mois {}", idEmploye, annee, mois);

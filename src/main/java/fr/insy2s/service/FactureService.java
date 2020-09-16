@@ -43,7 +43,7 @@ public interface FactureService {
      */
     void delete(Long id);
 
-    FactureDTO postFactureWithFile(FactureTemp factureTemp);
+    FactureDTO postFacture(FactureTemp factureTemp);
 
     List<FactureDTO> findAllBySocieteId(Long id);
 
@@ -51,5 +51,7 @@ public interface FactureService {
     List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id);
 
     List<FactureDTO> findAllInvoicesByStatement(Long idReleve);
+
+    Long getLastNumFact(Long id);
 
 }

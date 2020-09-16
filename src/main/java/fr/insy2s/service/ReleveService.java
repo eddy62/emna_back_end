@@ -41,18 +41,38 @@ public interface ReleveService {
      * @param id the id of the entity.
      */
     void delete(Long id);
-    List <ReleveDTO> findAllBySocieteId(Long id);
-    List <ReleveDTO> findAllByEtatReleveId(Long id);
-    List <ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat,Long idSociete);
+
+    List<ReleveDTO> findAllBySocieteId(Long id);
+
+    List<ReleveDTO> findAllByEtatReleveId(Long id);
+
+    List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete);
+
+    Optional<BigDecimal> getReleveSoldeById(Long id);
+
+    /**
+     * Checked permission for the releve
+     *
+     * @param idReleve the id of the releve.
+     * @param loginCurrentUser the login of the user.
+     * @return boolean
+     */
+    boolean hasPermissionForThisReleve(Long idReleve, String loginCurrentUser);
+
+    /**
+     * checked solde Invoices equals solde statements
+     *
+     * @param idReleve the id of the releve.
+     * @return boolean
+     */
+    boolean balanceOperationsEqualsInvoices(Long idReleve);
 
     /**
      * Validate the "id" releve.
      *
-     * @param id the id of the entity.
+     * @param idReleve the id of the statement.
+     * @param idEtat the id of statut.
+     * @return Integer.
      */
-    boolean validateReleve(Long id);
-
-    Optional<BigDecimal> getReleveSoldeById(Long id);
-
-    boolean checkPermissionForThisReleve(Long idReleve, String loginCurrentUser);
+    boolean changeStatutStatement(Long idReleve, Long idEtat);
 }

@@ -1,6 +1,7 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.FactureService;
+import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -120,13 +121,13 @@ public class FactureResource {
     @PostMapping("/facture/new")
     public ResponseEntity<FactureDTO> createFactureForSociete(@ModelAttribute FactureTemp factureTemp) throws URISyntaxException, IOException {
         log.debug("REST request to save Facture : {}", factureTemp);
-        FactureDTO result = factureService.postFactureWithFile(factureTemp);
+        FactureDTO result = factureService.postFacture(factureTemp);
         return ResponseEntity.created(new URI("/api/factures/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    @GetMapping("/facturesvente/societe/{id}")
+    @GetMapping("/factures/societe/{id}")
     public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
         return factureService.findAllWrapperVenteBySocieteId(id);
@@ -135,7 +136,7 @@ public class FactureResource {
     /**
      * {@code GET  /factures/relevé/:id} : get all the factures in statement id.
      *
-     * @param id the id of the statement concerned
+     * @param idReleve id of the statement concerned
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
      */
     @GetMapping("/factures/relevé/{idReleve}")
@@ -143,5 +144,12 @@ public class FactureResource {
         log.debug("REST request to get all invoices of the statement concerned : {}", idReleve);
         return factureService.findAllInvoicesByStatement(idReleve);
     }
+
+    @GetMapping("/facture/lastnumfact/{id}")
+    public Long getLastNumFact(@PathVariable Long id) {
+        log.debug("REST request to get Facture : {}", id);
+        return factureService.getLastNumFact(id);
+    }
+
 
 }

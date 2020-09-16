@@ -66,6 +66,9 @@ export const Document = (props: IDocumentProps) => {
                 <th>
                   <Translate contentKey="emnaBackEndApp.document.employe">Employe</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.depense">Depense</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -95,6 +98,7 @@ export const Document = (props: IDocumentProps) => {
                   <td>{document.releveId ? <Link to={`releve/${document.releveId}`}>{document.releveId}</Link> : ''}</td>
                   <td>{document.contratId ? <Link to={`contrat/${document.contratId}`}>{document.contratId}</Link> : ''}</td>
                   <td>{document.employeId ? <Link to={`employe/${document.employeId}`}>{document.employeId}</Link> : ''}</td>
+                  <td>{document.depenseId ? <Link to={`depense/${document.depenseId}`}>{document.depenseId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${document.id}`} color="info" size="sm">

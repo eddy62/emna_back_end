@@ -1,0 +1,72 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "listeDocuments",
+      "otherEntityName": "document",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "depense"
+    },
+    {
+      "relationshipName": "societe",
+      "otherEntityName": "societe",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "depense"
+    },
+    {
+      "relationshipName": "operation",
+      "otherEntityName": "operation",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "depense"
+    },
+    {
+      "relationshipName": "clientFournisseur",
+      "otherEntityName": "clientFournisseur",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "depense"
+    },
+    {
+      "relationshipName": "etatDepense",
+      "otherEntityName": "etatDepense",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "depense"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "prix",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "moyenDePaiement",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "raison",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20200911003413",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "depense",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no"
+}
