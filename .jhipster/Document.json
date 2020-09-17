@@ -65,11 +65,11 @@
       "otherEntityField": "id"
     },
     {
-      "relationshipName": "depense",
-      "otherEntityName": "depense",
       "relationshipType": "many-to-one",
-      "otherEntityField": "id",
-      "otherEntityRelationshipName": "document"
+      "otherEntityName": "depense",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "depense",
+      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20200810074300",
