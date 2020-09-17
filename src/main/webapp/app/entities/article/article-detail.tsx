@@ -26,53 +26,23 @@ export const ArticleDetail = (props: IArticleDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
-            <span id="reference">
-              <Translate contentKey="emnaBackEndApp.article.reference">Reference</Translate>
-            </span>
-          </dt>
-          <dd>{articleEntity.reference}</dd>
-          <dt>
             <span id="titre">
               <Translate contentKey="emnaBackEndApp.article.titre">Titre</Translate>
             </span>
           </dt>
           <dd>{articleEntity.titre}</dd>
           <dt>
+            <span id="intitule">
+              <Translate contentKey="emnaBackEndApp.article.intitule">Intitule</Translate>
+            </span>
+          </dt>
+          <dd>{articleEntity.intitule}</dd>
+          <dt>
             <span id="description">
               <Translate contentKey="emnaBackEndApp.article.description">Description</Translate>
             </span>
           </dt>
           <dd>{articleEntity.description}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.article.listeAvenants">Liste Avenants</Translate>
-          </dt>
-          <dd>
-            {articleEntity.listeAvenants
-              ? articleEntity.listeAvenants.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {articleEntity.listeAvenants && i === articleEntity.listeAvenants.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.article.listeContrats">Liste Contrats</Translate>
-          </dt>
-          <dd>
-            {articleEntity.listeContrats
-              ? articleEntity.listeContrats.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {articleEntity.listeContrats && i === articleEntity.listeContrats.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.article.societe">Societe</Translate>
-          </dt>
-          <dd>{articleEntity.societeId ? articleEntity.societeId : ''}</dd>
         </dl>
         <Button tag={Link} to="/article" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

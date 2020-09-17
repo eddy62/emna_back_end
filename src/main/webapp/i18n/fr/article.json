@@ -16,13 +16,9 @@
       "detail": {
         "title": "Article"
       },
-      "reference": "Reference",
       "titre": "Titre",
-      "description": "Description",
-      "listeClauses": "Liste Clauses",
-      "listeAvenants": "Liste Avenants",
-      "listeContrats": "Liste Contrats",
-      "societe": "Societe"
+      "intitule": "Intitule",
+      "description": "Description"
     }
   }
 }

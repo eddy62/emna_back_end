@@ -51,9 +51,6 @@ export const Clause = (props: IClauseProps) => {
                 <th>
                   <Translate contentKey="emnaBackEndApp.clause.societe">Societe</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.clause.article">Article</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -88,7 +85,6 @@ export const Clause = (props: IClauseProps) => {
                       : null}
                   </td>
                   <td>{clause.societeId ? <Link to={`societe/${clause.societeId}`}>{clause.societeId}</Link> : ''}</td>
-                  <td>{clause.articleId ? <Link to={`article/${clause.articleId}`}>{clause.articleId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${clause.id}`} color="info" size="sm">

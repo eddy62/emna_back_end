@@ -8,7 +8,6 @@ export interface IClause {
   listeContrats?: IContrat[];
   listeAvenants?: IAvenant[];
   societeId?: number;
-  articleId?: number;
 }
 
 export const defaultValue: Readonly<IClause> = {};

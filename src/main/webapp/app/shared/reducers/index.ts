@@ -152,6 +152,10 @@ import depense, {
 import etatDepense, {
   EtatDepenseState
 } from 'app/entities/etat-depense/etat-depense.reducer';
+// prettier-ignore
+import saisieArticle, {
+  SaisieArticleState
+} from 'app/entities/saisie-article/saisie-article.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -200,6 +204,7 @@ export interface IRootState {
   readonly dpae: DpaeState;
   readonly depense: DepenseState;
   readonly etatDepense: EtatDepenseState;
+  readonly saisieArticle: SaisieArticleState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -250,8 +255,9 @@ const rootReducer = combineReducers<IRootState>({
   dpae,
   depense,
   etatDepense,
+  saisieArticle,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
-  loadingBar
+  loadingBar,
 });
 
 export default rootReducer;

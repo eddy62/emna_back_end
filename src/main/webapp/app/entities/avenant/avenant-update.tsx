@@ -9,8 +9,6 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IContrat } from 'app/shared/model/contrat.model';
 import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
-import { IArticle } from 'app/shared/model/article.model';
-import { getEntities as getArticles } from 'app/entities/article/article.reducer';
 import { IClause } from 'app/shared/model/clause.model';
 import { getEntities as getClauses } from 'app/entities/clause/clause.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './avenant.reducer';
@@ -22,11 +20,10 @@ export interface IAvenantUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export const AvenantUpdate = (props: IAvenantUpdateProps) => {
   const [contratId, setContratId] = useState('0');
-  const [listeArticlesId, setListeArticlesId] = useState('0');
   const [listeClausesId, setListeClausesId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { avenantEntity, contrats, articles, clauses, loading, updating } = props;
+  const { avenantEntity, contrats, clauses, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/avenant');
@@ -40,7 +37,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
     }
 
     props.getContrats();
-    props.getArticles();
     props.getClauses();
   }, []);
 
@@ -145,7 +141,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   contrats: storeState.contrat.entities,
-  articles: storeState.article.entities,
   clauses: storeState.clause.entities,
   avenantEntity: storeState.avenant.entity,
   loading: storeState.avenant.loading,
@@ -155,7 +150,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getContrats,
-  getArticles,
   getClauses,
   getEntity,
   updateEntity,

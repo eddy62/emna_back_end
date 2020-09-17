@@ -24,9 +24,6 @@
             <column name="societe_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="article_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

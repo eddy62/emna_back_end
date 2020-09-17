@@ -49,6 +49,7 @@
     <include file="config/liquibase/changelog/20200825151204_added_entity_Dpae.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200911003413_added_entity_Depense.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200911004441_added_entity_EtatDepense.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200917145053_added_entity_SaisieArticle.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20200722090504_added_entity_constraints_Facture.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200722090604_added_entity_constraints_ClientFournisseur.xml" relativeToChangelogFile="false"/>
@@ -74,5 +75,6 @@
     <include file="config/liquibase/changelog/20200825151104_added_entity_constraints_AvanceRappelSalaire.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200825151204_added_entity_constraints_Dpae.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200911003413_added_entity_constraints_Depense.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200917145053_added_entity_constraints_SaisieArticle.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

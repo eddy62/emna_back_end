@@ -1,0 +1,24 @@
+{
+  "emnaBackEndApp": {
+    "saisieArticle": {
+      "home": {
+        "title": "SaisieArticles",
+        "createLabel": "Créer un nouveau Saisie Article",
+        "createOrEditLabel": "Créer ou éditer un Saisie Article",
+        "notFound": "Aucun Saisie Article trouvé"
+      },
+      "created": "Un nouveau Saisie Article a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Saisie Article avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Saisie Article avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Saisie Article {{ id }} ?"
+      },
+      "detail": {
+        "title": "Saisie Article"
+      },
+      "libelle": "Libelle",
+      "article": "Article",
+      "contrat": "Contrat"
+    }
+  }
+}

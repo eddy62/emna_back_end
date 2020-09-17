@@ -12,7 +12,7 @@ export const ACTION_TYPES = {
   CREATE_CLAUSE: 'clause/CREATE_CLAUSE',
   UPDATE_CLAUSE: 'clause/UPDATE_CLAUSE',
   DELETE_CLAUSE: 'clause/DELETE_CLAUSE',
-  RESET: 'clause/RESET'
+  RESET: 'clause/RESET',
 };
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IClause>,
   entity: defaultValue,
   updating: false,
-  updateSuccess: false
+  updateSuccess: false,
 };
 
 export type ClauseState = Readonly<typeof initialState>;
@@ -36,7 +36,7 @@ export default (state: ClauseState = initialState, action): ClauseState => {
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        loading: true
+        loading: true,
       };
     case REQUEST(ACTION_TYPES.CREATE_CLAUSE):
     case REQUEST(ACTION_TYPES.UPDATE_CLAUSE):
@@ -45,7 +45,7 @@ export default (state: ClauseState = initialState, action): ClauseState => {
         ...state,
         errorMessage: null,
         updateSuccess: false,
-        updating: true
+        updating: true,
       };
     case FAILURE(ACTION_TYPES.FETCH_CLAUSE_LIST):
     case FAILURE(ACTION_TYPES.FETCH_CLAUSE):
@@ -57,19 +57,19 @@ export default (state: ClauseState = initialState, action): ClauseState => {
         loading: false,
         updating: false,
         updateSuccess: false,
-        errorMessage: action.payload
+        errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.FETCH_CLAUSE_LIST):
       return {
         ...state,
         loading: false,
-        entities: action.payload.data
+        entities: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.FETCH_CLAUSE):
       return {
         ...state,
         loading: false,
-        entity: action.payload.data
+        entity: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.CREATE_CLAUSE):
     case SUCCESS(ACTION_TYPES.UPDATE_CLAUSE):
@@ -77,18 +77,18 @@ export default (state: ClauseState = initialState, action): ClauseState => {
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: action.payload.data
+        entity: action.payload.data,
       };
     case SUCCESS(ACTION_TYPES.DELETE_CLAUSE):
       return {
         ...state,
         updating: false,
         updateSuccess: true,
-        entity: {}
+        entity: {},
       };
     case ACTION_TYPES.RESET:
       return {
-        ...initialState
+        ...initialState,
       };
     default:
       return state;
@@ -101,21 +101,21 @@ const apiUrl = 'api/clauses';
 
 export const getEntities: ICrudGetAllAction<IClause> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_CLAUSE_LIST,
-  payload: axios.get<IClause>(`${apiUrl}?cacheBuster=${new Date().getTime()}`)
+  payload: axios.get<IClause>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
 });
 
 export const getEntity: ICrudGetAction<IClause> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_CLAUSE,
-    payload: axios.get<IClause>(requestUrl)
+    payload: axios.get<IClause>(requestUrl),
   };
 };
 
 export const createEntity: ICrudPutAction<IClause> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_CLAUSE,
-    payload: axios.post(apiUrl, cleanEntity(entity))
+    payload: axios.post(apiUrl, cleanEntity(entity)),
   });
   dispatch(getEntities());
   return result;
@@ -124,7 +124,7 @@ export const createEntity: ICrudPutAction<IClause> = entity => async dispatch =>
 export const updateEntity: ICrudPutAction<IClause> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_CLAUSE,
-    payload: axios.put(apiUrl, cleanEntity(entity))
+    payload: axios.put(apiUrl, cleanEntity(entity)),
   });
   return result;
 };
@@ -133,12 +133,12 @@ export const deleteEntity: ICrudDeleteAction<IClause> = id => async dispatch => 
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({
     type: ACTION_TYPES.DELETE_CLAUSE,
-    payload: axios.delete(requestUrl)
+    payload: axios.delete(requestUrl),
   });
   dispatch(getEntities());
   return result;
 };
 
 export const reset = () => ({
-  type: ACTION_TYPES.RESET
+  type: ACTION_TYPES.RESET,
 });

@@ -11,8 +11,6 @@ import { IEmploye } from 'app/shared/model/employe.model';
 import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
 import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { IArticle } from 'app/shared/model/article.model';
-import { getEntities as getArticles } from 'app/entities/article/article.reducer';
 import { IClause } from 'app/shared/model/clause.model';
 import { getEntities as getClauses } from 'app/entities/clause/clause.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './contrat.reducer';
@@ -25,11 +23,10 @@ export interface IContratUpdateProps extends StateProps, DispatchProps, RouteCom
 export const ContratUpdate = (props: IContratUpdateProps) => {
   const [employeId, setEmployeId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
-  const [listeArticlesId, setListeArticlesId] = useState('0');
   const [listeClausesId, setListeClausesId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { contratEntity, employes, societes, articles, clauses, loading, updating } = props;
+  const { contratEntity, employes, societes, clauses, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/contrat');
@@ -44,7 +41,6 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
 
     props.getEmployes();
     props.getSocietes();
-    props.getArticles();
     props.getClauses();
   }, []);
 
@@ -58,7 +54,7 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
     if (errors.length === 0) {
       const entity = {
         ...contratEntity,
-        ...values
+        ...values,
       };
 
       if (isNew) {
@@ -101,7 +97,7 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
                   type="text"
                   name="titre"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -115,7 +111,7 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
                   className="form-control"
                   name="dateCreation"
                   validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') }
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
@@ -185,23 +181,21 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   employes: storeState.employe.entities,
   societes: storeState.societe.entities,
-  articles: storeState.article.entities,
   clauses: storeState.clause.entities,
   contratEntity: storeState.contrat.entity,
   loading: storeState.contrat.loading,
   updating: storeState.contrat.updating,
-  updateSuccess: storeState.contrat.updateSuccess
+  updateSuccess: storeState.contrat.updateSuccess,
 });
 
 const mapDispatchToProps = {
   getEmployes,
   getSocietes,
-  getArticles,
   getClauses,
   getEntity,
   updateEntity,
   createEntity,
-  reset
+  reset,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
