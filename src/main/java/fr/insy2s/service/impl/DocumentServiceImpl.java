@@ -126,4 +126,48 @@ public class DocumentServiceImpl implements DocumentService {
         return document;
     }
 
+    /**
+     * Get all the documents by "id" Absence.
+     *
+     * @return the list of entities.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<DocumentDTO> findAllByAbsenceId(Long id) {
+        log.debug("Request to get all Documents by Absence id");
+        return documentRepository.findAllByAbsenceId(id).stream()
+            .map(documentMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get all the documents by "id" Note de Frais.
+     *
+     * @return the list of entities.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<DocumentDTO> findAllByNoteDeFraisId(Long id) {
+        log.debug("Request to get all Documents by Note de Frais id");
+        return documentRepository.findAllByNoteDeFraisId(id).stream()
+            .map(documentMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get all the documents by "id" Autre.
+     *
+     * @return the list of entities.
+     */
+/*
+    @Override
+    @Transactional(readOnly = true)
+    public List<DocumentDTO> findAllByAutresVariableId(Long id) {
+        log.debug("Request to get all Documents by Autre id");
+        return documentRepository.findAllByAutresVariableId(id).stream()
+            .map(documentMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+*/
+
 }
