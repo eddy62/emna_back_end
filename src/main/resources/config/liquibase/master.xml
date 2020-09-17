@@ -60,7 +60,6 @@
     <include file="config/liquibase/changelog/20200722091204_added_entity_constraints_Contrat.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200722091304_added_entity_constraints_Avenant.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200722091404_added_entity_constraints_Clause.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20200722091504_added_entity_constraints_Article.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200722091704_added_entity_constraints_Employe.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200722091904_added_entity_constraints_Absence.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200722092104_added_entity_constraints_Prime.xml" relativeToChangelogFile="false"/>
