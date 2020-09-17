@@ -40,4 +40,12 @@ public interface DevisService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get all quotes by society id.
+     *
+     * @param idSociete the id of the society.
+     * @return the list of entities
+     */
+    List<DevisDTO> findAllQuotesBySocietyId(Long idSociete);
 }
