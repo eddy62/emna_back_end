@@ -1,6 +1,9 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
+import fr.insy2s.service.*;
+import fr.insy2s.service.mapper.WrapperAbsenceMapper;
+import fr.insy2s.service.mapper.WrapperPrimeMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -24,7 +27,16 @@ public class VariableDePaieResourceIT {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        VariableDePaieResource variableDePaieResource = new VariableDePaieResource();
+        VariableDePaieService variableDePaieService = null;
+        AbsenceService absenceService = null;
+        WrapperAbsenceMapper wrapperAbsenceMapper = null;
+        AutresVariableService autresVariableService = null;
+        AvanceRappelSalaireService avanceRappelSalaireService = null;
+        HeuresSupplementairesService heuresSupplementairesService = null;
+        NoteDeFraisService noteDeFraisService = null;
+        PrimeService primeService = null;
+        WrapperPrimeMapper wrapperPrimeMapper = null;
+        VariableDePaieResource variableDePaieResource = new VariableDePaieResource(variableDePaieService, absenceService, wrapperAbsenceMapper, autresVariableService, avanceRappelSalaireService, heuresSupplementairesService, noteDeFraisService, primeService, wrapperPrimeMapper);
         restMockMvc = MockMvcBuilders
             .standaloneSetup(variableDePaieResource)
             .build();
