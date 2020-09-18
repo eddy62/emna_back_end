@@ -42,11 +42,6 @@ public class Avenant implements Serializable {
     @ManyToMany(mappedBy = "listeAvenants")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnore
-    private Set<Article> listeArticles = new HashSet<>();
-
-    @ManyToMany(mappedBy = "listeAvenants")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
     private Set<Clause> listeClauses = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -95,31 +90,6 @@ public class Avenant implements Serializable {
 
     public void setContrat(Contrat contrat) {
         this.contrat = contrat;
-    }
-
-    public Set<Article> getListeArticles() {
-        return listeArticles;
-    }
-
-    public Avenant listeArticles(Set<Article> articles) {
-        this.listeArticles = articles;
-        return this;
-    }
-
-    public Avenant addListeArticles(Article article) {
-        this.listeArticles.add(article);
-        article.getListeAvenants().add(this);
-        return this;
-    }
-
-    public Avenant removeListeArticles(Article article) {
-        this.listeArticles.remove(article);
-        article.getListeAvenants().remove(this);
-        return this;
-    }
-
-    public void setListeArticles(Set<Article> articles) {
-        this.listeArticles = articles;
     }
 
     public Set<Clause> getListeClauses() {

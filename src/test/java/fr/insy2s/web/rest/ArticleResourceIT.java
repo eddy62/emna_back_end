@@ -9,25 +9,18 @@ import fr.insy2s.service.mapper.ArticleMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,16 +28,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ArticleResource} REST controller.
  */
 @SpringBootTest(classes = EmnaBackEndApp.class)
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class ArticleResourceIT {
 
-    private static final String DEFAULT_REFERENCE = "AAAAAAAAAA";
-    private static final String UPDATED_REFERENCE = "BBBBBBBBBB";
-
     private static final String DEFAULT_TITRE = "AAAAAAAAAA";
     private static final String UPDATED_TITRE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_INTITULE = "AAAAAAAAAA";
+    private static final String UPDATED_INTITULE = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -52,14 +44,8 @@ public class ArticleResourceIT {
     @Autowired
     private ArticleRepository articleRepository;
 
-    @Mock
-    private ArticleRepository articleRepositoryMock;
-
     @Autowired
     private ArticleMapper articleMapper;
-
-    @Mock
-    private ArticleService articleServiceMock;
 
     @Autowired
     private ArticleService articleService;
@@ -80,8 +66,8 @@ public class ArticleResourceIT {
      */
     public static Article createEntity(EntityManager em) {
         Article article = new Article()
-            .reference(DEFAULT_REFERENCE)
             .titre(DEFAULT_TITRE)
+            .intitule(DEFAULT_INTITULE)
             .description(DEFAULT_DESCRIPTION);
         return article;
     }
@@ -93,8 +79,8 @@ public class ArticleResourceIT {
      */
     public static Article createUpdatedEntity(EntityManager em) {
         Article article = new Article()
-            .reference(UPDATED_REFERENCE)
             .titre(UPDATED_TITRE)
+            .intitule(UPDATED_INTITULE)
             .description(UPDATED_DESCRIPTION);
         return article;
     }
@@ -119,8 +105,8 @@ public class ArticleResourceIT {
         List<Article> articleList = articleRepository.findAll();
         assertThat(articleList).hasSize(databaseSizeBeforeCreate + 1);
         Article testArticle = articleList.get(articleList.size() - 1);
-        assertThat(testArticle.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testArticle.getTitre()).isEqualTo(DEFAULT_TITRE);
+        assertThat(testArticle.getIntitule()).isEqualTo(DEFAULT_INTITULE);
         assertThat(testArticle.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
@@ -147,10 +133,10 @@ public class ArticleResourceIT {
 
     @Test
     @Transactional
-    public void checkReferenceIsRequired() throws Exception {
+    public void checkTitreIsRequired() throws Exception {
         int databaseSizeBeforeTest = articleRepository.findAll().size();
         // set the field null
-        article.setReference(null);
+        article.setTitre(null);
 
         // Create the Article, which fails.
         ArticleDTO articleDTO = articleMapper.toDto(article);
@@ -167,10 +153,10 @@ public class ArticleResourceIT {
 
     @Test
     @Transactional
-    public void checkTitreIsRequired() throws Exception {
+    public void checkIntituleIsRequired() throws Exception {
         int databaseSizeBeforeTest = articleRepository.findAll().size();
         // set the field null
-        article.setTitre(null);
+        article.setIntitule(null);
 
         // Create the Article, which fails.
         ArticleDTO articleDTO = articleMapper.toDto(article);
@@ -216,31 +202,11 @@ public class ArticleResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(article.getId().intValue())))
-            .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE)))
             .andExpect(jsonPath("$.[*].titre").value(hasItem(DEFAULT_TITRE)))
+            .andExpect(jsonPath("$.[*].intitule").value(hasItem(DEFAULT_INTITULE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
     
-    @SuppressWarnings({"unchecked"})
-    public void getAllArticlesWithEagerRelationshipsIsEnabled() throws Exception {
-        when(articleServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restArticleMockMvc.perform(get("/api/articles?eagerload=true"))
-            .andExpect(status().isOk());
-
-        verify(articleServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAllArticlesWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(articleServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restArticleMockMvc.perform(get("/api/articles?eagerload=true"))
-            .andExpect(status().isOk());
-
-        verify(articleServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
     @Test
     @Transactional
     public void getArticle() throws Exception {
@@ -252,8 +218,8 @@ public class ArticleResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(article.getId().intValue()))
-            .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE))
             .andExpect(jsonPath("$.titre").value(DEFAULT_TITRE))
+            .andExpect(jsonPath("$.intitule").value(DEFAULT_INTITULE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
     @Test
@@ -277,8 +243,8 @@ public class ArticleResourceIT {
         // Disconnect from session so that the updates on updatedArticle are not directly saved in db
         em.detach(updatedArticle);
         updatedArticle
-            .reference(UPDATED_REFERENCE)
             .titre(UPDATED_TITRE)
+            .intitule(UPDATED_INTITULE)
             .description(UPDATED_DESCRIPTION);
         ArticleDTO articleDTO = articleMapper.toDto(updatedArticle);
 
@@ -291,8 +257,8 @@ public class ArticleResourceIT {
         List<Article> articleList = articleRepository.findAll();
         assertThat(articleList).hasSize(databaseSizeBeforeUpdate);
         Article testArticle = articleList.get(articleList.size() - 1);
-        assertThat(testArticle.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testArticle.getTitre()).isEqualTo(UPDATED_TITRE);
+        assertThat(testArticle.getIntitule()).isEqualTo(UPDATED_INTITULE);
         assertThat(testArticle.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 

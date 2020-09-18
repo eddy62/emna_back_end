@@ -123,6 +123,7 @@ public class CacheConfiguration {
             createCache(cm, fr.insy2s.domain.Depense.class.getName() + ".listeDocuments");
             createCache(cm, fr.insy2s.domain.Depense.class.getName() + ".as");
             createCache(cm, fr.insy2s.domain.EtatDepense.class.getName());
+            createCache(cm, fr.insy2s.domain.SaisieArticle.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
