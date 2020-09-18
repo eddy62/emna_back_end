@@ -19,5 +19,6 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
     List<Document> findAllByNoteDeFraisId(@Param(value = "id") Long id);
 
-    //List<Document> findAllByAutresVariableId(@Param(value = "id") Long id);
+    @Query(value="SELECT d FROM Document d where d.absence.id=:id")
+    List<Document> findAllByAutresVariableId(@Param(value = "id") Long id);
 }

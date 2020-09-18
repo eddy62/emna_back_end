@@ -144,9 +144,9 @@ public class DocumentResource {
      * @param id the id of Autre.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
      */
-    /*@GetMapping("/documentsAutre/{id}")
-    public List<DocumentDTO> getDocumentsByAutreId(@PathVariable Long id) {
+    @GetMapping("/documentsAutre/{id}")
+    public List<DocumentDTO> getDocumentsByAutresVariableId(@PathVariable Long id) {
         log.debug("REST request to get all Documents by Autre id");
         return documentService.findAllByAutresVariableId(id);
-    }*/
+    }
 }

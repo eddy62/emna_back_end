@@ -159,7 +159,6 @@ public class DocumentServiceImpl implements DocumentService {
      *
      * @return the list of entities.
      */
-/*
     @Override
     @Transactional(readOnly = true)
     public List<DocumentDTO> findAllByAutresVariableId(Long id) {
@@ -168,6 +167,6 @@ public class DocumentServiceImpl implements DocumentService {
             .map(documentMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
-*/
+
 
 }
