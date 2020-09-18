@@ -28,8 +28,6 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
 
     private final Logger log = LoggerFactory.getLogger(VariableDePaieServiceImpl.class);
 
-    /* Variables de Paie */
-
     private final AbsenceRepository                 absenceRepository;
     private final AbsenceMapper                     absenceMapper;
     private final TypeAbsenceMapper                 typeAbsenceMapper;
@@ -46,8 +44,7 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
     private final TypePrimeMapper                   typePrimeMapper;
 
 
-    public VariableDePaieServiceImpl(
-                                     AbsenceRepository absenceRepository,
+    public VariableDePaieServiceImpl(AbsenceRepository absenceRepository,
                                      AbsenceMapper absenceMapper,
                                      TypeAbsenceMapper typeAbsenceMapper,
                                      AutresVariableRepository autresVariableRepository,
