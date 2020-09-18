@@ -45,7 +45,7 @@ public interface EmployeService {
     void delete(Long id);
 
 
-    List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id);
+//    List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id);
 
     /**
      * Get all the WrapperEmploye

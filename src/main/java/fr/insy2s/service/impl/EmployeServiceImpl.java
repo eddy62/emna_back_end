@@ -372,10 +372,10 @@ public class EmployeServiceImpl implements EmployeService {
         return false;
     }
 
-    @Override
-    public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
-        return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
-    }
+//    @Override
+//    public List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id) {
+//        return this.employeRepository.getAllEmployeArticleClauseBySocieteId(id);
+//    }
 
     @Override
     public WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
