@@ -307,13 +307,16 @@ relationship OneToMany{
     Devis{listeLigneProduit} to LigneProduit{devis} 
 
 	Depense{listeDocuments} to Document{depense}
-	Societe{listeDepenses} to Depense{societe}
-	Operation{listeDepenses} to Depense{operation}
-	ClientFournisseur{listeClientsFournisseurs} to Depense{clientFournisseur}
+	
+	
+	
 }
 
 relationship ManyToOne{
-	Absence{typeAbsence required} to TypeAbsence
+    Depense{societe} to Societe
+    Depense{operation} to Operation
+    Depense{clientFournisseur} to ClientFournisseur
+    Absence{typeAbsence required} to TypeAbsence
     Prime{typePrime required} to TypePrime
     Employe{statutEmploye required} to StatutEmploye
 	Depense{etatDepense} to EtatDepense

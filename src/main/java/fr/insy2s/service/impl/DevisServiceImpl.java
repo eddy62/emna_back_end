@@ -65,4 +65,13 @@ public class DevisServiceImpl implements DevisService {
         log.debug("Request to delete Devis : {}", id);
         devisRepository.deleteById(id);
     }
+
+    @Override
+    public List<DevisDTO> findAllQuotesBySocietyId(Long idSociete) {
+        log.debug("Request to get all the quotes by society id: {}", idSociete);
+        return this.devisRepository.findAllQuotesBySocietyId(idSociete)
+            .stream()
+            .map(devisMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 }

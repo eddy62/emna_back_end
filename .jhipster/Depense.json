@@ -3,38 +3,38 @@
   "clientRootFolder": "",
   "relationships": [
     {
-      "relationshipName": "listeDocuments",
-      "otherEntityName": "document",
       "relationshipType": "one-to-many",
-      "otherEntityRelationshipName": "depense"
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "depense",
+      "relationshipName": "listeDocuments"
     },
     {
-      "relationshipName": "societe",
+      "relationshipType": "many-to-one",
       "otherEntityName": "societe",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "id",
-      "otherEntityRelationshipName": "depense"
+      "otherEntityRelationshipName": "depense",
+      "relationshipName": "societe",
+      "otherEntityField": "id"
     },
     {
-      "relationshipName": "operation",
+      "relationshipType": "many-to-one",
       "otherEntityName": "operation",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "id",
-      "otherEntityRelationshipName": "depense"
+      "otherEntityRelationshipName": "depense",
+      "relationshipName": "operation",
+      "otherEntityField": "id"
     },
     {
-      "relationshipName": "clientFournisseur",
+      "relationshipType": "many-to-one",
       "otherEntityName": "clientFournisseur",
-      "relationshipType": "many-to-one",
-      "otherEntityField": "id",
-      "otherEntityRelationshipName": "depense"
+      "otherEntityRelationshipName": "depense",
+      "relationshipName": "clientFournisseur",
+      "otherEntityField": "id"
     },
     {
-      "relationshipName": "etatDepense",
-      "otherEntityName": "etatDepense",
       "relationshipType": "many-to-one",
-      "otherEntityField": "id",
-      "otherEntityRelationshipName": "depense"
+      "otherEntityName": "etatDepense",
+      "otherEntityRelationshipName": "depense",
+      "relationshipName": "etatDepense",
+      "otherEntityField": "id"
     }
   ],
   "fields": [
@@ -68,5 +68,8 @@
   "databaseType": "sql",
   "readOnly": false,
   "jpaMetamodelFiltering": false,
-  "pagination": "no"
+  "pagination": "no",
+  "name": "Depense",
+  "embedded": false,
+  "applications": "*"
 }

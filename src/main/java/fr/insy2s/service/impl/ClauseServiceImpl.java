@@ -106,7 +106,7 @@ public class ClauseServiceImpl implements ClauseService {
 
     @Override
     public List<ClauseDTO> findAllClausesBySocietyId(Long idSociete) {
-        log.debug("Request to get all Factures for the statement concerned: {}", idSociete);
+        log.debug("Request to get all the clauses by society id: {}", idSociete);
         return this.clauseRepository.findAllClausesBySocietyId(idSociete)
             .stream()
             .map(clauseMapper::toDto)

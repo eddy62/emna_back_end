@@ -113,4 +113,16 @@ public class DevisResource {
         devisService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET /devis/societe/:id} : get all the quotes by society id.
+     *
+     * @param idSociete the id of the society
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of quotes in body.
+     */
+    @GetMapping("/devis/societe/{idSociete}")
+    public List<DevisDTO> getAllQuotesBySocietyId(@PathVariable Long idSociete) {
+        log.debug("REST request to get all quotes of a society");
+        return devisService.findAllQuotesBySocietyId(idSociete);
+    }
 }
