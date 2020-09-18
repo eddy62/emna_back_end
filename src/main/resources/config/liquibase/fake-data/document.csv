@@ -1,11 +1,6 @@
 id;chemin_fichier;type;nom
-1;invoice infomediaries;target Fantastic Universal;Mountain
-2;viral hacking parse;neural El Salvador Colon US Dollar;Maine hacking
-3;Automotive azure Auto Loan Account;hacking Aruban Guilder grey;pricing structure
-4;hard drive;Down-sized fault-tolerant Rustic;program teal Distributed
-5;Human Multi-tiered;payment sensor maximize;Operations Money Market Account
-6;copy;Steel back up envisioneer;bi-directional
-7;Response Games Generic Fresh Cheese;Borders Tactics payment;orchid Savings Account Pataca
-8;array microchip;Gorgeous Soft Tuna Beauty;Shoes Health COM
-9;primary;Nevada Checking Account Chief;payment Checking Account
-10;dynamic;Mozambique;mesh
+1;./fichiers/absence_1_1.pdf;absence de 1 jour;absence_1_1.pdf
+2;./fichiers/absence_1_2.pdf;absence non-justifiée;absence_1_2.pdf
+3;./fichiers/note_de_frais_1_1.pdf;ticket péage;note_de_frais_1_1.pdf
+4;./fichiers/autres_variables_1_1.pdf;inclassable;autres_variables_1_1.pdf
+
