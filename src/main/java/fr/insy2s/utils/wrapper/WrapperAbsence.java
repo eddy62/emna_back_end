@@ -1,9 +1,11 @@
 package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.service.dto.AbsenceDTO;
+import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.TypeAbsenceDTO;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,6 +31,9 @@ public class WrapperAbsence {
     private String codeRef;
     private String intitule;
 
+    // Documents
+    private List<DocumentDTO> documentDTOList;
+
     /**
      * Constructeur WrapperAbsence par défaut
      *
@@ -43,7 +48,7 @@ public class WrapperAbsence {
      * @param absenceDTO
      * @param typeAbsenceDTO
      */
-    public  WrapperAbsence(AbsenceDTO absenceDTO, TypeAbsenceDTO typeAbsenceDTO){
+    public  WrapperAbsence(AbsenceDTO absenceDTO, TypeAbsenceDTO typeAbsenceDTO, List<DocumentDTO> documentDTOList){
 
         super();
         // Absence
@@ -61,6 +66,10 @@ public class WrapperAbsence {
         this.idTypeAbsence = typeAbsenceDTO.getId();
         this.codeRef = typeAbsenceDTO.getCodeRef();
         this.intitule = typeAbsenceDTO.getIntitule();
+
+        // Documents
+        this.documentDTOList = documentDTOList;
+
 
     }
 
@@ -160,6 +169,14 @@ public class WrapperAbsence {
 
     public void setIntitule(String intitule) {
         this.intitule = intitule;
+    }
+
+    public List<DocumentDTO> getDocumentDTOList() {
+        return documentDTOList;
+    }
+
+    public void setDocumentDTOList(List<DocumentDTO> documentDTOList) {
+        this.documentDTOList = documentDTOList;
     }
 
     @Override

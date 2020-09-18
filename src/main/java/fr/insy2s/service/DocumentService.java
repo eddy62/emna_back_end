@@ -66,5 +66,5 @@ public interface DocumentService {
      *
      * @return the list of entities.
      */
-    //List<DocumentDTO> findAllByAutresVariableId(Long id);
+    List<DocumentDTO> findAllByAutresVariablesId(Long id);
 }

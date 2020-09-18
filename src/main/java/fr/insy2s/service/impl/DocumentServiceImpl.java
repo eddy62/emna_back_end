@@ -1,13 +1,12 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.DocumentService;
 import fr.insy2s.domain.Document;
 import fr.insy2s.repository.DocumentRepository;
+import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.mapper.DocumentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -155,19 +154,17 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     /**
-     * Get all the documents by "id" Autre.
+     * Get all the documents by "id" Autres Variables.
      *
      * @return the list of entities.
      */
-/*
     @Override
     @Transactional(readOnly = true)
-    public List<DocumentDTO> findAllByAutresVariableId(Long id) {
+    public List<DocumentDTO> findAllByAutresVariablesId(Long id) {
         log.debug("Request to get all Documents by Autre id");
-        return documentRepository.findAllByAutresVariableId(id).stream()
+        return documentRepository.findAllByAutresVariablesId(id).stream()
             .map(documentMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
-*/
 
 }
