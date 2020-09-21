@@ -78,13 +78,16 @@ public class ArticleServiceImpl implements ArticleService {
         String articleToCompareNormalizedIntitule   = removeDiacriticalMarks(articleToCompare.getIntitule());
 
         return this.findAll().stream().anyMatch(article -> {
-            boolean isSameTitle = articleToCompareNormalizedTitle.equals(
-                removeDiacriticalMarks(article.getTitre())
-            );
-            boolean isSameIntitule  = articleToCompareNormalizedIntitule.equals(
-                removeDiacriticalMarks(article.getIntitule())
-            );
-            return isSameTitle || isSameIntitule;
+            if (!article.equals(articleToCompare)) {
+                boolean isSameTitle = articleToCompareNormalizedTitle.equals(
+                    removeDiacriticalMarks(article.getTitre())
+                );
+                boolean isSameIntitule = articleToCompareNormalizedIntitule.equals(
+                    removeDiacriticalMarks(article.getIntitule())
+                );
+                return isSameTitle || isSameIntitule;
+            }
+            return false;
         });
     }
 
