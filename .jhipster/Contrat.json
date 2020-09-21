@@ -50,14 +50,6 @@
     },
     {
       "relationshipType": "many-to-many",
-      "otherEntityName": "article",
-      "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "listeArticles",
-      "otherEntityField": "id",
-      "ownerSide": false
-    },
-    {
-      "relationshipType": "many-to-many",
       "otherEntityName": "clause",
       "otherEntityRelationshipName": "listeContrats",
       "relationshipName": "listeClauses",

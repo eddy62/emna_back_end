@@ -66,10 +66,6 @@ public class Societe implements Serializable {
 
     @OneToMany(mappedBy = "societe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Article> listeArticles = new HashSet<>();
-
-    @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Employe> listeEmployes = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
@@ -305,31 +301,6 @@ public class Societe implements Serializable {
 
     public void setListeClauses(Set<Clause> clauses) {
         this.listeClauses = clauses;
-    }
-
-    public Set<Article> getListeArticles() {
-        return listeArticles;
-    }
-
-    public Societe listeArticles(Set<Article> articles) {
-        this.listeArticles = articles;
-        return this;
-    }
-
-    public Societe addListeArticles(Article article) {
-        this.listeArticles.add(article);
-        article.setSociete(this);
-        return this;
-    }
-
-    public Societe removeListeArticles(Article article) {
-        this.listeArticles.remove(article);
-        article.setSociete(null);
-        return this;
-    }
-
-    public void setListeArticles(Set<Article> articles) {
-        this.listeArticles = articles;
     }
 
     public Set<Employe> getListeEmployes() {

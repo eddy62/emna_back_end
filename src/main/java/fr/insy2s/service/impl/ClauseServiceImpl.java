@@ -79,9 +79,9 @@ public class ClauseServiceImpl implements ClauseService {
         log.debug("Request to get Clause : {}", id);
         Clause clause = clauseRepository.findById(id).get();
         ClauseDTO clauseDto = new ClauseDTO();
-        if(clause.getArticle() != null) {
-            clauseDto.setArticleId(clause.getArticle().getId());
-        }
+//        if(clause.getArticle() != null) {
+//            clauseDto.setArticleId(clause.getArticle().getId());
+//        }
         clauseDto.setDescription(clause.getDescription());
         clauseDto.setId(clause.getId());
         Set<AvenantDTO> listAvenantDto = new HashSet<>();

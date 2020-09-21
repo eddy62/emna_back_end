@@ -67,10 +67,6 @@ export const ClauseDetail = (props: IClauseDetailProps) => {
             <Translate contentKey="emnaBackEndApp.clause.societe">Societe</Translate>
           </dt>
           <dd>{clauseEntity.societeId ? clauseEntity.societeId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.clause.article">Article</Translate>
-          </dt>
-          <dd>{clauseEntity.articleId ? clauseEntity.articleId : ''}</dd>
         </dl>
         <Button tag={Link} to="/clause" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

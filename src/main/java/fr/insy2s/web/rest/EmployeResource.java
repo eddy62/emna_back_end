@@ -119,7 +119,7 @@ public class EmployeResource {
         employeService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
-
+/*
     @GetMapping("/employer/article/clause/societe/{id}")
     public EmployeEtArticleVM getAllEmployeArticleClauseBySocieteId(@PathVariable Long id) {
         EmployeEtArticleVM employeEtArticleVM = new EmployeEtArticleVM();
@@ -186,7 +186,7 @@ public class EmployeResource {
         return employeEtArticleVM;
 
     }
-
+*/
     /**
      * {@code GET  /wrapperemployes} : get all the wrapperEmployes.
      *

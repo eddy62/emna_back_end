@@ -22,8 +22,6 @@ public interface ContratMapper extends EntityMapper<ContratDTO, Contrat> {
     @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "employeId", target = "employe")
     @Mapping(source = "societeId", target = "societe")
-    @Mapping(target = "listeArticles", ignore = true)
-    @Mapping(target = "removeListeArticles", ignore = true)
     @Mapping(target = "listeClauses", ignore = true)
     @Mapping(target = "removeListeClauses", ignore = true)
     Contrat toEntity(ContratDTO contratDTO);

@@ -3,13 +3,12 @@ package fr.insy2s.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Contrat} entity.
  */
 public class ContratDTO implements Serializable {
-
+    
     private Long id;
 
     @NotNull
@@ -23,12 +22,11 @@ public class ContratDTO implements Serializable {
 
     private Boolean archive;
 
+
     private Long employeId;
 
     private Long societeId;
-
-
-
+    
     public Long getId() {
         return id;
     }
@@ -90,22 +88,19 @@ public class ContratDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ContratDTO)) {
             return false;
         }
 
-        ContratDTO contratDTO = (ContratDTO) o;
-        if (contratDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), contratDTO.getId());
+        return id != null && id.equals(((ContratDTO) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ContratDTO{" +

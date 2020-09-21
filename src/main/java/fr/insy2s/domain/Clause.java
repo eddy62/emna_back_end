@@ -34,7 +34,7 @@ public class Clause implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "clause_liste_contrats",
                joinColumns = @JoinColumn(name = "clause_id", referencedColumnName = "id"),
@@ -51,10 +51,6 @@ public class Clause implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = "listeClauses", allowSetters = true)
     private Societe societe;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeClauses", allowSetters = true)
-    private Article article;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -152,19 +148,6 @@ public class Clause implements Serializable {
 
     public void setSociete(Societe societe) {
         this.societe = societe;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public Clause article(Article article) {
-        this.article = article;
-        return this;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

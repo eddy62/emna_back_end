@@ -8,13 +8,13 @@ entity Facture{
     prixHT Integer
     prixTTC Integer
     tva Float
-    moyenDePaiement String    
+    moyenDePaiement String
 }
 
 entity ClientFournisseur {
 	nom String
 	siren Integer
-    telephone String 
+    telephone String
 	email String
 }
 
@@ -25,7 +25,7 @@ entity LigneProduit{
 	tva Float
 	prix Float required
 }
- 
+
 entity Produit {
     nom String
     reference Integer
@@ -85,13 +85,13 @@ entity Clause {
 }
 
 entity Article {
-    reference String required
     titre String required
+    intitule String required
     description String required
 }
 
 entity Adresse{
-    numeroRue String 
+    numeroRue String
     boitePostale String
     nomRue String required
     codePostal String required
@@ -124,7 +124,7 @@ entity Employe{
     periodeEssai Double required
     situationFamiliale String required
     enfantsACharge Integer required
-    
+
 }
 
 entity StatutEmploye{
@@ -206,7 +206,7 @@ entity EtatDepense {
 	codeRef String
 }
 entity Comptable{
-    civilite String 
+    civilite String
 }
 
 entity Societe {
@@ -215,10 +215,10 @@ entity Societe {
 
 entity InfoEntreprise{
     raisonSociale String
-    telephone String 
+    telephone String
     fax String
-    formeJuridique String 
-    dateDeCreation LocalDate 
+    formeJuridique String
+    dateDeCreation LocalDate
     siren String
     siret String
     domaineDactivite String
@@ -248,7 +248,7 @@ entity AvanceRappelSalaire{
     finPeriode LocalDate required,
     montant Double required,
     mois Integer required,
-    annee Integer required,    
+    annee Integer required,
 }
 
 entity Dpae {
@@ -263,31 +263,36 @@ entity Depense{
 	prix Double
 	moyenDePaiement String
 	raison String
-	}
+}
+
+entity SaisieArticle{
+    libelle String required
+}
+
 relationship OneToMany{
-    Societe{listeFactures} to Facture{societe} 
+    Societe{listeFactures} to Facture{societe}
     Operation{listeFactures} to Facture{operation}
     ClientFournisseur{listeFactures} to Facture{clientFournisseur}
-    
+
     Societe{listeDevis} to Devis{societe}
-    ClientFournisseur{listeDevis} to Devis{clientFournisseur} 
-    
+    ClientFournisseur{listeDevis} to Devis{clientFournisseur}
+
     Releve{listeOperations} to Operation{releve}
     Societe{listeReleves} to Releve{societe}
-   
+
     Societe{listeProduits} to Produit{societe}
-    
+
     Employe{listeContrats} to Contrat{employe}
     Societe{listeContrats} to Contrat{societe}
     Societe{listeClientsFournisseurs} to ClientFournisseur{societe}
-    
-    Societe{listeClauses} to Clause{societe}  
-    Societe{listeArticles}  to Article{societe} 
+
+    Societe{listeClauses} to Clause{societe}
+    //Societe{listeArticles}  to Article{societe}
     Societe{listeEmployes}  to  Employe{societe}
     Contrat{listeAvenants} to Avenant{contrat}
-    
+
     Comptable{listeSocietes} to Societe{comptable}
-    
+
     Employe{listeAbsences} to  Absence{employe}
     Employe{listePrimes} to Prime{employe}
     Employe {listeFichePaies} to FichePaie{employe}
@@ -295,8 +300,8 @@ relationship OneToMany{
     Employe{listeNoteDeFrais}  to NoteDeFrais{employe}
     Employe{listeAvanceRappelSalaire} to AvanceRappelSalaire{employe}
     Employe{listeAutresVariables} to AutresVariable{employe}
-    Article{listeClauses} to Clause{article}
-	
+    //Article{listeClauses} to Clause{article}
+
 	Facture{listeDocuments} to Document{facture}
 	Releve{listeDocuments} to Document{releve}
 	Contrat{listeDocuments} to Document{contrat}
@@ -304,12 +309,9 @@ relationship OneToMany{
     Employe{listeDpae} to Dpae{employe}
     Societe{listeDpae} to Dpae{societe}
     Facture{listeLigneProduit} to LigneProduit{facture}
-    Devis{listeLigneProduit} to LigneProduit{devis} 
+    Devis{listeLigneProduit} to LigneProduit{devis}
 
 	Depense{listeDocuments} to Document{depense}
-	
-	
-	
 }
 
 relationship ManyToOne{
@@ -325,7 +327,7 @@ relationship ManyToOne{
     Devis{etatDevis} to EtatDevis
     Employe{adresse required} to Adresse
     Societe{adresse} to Adresse
-    Facture{adresse} to Adresse    
+    Facture{adresse} to Adresse
     Comptable{adresse required} to Adresse
     ClientFournisseur{adresse} to Adresse
     Employe{typeContrat required} to TypeContrat
@@ -338,11 +340,13 @@ relationship ManyToOne{
     HeuresSupplementaires{etatVariablePaie} to EtatVariablePaie
     AutresVariable{etatVariablePaie} to EtatVariablePaie
     Document{autresVariables} to AutresVariable
+    SaisieArticle{article} to Article
+    SaisieArticle{contrat} to Contrat
 }
 
 relationship ManyToMany{
-    Article{listeAvenants} to Avenant{listeArticles}
-    Article{listeContrats} to Contrat{listeArticles}
+    //Article{listeAvenants} to Avenant{listeArticles}
+    //Article{listeContrats} to Contrat{listeArticles}
     Clause{listeContrats} to Contrat{listeClauses}
     Clause{listeAvenants} to Avenant{listeClauses}
 }

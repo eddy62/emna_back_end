@@ -9,17 +9,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Clause} and its DTO {@link ClauseDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ContratMapper.class, AvenantMapper.class, SocieteMapper.class, ArticleMapper.class})
+@Mapper(componentModel = "spring", uses = {ContratMapper.class, AvenantMapper.class, SocieteMapper.class})
 public interface ClauseMapper extends EntityMapper<ClauseDTO, Clause> {
 
     @Mapping(source = "societe.id", target = "societeId")
-    @Mapping(source = "article.id", target = "articleId")
     ClauseDTO toDto(Clause clause);
 
     @Mapping(target = "removeListeContrats", ignore = true)
     @Mapping(target = "removeListeAvenants", ignore = true)
     @Mapping(source = "societeId", target = "societe")
-    @Mapping(source = "articleId", target = "article")
     Clause toEntity(ClauseDTO clauseDTO);
 
     default Clause fromId(Long id) {
