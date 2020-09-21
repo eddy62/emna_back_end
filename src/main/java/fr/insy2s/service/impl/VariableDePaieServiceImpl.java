@@ -1,13 +1,11 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.Absence;
+import fr.insy2s.domain.Document;
 import fr.insy2s.domain.Prime;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.VariableDePaieService;
-import fr.insy2s.service.dto.AutresVariableDTO;
-import fr.insy2s.service.dto.AvanceRappelSalaireDTO;
-import fr.insy2s.service.dto.HeuresSupplementairesDTO;
-import fr.insy2s.service.dto.NoteDeFraisDTO;
+import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
 import fr.insy2s.utils.wrapper.WrapperPrime;
@@ -42,6 +40,8 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
     private final PrimeRepository                   primeRepository;
     private final PrimeMapper                       primeMapper;
     private final TypePrimeMapper                   typePrimeMapper;
+    private final DocumentRepository                documentRepository;
+    private final DocumentMapper                    documentMapper;
 
 
     public VariableDePaieServiceImpl(AbsenceRepository absenceRepository,
@@ -57,7 +57,9 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
                                      NoteDeFraisMapper noteDeFraisMapper,
                                      PrimeRepository primeRepository,
                                      PrimeMapper primeMapper,
-                                     TypePrimeMapper typePrimeMapper) {
+                                     TypePrimeMapper typePrimeMapper,
+                                     DocumentRepository documentRepository,
+                                     DocumentMapper documentMapper) {
 
         this.absenceRepository = absenceRepository;
         this.absenceMapper = absenceMapper;
@@ -73,6 +75,8 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         this.primeRepository = primeRepository;
         this.primeMapper = primeMapper;
         this.typePrimeMapper = typePrimeMapper;
+        this.documentRepository = documentRepository;
+        this.documentMapper = documentMapper;
     }
 
     @Override
@@ -82,7 +86,12 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
         for (Absence absence : absenceList) {
-            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()));
+            List<Document> documentList = documentRepository.findAllByAbsenceId(absence.getId());
+            List<DocumentDTO> documentDTOList = new ArrayList<>();
+            for (Document document : documentList){
+                documentDTOList.add(documentMapper.toDto(document));
+            };
+            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()),documentDTOList);
             wrapperAbsenceList.add(wrapperAbsence);
         }
         // Autres Variables
