@@ -20,8 +20,7 @@
       "description": "Description",
       "listeContrats": "Liste Contrats",
       "listeAvenants": "Liste Avenants",
-      "societe": "Societe",
-      "article": "Article"
+      "societe": "Societe"
     }
   }
 }

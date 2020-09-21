@@ -67,12 +67,6 @@
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "article",
-      "otherEntityRelationshipName": "societe",
-      "relationshipName": "listeArticles"
-    },
-    {
-      "relationshipType": "one-to-many",
       "otherEntityName": "employe",
       "otherEntityRelationshipName": "societe",
       "relationshipName": "listeEmployes"

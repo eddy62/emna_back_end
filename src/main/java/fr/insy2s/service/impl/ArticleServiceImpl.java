@@ -53,7 +53,6 @@ public class ArticleServiceImpl implements ArticleService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     public Page<ArticleDTO> findAllWithEagerRelationships(Pageable pageable) {
         return articleRepository.findAllWithEagerRelationships(pageable).map(articleMapper::toDto);
     }

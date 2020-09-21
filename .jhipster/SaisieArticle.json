@@ -1,0 +1,37 @@
+{
+  "name": "SaisieArticle",
+  "fields": [
+    {
+      "fieldName": "libelle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "article",
+      "otherEntityRelationshipName": "saisieArticle",
+      "relationshipName": "article",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "contrat",
+      "otherEntityRelationshipName": "saisieArticle",
+      "relationshipName": "contrat",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20200917145053",
+  "entityTableName": "saisie_article",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

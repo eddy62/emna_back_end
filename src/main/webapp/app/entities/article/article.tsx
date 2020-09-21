@@ -37,22 +37,13 @@ export const Article = (props: IArticleProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.article.reference">Reference</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.article.titre">Titre</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.article.intitule">Intitule</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.article.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.article.listeAvenants">Liste Avenants</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.article.listeContrats">Liste Contrats</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.article.societe">Societe</Translate>
                 </th>
                 <th />
               </tr>
@@ -65,30 +56,9 @@ export const Article = (props: IArticleProps) => {
                       {article.id}
                     </Button>
                   </td>
-                  <td>{article.reference}</td>
                   <td>{article.titre}</td>
+                  <td>{article.intitule}</td>
                   <td>{article.description}</td>
-                  <td>
-                    {article.listeAvenants
-                      ? article.listeAvenants.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`avenant/${val.id}`}>{val.id}</Link>
-                            {j === article.listeAvenants.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
-                  <td>
-                    {article.listeContrats
-                      ? article.listeContrats.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`contrat/${val.id}`}>{val.id}</Link>
-                            {j === article.listeContrats.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
-                  <td>{article.societeId ? <Link to={`societe/${article.societeId}`}>{article.societeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${article.id}`} color="info" size="sm">
