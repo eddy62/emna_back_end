@@ -50,4 +50,11 @@ public interface ArticleService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Check if an article already exists.
+     *
+     * @param articleDTO the article to compare.
+     */
+    boolean isArticleAlreadyExists(ArticleDTO articleDTO);
 }
