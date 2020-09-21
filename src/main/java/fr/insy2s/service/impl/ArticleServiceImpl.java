@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.Normalizer;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -69,5 +70,35 @@ public class ArticleServiceImpl implements ArticleService {
     public void delete(Long id) {
         log.debug("Request to delete Article : {}", id);
         articleRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isArticleAlreadyExists(ArticleDTO articleToCompare) {
+        String articleToCompareNormalizedTitle      = removeDiacriticalMarks(articleToCompare.getTitre());
+        String articleToCompareNormalizedIntitule   = removeDiacriticalMarks(articleToCompare.getIntitule());
+
+        return this.findAll().stream().anyMatch(article -> {
+            boolean isSameTitle = articleToCompareNormalizedTitle.equals(
+                removeDiacriticalMarks(article.getTitre())
+            );
+            boolean isSameIntitule  = articleToCompareNormalizedIntitule.equals(
+                removeDiacriticalMarks(article.getIntitule())
+            );
+            return isSameTitle || isSameIntitule;
+        });
+    }
+
+    /**
+     * Remove all sort of accent and spaces into a string.
+     */
+    private String removeDiacriticalMarks(String string) {
+        return Normalizer.normalize(removeSpaces(string), Normalizer.Form.NFD)
+            .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
+
+    private String removeSpaces(String string) {
+        return string.trim().toLowerCase()
+            .replaceAll("\\s+", "")
+            .replaceAll("\\p{Punct}", "");
     }
 }

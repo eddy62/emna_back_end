@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ArticleService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ArticleDTO;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,11 +48,18 @@ public class ArticleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/articles")
-    public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleDTO articleDTO) throws URISyntaxException {
+    @Secured({AuthoritiesConstants.ADMIN})
+    public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleDTO articleDTO)
+        throws URISyntaxException, BadRequestAlertException
+    {
         log.debug("REST request to save Article : {}", articleDTO);
         if (articleDTO.getId() != null) {
             throw new BadRequestAlertException("A new article cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (articleService.isArticleAlreadyExists(articleDTO))
+            throw new BadRequestAlertException("Cette article existe déjà !!!", ENTITY_NAME, "articleexists");
+
         ArticleDTO result = articleService.save(articleDTO);
         return ResponseEntity.created(new URI("/api/articles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -67,11 +76,16 @@ public class ArticleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/articles")
-    public ResponseEntity<ArticleDTO> updateArticle(@Valid @RequestBody ArticleDTO articleDTO) throws URISyntaxException {
+    @Secured({AuthoritiesConstants.ADMIN})
+    public ResponseEntity<ArticleDTO> updateArticle(@Valid @RequestBody ArticleDTO articleDTO) throws BadRequestAlertException {
         log.debug("REST request to update Article : {}", articleDTO);
         if (articleDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        if (articleService.isArticleAlreadyExists(articleDTO))
+            throw new BadRequestAlertException("Cette article existe déjà !!!", ENTITY_NAME, "articleexists");
+
         ArticleDTO result = articleService.save(articleDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, articleDTO.getId().toString()))
@@ -110,6 +124,7 @@ public class ArticleResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/articles/{id}")
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
         log.debug("REST request to delete Article : {}", id);
         articleService.delete(id);

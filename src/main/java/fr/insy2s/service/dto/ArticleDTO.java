@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A DTO for the {@link fr.insy2s.domain.Article} entity.
  */
 public class ArticleDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -19,7 +19,7 @@ public class ArticleDTO implements Serializable {
     @NotNull
     private String description;
 
-    
+
     public Long getId() {
         return id;
     }
@@ -50,6 +50,12 @@ public class ArticleDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String asString() {
+        String title    = this.titre.trim().toLowerCase().replaceAll("\\s+", "");
+        String intitule = this.intitule.trim().toLowerCase().replaceAll("\\s+", "");
+        return title + intitule;
     }
 
     @Override
