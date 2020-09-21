@@ -161,9 +161,9 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<DocumentDTO> findAllByAutresVariableId(Long id) {
+    public List<DocumentDTO> findAllByAutresVariablesId(Long id) {
         log.debug("Request to get all Documents by Autre id");
-        return documentRepository.findAllByAutresVariableId(id).stream()
+        return documentRepository.findAllByAutresVariablesId(id).stream()
             .map(documentMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
