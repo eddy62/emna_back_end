@@ -1,20 +1,13 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.domain.Absence;
-import fr.insy2s.domain.Document;
-import fr.insy2s.domain.NoteDeFrais;
-import fr.insy2s.domain.Prime;
+import fr.insy2s.domain.*;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.VariableDePaieService;
-import fr.insy2s.service.dto.AutresVariableDTO;
 import fr.insy2s.service.dto.AvanceRappelSalaireDTO;
 import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.HeuresSupplementairesDTO;
 import fr.insy2s.service.mapper.*;
-import fr.insy2s.utils.wrapper.WrapperAbsence;
-import fr.insy2s.utils.wrapper.WrapperNoteDeFrais;
-import fr.insy2s.utils.wrapper.WrapperPrime;
-import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
+import fr.insy2s.utils.wrapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -99,16 +92,25 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
             WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()),documentDTOList);
             wrapperAbsenceList.add(wrapperAbsence);
         }
-        // Autres Variables
-        List<AutresVariableDTO> autresVariableDTOList = autresVariableRepository.findAllAutresVariableByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream().map(autresVariableMapper::toDto)
-                .collect(Collectors.toCollection(LinkedList::new));
+        // Autres Variable
+        List<AutresVariable> autresVariableList = autresVariableRepository.findAllAutresVariablesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+        List<WrapperAutresVariable> wrapperAutresVariableList = new ArrayList<>();
+        for (AutresVariable autresVariable : autresVariableList) {
+            List<Document> documentList = documentRepository.findAllByAutresVariablesId(autresVariable.getId());
+            List<DocumentDTO> documentDTOList = new ArrayList<>();
+            for (Document document : documentList){
+                documentDTOList.add(documentMapper.toDto(document));
+            }
+            WrapperAutresVariable wrapperAutresVariable = new WrapperAutresVariable(autresVariableMapper.toDto(autresVariable),documentDTOList);
+            wrapperAutresVariableList.add(wrapperAutresVariable);
+        }
         // Avance/RappelSalaire
         List<AvanceRappelSalaireDTO> avanceRappelSalaireDTOList = avanceRappelSalaireRepository.findAllAvanceRappelSalaireByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
                 .map(avanceRappelSalaireMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
         // Heures supplémentaires
         List<HeuresSupplementairesDTO> heuresSupplementairesDTOList = heuresSupplementairesRepository.findAllHeuresSupplementairesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
                 .map(heuresSupplementairesMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
-        // Notes de Frais // garder noteDeFraisDTOList comme nom !!!
+        // Notes de Frais
         List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperNoteDeFrais> wrapperNoteDeFraisList = new ArrayList<>();
         for (NoteDeFrais noteDeFrais : noteDeFraisList) {
@@ -128,7 +130,7 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
             wrapperPrimeList.add(wrapperPrime);
         }
 
-        return new WrapperVariablesPaie(wrapperAbsenceList, autresVariableDTOList, avanceRappelSalaireDTOList, heuresSupplementairesDTOList, wrapperNoteDeFraisList,
+        return new WrapperVariablesPaie(wrapperAbsenceList, wrapperAutresVariableList, avanceRappelSalaireDTOList, heuresSupplementairesDTOList, wrapperNoteDeFraisList,
                 wrapperPrimeList);
     }
 
