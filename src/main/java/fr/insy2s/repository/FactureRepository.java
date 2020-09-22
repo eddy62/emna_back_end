@@ -28,4 +28,7 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
         "where f.operation.id =:idOperation")
     Optional<BigDecimal> balanceOfInvoicesByTransaction(@Param("idOperation") Long idOperation);
 
+    @Query("select f from Facture f " +
+    "where f.operation.id=:idOperation")
+    List<Facture> findAllInvoicesByOperationId(@Param("idOperation") Long idOperation);
 }

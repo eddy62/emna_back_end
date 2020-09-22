@@ -1,12 +1,13 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.Adresse;
+import fr.insy2s.domain.ClientFournisseur;
+import fr.insy2s.domain.Facture;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
-import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
@@ -14,11 +15,13 @@ import fr.insy2s.service.mapper.FactureMapper;
 import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -166,6 +169,15 @@ public class FactureServiceImpl implements FactureService {
             }
         }
          return max;
+    }
+
+    @Override
+    public List<FactureDTO> findAllInvoicesByOperationId(Long idOperation) {
+        log.debug("Request to get all factures from id operation");
+        return this.factureRepository.findAllInvoicesByOperationId(idOperation)
+                                     .stream()
+                                     .map(factureMapper::toDto)
+                                     .collect(Collectors.toList());
     }
 
 }

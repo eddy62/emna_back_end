@@ -54,4 +54,11 @@ public interface FactureService {
 
     Long getLastNumFact(Long id);
 
+    /**
+     * Get all the factures
+     *
+     * @param idOperation id of the entity
+     * @return the list of entities
+     */
+    List<FactureDTO> findAllInvoicesByOperationId(Long idOperation);
 }
