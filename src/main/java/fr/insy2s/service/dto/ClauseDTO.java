@@ -22,8 +22,6 @@ public class ClauseDTO implements Serializable {
     private Set<AvenantDTO> listeAvenants = new HashSet<>();
 
     private Long societeId;
-
-    private Long articleId;
     
     public Long getId() {
         return id;
@@ -73,14 +71,6 @@ public class ClauseDTO implements Serializable {
         this.societeId = societeId;
     }
 
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -108,7 +98,6 @@ public class ClauseDTO implements Serializable {
             ", listeContrats='" + getListeContrats() + "'" +
             ", listeAvenants='" + getListeAvenants() + "'" +
             ", societeId=" + getSocieteId() +
-            ", articleId=" + getArticleId() +
             "}";
     }
 }

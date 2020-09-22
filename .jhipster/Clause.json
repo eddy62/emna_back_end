@@ -35,13 +35,6 @@
       "otherEntityRelationshipName": "listeClauses",
       "relationshipName": "societe",
       "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "article",
-      "otherEntityRelationshipName": "listeClauses",
-      "relationshipName": "article",
-      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20200722091404",

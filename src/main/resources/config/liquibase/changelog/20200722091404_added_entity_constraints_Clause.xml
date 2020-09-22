@@ -38,11 +38,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="societe"/>
 
-        <addForeignKeyConstraint baseColumnNames="article_id"
-                                 baseTableName="clause"
-                                 constraintName="fk_clause_article_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="article"/>
-
     </changeSet>
 </databaseChangeLog>

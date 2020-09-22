@@ -5,7 +5,6 @@ import { IProduit } from 'app/shared/model/produit.model';
 import { IContrat } from 'app/shared/model/contrat.model';
 import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
 import { IClause } from 'app/shared/model/clause.model';
-import { IArticle } from 'app/shared/model/article.model';
 import { IEmploye } from 'app/shared/model/employe.model';
 import { IDpae } from 'app/shared/model/dpae.model';
 
@@ -21,7 +20,6 @@ export interface ISociete {
   listeContrats?: IContrat[];
   listeClientsFournisseurs?: IClientFournisseur[];
   listeClauses?: IClause[];
-  listeArticles?: IArticle[];
   listeEmployes?: IEmploye[];
   listeDpaes?: IDpae[];
   adresseId?: number;

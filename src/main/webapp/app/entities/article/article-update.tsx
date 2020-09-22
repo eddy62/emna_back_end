@@ -7,12 +7,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IAvenant } from 'app/shared/model/avenant.model';
-import { getEntities as getAvenants } from 'app/entities/avenant/avenant.reducer';
-import { IContrat } from 'app/shared/model/contrat.model';
-import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './article.reducer';
 import { IArticle } from 'app/shared/model/article.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -21,12 +15,9 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IArticleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ArticleUpdate = (props: IArticleUpdateProps) => {
-  const [idslisteAvenants, setIdslisteAvenants] = useState([]);
-  const [idslisteContrats, setIdslisteContrats] = useState([]);
-  const [societeId, setSocieteId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { articleEntity, avenants, contrats, societes, loading, updating } = props;
+  const { articleEntity, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/article');
@@ -38,10 +29,6 @@ export const ArticleUpdate = (props: IArticleUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
-
-    props.getAvenants();
-    props.getContrats();
-    props.getSocietes();
   }, []);
 
   useEffect(() => {
@@ -55,8 +42,6 @@ export const ArticleUpdate = (props: IArticleUpdateProps) => {
       const entity = {
         ...articleEntity,
         ...values,
-        listeAvenants: mapIdList(values.listeAvenants),
-        listeContrats: mapIdList(values.listeContrats),
       };
 
       if (isNew) {
@@ -91,19 +76,6 @@ export const ArticleUpdate = (props: IArticleUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label id="referenceLabel" for="article-reference">
-                  <Translate contentKey="emnaBackEndApp.article.reference">Reference</Translate>
-                </Label>
-                <AvField
-                  id="article-reference"
-                  type="text"
-                  name="reference"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
                 <Label id="titreLabel" for="article-titre">
                   <Translate contentKey="emnaBackEndApp.article.titre">Titre</Translate>
                 </Label>
@@ -111,6 +83,19 @@ export const ArticleUpdate = (props: IArticleUpdateProps) => {
                   id="article-titre"
                   type="text"
                   name="titre"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="intituleLabel" for="article-intitule">
+                  <Translate contentKey="emnaBackEndApp.article.intitule">Intitule</Translate>
+                </Label>
+                <AvField
+                  id="article-intitule"
+                  type="text"
+                  name="intitule"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
@@ -128,65 +113,6 @@ export const ArticleUpdate = (props: IArticleUpdateProps) => {
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
-              </AvGroup>
-              <AvGroup>
-                <Label for="article-listeAvenants">
-                  <Translate contentKey="emnaBackEndApp.article.listeAvenants">Liste Avenants</Translate>
-                </Label>
-                <AvInput
-                  id="article-listeAvenants"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="listeAvenants"
-                  value={articleEntity.listeAvenants && articleEntity.listeAvenants.map(e => e.id)}
-                >
-                  <option value="" key="0" />
-                  {avenants
-                    ? avenants.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="article-listeContrats">
-                  <Translate contentKey="emnaBackEndApp.article.listeContrats">Liste Contrats</Translate>
-                </Label>
-                <AvInput
-                  id="article-listeContrats"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="listeContrats"
-                  value={articleEntity.listeContrats && articleEntity.listeContrats.map(e => e.id)}
-                >
-                  <option value="" key="0" />
-                  {contrats
-                    ? contrats.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="article-societe">
-                  <Translate contentKey="emnaBackEndApp.article.societe">Societe</Translate>
-                </Label>
-                <AvInput id="article-societe" type="select" className="form-control" name="societeId">
-                  <option value="" key="0" />
-                  {societes
-                    ? societes.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/article" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -210,9 +136,6 @@ export const ArticleUpdate = (props: IArticleUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  avenants: storeState.avenant.entities,
-  contrats: storeState.contrat.entities,
-  societes: storeState.societe.entities,
   articleEntity: storeState.article.entity,
   loading: storeState.article.loading,
   updating: storeState.article.updating,
@@ -220,9 +143,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getAvenants,
-  getContrats,
-  getSocietes,
   getEntity,
   updateEntity,
   createEntity,

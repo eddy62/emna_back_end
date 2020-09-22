@@ -67,7 +67,7 @@ export const Contrat = (props: IContratProps) => {
                   </td>
                   <td>{contrat.titre}</td>
                   <td>
-                    <TextFormat type="date" value={contrat.dateCreation} format={APP_LOCAL_DATE_FORMAT} />
+                    {contrat.dateCreation ? <TextFormat type="date" value={contrat.dateCreation} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{contrat.signe ? 'true' : 'false'}</td>
                   <td>{contrat.archive ? 'true' : 'false'}</td>
@@ -113,11 +113,11 @@ export const Contrat = (props: IContratProps) => {
 
 const mapStateToProps = ({ contrat }: IRootState) => ({
   contratList: contrat.entities,
-  loading: contrat.loading
+  loading: contrat.loading,
 });
 
 const mapDispatchToProps = {
-  getEntities
+  getEntities,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

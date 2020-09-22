@@ -59,7 +59,7 @@ export const ContratDeleteDialog = (props: IContratDeleteDialogProps) => {
 
 const mapStateToProps = ({ contrat }: IRootState) => ({
   contratEntity: contrat.entity,
-  updateSuccess: contrat.updateSuccess
+  updateSuccess: contrat.updateSuccess,
 });
 
 const mapDispatchToProps = { getEntity, deleteEntity };

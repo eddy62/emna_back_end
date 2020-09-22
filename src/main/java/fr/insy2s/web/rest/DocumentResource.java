@@ -16,6 +16,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.io.*;
+import fr.insy2s.utils.files.PdfUtil;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import java.nio.file.Paths;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Document}.
@@ -144,9 +152,36 @@ public class DocumentResource {
      * @param id the id of Autre.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
      */
-    /*@GetMapping("/documentsAutre/{id}")
-    public List<DocumentDTO> getDocumentsByAutreId(@PathVariable Long id) {
+    @GetMapping("/documentsAutre/{id}")
+    public List<DocumentDTO> getDocumentsByAutresVariableId(@PathVariable Long id) {
         log.debug("REST request to get all Documents by Autre id");
-        return documentService.findAllByAutresVariableId(id);
-    }*/
+        return documentService.findAllByAutresVariablesId(id);
+    }
+
+    /**
+     * {@code GET  /documentsPdf/:id} : get PDF File by path name.
+     *
+     * @param path the path of File.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} PDF File.
+     */
+
+    @GetMapping("/getPdfFile/{path}")
+    public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
+        Path completePath = Paths.get("./fichiers/" + path);
+        byte[] pdfContents = null;
+        try {
+            pdfContents = Files.readAllBytes(completePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers = new HttpHeaders();
+        //headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("content-disposition", "attachment; filename=" + path);
+        /*headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");*/
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+            pdfContents, headers, HttpStatus.OK);
+        return response;
+    }
+
 }

@@ -13,8 +13,6 @@ import { IAvenant } from 'app/shared/model/avenant.model';
 import { getEntities as getAvenants } from 'app/entities/avenant/avenant.reducer';
 import { ISociete } from 'app/shared/model/societe.model';
 import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { IArticle } from 'app/shared/model/article.model';
-import { getEntities as getArticles } from 'app/entities/article/article.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './clause.reducer';
 import { IClause } from 'app/shared/model/clause.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -26,10 +24,9 @@ export const ClauseUpdate = (props: IClauseUpdateProps) => {
   const [idslisteContrats, setIdslisteContrats] = useState([]);
   const [idslisteAvenants, setIdslisteAvenants] = useState([]);
   const [societeId, setSocieteId] = useState('0');
-  const [articleId, setArticleId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { clauseEntity, contrats, avenants, societes, articles, loading, updating } = props;
+  const { clauseEntity, contrats, avenants, societes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/clause');
@@ -45,7 +42,6 @@ export const ClauseUpdate = (props: IClauseUpdateProps) => {
     props.getContrats();
     props.getAvenants();
     props.getSocietes();
-    props.getArticles();
   }, []);
 
   useEffect(() => {
@@ -179,21 +175,6 @@ export const ClauseUpdate = (props: IClauseUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-              <AvGroup>
-                <Label for="clause-article">
-                  <Translate contentKey="emnaBackEndApp.clause.article">Article</Translate>
-                </Label>
-                <AvInput id="clause-article" type="select" className="form-control" name="articleId">
-                  <option value="" key="0" />
-                  {articles
-                    ? articles.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/clause" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -219,7 +200,6 @@ const mapStateToProps = (storeState: IRootState) => ({
   contrats: storeState.contrat.entities,
   avenants: storeState.avenant.entities,
   societes: storeState.societe.entities,
-  articles: storeState.article.entities,
   clauseEntity: storeState.clause.entity,
   loading: storeState.clause.loading,
   updating: storeState.clause.updating,
@@ -230,7 +210,6 @@ const mapDispatchToProps = {
   getContrats,
   getAvenants,
   getSocietes,
-  getArticles,
   getEntity,
   updateEntity,
   createEntity,

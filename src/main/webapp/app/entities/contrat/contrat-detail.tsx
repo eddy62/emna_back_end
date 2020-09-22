@@ -37,7 +37,9 @@ export const ContratDetail = (props: IContratDetailProps) => {
             </span>
           </dt>
           <dd>
-            <TextFormat value={contratEntity.dateCreation} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            {contratEntity.dateCreation ? (
+              <TextFormat value={contratEntity.dateCreation} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
           </dd>
           <dt>
             <span id="signe">
@@ -79,7 +81,7 @@ export const ContratDetail = (props: IContratDetailProps) => {
 };
 
 const mapStateToProps = ({ contrat }: IRootState) => ({
-  contratEntity: contrat.entity
+  contratEntity: contrat.entity,
 });
 
 const mapDispatchToProps = { getEntity };

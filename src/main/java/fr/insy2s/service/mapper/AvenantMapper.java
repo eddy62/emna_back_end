@@ -16,8 +16,6 @@ public interface AvenantMapper extends EntityMapper<AvenantDTO, Avenant> {
     AvenantDTO toDto(Avenant avenant);
 
     @Mapping(source = "contratId", target = "contrat")
-    @Mapping(target = "listeArticles", ignore = true)
-    @Mapping(target = "removeListeArticles", ignore = true)
     @Mapping(target = "listeClauses", ignore = true)
     @Mapping(target = "removeListeClauses", ignore = true)
     Avenant toEntity(AvenantDTO avenantDTO);
