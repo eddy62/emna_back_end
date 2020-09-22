@@ -1,6 +1,7 @@
 package fr.insy2s.web.rest;
 
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class FilesController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId,
         @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId) {
         String message = "";
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         try {
             storageService.save(file);
             try {
@@ -53,8 +55,9 @@ public class FilesController {
                 } else if (autresVariableId != -1) {
                     documentDTO.setAutresVariablesId(autresVariableId);
                 }
+                String extension[] = file.getContentType().split("/");
                 documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
-                documentDTO.setNom(file.getOriginalFilename());
+                documentDTO.setNom("file" + timestamp.getTime() + "." + extension[1]);
                 DocumentDTO result = documentService.save(documentDTO);
                 System.out.println(result);
             } catch (Exception e) {
