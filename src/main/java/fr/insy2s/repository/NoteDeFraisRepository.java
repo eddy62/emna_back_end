@@ -1,6 +1,7 @@
 package fr.insy2s.repository;
 
 import fr.insy2s.domain.NoteDeFrais;
+import fr.insy2s.utils.wrapper.WrapperNoteDeFrais;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,8 @@ public interface NoteDeFraisRepository extends JpaRepository<NoteDeFrais, Long> 
     @Query("SELECT n FROM NoteDeFrais n " +
             "WHERE n.employe.id=:idEmploye AND n.annee=:annee AND n.mois=:mois")
     List<NoteDeFrais> findAllNoteDeFraisByIdEmployeAndAnneeAndMois(@Param("idEmploye") Long idEmploye, @Param("annee") Integer annee, @Param("mois") Integer mois);
+
+    @Query("SELECT n FROM NoteDeFrais n " +
+            "WHERE n.employe.id=:idEmploye AND n.annee=:annee AND n.mois=:mois")
+    List<WrapperNoteDeFrais> findAllWrapperNoteDeFraisByIdEmployeAndAnneeAndMois(@Param("idEmploye") Long idEmploye, @Param("annee") Integer annee, @Param("mois") Integer mois);
 }

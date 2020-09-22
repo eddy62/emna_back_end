@@ -2,12 +2,17 @@ package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.Absence;
 import fr.insy2s.domain.Document;
+import fr.insy2s.domain.NoteDeFrais;
 import fr.insy2s.domain.Prime;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.VariableDePaieService;
-import fr.insy2s.service.dto.*;
+import fr.insy2s.service.dto.AutresVariableDTO;
+import fr.insy2s.service.dto.AvanceRappelSalaireDTO;
+import fr.insy2s.service.dto.DocumentDTO;
+import fr.insy2s.service.dto.HeuresSupplementairesDTO;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperNoteDeFrais;
 import fr.insy2s.utils.wrapper.WrapperPrime;
 import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import org.slf4j.Logger;
@@ -90,7 +95,7 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
             List<DocumentDTO> documentDTOList = new ArrayList<>();
             for (Document document : documentList){
                 documentDTOList.add(documentMapper.toDto(document));
-            };
+            }
             WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()),documentDTOList);
             wrapperAbsenceList.add(wrapperAbsence);
         }
@@ -103,9 +108,18 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         // Heures supplémentaires
         List<HeuresSupplementairesDTO> heuresSupplementairesDTOList = heuresSupplementairesRepository.findAllHeuresSupplementairesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
                 .map(heuresSupplementairesMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
-        // Notes de Frais
-        List<NoteDeFraisDTO> noteDeFraisDTOList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream().map(noteDeFraisMapper::toDto)
-                .collect(Collectors.toCollection(LinkedList::new));
+        // Notes de Frais // garder noteDeFraisDTOList comme nom !!!
+        List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
+        List<WrapperNoteDeFrais> wrapperNoteDeFraisList = new ArrayList<>();
+        for (NoteDeFrais noteDeFrais : noteDeFraisList) {
+            List<Document> documentList = documentRepository.findAllByNoteDeFraisId(noteDeFrais.getId());
+            List<DocumentDTO> documentDTOList = new ArrayList<>();
+            for (Document document : documentList){
+                documentDTOList.add(documentMapper.toDto(document));
+            }
+            WrapperNoteDeFrais wrapperNoteDeFrais = new WrapperNoteDeFrais(noteDeFraisMapper.toDto(noteDeFrais),documentDTOList);
+            wrapperNoteDeFraisList.add(wrapperNoteDeFrais);
+        }
         // Primes
         List<Prime> primeList = primeRepository.findAllPrimeByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperPrime> wrapperPrimeList = new ArrayList<>();
@@ -114,7 +128,7 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
             wrapperPrimeList.add(wrapperPrime);
         }
 
-        return new WrapperVariablesPaie(wrapperAbsenceList, autresVariableDTOList, avanceRappelSalaireDTOList, heuresSupplementairesDTOList, noteDeFraisDTOList,
+        return new WrapperVariablesPaie(wrapperAbsenceList, autresVariableDTOList, avanceRappelSalaireDTOList, heuresSupplementairesDTOList, wrapperNoteDeFraisList,
                 wrapperPrimeList);
     }
 

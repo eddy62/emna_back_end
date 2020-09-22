@@ -3,7 +3,6 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.AutresVariableDTO;
 import fr.insy2s.service.dto.AvanceRappelSalaireDTO;
 import fr.insy2s.service.dto.HeuresSupplementairesDTO;
-import fr.insy2s.service.dto.NoteDeFraisDTO;
 
 import java.util.List;
 
@@ -28,16 +27,15 @@ public class WrapperVariablesPaie {
     private List<HeuresSupplementairesDTO> heuresSupplementairesDTOList;
 
     // Notes de Frais
-    private List<NoteDeFraisDTO> noteDeFraisDTOList;
+    private List<WrapperNoteDeFrais> wrapperNoteDeFraisList;
 
     // Primes
     private List<WrapperPrime> wrapperPrimeList;
 
     /**
      * Constructeur WrapperVariablesPaie par défaut
-     *
      */
-    public WrapperVariablesPaie(){
+    public WrapperVariablesPaie() {
         // constructeur par défaut
     }
 
@@ -48,26 +46,27 @@ public class WrapperVariablesPaie {
      * @param autresVariableDTOList
      * @param avanceRappelSalaireDTOList
      * @param heuresSupplementairesDTOList
-     * @param noteDeFraisDTOList
+     * @param wrapperNoteDeFraisList
      * @param wrapperPrimeList
      */
-    public  WrapperVariablesPaie(List<WrapperAbsence> wrapperAbsenceList,
-                                 List<AutresVariableDTO> autresVariableDTOList,
+    public WrapperVariablesPaie(List<WrapperAbsence> wrapperAbsenceList,
+                                List<AutresVariableDTO> autresVariableDTOList,
                                 List<AvanceRappelSalaireDTO> avanceRappelSalaireDTOList,
                                 List<HeuresSupplementairesDTO> heuresSupplementairesDTOList,
-                                List<NoteDeFraisDTO> noteDeFraisDTOList,
-                                List<WrapperPrime> wrapperPrimeList){
+                                List<WrapperNoteDeFrais> wrapperNoteDeFraisList,
+                                List<WrapperPrime> wrapperPrimeList) {
 
         super();
         this.wrapperAbsenceList = wrapperAbsenceList;
         this.autresVariableDTOList = autresVariableDTOList;
         this.avanceRappelSalaireDTOList = avanceRappelSalaireDTOList;
         this.heuresSupplementairesDTOList = heuresSupplementairesDTOList;
-        this.noteDeFraisDTOList = noteDeFraisDTOList;
+        this.wrapperNoteDeFraisList = wrapperNoteDeFraisList;
         this.wrapperPrimeList = wrapperPrimeList;
     }
 
     // Getters / Setters
+
     public List<WrapperAbsence> getWrapperAbsenceList() {
         return wrapperAbsenceList;
     }
@@ -100,12 +99,12 @@ public class WrapperVariablesPaie {
         this.heuresSupplementairesDTOList = heuresSupplementairesDTOList;
     }
 
-    public List<NoteDeFraisDTO> getNoteDeFraisDTOList() {
-        return noteDeFraisDTOList;
+    public List<WrapperNoteDeFrais> getWrapperNoteDeFraisList() {
+        return wrapperNoteDeFraisList;
     }
 
-    public void setNoteDeFraisDTOList(List<NoteDeFraisDTO> noteDeFraisDTOList) {
-        this.noteDeFraisDTOList = noteDeFraisDTOList;
+    public void setWrapperNoteDeFraisList(List<WrapperNoteDeFrais> wrapperNoteDeFraisList) {
+        this.wrapperNoteDeFraisList = wrapperNoteDeFraisList;
     }
 
     public List<WrapperPrime> getWrapperPrimeList() {

@@ -3,8 +3,10 @@ package fr.insy2s.web.rest;
 import fr.insy2s.service.*;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.WrapperAbsenceMapper;
+import fr.insy2s.service.mapper.WrapperNoteDeFraisMapper;
 import fr.insy2s.service.mapper.WrapperPrimeMapper;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperNoteDeFrais;
 import fr.insy2s.utils.wrapper.WrapperPrime;
 import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -41,6 +43,7 @@ public class VariableDePaieResource {
     private final AvanceRappelSalaireService avanceRappelSalaireService;
     private final HeuresSupplementairesService heuresSupplementairesService;
     private final NoteDeFraisService noteDeFraisService;
+    private final WrapperNoteDeFraisMapper wrapperNoteDeFraisMapper;
     private final PrimeService primeService;
     private final WrapperPrimeMapper wrapperPrimeMapper;
 
@@ -51,6 +54,7 @@ public class VariableDePaieResource {
                                   AvanceRappelSalaireService avanceRappelSalaireService,
                                   HeuresSupplementairesService heuresSupplementairesService,
                                   NoteDeFraisService noteDeFraisService,
+                                  WrapperNoteDeFraisMapper wrapperNoteDeFraisMapper,
                                   PrimeService primeService,
                                   WrapperPrimeMapper wrapperPrimeMapper){
 
@@ -63,6 +67,7 @@ public class VariableDePaieResource {
         this.avanceRappelSalaireService = avanceRappelSalaireService;
         this.heuresSupplementairesService = heuresSupplementairesService;
         this.noteDeFraisService = noteDeFraisService;
+        this.wrapperNoteDeFraisMapper = wrapperNoteDeFraisMapper;
         this.primeService = primeService;
         this.wrapperPrimeMapper = wrapperPrimeMapper;
     }
@@ -183,21 +188,22 @@ public class VariableDePaieResource {
         }
 
         // NoteDeFrais
-        List<NoteDeFraisDTO> noteDeFraisDTOList = wrapperVariablesPaieToUpdate.getNoteDeFraisDTOList();
-        if (!noteDeFraisDTOList.isEmpty()) {
-            for (NoteDeFraisDTO noteDeFraisDTO : noteDeFraisDTOList) {
+        List<WrapperNoteDeFrais> wrapperNoteDeFraisList = wrapperVariablesPaieToUpdate.getWrapperNoteDeFraisList();
+        if (!wrapperNoteDeFraisList.isEmpty()) {
+            for (WrapperNoteDeFrais wrapperNoteDeFrais : wrapperNoteDeFraisList) {
                 nbVariablesToUpdate++;
-                if (noteDeFraisDTO.getId() == null) {
+                if (wrapperNoteDeFrais.getId() == null) {
                     throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-                } else if (!noteDeFraisService.findOne(noteDeFraisDTO.getId()).isPresent()) {
-                    variablesNonConfirmees.append("\n").append(noteDeFraisDTO.toString()).append("\nid ").append(noteDeFraisDTO.getId()).append(" does not exist");
-                } else if (noteDeFraisDTO.getEtatVariablePaieId() == 1
-                        && noteDeFraisService.findOne(noteDeFraisDTO.getId()).get().getEtatVariablePaieId() == 1) {
-                    noteDeFraisDTO.setEtatVariablePaieId((long) 2);
+                } else if (!noteDeFraisService.findOne(wrapperNoteDeFrais.getId()).isPresent()) {
+                    variablesNonConfirmees.append("\n").append(wrapperNoteDeFrais.toString()).append("\nid ").append(wrapperNoteDeFrais.getId()).append(" does not exist");
+                } else if (wrapperNoteDeFrais.getEtatVariablePaieId() == 1
+                        && noteDeFraisService.findOne(wrapperNoteDeFrais.getId()).get().getEtatVariablePaieId() == 1) {
+                    wrapperNoteDeFrais.setEtatVariablePaieId((long) 2);
+                    NoteDeFraisDTO noteDeFraisDTO = wrapperNoteDeFraisMapper.toNoteDeFraisDTO(wrapperNoteDeFrais);
                     NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
                     if (result != null) {nbVariablesUpdated++;}
                 } else {
-                    variablesNonConfirmees.append("\n").append(noteDeFraisDTO.toString());
+                    variablesNonConfirmees.append("\n").append(wrapperNoteDeFrais.toString());
                 }
             }
         }
