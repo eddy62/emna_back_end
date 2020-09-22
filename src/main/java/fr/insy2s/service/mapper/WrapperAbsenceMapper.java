@@ -15,8 +15,8 @@ public class WrapperAbsenceMapper {
     /**
      * Builder WrapperAbsence
      *
-     * @param absenceDTO
-     * @param typeAbsenceDTO
+     * @param absenceDTO the absenceDTO for building the WrapperAbsence
+     * @param typeAbsenceDTO the typeAbsenceDTO for building the WrapperAbsence
      *
      * @return wrapperAbsence
      */
@@ -43,7 +43,7 @@ public class WrapperAbsenceMapper {
     /**
      * Mappe WrapperAbsence to AbsenceDto
      *
-     * @param wrapperAbsence
+     * @param wrapperAbsence the wrapperAbsence to map to a absenceDTO
      *
      * @return absenceDTO
      */
@@ -66,7 +66,7 @@ public class WrapperAbsenceMapper {
     /**
      * Mappe WrapperAbsence to TypeAbsenceDto
      *
-     * @param wrapperAbsence
+     * @param wrapperAbsence the wrapperAbsence to map to a typeAbsenceDTO
      *
      * @return typeAbsenceDTO
      */    public TypeAbsenceDTO toTypeAbsenceDTO(final WrapperAbsence wrapperAbsence){

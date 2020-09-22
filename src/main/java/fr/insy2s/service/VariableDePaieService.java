@@ -10,7 +10,7 @@ public interface VariableDePaieService {
      * @param idEmploye id of the Employe in all VariablesPaie
      * @param annee     year in all VariablesPaie
      * @param mois      month in all VariablesPaie
-     * @return the archived WrapperEmploye
+     * @return the WrapperVariablesPaie
      */
     WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
 

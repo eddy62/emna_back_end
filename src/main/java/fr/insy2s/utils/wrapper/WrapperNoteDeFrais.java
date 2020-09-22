@@ -38,7 +38,8 @@ public class WrapperNoteDeFrais {
     /**
      * Constructeur WrapperNoteDeFrais avec paramètres
      *
-     * @param noteDeFraisDTO
+     * @param noteDeFraisDTO the noteDeFraisDTO
+     * @param documentDTOList the list of DocumentDTO
      */
     public WrapperNoteDeFrais(NoteDeFraisDTO noteDeFraisDTO, List<DocumentDTO> documentDTOList){
 

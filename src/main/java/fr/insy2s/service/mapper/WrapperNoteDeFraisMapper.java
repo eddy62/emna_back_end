@@ -14,7 +14,7 @@ public class WrapperNoteDeFraisMapper {
     /**
      * Builder WrapperNoteDeFrais
      *
-     * @param noteDeFraisDTO
+     * @param noteDeFraisDTO the noteDeFraisDTO for building a WrapperNoteDeFrais.
      *
      * @return wrapperNoteDeFrais
      */
@@ -38,7 +38,7 @@ public class WrapperNoteDeFraisMapper {
     /**
      * Mappe WrapperNoteDeFrais to NoteDeFraisDto
      *
-     * @param wrapperNoteDeFrais
+     * @param wrapperNoteDeFrais the wrapperNoteDeFrais to map to NoteDeFraisDTO
      *
      * @return noteDeFraisDTO
      */
