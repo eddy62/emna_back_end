@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,16 @@ public class FilesController {
     @Autowired
     DocumentService documentService;
 
+
+    /**
+     * {@code POST  /upload} : Upload a new file.
+     *
+     * @param file the file to upload.
+     * @param absenceId the ID linked to Absence.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body a personalized message,
+     * or with status {@code 400 (Bad Request)} if the Document cannot be created,
+     * or with status {@code 417 (Expectation Failed) if an error occured during upload}
+     */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId) {
         String message = "";
@@ -35,13 +46,13 @@ public class FilesController {
                 /* Crée l'entité Document liée */
                 DocumentDTO documentDTO = new DocumentDTO();
                 documentDTO.setAbsenceId(absenceId);
-                documentDTO.setCheminFichier(storageService.getRoot().toString());
+                documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
                 documentDTO.setNom(file.getOriginalFilename());
                 DocumentDTO result = documentService.save(documentDTO);
                 System.out.println(result);
             } catch (Exception e) {
                 message = "Error: could not create the entity Document linked to: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
             }
             message = "File uploaded with success: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(message);
