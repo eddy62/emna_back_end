@@ -1,12 +1,10 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.FactureService;
-import fr.insy2s.service.dto.DepenseTemp;
+import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.FactureDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -149,6 +147,17 @@ public class FactureResource {
     public Long getLastNumFact(@PathVariable Long id) {
         log.debug("REST request to get Facture : {}", id);
         return factureService.getLastNumFact(id);
+    }
+
+    /**
+     *  {@code GET  /factures/operation/:id} : get all the invoices by operation id.
+     * @param idOperation id of the operation concerned
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
+     */
+    @GetMapping("facture/operation/{idOperation}")
+    public List<FactureDTO> getAllInvoicesByOperationId(@PathVariable Long idOperation) {
+        log.debug("REST request to get all Facture from id operation: {}", idOperation);
+        return factureService.findAllInvoicesByOperationId(idOperation);
     }
 
 
