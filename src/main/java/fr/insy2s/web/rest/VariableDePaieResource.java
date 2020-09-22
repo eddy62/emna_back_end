@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.invoke.SwitchPoint;
 import java.util.List;
 
 /**
@@ -30,10 +29,10 @@ public class VariableDePaieResource {
 
     private final Logger log = LoggerFactory.getLogger(VariableDePaieResource.class);
 
-    private static final String  ENTITY_NAME = "wrapperVariablesDePaie";
+    private static final String ENTITY_NAME = "wrapperVariablesDePaie";
 
     @Value("${jhipster.clientApp.name}")
-    private String               applicationName;
+    private String applicationName;
 
     private final VariableDePaieService variableDePaieService;
 
@@ -57,7 +56,7 @@ public class VariableDePaieResource {
                                   NoteDeFraisService noteDeFraisService,
                                   WrapperNoteDeFraisMapper wrapperNoteDeFraisMapper,
                                   PrimeService primeService,
-                                  WrapperPrimeMapper wrapperPrimeMapper){
+                                  WrapperPrimeMapper wrapperPrimeMapper) {
 
         this.variableDePaieService = variableDePaieService;
 
@@ -89,14 +88,14 @@ public class VariableDePaieResource {
 
     /**
      * {@code PUT  /wrappervariablespaie/process-variablespaie} : Confirm all Variables de Paie in a WrapperVariablesPaie
-     *              etatVariablePaie 1 -> 2 if enterprise
-     *              etatVariablePaie 2 -> 3 if accountant
+     * etatVariablePaie 1 -> 2 if enterprise
+     * etatVariablePaie 2 -> 3 if accountant
      *
      * @param wrapperVariablesPaieToUpdate the WrapperVariablesPaie containing all the Variables de Paie to update
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} if all the Variables de Paie were updated,
-     *      or with status {@code 206 (Partial Content)} if partial Variables de Paie were updated,
-     *      or with status {@code 400 (Bad Request)} if none Variables de Paie were updated,
-     *      and with body the String "Variables de paie traitées : x / y " And eventual Variables de Paie not updated
+     * or with status {@code 206 (Partial Content)} if partial Variables de Paie were updated,
+     * or with status {@code 400 (Bad Request)} if none Variables de Paie were updated,
+     * and with body the String "Variables de paie traitées : x / y " And eventual Variables de Paie not updated
      */
     @PutMapping("/wrappervariablespaie/process-variablespaie/{idOperation}")
     public ResponseEntity<String> updateConfirmWrapperVariablesPaie(@Valid @RequestBody WrapperVariablesPaie wrapperVariablesPaieToUpdate, @PathVariable Integer idOperation) {
@@ -116,9 +115,7 @@ public class VariableDePaieResource {
             default:
                 log.debug("REST request to update one WrapperVariablesPaie, state: ? {}", wrapperVariablesPaieToUpdate);
                 typeOperation = "?";
-        };
-
-
+        }
 
 
         int nbVariablesToUpdate = 0;
@@ -135,25 +132,26 @@ public class VariableDePaieResource {
                     throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "id null");
                 } else if (!absenceService.findOne(wrapperAbsence.getId()).isPresent()) {
                     variablesNonTraitees.append("\n").append(wrapperAbsence.toString()).append("\nid ").append(wrapperAbsence.getId()).append(" does not exist");
-                } else if (idOperation == 1){ if (wrapperAbsence.getEtatVariablePaieId() == 1
-                        && absenceService.findOne(wrapperAbsence.getId()).get().getEtatVariablePaieId() == 1) {
-                    wrapperAbsence.setEtatVariablePaieId((long) 2);
-                    AbsenceDTO absenceDTO = wrapperAbsenceMapper.toAbsenceDTO(wrapperAbsence);
-                    AbsenceDTO result = absenceService.save(absenceDTO);
-                    if (result != null) {
-                        nbVariablesUpdated++;
+                } else if (idOperation == 1) {
+                    if (wrapperAbsence.getEtatVariablePaieId() == 1
+                            && absenceService.findOne(wrapperAbsence.getId()).get().getEtatVariablePaieId() == 1) {
+                        wrapperAbsence.setEtatVariablePaieId((long) 2);
+                        AbsenceDTO absenceDTO = wrapperAbsenceMapper.toAbsenceDTO(wrapperAbsence);
+                        AbsenceDTO result = absenceService.save(absenceDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
                     }
-                }
-
-                } else if (idOperation == 2){ if (wrapperAbsence.getEtatVariablePaieId() == 2
-                    && absenceService.findOne(wrapperAbsence.getId()).get().getEtatVariablePaieId() == 2) {
-                    wrapperAbsence.setEtatVariablePaieId((long) 3);
-                    AbsenceDTO absenceDTO = wrapperAbsenceMapper.toAbsenceDTO(wrapperAbsence);
-                    AbsenceDTO result = absenceService.save(absenceDTO);
-                    if (result != null) {
-                        nbVariablesUpdated++;
+                } else if (idOperation == 2) {
+                    if (wrapperAbsence.getEtatVariablePaieId() == 2
+                            && absenceService.findOne(wrapperAbsence.getId()).get().getEtatVariablePaieId() == 2) {
+                        wrapperAbsence.setEtatVariablePaieId((long) 3);
+                        AbsenceDTO absenceDTO = wrapperAbsenceMapper.toAbsenceDTO(wrapperAbsence);
+                        AbsenceDTO result = absenceService.save(absenceDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
                     }
-                }
                 } else {
                     variablesNonTraitees.append("\n").append(wrapperAbsence.toString());
                 }
@@ -173,7 +171,9 @@ public class VariableDePaieResource {
                         && autresVariableService.findOne(autresVariableDTO.getId()).get().getEtatVariablePaieId() == 1) {
                     autresVariableDTO.setEtatVariablePaieId((long) 2);
                     AutresVariableDTO result = autresVariableService.save(autresVariableDTO);
-                    if (result != null) {nbVariablesUpdated++;}
+                    if (result != null) {
+                        nbVariablesUpdated++;
+                    }
                 } else {
                     variablesNonTraitees.append("\n").append(autresVariableDTO.toString());
                 }
@@ -189,13 +189,28 @@ public class VariableDePaieResource {
                     throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
                 } else if (!avanceRappelSalaireService.findOne(avanceRappelSalaireDTO.getId()).isPresent()) {
                     variablesNonTraitees.append("\n").append(avanceRappelSalaireDTO.toString()).append("\nid ").append(avanceRappelSalaireDTO.getId()).append(" does not exist");
-                } else if (avanceRappelSalaireDTO.getEtatVariablePaieId() == 1
-                        && avanceRappelSalaireService.findOne(avanceRappelSalaireDTO.getId()).get().getEtatVariablePaieId() == 1) {
-                    avanceRappelSalaireDTO.setEtatVariablePaieId((long) 2);
-                    AvanceRappelSalaireDTO result = avanceRappelSalaireService.save(avanceRappelSalaireDTO);
-                    if (result != null) {nbVariablesUpdated++;}
-                } else {
-                    variablesNonTraitees.append("\n").append(avanceRappelSalaireDTO.toString());
+                } else if (idOperation == 1) {
+                    if (avanceRappelSalaireDTO.getEtatVariablePaieId() == 1
+                            && avanceRappelSalaireService.findOne(avanceRappelSalaireDTO.getId()).get().getEtatVariablePaieId() == 1) {
+                        avanceRappelSalaireDTO.setEtatVariablePaieId((long) 2);
+                        AvanceRappelSalaireDTO result = avanceRappelSalaireService.save(avanceRappelSalaireDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
+                } else if (idOperation == 2) {
+                    if (avanceRappelSalaireDTO.getEtatVariablePaieId() == 2
+                            && avanceRappelSalaireService.findOne(avanceRappelSalaireDTO.getId()).get().getEtatVariablePaieId() == 2) {
+                        {
+                            avanceRappelSalaireDTO.setEtatVariablePaieId((long) 3);
+                            AvanceRappelSalaireDTO result = avanceRappelSalaireService.save(avanceRappelSalaireDTO);
+                            if (result != null) {
+                                nbVariablesUpdated++;
+                            }
+                        }
+                    } else {
+                        variablesNonTraitees.append("\n").append(avanceRappelSalaireDTO.toString());
+                    }
                 }
             }
         }
@@ -209,11 +224,24 @@ public class VariableDePaieResource {
                     throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
                 } else if (!heuresSupplementairesService.findOne(heuresSupplementairesDTO.getId()).isPresent()) {
                     variablesNonTraitees.append("\n").append(heuresSupplementairesDTO.toString()).append("\nid ").append(heuresSupplementairesDTO.getId()).append(" does not exist");
-                } else if (heuresSupplementairesDTO.getEtatVariablePaieId() == 1
-                        && heuresSupplementairesService.findOne(heuresSupplementairesDTO.getId()).get().getEtatVariablePaieId() == 1) {
-                    heuresSupplementairesDTO.setEtatVariablePaieId((long) 2);
-                    HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
-                    if (result != null) {nbVariablesUpdated++;}
+                } else if  (idOperation == 1) {
+                    if (heuresSupplementairesDTO.getEtatVariablePaieId() == 1
+                            && heuresSupplementairesService.findOne(heuresSupplementairesDTO.getId()).get().getEtatVariablePaieId() == 1) {
+                        heuresSupplementairesDTO.setEtatVariablePaieId((long) 2);
+                        HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
+                } else if  (idOperation == 2) {
+                    if (heuresSupplementairesDTO.getEtatVariablePaieId() == 2
+                            && heuresSupplementairesService.findOne(heuresSupplementairesDTO.getId()).get().getEtatVariablePaieId() == 2) {
+                        heuresSupplementairesDTO.setEtatVariablePaieId((long) 3);
+                        HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
                 } else {
                     variablesNonTraitees.append("\n").append(heuresSupplementairesDTO.toString());
                 }
@@ -229,12 +257,26 @@ public class VariableDePaieResource {
                     throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
                 } else if (!noteDeFraisService.findOne(wrapperNoteDeFrais.getId()).isPresent()) {
                     variablesNonTraitees.append("\n").append(wrapperNoteDeFrais.toString()).append("\nid ").append(wrapperNoteDeFrais.getId()).append(" does not exist");
-                } else if (wrapperNoteDeFrais.getEtatVariablePaieId() == 1
+                } else if  (idOperation == 1) {
+                    if (wrapperNoteDeFrais.getEtatVariablePaieId() == 1
                         && noteDeFraisService.findOne(wrapperNoteDeFrais.getId()).get().getEtatVariablePaieId() == 1) {
-                    wrapperNoteDeFrais.setEtatVariablePaieId((long) 2);
-                    NoteDeFraisDTO noteDeFraisDTO = wrapperNoteDeFraisMapper.toNoteDeFraisDTO(wrapperNoteDeFrais);
-                    NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
-                    if (result != null) {nbVariablesUpdated++;}
+                        wrapperNoteDeFrais.setEtatVariablePaieId((long) 2);
+                        NoteDeFraisDTO noteDeFraisDTO = wrapperNoteDeFraisMapper.toNoteDeFraisDTO(wrapperNoteDeFrais);
+                        NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
+                } else if  (idOperation == 2) {
+                    if (wrapperNoteDeFrais.getEtatVariablePaieId() == 2
+                            && noteDeFraisService.findOne(wrapperNoteDeFrais.getId()).get().getEtatVariablePaieId() == 2) {
+                        wrapperNoteDeFrais.setEtatVariablePaieId((long) 3);
+                        NoteDeFraisDTO noteDeFraisDTO = wrapperNoteDeFraisMapper.toNoteDeFraisDTO(wrapperNoteDeFrais);
+                        NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
                 } else {
                     variablesNonTraitees.append("\n").append(wrapperNoteDeFrais.toString());
                 }
@@ -244,27 +286,40 @@ public class VariableDePaieResource {
         // Prime
         List<WrapperPrime> wrapperPrimeList = wrapperVariablesPaieToUpdate.getWrapperPrimeList();
         if (!wrapperPrimeList.isEmpty()) {
-            nbVariablesToUpdate++;
             for (WrapperPrime wrapperPrime : wrapperPrimeList) {
+                nbVariablesToUpdate++;
                 if (wrapperPrime.getId() == null) {
                     throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
                 } else if (!primeService.findOne(wrapperPrime.getId()).isPresent()) {
                     variablesNonTraitees.append("\n").append(wrapperPrime.toString()).append("\nid ").append(wrapperPrime.getId()).append(" does not exist");
-                } else if (wrapperPrime.getEtatVariablePaieId() == 1
+                } else if  (idOperation == 1) {
+                    if (wrapperPrime.getEtatVariablePaieId() == 1
                         && primeService.findOne(wrapperPrime.getId()).get().getEtatVariablePaieId() == 1) {
-                    wrapperPrime.setEtatVariablePaieId((long) 2);
-                    PrimeDTO primeDTO = wrapperPrimeMapper.toPrimeDTO(wrapperPrime);
-                    PrimeDTO result = primeService.save(primeDTO);
-                    if (result != null) {nbVariablesUpdated++;}
+                        wrapperPrime.setEtatVariablePaieId((long) 2);
+                        PrimeDTO primeDTO = wrapperPrimeMapper.toPrimeDTO(wrapperPrime);
+                        PrimeDTO result = primeService.save(primeDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
+                } else if  (idOperation == 2) {
+                    if (wrapperPrime.getEtatVariablePaieId() == 2
+                            && primeService.findOne(wrapperPrime.getId()).get().getEtatVariablePaieId() == 2) {
+                        wrapperPrime.setEtatVariablePaieId((long) 3);
+                        PrimeDTO primeDTO = wrapperPrimeMapper.toPrimeDTO(wrapperPrime);
+                        PrimeDTO result = primeService.save(primeDTO);
+                        if (result != null) {
+                            nbVariablesUpdated++;
+                        }
+                    }
                 } else {
                     variablesNonTraitees.append("\n").append(wrapperPrime.toString());
                 }
             }
         }
 
-
-        bilanTraitement = "Variable(s) de paie " +typeOperation + "(s) : " + nbVariablesUpdated + " / " + nbVariablesToUpdate
-                + (nbVariablesUpdated < nbVariablesToUpdate ? "\nVariable(s) de paie non-" +typeOperation + "(s) : " + variablesNonTraitees : "");
+        bilanTraitement = "Variable(s) de paie " + typeOperation + "(s) : " + nbVariablesUpdated + " / " + nbVariablesToUpdate
+                + (nbVariablesUpdated < nbVariablesToUpdate ? "\nVariable(s) de paie non-" + typeOperation + "(s) : " + variablesNonTraitees : "");
 
         if (nbVariablesUpdated == nbVariablesToUpdate) {
             return ResponseEntity.status(201).headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "Traitement de Variable(s) de Paie")).body(bilanTraitement);
@@ -273,7 +328,5 @@ public class VariableDePaieResource {
         } else { // certaines variables mais pas toutes ont pu être traitées
             return ResponseEntity.status(206).headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, "Traitement de Variable(s) de Paie")).body(bilanTraitement);
         }
-
     }
-
 }
