@@ -31,21 +31,28 @@ public class FilesController {
     /**
      * {@code POST  /upload} : Upload a new file.
      *
-     * @param file the file to upload.
+     * @param file      the file to upload.
      * @param absenceId the ID linked to Absence.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body a personalized message,
      * or with status {@code 400 (Bad Request)} if the Document cannot be created,
      * or with status {@code 417 (Expectation Failed) if an error occured during upload}
      */
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId,
+        @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId) {
         String message = "";
         try {
             storageService.save(file);
             try {
                 /* Crée l'entité Document liée */
                 DocumentDTO documentDTO = new DocumentDTO();
-                documentDTO.setAbsenceId(absenceId);
+                if (absenceId != -1) {
+                    documentDTO.setAbsenceId(absenceId);
+                } else if (noteDeFraisId != -1) {
+                    documentDTO.setNoteDeFraisId(noteDeFraisId);
+                } else if (autresVariableId != -1) {
+                    documentDTO.setAutresVariablesId(autresVariableId);
+                }
                 documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
                 documentDTO.setNom(file.getOriginalFilename());
                 DocumentDTO result = documentService.save(documentDTO);
