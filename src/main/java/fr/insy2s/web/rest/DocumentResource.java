@@ -1,29 +1,26 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.DocumentService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.DocumentDTO;
-
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import java.io.*;
-import fr.insy2s.utils.files.PdfUtil;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Document}.
@@ -153,7 +150,7 @@ public class DocumentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
      */
     @GetMapping("/documentsAutre/{id}")
-    public List<DocumentDTO> getDocumentsByAutresVariableId(@PathVariable Long id) {
+    public List<DocumentDTO> getDocumentsByAutresVariablesId(@PathVariable Long id) {
         log.debug("REST request to get all Documents by Autre id");
         return documentService.findAllByAutresVariablesId(id);
     }
