@@ -1,13 +1,7 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
-import fr.insy2s.service.FactureService;
-import fr.insy2s.service.OperationService;
 import fr.insy2s.service.ReleveService;
-import fr.insy2s.service.SocieteService;
-import fr.insy2s.service.dto.FactureDTO;
-import fr.insy2s.service.dto.OperationDTO;
-import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.utils.EtatReleveConstants;
 import fr.insy2s.utils.files.PdfUtil;
@@ -28,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,16 +41,9 @@ public class ReleveResource {
     private String applicationName;
 
     private final ReleveService releveService;
-    private final OperationService operationService;
-    private final SocieteService societeService;
-    private final FactureService factureService;
 
-    public ReleveResource(ReleveService releveService, OperationService operationService,
-                          SocieteService societeService, FactureService factureService) {
-        this.releveService      = releveService;
-        this.operationService   = operationService;
-        this.societeService     = societeService;
-        this.factureService     = factureService;
+    public ReleveResource(ReleveService releveService) {
+        this.releveService = releveService;
     }
 
     /**
@@ -171,22 +159,14 @@ public class ReleveResource {
         AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/releves/pdf/{id}")
-    public ResponseEntity getPDFArchivedStatement(@PathVariable Long id) throws JRException {
+    public ResponseEntity<byte[]> getPDFArchivedStatement(@PathVariable Long id) throws JRException {
         log.debug("REST request to get statement total solde: {}", id);
-        ReleveDTO               releveDTO                   = releveService.findOne(id).get();
-        Optional<SocieteDTO>    societeDTO                  = societeService.findOne(releveDTO.getSocieteId());
-        List<OperationDTO>      operationDTOList            = operationService.findAllByReleveId(id);
-        List<FactureDTO>        factureDTOList              = factureService.findAllInvoicesByStatement(id);
-        WrapperArchivedStatement wrapperArchivedStatement   = new WrapperArchivedStatement(
-            releveDTO.getId(),
-            releveDTO.getDateDebut(),
-            releveDTO.getDateFin(),
-            releveDTO.getSolde().toString(),
-            releveDTO.getBanque(),
-            societeDTO.get().getCivilite()
-        );
+        WrapperArchivedStatement wrapperArchivedStatement = releveService.getWrapperArchivedStatement(id);
         byte[] bytes    = PdfUtil.generateArchivedStatementAsBytes(wrapperArchivedStatement);
-        String pdfName  = "YOLO";
+        String pdfName  = new Date().getTime()
+                            + "_Releve_"
+                            + wrapperArchivedStatement.getNomSociete() + "_"
+                            + wrapperArchivedStatement.getId();
         return ResponseEntity.ok()
             .header("Content-Type", "application/pdf; charset=UTF-8")
             .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"")

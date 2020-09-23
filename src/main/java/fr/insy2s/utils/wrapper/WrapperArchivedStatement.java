@@ -1,6 +1,9 @@
 package fr.insy2s.utils.wrapper;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class WrapperArchivedStatement {
@@ -11,18 +14,21 @@ public class WrapperArchivedStatement {
     private final String solde;
     private final String banque;
     private final String nomSociete;
-//    private final List<WrapperPDFSingleOperation> operationList;
+    private final List<WrapperPDFSingleOperation> operationList;
+    private final JRBeanCollectionDataSource operationsDataSource;
 //    private final List<WrapperPDFSingleFacture> factureList;
 
-    public WrapperArchivedStatement(Long id, LocalDate dateDebut, LocalDate dateFin, String solde,
-                                    String banque, String nomSociete)
+    public WrapperArchivedStatement(Long id, String dateDebut, String dateFin, String solde,
+                                    String banque, String nomSociete, List<WrapperPDFSingleOperation> operationList)
     {
-        this.id         = id;
-        this.dateDebut  = dateDebut +"";
-        this.dateFin    = dateFin   +"";
-        this.solde      = solde;
-        this.banque     = banque;
-        this.nomSociete = nomSociete;
+        this.id                     = id;
+        this.dateDebut              = dateDebut +"";
+        this.dateFin                = dateFin   +"";
+        this.solde                  = solde;
+        this.banque                 = banque;
+        this.nomSociete             = nomSociete;
+        this.operationList          = operationList;
+        this.operationsDataSource   = new JRBeanCollectionDataSource(operationList, false);
     }
 
     public Long getId() {
@@ -47,6 +53,14 @@ public class WrapperArchivedStatement {
 
     public String getNomSociete() {
         return nomSociete;
+    }
+
+    public List<WrapperPDFSingleOperation> getOperationList() {
+        return operationList;
+    }
+
+    public JRBeanCollectionDataSource getOperationsDataSource() {
+        return operationsDataSource;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ReleveDTO;
+import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -72,4 +73,12 @@ public interface ReleveService {
      * @return Integer.
      */
     boolean changeStatutStatement(Long idReleve, Long idEtat);
+
+    /**
+     * Get WrapperArchivedStatement.
+     *
+     * @param id the id of the statement.
+     * @return WrapperArchivedStatement.
+     */
+    WrapperArchivedStatement getWrapperArchivedStatement(Long id);
 }
