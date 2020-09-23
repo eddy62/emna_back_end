@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -64,5 +65,27 @@ public class FichePaieServiceImpl implements FichePaieService {
     public void delete(Long id) {
         log.debug("Request to delete FichePaie : {}", id);
         fichePaieRepository.deleteById(id);
+    }
+
+    @Override
+    public List<FichePaieDTO> findAllByEmployeYearMonthStartMonthEnd(Long idEmploye, Integer year, Integer monthStart, Integer monthEnd) {
+        log.debug("Request to get all PaySlip with IdEmploye:{}, year:{}, monthStart:{}, monthEnd:{}", idEmploye, year, monthStart, monthEnd );
+        List<FichePaie> fichePaieList = fichePaieRepository.findAllByEmployeYearMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd );
+        List<FichePaieDTO> fichePaieDTOList = new ArrayList<>();
+        FichePaieDTO FichePaieDTOtmp ;
+        if(!fichePaieList.isEmpty()) {
+            for (FichePaie fichePaie : fichePaieList) {
+                FichePaieDTOtmp = new FichePaieDTO();
+                FichePaieDTOtmp.setId(fichePaie.getId());
+                FichePaieDTOtmp.setDebutPeriode(fichePaie.getDebutPeriode());
+                FichePaieDTOtmp.setFinPeriode(fichePaie.getFinPeriode());
+                FichePaieDTOtmp.setLienDocument(fichePaie.getLienDocument());
+                FichePaieDTOtmp.setMois(fichePaie.getMois());
+                FichePaieDTOtmp.setAnnee(fichePaie.getAnnee());
+                FichePaieDTOtmp.setEmployeId(fichePaie.getEmploye().getId());
+                fichePaieDTOList.add(FichePaieDTOtmp);
+            }
+        }
+        return fichePaieDTOList;
     }
 }
