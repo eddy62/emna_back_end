@@ -71,10 +71,10 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("Request to get Releve : {}", id);
         Optional<ReleveDTO> releve = releveRepository.findById(id)
             .map(releveMapper::toDto);
-        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
-        releve.get().setSolde(
-            solde.map(BigDecimal::doubleValue).orElse(0.0)
-        );
+//        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
+//        releve.get().setSolde(
+//            solde.map(BigDecimal::doubleValue).orElse(0.0)
+//        );
         return releve;
     }
 
@@ -101,13 +101,13 @@ public class ReleveServiceImpl implements ReleveService {
         List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
             .stream().map(releveMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
-        Optional<BigDecimal> solde;
-        for (ReleveDTO releve : releves) {
-            solde = getReleveSoldeById(releve.getId());
-            releve.setSolde(
-                solde.map(BigDecimal::doubleValue).orElse(0.0)
-             );
-        }
+//        Optional<BigDecimal> solde;
+//        for (ReleveDTO releve : releves) {
+//            solde = getReleveSoldeById(releve.getId());
+//            releve.setSolde(
+//                solde.map(BigDecimal::doubleValue).orElse(0.0)
+//             );
+//        }
         return releves;
     }
 

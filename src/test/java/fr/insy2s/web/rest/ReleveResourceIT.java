@@ -40,9 +40,6 @@ public class ReleveResourceIT {
     private static final LocalDate DEFAULT_DATE_FIN = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_FIN = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Double DEFAULT_SOLDE = 1D;
-    private static final Double UPDATED_SOLDE = 2D;
-
     private static final String DEFAULT_BANQUE = "AAAAAAAAAA";
     private static final String UPDATED_BANQUE = "BBBBBBBBBB";
 
@@ -73,7 +70,6 @@ public class ReleveResourceIT {
         Releve releve = new Releve()
             .dateDebut(DEFAULT_DATE_DEBUT)
             .dateFin(DEFAULT_DATE_FIN)
-            .solde(DEFAULT_SOLDE)
             .banque(DEFAULT_BANQUE);
         return releve;
     }
@@ -87,7 +83,6 @@ public class ReleveResourceIT {
         Releve releve = new Releve()
             .dateDebut(UPDATED_DATE_DEBUT)
             .dateFin(UPDATED_DATE_FIN)
-            .solde(UPDATED_SOLDE)
             .banque(UPDATED_BANQUE);
         return releve;
     }
@@ -114,7 +109,6 @@ public class ReleveResourceIT {
         Releve testReleve = releveList.get(releveList.size() - 1);
         assertThat(testReleve.getDateDebut()).isEqualTo(DEFAULT_DATE_DEBUT);
         assertThat(testReleve.getDateFin()).isEqualTo(DEFAULT_DATE_FIN);
-        assertThat(testReleve.getSolde()).isEqualTo(DEFAULT_SOLDE);
         assertThat(testReleve.getBanque()).isEqualTo(DEFAULT_BANQUE);
     }
 
@@ -152,7 +146,6 @@ public class ReleveResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(releve.getId().intValue())))
             .andExpect(jsonPath("$.[*].dateDebut").value(hasItem(DEFAULT_DATE_DEBUT.toString())))
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(DEFAULT_DATE_FIN.toString())))
-            .andExpect(jsonPath("$.[*].solde").value(hasItem(DEFAULT_SOLDE.doubleValue())))
             .andExpect(jsonPath("$.[*].banque").value(hasItem(DEFAULT_BANQUE)));
     }
     
@@ -169,7 +162,6 @@ public class ReleveResourceIT {
             .andExpect(jsonPath("$.id").value(releve.getId().intValue()))
             .andExpect(jsonPath("$.dateDebut").value(DEFAULT_DATE_DEBUT.toString()))
             .andExpect(jsonPath("$.dateFin").value(DEFAULT_DATE_FIN.toString()))
-            .andExpect(jsonPath("$.solde").value(DEFAULT_SOLDE.doubleValue()))
             .andExpect(jsonPath("$.banque").value(DEFAULT_BANQUE));
     }
     @Test
@@ -195,7 +187,6 @@ public class ReleveResourceIT {
         updatedReleve
             .dateDebut(UPDATED_DATE_DEBUT)
             .dateFin(UPDATED_DATE_FIN)
-            .solde(UPDATED_SOLDE)
             .banque(UPDATED_BANQUE);
         ReleveDTO releveDTO = releveMapper.toDto(updatedReleve);
 
@@ -210,7 +201,6 @@ public class ReleveResourceIT {
         Releve testReleve = releveList.get(releveList.size() - 1);
         assertThat(testReleve.getDateDebut()).isEqualTo(UPDATED_DATE_DEBUT);
         assertThat(testReleve.getDateFin()).isEqualTo(UPDATED_DATE_FIN);
-        assertThat(testReleve.getSolde()).isEqualTo(UPDATED_SOLDE);
         assertThat(testReleve.getBanque()).isEqualTo(UPDATED_BANQUE);
     }
 
