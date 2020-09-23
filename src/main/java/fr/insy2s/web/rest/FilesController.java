@@ -43,23 +43,43 @@ public class FilesController {
         @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId) {
         String message = "";
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        boolean isAbsence = false;
+        boolean isNoteDeFrais = false;
+        boolean isAutre = false;
+        String type = "";
+        String id = "";
         try {
-            storageService.save(file);
+            if (absenceId != -1) {
+                isAbsence = true;
+                type = "Absence";
+                id = absenceId.toString();
+            } else if (noteDeFraisId != -1) {
+                isNoteDeFrais = true;
+                type = "NoteDeFrais";
+                id = noteDeFraisId.toString();
+            } else if (autresVariableId != -1) {
+                isAutre = true;
+                type = "Autre";
+                id = autresVariableId.toString();
+            }
+            storageService.save(file, type, id);
             try {
                 /* Crée l'entité Document liée */
                 DocumentDTO documentDTO = new DocumentDTO();
-                if (absenceId != -1) {
+                if (isAbsence) {
                     documentDTO.setAbsenceId(absenceId);
-                } else if (noteDeFraisId != -1) {
+                    documentDTO.setType(type);
+                } else if (isNoteDeFrais) {
                     documentDTO.setNoteDeFraisId(noteDeFraisId);
-                } else if (autresVariableId != -1) {
+                    documentDTO.setType(type);
+                } else if (isAutre) {
                     documentDTO.setAutresVariablesId(autresVariableId);
+                    documentDTO.setType(type);
                 }
                 String extension[] = file.getContentType().split("/");
                 documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
                 documentDTO.setNom("file" + timestamp.getTime() + "." + extension[1]);
-                DocumentDTO result = documentService.save(documentDTO);
-                System.out.println(result);
+                documentService.save(documentDTO);
             } catch (Exception e) {
                 message = "Error: could not create the entity Document linked to: " + file.getOriginalFilename() + "!";
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);

@@ -30,11 +30,11 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, String type, String id) {
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             String extension[] = file.getContentType().split("/");
-            Files.copy(file.getInputStream(), this.root.resolve("file" + timestamp.getTime() + "." + extension[1]));
+            Files.copy(file.getInputStream(), this.root.resolve(id + "_" + type + "_" + timestamp.getTime() + "." + extension[1]));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
