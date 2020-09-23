@@ -40,9 +40,9 @@ public class FilesController {
      */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId,
-        @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId) {
+        @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId,
+        @RequestParam("fileNumber") String fileNumber) {
         String message = "";
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         boolean isAbsence = false;
         boolean isNoteDeFrais = false;
         boolean isAutre = false;
@@ -62,7 +62,7 @@ public class FilesController {
                 type = "Autre";
                 id = autresVariableId.toString();
             }
-            storageService.save(file, type, id);
+            storageService.save(file, type, id, fileNumber);
             try {
                 /* Crée l'entité Document liée */
                 DocumentDTO documentDTO = new DocumentDTO();
@@ -78,7 +78,7 @@ public class FilesController {
                 }
                 String extension[] = file.getContentType().split("/");
                 documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
-                documentDTO.setNom("file" + timestamp.getTime() + "." + extension[1]);
+                documentDTO.setNom(id + "_" + type + "_" + fileNumber + "." + extension[1]);
                 documentService.save(documentDTO);
             } catch (Exception e) {
                 message = "Error: could not create the entity Document linked to: " + file.getOriginalFilename() + "!";
