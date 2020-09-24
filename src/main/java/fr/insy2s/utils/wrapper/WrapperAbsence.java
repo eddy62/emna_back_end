@@ -45,8 +45,9 @@ public class WrapperAbsence {
     /**
      * Constructeur WrapperAbsence avec paramètres
      *
-     * @param absenceDTO
-     * @param typeAbsenceDTO
+     * @param absenceDTO the absenceDTO
+     * @param typeAbsenceDTO the typeAbsenceDTO
+     * @param documentDTOList the list of documentDTOList
      */
     public  WrapperAbsence(AbsenceDTO absenceDTO, TypeAbsenceDTO typeAbsenceDTO, List<DocumentDTO> documentDTOList){
 

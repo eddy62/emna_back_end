@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.stream.Stream;
 
 import fr.insy2s.service.FilesStorageService;
@@ -29,9 +30,10 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, String type, String id, String fileNumber) {
         try {
-            Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            String extension[] = file.getContentType().split("/");
+            Files.copy(file.getInputStream(), this.root.resolve(id + "_" + type + "_" + fileNumber + "." + extension[1]));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }

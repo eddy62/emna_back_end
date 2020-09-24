@@ -41,12 +41,12 @@ public class WrapperVariablesPaie {
     /**
      * Constructeur WrapperVariablesPaie avec paramètres
      *
-     * @param wrapperAbsenceList
-     * @param wrapperAutresVariableList
-     * @param avanceRappelSalaireDTOList
-     * @param heuresSupplementairesDTOList
-     * @param wrapperNoteDeFraisList
-     * @param wrapperPrimeList
+     * @param wrapperAbsenceList the list of WrapperAbsence
+     * @param wrapperAutresVariableList the list of WrapperAutresVariable
+     * @param avanceRappelSalaireDTOList the list of AvanceRappelSalaireDTO
+     * @param heuresSupplementairesDTOList the list of HeuresSupplementairesDTO
+     * @param wrapperNoteDeFraisList the list of WrapperNoteDeFrais
+     * @param wrapperPrimeList the list of WrapperPrime
      */
     public WrapperVariablesPaie(List<WrapperAbsence> wrapperAbsenceList,
                                 List<WrapperAutresVariable> wrapperAutresVariableList,

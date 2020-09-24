@@ -21,7 +21,7 @@ public interface FilesStorageService {
      *
      * @param file the file to save.
      */
-    public void save(MultipartFile file);
+    public void save(MultipartFile file, String type, String id, String fileNumber);
 
     /**
      * Get the "name" file.

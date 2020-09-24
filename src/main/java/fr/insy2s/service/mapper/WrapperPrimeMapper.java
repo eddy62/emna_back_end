@@ -15,8 +15,8 @@ public class WrapperPrimeMapper {
     /**
      * Builder WrapperPrime
      *
-     * @param primeDTO
-     * @param typePrimeDTO
+     * @param primeDTO the primeDTO for building a WrapperPrime
+     * @param typePrimeDTO the typePrimeDTO for building a WrapperPrime
      *
      * @return wrapperPrime
      */
@@ -41,7 +41,7 @@ public class WrapperPrimeMapper {
     /**
      * Mappe WrapperPrime to PrimeDto
      *
-     * @param wrapperPrime
+     * @param wrapperPrime the wrapperPrime to map to primeDTO
      *
      * @return primeDTO
      */
@@ -62,7 +62,7 @@ public class WrapperPrimeMapper {
     /**
      * Mappe WrapperPrime to TypePrimeDto
      *
-     * @param wrapperPrime
+     * @param wrapperPrime the wrapperPrime to map to typePrimeDTO
      *
      * @return typePrimeDTO
      */    public TypePrimeDTO toTypePrimeDTO(final WrapperPrime wrapperPrime){

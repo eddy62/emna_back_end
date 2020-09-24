@@ -38,7 +38,8 @@ public class WrapperAutresVariable {
     /**
      * Constructeur WrapperAutresVariable avec paramètres
      *
-     * @param autresVariableDTO
+     * @param autresVariableDTO the autresVariableDTO
+     * @param documentDTOList the list of DocumentDTO
      */
     public WrapperAutresVariable(AutresVariableDTO autresVariableDTO, List<DocumentDTO> documentDTOList){
 
@@ -56,8 +57,6 @@ public class WrapperAutresVariable {
 
         // Documents
         this.documentDTOList = documentDTOList;
-
-
     }
 
     // Getters / Setters

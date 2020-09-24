@@ -1,6 +1,7 @@
 package fr.insy2s.web.rest;
 
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,25 +32,54 @@ public class FilesController {
     /**
      * {@code POST  /upload} : Upload a new file.
      *
-     * @param file the file to upload.
+     * @param file      the file to upload.
      * @param absenceId the ID linked to Absence.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body a personalized message,
      * or with status {@code 400 (Bad Request)} if the Document cannot be created,
      * or with status {@code 417 (Expectation Failed) if an error occured during upload}
      */
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId,
+        @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId,
+        @RequestParam("fileNumber") String fileNumber) {
         String message = "";
+        boolean isAbsence = false;
+        boolean isNoteDeFrais = false;
+        boolean isAutre = false;
+        String type = "";
+        String id = "";
         try {
-            storageService.save(file);
+            if (absenceId != -1) {
+                isAbsence = true;
+                type = "Absence";
+                id = absenceId.toString();
+            } else if (noteDeFraisId != -1) {
+                isNoteDeFrais = true;
+                type = "NoteDeFrais";
+                id = noteDeFraisId.toString();
+            } else if (autresVariableId != -1) {
+                isAutre = true;
+                type = "Autre";
+                id = autresVariableId.toString();
+            }
+            storageService.save(file, type, id, fileNumber);
             try {
                 /* Crée l'entité Document liée */
                 DocumentDTO documentDTO = new DocumentDTO();
-                documentDTO.setAbsenceId(absenceId);
+                if (isAbsence) {
+                    documentDTO.setAbsenceId(absenceId);
+                    documentDTO.setType(type);
+                } else if (isNoteDeFrais) {
+                    documentDTO.setNoteDeFraisId(noteDeFraisId);
+                    documentDTO.setType(type);
+                } else if (isAutre) {
+                    documentDTO.setAutresVariablesId(autresVariableId);
+                    documentDTO.setType(type);
+                }
+                String extension[] = file.getContentType().split("/");
                 documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
-                documentDTO.setNom(file.getOriginalFilename());
-                DocumentDTO result = documentService.save(documentDTO);
-                System.out.println(result);
+                documentDTO.setNom(id + "_" + type + "_" + fileNumber + "." + extension[1]);
+                documentService.save(documentDTO);
             } catch (Exception e) {
                 message = "Error: could not create the entity Document linked to: " + file.getOriginalFilename() + "!";
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);

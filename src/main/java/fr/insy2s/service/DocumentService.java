@@ -43,14 +43,27 @@ public interface DocumentService {
      */
     void delete(Long id);
 
+    /**
+     * Get a set of Document from a list of MultipartFile files
+     *
+     * @param files the files to get a Documents from.
+     * @return the set of Entity Document
+     */
     Set<Document> multiPartFilesToDocuments(List<MultipartFile> files);
 
+    /**
+     * Get one Document from a MultipartFile file
+     *
+     * @param file the file to get a Document from.
+     * @return the Entity Document
+     */
     Document multiPartFileToDocument(MultipartFile file);
 
     /**
      * Get all the documents by "id" Absence.
      *
-     * @return the list of entities.
+     * @param id the id of Absence to get all documents from.
+     * @return the list of DocumentDTO.
      */
     List<DocumentDTO> findAllByAbsenceId(Long id);
 
@@ -62,9 +75,10 @@ public interface DocumentService {
     List<DocumentDTO> findAllByNoteDeFraisId(Long id);
 
     /**
-     * Get all the documents by "id" Autre
+     * Get all the documents by "id" AutresVariable
      *
-     * @return the list of entities.
+     * @param id the id of AutresVariable to get all documents from.
+     * @return the list of DocumentDTO.
      */
     List<DocumentDTO> findAllByAutresVariablesId(Long id);
 }

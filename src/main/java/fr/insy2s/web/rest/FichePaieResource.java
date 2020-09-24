@@ -1,6 +1,8 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.domain.FichePaie;
 import fr.insy2s.service.FichePaieService;
+import fr.insy2s.utils.wrapper.WrapperVariablesPaie;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FichePaieDTO;
 
@@ -100,6 +102,21 @@ public class FichePaieResource {
         log.debug("REST request to get FichePaie : {}", id);
         Optional<FichePaieDTO> fichePaieDTO = fichePaieService.findOne(id);
         return ResponseUtil.wrapOrNotFound(fichePaieDTO);
+    }
+
+    /**
+     * {@code GET /fiche-paies/employe/:idEmploye/annee/:year/moisDu/:monthStart/moisFin/:monthEnd} : get all the PaySlip by one employe, by one year and months.
+     *
+     * @param idEmploye id of the Employe in all PaySLip
+     * @param year      year in all PaySLip
+     * @param monthStart      min month in all PaySLip
+     * @param monthEnd        max month in all PaySLip
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the wrapperVariablesPaie in body
+     */
+    @GetMapping("/fiche-paies/employe/{idEmploye}/annee/{year}/moisDu/{monthStart}/moisFin/{monthEnd}")
+    public List<FichePaieDTO> getAllPayslipByEmployeIdMonthStartMonthEnd(@PathVariable Long idEmploye, @PathVariable Integer year, @PathVariable Integer monthStart , @PathVariable Integer monthEnd) {
+        log.debug("REST request to get all PaySlip by employe:{}, annee:{}, moisDu:{}, moisFin:{}", idEmploye, year, monthStart, monthEnd);
+        return fichePaieService.findAllByEmployeYearMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd);
     }
 
     /**

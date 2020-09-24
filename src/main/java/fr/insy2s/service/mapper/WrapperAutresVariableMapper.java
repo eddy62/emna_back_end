@@ -5,7 +5,7 @@ import fr.insy2s.utils.wrapper.WrapperAutresVariable;
 import org.springframework.stereotype.Service;
 
 /**
- * Mapper for the entity NoteDeFrais,  and the DTO WrapperAutresVariable.
+ * Mapper for the AutresVariableDTO to WrapperAutresVariable,  WrapperAutresVariable to AutresVariableDTO.
  *
  */
 @Service
@@ -14,7 +14,7 @@ public class WrapperAutresVariableMapper {
     /**
      * Builder WrapperAutresVariable
      *
-     * @param autresVariableDTO : the autresVariableDTO for building a wrapperAutresVariable
+     * @param autresVariableDTO the autresVariableDTO for building a wrapperAutresVariable
      *
      * @return wrapperAutresVariable
      */
@@ -38,7 +38,7 @@ public class WrapperAutresVariableMapper {
     /**
      * Mappe WrapperAutresVariable to NoteDeFraisDto
      *
-     * @param wrapperAutresVariable : the wrapperAutresVariable to map to autresVariableDTO
+     * @param wrapperAutresVariable the wrapperAutresVariable to map to autresVariableDTO
      *
      * @return autresVariableDTO
      */
