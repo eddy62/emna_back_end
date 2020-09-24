@@ -1,23 +1,23 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.Facture;
 import fr.insy2s.domain.Operation;
-import fr.insy2s.repository.EtatReleveRepository;
-import fr.insy2s.repository.FactureRepository;
-import fr.insy2s.repository.OperationRepository;
+import fr.insy2s.domain.Societe;
+import fr.insy2s.repository.*;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.domain.Releve;
-import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
+import fr.insy2s.utils.DateUtil;
+import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
+import fr.insy2s.utils.wrapper.WrapperPDFSingleOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,12 +39,15 @@ public class ReleveServiceImpl implements ReleveService {
 
     private final FactureRepository factureRepository;
 
-    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository, OperationRepository operationRepository, FactureRepository factureRepository) {
+    private final SocieteRepository societeRepository;
+
+    public ReleveServiceImpl(ReleveRepository releveRepository, ReleveMapper releveMapper, EtatReleveRepository etatReleveRepository, OperationRepository operationRepository, FactureRepository factureRepository, SocieteRepository societeRepository) {
         this.releveRepository = releveRepository;
         this.releveMapper = releveMapper;
         this.etatReleveRepository = etatReleveRepository;
         this.operationRepository = operationRepository;
         this.factureRepository = factureRepository;
+        this.societeRepository = societeRepository;
     }
 
     @Override
@@ -148,5 +151,43 @@ public class ReleveServiceImpl implements ReleveService {
         log.debug("REST request to validate Releve");
         Integer result = releveRepository.validateRelever(idReleve, idEtat);
         return result != 0;
+    }
+
+    // C'est mieux de faire appel à un autre service our faire une nouvelle requête ?
+
+    @Override
+    public WrapperArchivedStatement getWrapperArchivedStatement(Long idStatement)
+    {
+        ReleveDTO releveDTO                 = this.findOne(idStatement).orElse(null);
+        assert releveDTO                    != null;
+        Optional<Societe> societeDTO        = societeRepository.findById(releveDTO.getSocieteId());
+        List<Operation> operationDTOList    = operationRepository.findAllByReleveId(idStatement);
+        List<Facture> factureDTOList        = factureRepository.findAllInvoicesByStatement(idStatement);
+        return new WrapperArchivedStatement(
+            releveDTO.getId(),
+            DateUtil.convertToFrenchDate(releveDTO.getDateDebut()),
+            DateUtil.convertToFrenchDate(releveDTO.getDateFin()),
+            releveDTO.getSolde().toString(),
+            releveDTO.getBanque(),
+            societeDTO.get().getCivilite(),
+            getListOfWrapperPDFSingleOperation(operationDTOList)
+        );
+    }
+
+    private List<WrapperPDFSingleOperation> getListOfWrapperPDFSingleOperation(List<Operation> operations)
+    {
+        List<WrapperPDFSingleOperation> wrapperPDFSingleOperations = new ArrayList<>();
+
+        operations.forEach(operation -> {
+            wrapperPDFSingleOperations.add( new WrapperPDFSingleOperation(
+                operation.getId(),
+                DateUtil.convertToFrenchDate(operation.getDate()),
+                operation.getDescription(),
+                operation.getType(),
+                operation.getSolde() + "€"
+            ));
+        });
+
+        return wrapperPDFSingleOperations;
     }
 }
