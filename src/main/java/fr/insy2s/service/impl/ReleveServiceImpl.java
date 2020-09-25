@@ -9,12 +9,14 @@ import fr.insy2s.domain.Releve;
 import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
+import fr.insy2s.utils.wrapper.WrapperReleveSolde;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -67,15 +69,17 @@ public class ReleveServiceImpl implements ReleveService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ReleveDTO> findOne(Long id) {
+    public Optional<WrapperReleveSolde> findOne(Long id) {
         log.debug("Request to get Releve : {}", id);
         Optional<ReleveDTO> releve = releveRepository.findById(id)
             .map(releveMapper::toDto);
-//        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
+        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
+        BigDecimal soldeBig = solde.orElse(new BigDecimal(0));
+        Optional<WrapperReleveSolde> wrapperReleveSolde = Optional.of(new WrapperReleveSolde(releve.orElse(new ReleveDTO()),soldeBig));
 //        releve.get().setSolde(
 //            solde.map(BigDecimal::doubleValue).orElse(0.0)
 //        );
-        return releve;
+        return wrapperReleveSolde;
     }
 
     @Override
@@ -96,20 +100,36 @@ public class ReleveServiceImpl implements ReleveService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
+    public List<WrapperReleveSolde> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
         log.debug("Request to get all Releves by Societe Id");
         List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
             .stream().map(releveMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
-//        Optional<BigDecimal> solde;
-//        for (ReleveDTO releve : releves) {
-//            solde = getReleveSoldeById(releve.getId());
-//            releve.setSolde(
-//                solde.map(BigDecimal::doubleValue).orElse(0.0)
-//             );
-//        }
-        return releves;
+        List<WrapperReleveSolde> wrapperReleveSoldes = new ArrayList<>();
+        Optional<BigDecimal> solde;
+        for (int i = 0; i<releves.size();i++) {
+            solde = getReleveSoldeById(releves.get(i).getId());
+            WrapperReleveSolde wrapperReleveSolde = new WrapperReleveSolde(releves.get(i),solde.orElse(new BigDecimal(0)));
+            wrapperReleveSoldes.add(wrapperReleveSolde);
+        }
+        return wrapperReleveSoldes;
     }
+
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Optional<WrapperReleveSolde> findOne(Long id) {
+//        log.debug("Request to get Releve : {}", id);
+//        Optional<ReleveDTO> releve = releveRepository.findById(id)
+//            .map(releveMapper::toDto);
+//        Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
+//        BigDecimal soldeBig = solde.get();
+//        Optional<WrapperReleveSolde> wrapperReleveSolde = Optional.of(new WrapperReleveSolde(releve.orElse(new ReleveDTO()),soldeBig));
+////        releve.get().setSolde(
+////            solde.map(BigDecimal::doubleValue).orElse(0.0)
+////        );
+//        return wrapperReleveSolde;
+//    }
+
 
     @Override
     public Optional<BigDecimal> getReleveSoldeById(Long id)

@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.ReleveDTO;
+import fr.insy2s.utils.wrapper.WrapperReleveSolde;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,7 +34,7 @@ public interface ReleveService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ReleveDTO> findOne(Long id);
+    Optional<WrapperReleveSolde> findOne(Long id);
 
     /**
      * Delete the "id" releve.
@@ -46,7 +47,7 @@ public interface ReleveService {
 
     List<ReleveDTO> findAllByEtatReleveId(Long id);
 
-    List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete);
+    List<WrapperReleveSolde> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete);
 
     Optional<BigDecimal> getReleveSoldeById(Long id);
 

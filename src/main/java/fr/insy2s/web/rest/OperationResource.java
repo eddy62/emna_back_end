@@ -6,6 +6,7 @@ import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.OperationDTO;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.utils.CheckUtil;
+import fr.insy2s.utils.wrapper.WrapperReleveSolde;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -59,14 +60,14 @@ public class OperationResource {
             throw new BadRequestAlertException("A new operation cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        Optional<ReleveDTO> optionalReleveDTO = releveService.findOne(operationDTO.getReleveId());
+        Optional<WrapperReleveSolde> optionalReleveDTO = releveService.findOne(operationDTO.getReleveId());
 
         if (optionalReleveDTO.isPresent()) {
-            ReleveDTO releve = optionalReleveDTO.get();
+            WrapperReleveSolde releve = optionalReleveDTO.get();
             if (operationDTO.getDate() == null || !CheckUtil.isDateBetween(
                     operationDTO.getDate(),
-                    releve.getDateDebut(),
-                    releve.getDateFin())
+                    releve.getReleve().getDateDebut(),
+                    releve.getReleve().getDateFin())
             ) {
                 throw new BadRequestAlertException("La date de l'opération est invalide", ENTITY_NAME, "dateOutOfRange");
             }
