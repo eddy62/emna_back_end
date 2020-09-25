@@ -1,11 +1,11 @@
-id;numero;date;prix;moyen_de_paiement;raison
-1;56976;2020-09-10;98361;Hat secured line;architectures scalable
-2;884;2020-09-10;93708;Corporate;Berkshire
-3;8592;2020-09-10;69138;reinvent;Versatile Washington red
-4;61590;2020-09-10;12993;capability Bedfordshire;Unbranded
-5;22156;2020-09-10;17851;Auto Loan Account neural-net;Pataca Rwanda Franc
-6;76201;2020-09-10;18736;Home Loan Account;facilitate
-7;52702;2020-09-10;36199;Brand ROI;District black
-8;50768;2020-09-10;76716;South Dakota;California
-9;75915;2020-09-11;69608;Handcrafted Granite Shirt Nepal Books;Quetzal Buckinghamshire utilisation
-10;59783;2020-09-10;15137;United States Minor Outlying Islands;Toys Jewelery index
+id;numero;date;prix;moyen_de_paiement;raison;societe_id;operation_id;client_fournisseur_id;etat_depense_id
+1;56976;2020-09-10;98361;Hat secured line;architectures scalable;1;1;1;1
+2;884;2020-09-10;93708;Corporate;Berkshire;2;1;2;2
+3;8592;2020-09-10;69138;reinvent;Versatile Washington red;3;1;1;1
+4;61590;2020-09-10;12993;capability Bedfordshire;Unbranded;1;2;2;2
+5;22156;2020-09-10;17851;Auto Loan Account neural-net;Pataca Rwanda Franc;2;2;10;3
+6;76201;2020-09-10;18736;Home Loan Account;facilitate;3;14;10;4
+7;52702;2020-09-10;36199;Brand ROI;District black;1;14;3;5
+8;50768;2020-09-10;76716;South Dakota;California;2;15;4;5
+9;75915;2020-09-11;69608;Handcrafted Granite Shirt Nepal Books;Quetzal Buckinghamshire utilisation;3;15;5;6
+10;59783;2020-09-10;15137;United States Minor Outlying Islands;Toys Jewelery index;1;15;6;7
