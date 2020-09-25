@@ -43,9 +43,6 @@ export const Releve = (props: IReleveProps) => {
                   <Translate contentKey="emnaBackEndApp.releve.dateFin">Date Fin</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.releve.solde">Solde</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.releve.banque">Banque</Translate>
                 </th>
                 <th>
@@ -67,7 +64,6 @@ export const Releve = (props: IReleveProps) => {
                   </td>
                   <td>{releve.dateDebut ? <TextFormat type="date" value={releve.dateDebut} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{releve.dateFin ? <TextFormat type="date" value={releve.dateFin} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
-                  <td>{releve.solde}</td>
                   <td>{releve.banque}</td>
                   <td>{releve.etatReleveId ? <Link to={`etat-releve/${releve.etatReleveId}`}>{releve.etatReleveId}</Link> : ''}</td>
                   <td>{releve.societeId ? <Link to={`societe/${releve.societeId}`}>{releve.societeId}</Link> : ''}</td>

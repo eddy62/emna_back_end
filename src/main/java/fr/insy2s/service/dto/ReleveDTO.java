@@ -14,8 +14,6 @@ public class ReleveDTO implements Serializable {
 
     private LocalDate dateFin;
 
-    private Double solde;
-
     private String banque;
 
 
@@ -45,14 +43,6 @@ public class ReleveDTO implements Serializable {
 
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
-    }
-
-    public Double getSolde() {
-        return solde;
-    }
-
-    public void setSolde(Double solde) {
-        this.solde = solde;
     }
 
     public String getBanque() {
@@ -103,7 +93,6 @@ public class ReleveDTO implements Serializable {
             "id=" + getId() +
             ", dateDebut='" + getDateDebut() + "'" +
             ", dateFin='" + getDateFin() + "'" +
-            ", solde=" + getSolde() +
             ", banque='" + getBanque() + "'" +
             ", etatReleveId=" + getEtatReleveId() +
             ", societeId=" + getSocieteId() +

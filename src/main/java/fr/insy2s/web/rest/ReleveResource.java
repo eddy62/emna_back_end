@@ -1,10 +1,12 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.repository.ReleveRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.utils.CheckUtil;
 import fr.insy2s.utils.EtatReleveConstants;
+import fr.insy2s.utils.wrapper.WrapperReleveSolde;
 import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -40,9 +42,11 @@ public class ReleveResource {
     private String applicationName;
 
     private final ReleveService releveService;
+    private final ReleveRepository releveRepository;
 
-    public ReleveResource(ReleveService releveService) {
+    public ReleveResource(ReleveService releveService, ReleveRepository releveRepository) {
         this.releveService = releveService;
+        this.releveRepository = releveRepository;
     }
 
     /**
@@ -103,9 +107,9 @@ public class ReleveResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the BigDecimal, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/releves/{id}")
-    public ResponseEntity<ReleveDTO> getReleve(@PathVariable Long id) {
+    public ResponseEntity<WrapperReleveSolde> getReleve(@PathVariable Long id) {
         log.debug("REST request to get Releve : {}", id);
-        Optional<ReleveDTO> releveDTO = releveService.findOne(id);
+        Optional<WrapperReleveSolde> releveDTO = releveService.findOne(id);
         return ResponseUtil.wrapOrNotFound(releveDTO);
     }
 
@@ -173,7 +177,7 @@ public class ReleveResource {
     }
 
     @GetMapping("/releve/etat/{idEtat}/societe/{idSociete}")
-    public List<ReleveDTO> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat, @PathVariable Long idSociete) {
+    public List<WrapperReleveSolde> getAllRelevesByEtatReleveIdAndSocieteId(@PathVariable Long idEtat, @PathVariable Long idSociete) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete);
     }
@@ -204,7 +208,7 @@ public class ReleveResource {
     public ResponseEntity<Boolean> updateEtatRelever(@PathVariable Long idReleve) {
         log.debug("REST request to update etat releve");
         boolean conditionsBeforValidate = false;
-        if (/*CheckUtil.isAcountant()*/ true) {
+        if (CheckUtil.isAcountant()) {
             conditionsBeforValidate = releveService.hasPermissionForThisReleve(idReleve,"accountant")
             && releveService.balanceOperationsEqualsInvoices(idReleve);
         } else if (CheckUtil.isAdmin()) {

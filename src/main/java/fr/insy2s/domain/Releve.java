@@ -32,9 +32,6 @@ public class Releve implements Serializable {
     @Column(name = "date_fin")
     private LocalDate dateFin;
 
-    @Column(name = "solde")
-    private Double solde;
-
     @Column(name = "banque")
     private String banque;
 
@@ -87,19 +84,6 @@ public class Releve implements Serializable {
 
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
-    }
-
-    public Double getSolde() {
-        return solde;
-    }
-
-    public Releve solde(Double solde) {
-        this.solde = solde;
-        return this;
-    }
-
-    public void setSolde(Double solde) {
-        this.solde = solde;
     }
 
     public String getBanque() {
@@ -215,7 +199,6 @@ public class Releve implements Serializable {
             "id=" + getId() +
             ", dateDebut='" + getDateDebut() + "'" +
             ", dateFin='" + getDateFin() + "'" +
-            ", solde=" + getSolde() +
             ", banque='" + getBanque() + "'" +
             "}";
     }

@@ -11,6 +11,7 @@ import fr.insy2s.service.mapper.ReleveMapper;
 import fr.insy2s.utils.DateUtil;
 import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
 import fr.insy2s.utils.wrapper.WrapperPDFSingleOperation;
+import fr.insy2s.utils.wrapper.WrapperReleveSolde;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -70,15 +71,14 @@ public class ReleveServiceImpl implements ReleveService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ReleveDTO> findOne(Long id) {
+    public Optional<WrapperReleveSolde> findOne(Long id) {
         log.debug("Request to get Releve : {}", id);
         Optional<ReleveDTO> releve = releveRepository.findById(id)
             .map(releveMapper::toDto);
         Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
-        releve.get().setSolde(
-            solde.map(BigDecimal::doubleValue).orElse(0.0)
-        );
-        return releve;
+        BigDecimal soldeBig = solde.orElse(new BigDecimal(0));
+        Optional<WrapperReleveSolde> wrapperReleveSolde = Optional.of(new WrapperReleveSolde(releve.orElse(new ReleveDTO()),soldeBig));
+        return wrapperReleveSolde;
     }
 
     @Override
@@ -99,19 +99,19 @@ public class ReleveServiceImpl implements ReleveService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public List<ReleveDTO> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
+    public List<WrapperReleveSolde> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
         log.debug("Request to get all Releves by Societe Id");
         List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
             .stream().map(releveMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+        List<WrapperReleveSolde> wrapperReleveSoldes = new ArrayList<>();
         Optional<BigDecimal> solde;
-        for (ReleveDTO releve : releves) {
-            solde = getReleveSoldeById(releve.getId());
-            releve.setSolde(
-                solde.map(BigDecimal::doubleValue).orElse(0.0)
-             );
+        for (int i = 0; i<releves.size();i++) {
+            solde = getReleveSoldeById(releves.get(i).getId());
+            WrapperReleveSolde wrapperReleveSolde = new WrapperReleveSolde(releves.get(i),solde.orElse(new BigDecimal(0)));
+            wrapperReleveSoldes.add(wrapperReleveSolde);
         }
-        return releves;
+        return wrapperReleveSoldes;
     }
 
     @Override
@@ -158,20 +158,21 @@ public class ReleveServiceImpl implements ReleveService {
     @Override
     public WrapperArchivedStatement getWrapperArchivedStatement(Long idStatement)
     {
-        ReleveDTO releveDTO                 = this.findOne(idStatement).orElse(null);
-        assert releveDTO                    != null;
-        Optional<Societe> societeDTO        = societeRepository.findById(releveDTO.getSocieteId());
-        List<Operation> operationDTOList    = operationRepository.findAllByReleveId(idStatement);
-        List<Facture> factureDTOList        = factureRepository.findAllInvoicesByStatement(idStatement);
-        return new WrapperArchivedStatement(
-            releveDTO.getId(),
-            DateUtil.convertToFrenchDate(releveDTO.getDateDebut()),
-            DateUtil.convertToFrenchDate(releveDTO.getDateFin()),
-            releveDTO.getSolde().toString(),
-            releveDTO.getBanque(),
-            societeDTO.get().getCivilite(),
-            getListOfWrapperPDFSingleOperation(operationDTOList)
-        );
+//        ReleveDTO releveDTO                 = this.findOne(idStatement).orElse(null);
+//        assert releveDTO                    != null;
+//        Optional<Societe> societeDTO        = societeRepository.findById(releveDTO.getSocieteId());
+//        List<Operation> operationDTOList    = operationRepository.findAllByReleveId(idStatement);
+//        List<Facture> factureDTOList        = factureRepository.findAllInvoicesByStatement(idStatement);
+//        return new WrapperArchivedStatement(
+//            releveDTO.getId(),
+//            DateUtil.convertToFrenchDate(releveDTO.getDateDebut()),
+//            DateUtil.convertToFrenchDate(releveDTO.getDateFin()),
+//            releveDTO.getSolde().toString(),
+//            releveDTO.getBanque(),
+//            societeDTO.get().getCivilite(),
+//            getListOfWrapperPDFSingleOperation(operationDTOList)
+//        );
+        return null;
     }
 
     private List<WrapperPDFSingleOperation> getListOfWrapperPDFSingleOperation(List<Operation> operations)

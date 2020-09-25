@@ -97,12 +97,6 @@ export const ReleveUpdate = (props: IReleveUpdateProps) => {
                 <AvField id="releve-dateFin" type="date" className="form-control" name="dateFin" />
               </AvGroup>
               <AvGroup>
-                <Label id="soldeLabel" for="releve-solde">
-                  <Translate contentKey="emnaBackEndApp.releve.solde">Solde</Translate>
-                </Label>
-                <AvField id="releve-solde" type="string" className="form-control" name="solde" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="banqueLabel" for="releve-banque">
                   <Translate contentKey="emnaBackEndApp.releve.banque">Banque</Translate>
                 </Label>

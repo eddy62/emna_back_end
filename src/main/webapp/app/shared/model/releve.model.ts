@@ -6,7 +6,6 @@ export interface IReleve {
   id?: number;
   dateDebut?: string;
   dateFin?: string;
-  solde?: number;
   banque?: string;
   listeOperations?: IOperation[];
   listeDocuments?: IDocument[];
