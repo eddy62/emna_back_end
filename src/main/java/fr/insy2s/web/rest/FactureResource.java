@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.domain.Facture;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureTemp;
@@ -9,6 +10,7 @@ import fr.insy2s.service.dto.FactureDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -149,6 +152,13 @@ public class FactureResource {
     public Long getLastNumFact(@PathVariable Long id) {
         log.debug("REST request to get Facture : {}", id);
         return factureService.getLastNumFact(id);
+    }
+
+    @PutMapping("/facture/{idOperation}/{idFacture}")
+    public void mergeOperationToInvoices(@PathVariable Long idFacture,
+                                         @PathVariable Long idOperation) {
+        log.debug("REST request to merge operation to invoices");
+            factureService.mergeOperationByIdFacture(idFacture,idOperation);
     }
 
 

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -100,6 +101,12 @@ public class OperationResource {
             .body(result);
     }
 
+    @PutMapping("/operations/{idOperation}")
+    public void updateRapprochementOperation(@PathVariable Long idOperation){
+        log.debug("REST request to update rapprochement operation by id operation");
+        operationService.updateRapprochementOperation(idOperation);
+    }
+
     /**
      * {@code GET  /operations} : get all the operations.
      *
@@ -142,4 +149,6 @@ public class OperationResource {
         log.debug("REST request to get all Operations by Releve id ");
         return operationService.findAllByReleveId(id);
     }
+
+
 }

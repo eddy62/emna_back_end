@@ -70,4 +70,10 @@ public class OperationServiceImpl implements OperationService {
 		return operationRepository.findAllByReleveId(id).stream().map(operationMapper::toDto)
 	            .collect(Collectors.toCollection(LinkedList::new));
 	}
+
+    @Override
+    public void updateRapprochementOperation(Long idOperation) {
+        log.debug("Request to update rapprochement");
+        operationRepository.updateRapprochementOperation(idOperation,true);
+    }
 }

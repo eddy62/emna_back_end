@@ -168,4 +168,10 @@ public class FactureServiceImpl implements FactureService {
          return max;
     }
 
+    @Override
+    public Integer mergeOperationByIdFacture(Long idFacture, Long idOperation) {
+        return factureRepository.mergeOperationByIdFacture(idFacture,idOperation);
+
+    }
+
 }
