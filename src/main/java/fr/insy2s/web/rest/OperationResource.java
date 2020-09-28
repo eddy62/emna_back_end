@@ -66,8 +66,8 @@ public class OperationResource {
             WrapperReleveSolde releve = optionalReleveDTO.get();
             if (operationDTO.getDate() == null || !CheckUtil.isDateBetween(
                     operationDTO.getDate(),
-                    releve.getReleve().getDateDebut(),
-                    releve.getReleve().getDateFin())
+                    releve.getDateDebut(),
+                    releve.getDateFin())
             ) {
                 throw new BadRequestAlertException("La date de l'opération est invalide", ENTITY_NAME, "dateOutOfRange");
             }

@@ -77,7 +77,11 @@ public class ReleveServiceImpl implements ReleveService {
             .map(releveMapper::toDto);
         Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
         BigDecimal soldeBig = solde.orElse(new BigDecimal(0));
-        Optional<WrapperReleveSolde> wrapperReleveSolde = Optional.of(new WrapperReleveSolde(releve.orElse(new ReleveDTO()),soldeBig));
+        ReleveDTO releveDTO = releve.orElse(new ReleveDTO());
+        Optional<WrapperReleveSolde> wrapperReleveSolde =
+            Optional.of(new WrapperReleveSolde(
+                releveDTO.getId(), releveDTO.getDateDebut(), releveDTO.getDateFin(), releveDTO.getBanque(),
+                releveDTO.getEtatReleveId(),releveDTO.getSocieteId(), soldeBig));
         return wrapperReleveSolde;
     }
 
@@ -106,17 +110,19 @@ public class ReleveServiceImpl implements ReleveService {
             .collect(Collectors.toCollection(LinkedList::new));
         List<WrapperReleveSolde> wrapperReleveSoldes = new ArrayList<>();
         Optional<BigDecimal> solde;
-        for (int i = 0; i<releves.size();i++) {
+        for (int i = 0; i < releves.size(); i++) {
             solde = getReleveSoldeById(releves.get(i).getId());
-            WrapperReleveSolde wrapperReleveSolde = new WrapperReleveSolde(releves.get(i),solde.orElse(new BigDecimal(0)));
+            ReleveDTO releveDTO = releves.get(i);
+            WrapperReleveSolde wrapperReleveSolde = new WrapperReleveSolde(
+                releveDTO.getId(), releveDTO.getDateDebut(), releveDTO.getDateFin(), releveDTO.getBanque(),
+                releveDTO.getEtatReleveId(),releveDTO.getSocieteId(), solde.orElse(new BigDecimal(0)));
             wrapperReleveSoldes.add(wrapperReleveSolde);
         }
         return wrapperReleveSoldes;
     }
 
     @Override
-    public Optional<BigDecimal> getReleveSoldeById(Long id)
-    {
+    public Optional<BigDecimal> getReleveSoldeById(Long id) {
         log.debug("Request to get solde by Releve Id");
         return releveRepository.getReleveSoldeById(id);
     }
@@ -156,30 +162,28 @@ public class ReleveServiceImpl implements ReleveService {
     // C'est mieux de faire appel à un autre service our faire une nouvelle requête ?
 
     @Override
-    public WrapperArchivedStatement getWrapperArchivedStatement(Long idStatement)
-    {
-        WrapperReleveSolde releveDTO                 = this.findOne(idStatement).orElse(null);
-        assert releveDTO                    != null;
-        Optional<Societe> societeDTO        = societeRepository.findById(releveDTO.getReleve().getSocieteId());
-        List<Operation> operationDTOList    = operationRepository.findAllByReleveId(idStatement);
-        List<Facture> factureDTOList        = factureRepository.findAllInvoicesByStatement(idStatement);
+    public WrapperArchivedStatement getWrapperArchivedStatement(Long idStatement) {
+        WrapperReleveSolde releveDTO = this.findOne(idStatement).orElse(null);
+        assert releveDTO != null;
+        Optional<Societe> societeDTO = societeRepository.findById(releveDTO.getSocieteId());
+        List<Operation> operationDTOList = operationRepository.findAllByReleveId(idStatement);
+        List<Facture> factureDTOList = factureRepository.findAllInvoicesByStatement(idStatement);
         return new WrapperArchivedStatement(
-            releveDTO.getReleve().getId(),
-            DateUtil.convertToFrenchDate(releveDTO.getReleve().getDateDebut()),
-            DateUtil.convertToFrenchDate(releveDTO.getReleve().getDateFin()),
+            releveDTO.getId(),
+            DateUtil.convertToFrenchDate(releveDTO.getDateDebut()),
+            DateUtil.convertToFrenchDate(releveDTO.getDateFin()),
             releveDTO.getSolde().toString(),
-            releveDTO.getReleve().getBanque(),
+            releveDTO.getBanque(),
             societeDTO.get().getCivilite(),
             getListOfWrapperPDFSingleOperation(operationDTOList)
         );
     }
 
-    private List<WrapperPDFSingleOperation> getListOfWrapperPDFSingleOperation(List<Operation> operations)
-    {
+    private List<WrapperPDFSingleOperation> getListOfWrapperPDFSingleOperation(List<Operation> operations) {
         List<WrapperPDFSingleOperation> wrapperPDFSingleOperations = new ArrayList<>();
 
         operations.forEach(operation -> {
-            wrapperPDFSingleOperations.add( new WrapperPDFSingleOperation(
+            wrapperPDFSingleOperations.add(new WrapperPDFSingleOperation(
                 operation.getId(),
                 DateUtil.convertToFrenchDate(operation.getDate()),
                 operation.getDescription(),
