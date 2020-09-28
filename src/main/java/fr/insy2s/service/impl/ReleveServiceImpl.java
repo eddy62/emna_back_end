@@ -158,21 +158,20 @@ public class ReleveServiceImpl implements ReleveService {
     @Override
     public WrapperArchivedStatement getWrapperArchivedStatement(Long idStatement)
     {
-//        ReleveDTO releveDTO                 = this.findOne(idStatement).orElse(null);
-//        assert releveDTO                    != null;
-//        Optional<Societe> societeDTO        = societeRepository.findById(releveDTO.getSocieteId());
-//        List<Operation> operationDTOList    = operationRepository.findAllByReleveId(idStatement);
-//        List<Facture> factureDTOList        = factureRepository.findAllInvoicesByStatement(idStatement);
-//        return new WrapperArchivedStatement(
-//            releveDTO.getId(),
-//            DateUtil.convertToFrenchDate(releveDTO.getDateDebut()),
-//            DateUtil.convertToFrenchDate(releveDTO.getDateFin()),
-//            releveDTO.getSolde().toString(),
-//            releveDTO.getBanque(),
-//            societeDTO.get().getCivilite(),
-//            getListOfWrapperPDFSingleOperation(operationDTOList)
-//        );
-        return null;
+        WrapperReleveSolde releveDTO                 = this.findOne(idStatement).orElse(null);
+        assert releveDTO                    != null;
+        Optional<Societe> societeDTO        = societeRepository.findById(releveDTO.getReleve().getSocieteId());
+        List<Operation> operationDTOList    = operationRepository.findAllByReleveId(idStatement);
+        List<Facture> factureDTOList        = factureRepository.findAllInvoicesByStatement(idStatement);
+        return new WrapperArchivedStatement(
+            releveDTO.getReleve().getId(),
+            DateUtil.convertToFrenchDate(releveDTO.getReleve().getDateDebut()),
+            DateUtil.convertToFrenchDate(releveDTO.getReleve().getDateFin()),
+            releveDTO.getSolde().toString(),
+            releveDTO.getReleve().getBanque(),
+            societeDTO.get().getCivilite(),
+            getListOfWrapperPDFSingleOperation(operationDTOList)
+        );
     }
 
     private List<WrapperPDFSingleOperation> getListOfWrapperPDFSingleOperation(List<Operation> operations)
