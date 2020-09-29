@@ -1,10 +1,14 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.Absence;
+import fr.insy2s.domain.Document;
 import fr.insy2s.repository.AbsenceRepository;
+import fr.insy2s.repository.DocumentRepository;
 import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.dto.AbsenceDTO;
+import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.mapper.AbsenceMapper;
+import fr.insy2s.service.mapper.DocumentMapper;
 import fr.insy2s.service.mapper.TypeAbsenceMapper;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
 import org.slf4j.Logger;
@@ -33,10 +37,16 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     private final TypeAbsenceMapper typeAbsenceMapper;
 
-    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper) {
+    private final DocumentRepository documentRepository;
+
+    private final DocumentMapper documentMapper;
+
+    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper, DocumentRepository documentRepository, DocumentMapper documentMapper) {
         this.absenceRepository = absenceRepository;
         this.absenceMapper = absenceMapper;
         this.typeAbsenceMapper = typeAbsenceMapper;
+        this.documentRepository = documentRepository;
+        this.documentMapper = documentMapper;
     }
 
     @Override
@@ -76,8 +86,14 @@ public class AbsenceServiceImpl implements AbsenceService {
         log.debug("Request to get all WrapperAbsence with IdEmploye:{}, Annee:{}, Mois:{}", idEmploye, annee, mois);
         List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
+
         for (Absence absence : absenceList){
-            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()));
+            List<Document> documentList = documentRepository.findAllByAbsenceId(absence.getId());
+            List<DocumentDTO> documentDTOList = new ArrayList<>();
+            for (Document document : documentList){
+                documentDTOList.add(documentMapper.toDto(document));
+            };
+            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()), documentDTOList);
             wrapperAbsenceList.add(wrapperAbsence);
         }
         return wrapperAbsenceList;

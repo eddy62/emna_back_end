@@ -1,19 +1,24 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.DocumentService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.DocumentDTO;
-
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,4 +118,67 @@ public class DocumentResource {
         documentService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /documentsAbsence/:id} : get all documents by "id" Absence.
+     *
+     * @param id the id of Absence.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
+     */
+    @GetMapping("/documentsAbsence/{id}")
+    public List<DocumentDTO> getDocumentsByAbsencesId(@PathVariable Long id) {
+        log.debug("REST request to get all Documents by Absence id");
+        return documentService.findAllByAbsenceId(id);
+    }
+
+    /**
+     * {@code GET  /documentsNoteDeFrais/:id} : get all documents by "id" Note de Frais.
+     *
+     * @param id the id of Absence.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
+     */
+    @GetMapping("/documentsNoteDeFrais/{id}")
+    public List<DocumentDTO> getDocumentsByNoteDeFraisId(@PathVariable Long id) {
+        log.debug("REST request to get all Documents by Note de Frais id");
+        return documentService.findAllByNoteDeFraisId(id);
+    }
+
+    /**
+     * {@code GET  /documentsAutre/:id} : get all documents by "id" Autre.
+     *
+     * @param id the id of Autre.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
+     */
+    @GetMapping("/documentsAutre/{id}")
+    public List<DocumentDTO> getDocumentsByAutresVariablesId(@PathVariable Long id) {
+        log.debug("REST request to get all Documents by Autre id");
+        return documentService.findAllByAutresVariablesId(id);
+    }
+
+    /**
+     * {@code GET  /documentsPdf/:id} : get PDF File by path name.
+     *
+     * @param path the path of File.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} PDF File.
+     */
+
+    @GetMapping("/getPdfFile/{path}")
+    public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
+        Path completePath = Paths.get("./fichiers/" + path);
+        byte[] pdfContents = null;
+        try {
+            pdfContents = Files.readAllBytes(completePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HttpHeaders headers = new HttpHeaders();
+        //headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("content-disposition", "attachment; filename=" + path);
+        /*headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");*/
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+            pdfContents, headers, HttpStatus.OK);
+        return response;
+    }
+
 }

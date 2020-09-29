@@ -10,10 +10,6 @@
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "solde",
-      "fieldType": "Double"
-    },
-    {
       "fieldName": "banque",
       "fieldType": "String"
     }
@@ -56,5 +52,7 @@
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": "*"
+  "applications": "*",
+  "searchEngine": false,
+  "databaseType": "sql"
 }

@@ -46,7 +46,6 @@ entity Operation{
 entity Releve {
     dateDebut LocalDate
     dateFin LocalDate
-    solde Double
     banque String
 }
 

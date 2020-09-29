@@ -20,6 +20,9 @@ logging:
     fr.insy2s: DEBUG
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
   profiles:
     active: dev
     include:

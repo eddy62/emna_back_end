@@ -169,6 +169,15 @@ public class FactureServiceImpl implements FactureService {
     }
 
     @Override
+    public List<FactureDTO> findAllInvoicesByOperationId(Long idOperation) {
+        log.debug("Request to get all factures from id operation");
+        return this.factureRepository.findAllInvoicesByOperationId(idOperation)
+                                     .stream()
+                                     .map(factureMapper::toDto)
+                                     .collect(Collectors.toList());
+    }
+
+    @Override
     public Integer mergeOperationByIdFacture(Long idFacture, Long idOperation) {
         return factureRepository.mergeOperationByIdFacture(idFacture,idOperation);
 

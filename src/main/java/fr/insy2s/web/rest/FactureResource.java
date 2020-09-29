@@ -154,6 +154,17 @@ public class FactureResource {
         return factureService.getLastNumFact(id);
     }
 
+    /**
+     *  {@code GET  /factures/operation/:id} : get all the invoices by operation id.
+     * @param idOperation id of the operation concerned
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
+     */
+    @GetMapping("facture/operation/{idOperation}")
+    public List<FactureDTO> getAllInvoicesByOperationId(@PathVariable Long idOperation) {
+        log.debug("REST request to get all Facture from id operation: {}", idOperation);
+        return factureService.findAllInvoicesByOperationId(idOperation);
+    }
+
     @PutMapping("/facture/{idOperation}/{idFacture}")
     public void mergeOperationToInvoices(@PathVariable Long idFacture,
                                          @PathVariable Long idOperation) {

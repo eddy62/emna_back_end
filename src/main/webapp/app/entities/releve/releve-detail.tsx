@@ -40,12 +40,6 @@ export const ReleveDetail = (props: IReleveDetailProps) => {
           </dt>
           <dd>{releveEntity.dateFin ? <TextFormat value={releveEntity.dateFin} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
           <dt>
-            <span id="solde">
-              <Translate contentKey="emnaBackEndApp.releve.solde">Solde</Translate>
-            </span>
-          </dt>
-          <dd>{releveEntity.solde}</dd>
-          <dt>
             <span id="banque">
               <Translate contentKey="emnaBackEndApp.releve.banque">Banque</Translate>
             </span>

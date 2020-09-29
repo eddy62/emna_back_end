@@ -35,4 +35,7 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
             "set f.operation.id =:idOperation " +
             "where f.id=:idFacture")
     Integer mergeOperationByIdFacture(@Param("idFacture") Long idFacture,@Param("idOperation") Long idOperation);
+    @Query("select f from Facture f " +
+    "where f.operation.id=:idOperation")
+    List<Facture> findAllInvoicesByOperationId(@Param("idOperation") Long idOperation);
 }
