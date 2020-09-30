@@ -1,13 +1,11 @@
 package fr.insy2s.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,14 +33,13 @@ public class Avenant implements Serializable {
     @Column(name = "signe", nullable = false)
     private Boolean signe;
 
+    @OneToMany(mappedBy = "avenant")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties(value = "listeAvenants", allowSetters = true)
     private Contrat contrat;
-
-    @ManyToMany(mappedBy = "listeAvenants")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
-    private Set<Clause> listeClauses = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -79,6 +76,31 @@ public class Avenant implements Serializable {
         this.signe = signe;
     }
 
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Avenant listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Avenant addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setAvenant(this);
+        return this;
+    }
+
+    public Avenant removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setAvenant(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+    }
+
     public Contrat getContrat() {
         return contrat;
     }
@@ -90,31 +112,6 @@ public class Avenant implements Serializable {
 
     public void setContrat(Contrat contrat) {
         this.contrat = contrat;
-    }
-
-    public Set<Clause> getListeClauses() {
-        return listeClauses;
-    }
-
-    public Avenant listeClauses(Set<Clause> clauses) {
-        this.listeClauses = clauses;
-        return this;
-    }
-
-    public Avenant addListeClauses(Clause clause) {
-        this.listeClauses.add(clause);
-        clause.getListeAvenants().add(this);
-        return this;
-    }
-
-    public Avenant removeListeClauses(Clause clause) {
-        this.listeClauses.remove(clause);
-        clause.getListeAvenants().remove(this);
-        return this;
-    }
-
-    public void setListeClauses(Set<Clause> clauses) {
-        this.listeClauses = clauses;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

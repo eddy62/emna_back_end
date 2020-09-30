@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IAvanceRappelSalaire, defaultValue } from 'app/shared/model/avance-rappel-salaire.model';
+import { defaultValue, IAvanceRappelSalaire } from 'app/shared/model/avance-rappel-salaire.model';
 
 export const ACTION_TYPES = {
   FETCH_AVANCERAPPELSALAIRE_LIST: 'avanceRappelSalaire/FETCH_AVANCERAPPELSALAIRE_LIST',

@@ -1,6 +1,7 @@
 package fr.insy2s.service.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Produit} entity.
@@ -11,11 +12,11 @@ public class ProduitDTO implements Serializable {
 
     private String nom;
 
-    private Integer reference;
+    private String reference;
 
-    private Float tva;
+    private BigDecimal tva;
 
-    private Double prix;
+    private BigDecimal prix;
 
     private String unite;
 
@@ -40,27 +41,27 @@ public class ProduitDTO implements Serializable {
         this.nom = nom;
     }
 
-    public Integer getReference() {
+    public String getReference() {
         return reference;
     }
 
-    public void setReference(Integer reference) {
+    public void setReference(String reference) {
         this.reference = reference;
     }
 
-    public Float getTva() {
+    public BigDecimal getTva() {
         return tva;
     }
 
-    public void setTva(Float tva) {
+    public void setTva(BigDecimal tva) {
         this.tva = tva;
     }
 
-    public Double getPrix() {
+    public BigDecimal getPrix() {
         return prix;
     }
 
-    public void setPrix(Double prix) {
+    public void setPrix(BigDecimal prix) {
         this.prix = prix;
     }
 
@@ -111,7 +112,7 @@ public class ProduitDTO implements Serializable {
         return "ProduitDTO{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", reference=" + getReference() +
+            ", reference='" + getReference() + "'" +
             ", tva=" + getTva() +
             ", prix=" + getPrix() +
             ", unite='" + getUnite() + "'" +

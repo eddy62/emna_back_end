@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IEmploye, defaultValue } from 'app/shared/model/employe.model';
+import { defaultValue, IEmploye } from 'app/shared/model/employe.model';
 
 export const ACTION_TYPES = {
   FETCH_EMPLOYE_LIST: 'employe/FETCH_EMPLOYE_LIST',

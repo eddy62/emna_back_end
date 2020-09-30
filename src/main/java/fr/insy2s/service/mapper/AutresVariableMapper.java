@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.AutresVariable;
 import fr.insy2s.service.dto.AutresVariableDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link AutresVariable} and its DTO {@link AutresVariableDTO}.
@@ -16,6 +16,8 @@ public interface AutresVariableMapper extends EntityMapper<AutresVariableDTO, Au
     @Mapping(source = "employe.id", target = "employeId")
     AutresVariableDTO toDto(AutresVariable autresVariable);
 
+    @Mapping(target = "listeDocuments", ignore = true)
+    @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "etatVariablePaieId", target = "etatVariablePaie")
     @Mapping(source = "employeId", target = "employe")
     AutresVariable toEntity(AutresVariableDTO autresVariableDTO);

@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IEmploye } from 'app/shared/model/employe.model';
-import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './fiche-paie.reducer';
-import { IFichePaie } from 'app/shared/model/fiche-paie.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './fiche-paie.reducer';
 
 export interface IFichePaieUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -103,19 +98,6 @@ export const FichePaieUpdate = (props: IFichePaieUpdateProps) => {
                   type="date"
                   className="form-control"
                   name="finPeriode"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
-                <Label id="lienDocumentLabel" for="fiche-paie-lienDocument">
-                  <Translate contentKey="emnaBackEndApp.fichePaie.lienDocument">Lien Document</Translate>
-                </Label>
-                <AvField
-                  id="fiche-paie-lienDocument"
-                  type="text"
-                  name="lienDocument"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}

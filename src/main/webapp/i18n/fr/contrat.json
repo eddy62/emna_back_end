@@ -22,9 +22,8 @@
       "archive": "Archive",
       "listeAvenants": "Liste Avenants",
       "listeDocuments": "Liste Documents",
-      "employe": "Employe",
-      "societe": "Societe",
-      "listeClauses": "Liste Clauses"
+      "typeContrat": "Type Contrat",
+      "employe": "Employe"
     }
   }
 }

@@ -7,24 +7,23 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "nom",
+      "fieldName": "commentaire",
       "fieldType": "String"
     },
     {
-      "fieldName": "description",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "tva",
-      "fieldType": "Float"
-    },
-    {
-      "fieldName": "prix",
-      "fieldType": "Float",
-      "fieldValidateRules": ["required"]
+      "fieldName": "remise",
+      "fieldType": "BigDecimal"
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "produit",
+      "otherEntityRelationshipName": "ligneProduit",
+      "relationshipValidateRules": "required",
+      "relationshipName": "produit",
+      "otherEntityField": "id"
+    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "facture",

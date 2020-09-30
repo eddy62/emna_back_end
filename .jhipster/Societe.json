@@ -31,27 +31,9 @@
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "devis",
-      "otherEntityRelationshipName": "societe",
-      "relationshipName": "listeDevis"
-    },
-    {
-      "relationshipType": "one-to-many",
       "otherEntityName": "releve",
       "otherEntityRelationshipName": "societe",
       "relationshipName": "listeReleves"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "produit",
-      "otherEntityRelationshipName": "societe",
-      "relationshipName": "listeProduits"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "contrat",
-      "otherEntityRelationshipName": "societe",
-      "relationshipName": "listeContrats"
     },
     {
       "relationshipType": "one-to-many",
@@ -61,21 +43,9 @@
     },
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "clause",
-      "otherEntityRelationshipName": "societe",
-      "relationshipName": "listeClauses"
-    },
-    {
-      "relationshipType": "one-to-many",
       "otherEntityName": "employe",
       "otherEntityRelationshipName": "societe",
       "relationshipName": "listeEmployes"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "dpae",
-      "otherEntityRelationshipName": "societe",
-      "relationshipName": "listeDpae"
     },
     {
       "relationshipType": "many-to-one",

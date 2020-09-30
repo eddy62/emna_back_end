@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './fiche-paie.reducer';
-import { IFichePaie } from 'app/shared/model/fiche-paie.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './fiche-paie.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IFichePaieProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -43,9 +42,6 @@ export const FichePaie = (props: IFichePaieProps) => {
                   <Translate contentKey="emnaBackEndApp.fichePaie.finPeriode">Fin Periode</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.fichePaie.lienDocument">Lien Document</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.fichePaie.mois">Mois</Translate>
                 </th>
                 <th>
@@ -73,7 +69,6 @@ export const FichePaie = (props: IFichePaieProps) => {
                   <td>
                     {fichePaie.finPeriode ? <TextFormat type="date" value={fichePaie.finPeriode} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{fichePaie.lienDocument}</td>
                   <td>{fichePaie.mois}</td>
                   <td>{fichePaie.annee}</td>
                   <td>{fichePaie.employeId ? <Link to={`employe/${fichePaie.employeId}`}>{fichePaie.employeId}</Link> : ''}</td>

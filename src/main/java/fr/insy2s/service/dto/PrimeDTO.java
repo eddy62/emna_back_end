@@ -1,7 +1,8 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Prime} entity.
@@ -11,7 +12,7 @@ public class PrimeDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Double montant;
+    private BigDecimal montant;
 
     @NotNull
     private Integer mois;
@@ -34,11 +35,11 @@ public class PrimeDTO implements Serializable {
         this.id = id;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 

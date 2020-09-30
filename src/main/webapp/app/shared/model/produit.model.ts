@@ -1,7 +1,7 @@
 export interface IProduit {
   id?: number;
   nom?: string;
-  reference?: number;
+  reference?: string;
   tva?: number;
   prix?: number;
   unite?: string;

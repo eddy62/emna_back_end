@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IArticle } from 'app/shared/model/article.model';
-import { getEntities as getArticles } from 'app/entities/article/article.reducer';
-import { IContrat } from 'app/shared/model/contrat.model';
-import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './saisie-article.reducer';
-import { ISaisieArticle } from 'app/shared/model/saisie-article.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getArticles} from 'app/entities/article/article.reducer';
+import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './saisie-article.reducer';
 
 export interface ISaisieArticleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -101,8 +95,7 @@ export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
                 <Label for="saisie-article-article">
                   <Translate contentKey="emnaBackEndApp.saisieArticle.article">Article</Translate>
                 </Label>
-                <AvInput id="saisie-article-article" type="select" className="form-control" name="articleId">
-                  <option value="" key="0" />
+                <AvInput id="saisie-article-article" type="select" className="form-control" name="articleId" required>
                   {articles
                     ? articles.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -111,13 +104,15 @@ export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="saisie-article-contrat">
                   <Translate contentKey="emnaBackEndApp.saisieArticle.contrat">Contrat</Translate>
                 </Label>
-                <AvInput id="saisie-article-contrat" type="select" className="form-control" name="contratId">
-                  <option value="" key="0" />
+                <AvInput id="saisie-article-contrat" type="select" className="form-control" name="contratId" required>
                   {contrats
                     ? contrats.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -126,6 +121,9 @@ export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/saisie-article" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

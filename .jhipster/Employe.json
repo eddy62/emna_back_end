@@ -13,12 +13,12 @@
     },
     {
       "fieldName": "nomNaissance",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "nomUsage",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     },
     {
       "fieldName": "prenom",
@@ -37,7 +37,8 @@
     },
     {
       "fieldName": "departementNaissance",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "paysNaisance",
@@ -51,8 +52,7 @@
     },
     {
       "fieldName": "email",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     },
     {
       "fieldName": "telephoneFix",
@@ -65,22 +65,21 @@
     },
     {
       "fieldName": "fax",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     },
     {
       "fieldName": "salaireHoraire",
-      "fieldType": "Double",
+      "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "salaireBrutMensuelle",
-      "fieldType": "Double",
+      "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "heuresMensuelle",
-      "fieldType": "Double",
+      "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
     {
@@ -100,8 +99,7 @@
     },
     {
       "fieldName": "dateSortie",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": ["required"]
+      "fieldType": "LocalDate"
     },
     {
       "fieldName": "periodeEssai",
@@ -194,14 +192,6 @@
       "otherEntityRelationshipName": "employe",
       "relationshipValidateRules": "required",
       "relationshipName": "adresse",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "typeContrat",
-      "otherEntityRelationshipName": "employe",
-      "relationshipValidateRules": "required",
-      "relationshipName": "typeContrat",
       "otherEntityField": "id"
     },
     {

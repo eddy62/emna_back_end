@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './facture.reducer';
-import { IFacture } from 'app/shared/model/facture.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './facture.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IFactureProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -55,16 +54,10 @@ export const Facture = (props: IFactureProps) => {
                   <Translate contentKey="emnaBackEndApp.facture.dateEcheance">Date Echeance</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.facture.prixHT">Prix HT</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.facture.prixTTC">Prix TTC</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.facture.tva">Tva</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.facture.devis">Devis</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
@@ -100,10 +93,8 @@ export const Facture = (props: IFactureProps) => {
                   <td>
                     {facture.dateEcheance ? <TextFormat type="date" value={facture.dateEcheance} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{facture.prixHT}</td>
-                  <td>{facture.prixTTC}</td>
-                  <td>{facture.tva}</td>
                   <td>{facture.moyenDePaiement}</td>
+                  <td>{facture.devisId ? <Link to={`devis/${facture.devisId}`}>{facture.devisId}</Link> : ''}</td>
                   <td>{facture.etatFactureId ? <Link to={`etat-facture/${facture.etatFactureId}`}>{facture.etatFactureId}</Link> : ''}</td>
                   <td>{facture.adresseId ? <Link to={`adresse/${facture.adresseId}`}>{facture.adresseId}</Link> : ''}</td>
                   <td>{facture.societeId ? <Link to={`societe/${facture.societeId}`}>{facture.societeId}</Link> : ''}</td>

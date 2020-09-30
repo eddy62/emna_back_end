@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { IContrat } from 'app/shared/model/contrat.model';
 import { IAbsence } from 'app/shared/model/absence.model';
 import { IPrime } from 'app/shared/model/prime.model';
@@ -48,7 +47,6 @@ export interface IEmploye {
   listeDpaes?: IDpae[];
   statutEmployeId?: number;
   adresseId?: number;
-  typeContratId?: number;
   societeId?: number;
 }
 

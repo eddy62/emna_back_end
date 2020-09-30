@@ -17,10 +17,9 @@
         "title": "Ligne Produit"
       },
       "quantite": "Quantite",
-      "nom": "Nom",
-      "description": "Description",
-      "tva": "Tva",
-      "prix": "Prix",
+      "commentaire": "Commentaire",
+      "remise": "Remise",
+      "produit": "Produit",
       "facture": "Facture",
       "devis": "Devis"
     }

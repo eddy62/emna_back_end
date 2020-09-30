@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IDocument, defaultValue } from 'app/shared/model/document.model';
+import { defaultValue, IDocument } from 'app/shared/model/document.model';
 
 export const ACTION_TYPES = {
   FETCH_DOCUMENT_LIST: 'document/FETCH_DOCUMENT_LIST',

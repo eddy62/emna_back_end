@@ -20,22 +20,6 @@
     {
       "fieldName": "dateLimite",
       "fieldType": "LocalDate"
-    },
-    {
-      "fieldName": "prixHT",
-      "fieldType": "Double"
-    },
-    {
-      "fieldName": "prixTTC",
-      "fieldType": "Double"
-    },
-    {
-      "fieldName": "tva",
-      "fieldType": "Float"
-    },
-    {
-      "fieldName": "cheminFichier",
-      "fieldType": "String"
     }
   ],
   "relationships": [
@@ -46,17 +30,16 @@
       "relationshipName": "listeLigneProduit"
     },
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "devis",
+      "relationshipName": "listeDocuments"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "etatDevis",
       "otherEntityRelationshipName": "devis",
       "relationshipName": "etatDevis",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "societe",
-      "otherEntityRelationshipName": "listeDevis",
-      "relationshipName": "societe",
       "otherEntityField": "id"
     },
     {

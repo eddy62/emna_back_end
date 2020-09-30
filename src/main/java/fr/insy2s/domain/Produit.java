@@ -5,8 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A Produit.
@@ -27,13 +28,13 @@ public class Produit implements Serializable {
     private String nom;
 
     @Column(name = "reference")
-    private Integer reference;
+    private String reference;
 
-    @Column(name = "tva")
-    private Float tva;
+    @Column(name = "tva", precision = 21, scale = 2)
+    private BigDecimal tva;
 
-    @Column(name = "prix")
-    private Double prix;
+    @Column(name = "prix", precision = 21, scale = 2)
+    private BigDecimal prix;
 
     @Column(name = "unite")
     private String unite;
@@ -41,8 +42,9 @@ public class Produit implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeProduits", allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "produits", allowSetters = true)
     private Societe societe;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -67,42 +69,42 @@ public class Produit implements Serializable {
         this.nom = nom;
     }
 
-    public Integer getReference() {
+    public String getReference() {
         return reference;
     }
 
-    public Produit reference(Integer reference) {
+    public Produit reference(String reference) {
         this.reference = reference;
         return this;
     }
 
-    public void setReference(Integer reference) {
+    public void setReference(String reference) {
         this.reference = reference;
     }
 
-    public Float getTva() {
+    public BigDecimal getTva() {
         return tva;
     }
 
-    public Produit tva(Float tva) {
+    public Produit tva(BigDecimal tva) {
         this.tva = tva;
         return this;
     }
 
-    public void setTva(Float tva) {
+    public void setTva(BigDecimal tva) {
         this.tva = tva;
     }
 
-    public Double getPrix() {
+    public BigDecimal getPrix() {
         return prix;
     }
 
-    public Produit prix(Double prix) {
+    public Produit prix(BigDecimal prix) {
         this.prix = prix;
         return this;
     }
 
-    public void setPrix(Double prix) {
+    public void setPrix(BigDecimal prix) {
         this.prix = prix;
     }
 
@@ -168,7 +170,7 @@ public class Produit implements Serializable {
         return "Produit{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", reference=" + getReference() +
+            ", reference='" + getReference() + "'" +
             ", tva=" + getTva() +
             ", prix=" + getPrix() +
             ", unite='" + getUnite() + "'" +

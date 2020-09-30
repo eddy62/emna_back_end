@@ -7,15 +7,15 @@
     },
     {
       "fieldName": "reference",
-      "fieldType": "Integer"
+      "fieldType": "String"
     },
     {
       "fieldName": "tva",
-      "fieldType": "Float"
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "prix",
-      "fieldType": "Double"
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "unite",
@@ -30,7 +30,8 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "societe",
-      "otherEntityRelationshipName": "listeProduits",
+      "otherEntityRelationshipName": "produit",
+      "relationshipValidateRules": "required",
       "relationshipName": "societe",
       "otherEntityField": "id"
     }

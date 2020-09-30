@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './societe.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './societe.reducer';
 
 export interface ISocieteDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

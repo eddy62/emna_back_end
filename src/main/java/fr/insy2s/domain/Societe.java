@@ -5,7 +5,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,19 +41,7 @@ public class Societe implements Serializable {
 
     @OneToMany(mappedBy = "societe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Devis> listeDevis = new HashSet<>();
-
-    @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Releve> listeReleves = new HashSet<>();
-
-    @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Produit> listeProduits = new HashSet<>();
-
-    @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Contrat> listeContrats = new HashSet<>();
 
     @OneToMany(mappedBy = "societe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -62,15 +49,7 @@ public class Societe implements Serializable {
 
     @OneToMany(mappedBy = "societe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Clause> listeClauses = new HashSet<>();
-
-    @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Employe> listeEmployes = new HashSet<>();
-
-    @OneToMany(mappedBy = "societe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Dpae> listeDpaes = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "societes", allowSetters = true)
@@ -153,31 +132,6 @@ public class Societe implements Serializable {
         this.listeFactures = factures;
     }
 
-    public Set<Devis> getListeDevis() {
-        return listeDevis;
-    }
-
-    public Societe listeDevis(Set<Devis> devis) {
-        this.listeDevis = devis;
-        return this;
-    }
-
-    public Societe addListeDevis(Devis devis) {
-        this.listeDevis.add(devis);
-        devis.setSociete(this);
-        return this;
-    }
-
-    public Societe removeListeDevis(Devis devis) {
-        this.listeDevis.remove(devis);
-        devis.setSociete(null);
-        return this;
-    }
-
-    public void setListeDevis(Set<Devis> devis) {
-        this.listeDevis = devis;
-    }
-
     public Set<Releve> getListeReleves() {
         return listeReleves;
     }
@@ -201,56 +155,6 @@ public class Societe implements Serializable {
 
     public void setListeReleves(Set<Releve> releves) {
         this.listeReleves = releves;
-    }
-
-    public Set<Produit> getListeProduits() {
-        return listeProduits;
-    }
-
-    public Societe listeProduits(Set<Produit> produits) {
-        this.listeProduits = produits;
-        return this;
-    }
-
-    public Societe addListeProduits(Produit produit) {
-        this.listeProduits.add(produit);
-        produit.setSociete(this);
-        return this;
-    }
-
-    public Societe removeListeProduits(Produit produit) {
-        this.listeProduits.remove(produit);
-        produit.setSociete(null);
-        return this;
-    }
-
-    public void setListeProduits(Set<Produit> produits) {
-        this.listeProduits = produits;
-    }
-
-    public Set<Contrat> getListeContrats() {
-        return listeContrats;
-    }
-
-    public Societe listeContrats(Set<Contrat> contrats) {
-        this.listeContrats = contrats;
-        return this;
-    }
-
-    public Societe addListeContrats(Contrat contrat) {
-        this.listeContrats.add(contrat);
-        contrat.setSociete(this);
-        return this;
-    }
-
-    public Societe removeListeContrats(Contrat contrat) {
-        this.listeContrats.remove(contrat);
-        contrat.setSociete(null);
-        return this;
-    }
-
-    public void setListeContrats(Set<Contrat> contrats) {
-        this.listeContrats = contrats;
     }
 
     public Set<ClientFournisseur> getListeClientsFournisseurs() {
@@ -278,31 +182,6 @@ public class Societe implements Serializable {
         this.listeClientsFournisseurs = clientFournisseurs;
     }
 
-    public Set<Clause> getListeClauses() {
-        return listeClauses;
-    }
-
-    public Societe listeClauses(Set<Clause> clauses) {
-        this.listeClauses = clauses;
-        return this;
-    }
-
-    public Societe addListeClauses(Clause clause) {
-        this.listeClauses.add(clause);
-        clause.setSociete(this);
-        return this;
-    }
-
-    public Societe removeListeClauses(Clause clause) {
-        this.listeClauses.remove(clause);
-        clause.setSociete(null);
-        return this;
-    }
-
-    public void setListeClauses(Set<Clause> clauses) {
-        this.listeClauses = clauses;
-    }
-
     public Set<Employe> getListeEmployes() {
         return listeEmployes;
     }
@@ -326,31 +205,6 @@ public class Societe implements Serializable {
 
     public void setListeEmployes(Set<Employe> employes) {
         this.listeEmployes = employes;
-    }
-
-    public Set<Dpae> getListeDpaes() {
-        return listeDpaes;
-    }
-
-    public Societe listeDpaes(Set<Dpae> dpaes) {
-        this.listeDpaes = dpaes;
-        return this;
-    }
-
-    public Societe addListeDpae(Dpae dpae) {
-        this.listeDpaes.add(dpae);
-        dpae.setSociete(this);
-        return this;
-    }
-
-    public Societe removeListeDpae(Dpae dpae) {
-        this.listeDpaes.remove(dpae);
-        dpae.setSociete(null);
-        return this;
-    }
-
-    public void setListeDpaes(Set<Dpae> dpaes) {
-        this.listeDpaes = dpaes;
     }
 
     public Adresse getAdresse() {

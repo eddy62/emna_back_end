@@ -8,23 +8,11 @@
     -->
     <changeSet id="20200810074300-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="absence_id"
+        <addForeignKeyConstraint baseColumnNames="type_document_id"
                                  baseTableName="document"
-                                 constraintName="fk_document_absence_id"
+                                 constraintName="fk_document_type_document_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="absence"/>
-
-        <addForeignKeyConstraint baseColumnNames="note_de_frais_id"
-                                 baseTableName="document"
-                                 constraintName="fk_document_note_de_frais_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="note_de_frais"/>
-
-        <addForeignKeyConstraint baseColumnNames="autres_variables_id"
-                                 baseTableName="document"
-                                 constraintName="fk_document_autres_variables_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="autres_variable"/>
+                                 referencedTableName="type_document"/>
 
         <addForeignKeyConstraint baseColumnNames="facture_id"
                                  baseTableName="document"
@@ -55,6 +43,48 @@
                                  constraintName="fk_document_depense_id"
                                  referencedColumnNames="id"
                                  referencedTableName="depense"/>
+
+        <addForeignKeyConstraint baseColumnNames="absence_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_absence_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="absence"/>
+
+        <addForeignKeyConstraint baseColumnNames="note_de_frais_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_note_de_frais_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="note_de_frais"/>
+
+        <addForeignKeyConstraint baseColumnNames="autres_variable_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_autres_variable_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="autres_variable"/>
+
+        <addForeignKeyConstraint baseColumnNames="devis_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_devis_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="devis"/>
+
+        <addForeignKeyConstraint baseColumnNames="dpae_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_dpae_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dpae"/>
+
+        <addForeignKeyConstraint baseColumnNames="fiche_paie_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_fiche_paie_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fiche_paie"/>
+
+        <addForeignKeyConstraint baseColumnNames="avenant_id"
+                                 baseTableName="document"
+                                 constraintName="fk_document_avenant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avenant"/>
 
     </changeSet>
 </databaseChangeLog>

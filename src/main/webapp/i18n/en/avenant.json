@@ -18,8 +18,8 @@
       },
       "reference": "Reference",
       "signe": "Signe",
-      "contrat": "Contrat",
-      "listeClauses": "Liste Clauses"
+      "listeDocuments": "Liste Documents",
+      "contrat": "Contrat"
     }
   }
 }

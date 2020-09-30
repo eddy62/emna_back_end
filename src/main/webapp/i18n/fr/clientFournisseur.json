@@ -17,7 +17,7 @@
         "title": "Client Fournisseur"
       },
       "nom": "Nom",
-      "siren": "Siren",
+      "siret": "Siret",
       "telephone": "Telephone",
       "email": "Email",
       "listeFactures": "Liste Factures",

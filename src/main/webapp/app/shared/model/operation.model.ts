@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { IFacture } from 'app/shared/model/facture.model';
 
 export interface IOperation {

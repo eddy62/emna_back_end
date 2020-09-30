@@ -5,10 +5,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A AutresVariable.
@@ -31,11 +33,8 @@ public class AutresVariable implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "montant")
-    private Double montant;
-
-    @Column(name = "justificatif")
-    private String justificatif;
+    @Column(name = "montant", precision = 21, scale = 2)
+    private BigDecimal montant;
 
     @NotNull
     @Column(name = "mois", nullable = false)
@@ -45,7 +44,12 @@ public class AutresVariable implements Serializable {
     @Column(name = "annee", nullable = false)
     private Integer annee;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "autresVariable")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "autresVariables", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
 
@@ -88,30 +92,17 @@ public class AutresVariable implements Serializable {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public AutresVariable montant(Double montant) {
+    public AutresVariable montant(BigDecimal montant) {
         this.montant = montant;
         return this;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public AutresVariable justificatif(String justificatif) {
-        this.justificatif = justificatif;
-        return this;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -138,6 +129,31 @@ public class AutresVariable implements Serializable {
 
     public void setAnnee(Integer annee) {
         this.annee = annee;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public AutresVariable listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public AutresVariable addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setAutresVariable(this);
+        return this;
+    }
+
+    public AutresVariable removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setAutresVariable(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public EtatVariablePaie getEtatVariablePaie() {
@@ -191,7 +207,6 @@ public class AutresVariable implements Serializable {
             ", description='" + getDescription() + "'" +
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             "}";

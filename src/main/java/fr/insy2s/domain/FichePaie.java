@@ -5,10 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A FichePaie.
@@ -34,16 +35,16 @@ public class FichePaie implements Serializable {
     private LocalDate finPeriode;
 
     @NotNull
-    @Column(name = "lien_document", nullable = false)
-    private String lienDocument;
-
-    @NotNull
     @Column(name = "mois", nullable = false)
     private Integer mois;
 
     @NotNull
     @Column(name = "annee", nullable = false)
     private Integer annee;
+
+    @OneToMany(mappedBy = "fichePaie")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeFichePaies", allowSetters = true)
@@ -84,19 +85,6 @@ public class FichePaie implements Serializable {
         this.finPeriode = finPeriode;
     }
 
-    public String getLienDocument() {
-        return lienDocument;
-    }
-
-    public FichePaie lienDocument(String lienDocument) {
-        this.lienDocument = lienDocument;
-        return this;
-    }
-
-    public void setLienDocument(String lienDocument) {
-        this.lienDocument = lienDocument;
-    }
-
     public Integer getMois() {
         return mois;
     }
@@ -121,6 +109,31 @@ public class FichePaie implements Serializable {
 
     public void setAnnee(Integer annee) {
         this.annee = annee;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public FichePaie listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public FichePaie addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setFichePaie(this);
+        return this;
+    }
+
+    public FichePaie removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setFichePaie(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public Employe getEmploye() {
@@ -160,7 +173,6 @@ public class FichePaie implements Serializable {
             "id=" + getId() +
             ", debutPeriode='" + getDebutPeriode() + "'" +
             ", finPeriode='" + getFinPeriode() + "'" +
-            ", lienDocument='" + getLienDocument() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             "}";

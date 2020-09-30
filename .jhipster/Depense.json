@@ -49,7 +49,7 @@
     },
     {
       "fieldName": "prix",
-      "fieldType": "Double"
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "moyenDePaiement",

@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './produit.reducer';
-import { IProduit } from 'app/shared/model/produit.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getSocietes} from 'app/entities/societe/societe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './produit.reducer';
 
 export interface IProduitUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -90,19 +85,19 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
                 <Label id="referenceLabel" for="produit-reference">
                   <Translate contentKey="emnaBackEndApp.produit.reference">Reference</Translate>
                 </Label>
-                <AvField id="produit-reference" type="string" className="form-control" name="reference" />
+                <AvField id="produit-reference" type="text" name="reference" />
               </AvGroup>
               <AvGroup>
                 <Label id="tvaLabel" for="produit-tva">
                   <Translate contentKey="emnaBackEndApp.produit.tva">Tva</Translate>
                 </Label>
-                <AvField id="produit-tva" type="string" className="form-control" name="tva" />
+                <AvField id="produit-tva" type="text" name="tva" />
               </AvGroup>
               <AvGroup>
                 <Label id="prixLabel" for="produit-prix">
                   <Translate contentKey="emnaBackEndApp.produit.prix">Prix</Translate>
                 </Label>
-                <AvField id="produit-prix" type="string" className="form-control" name="prix" />
+                <AvField id="produit-prix" type="text" name="prix" />
               </AvGroup>
               <AvGroup>
                 <Label id="uniteLabel" for="produit-unite">
@@ -120,8 +115,7 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
                 <Label for="produit-societe">
                   <Translate contentKey="emnaBackEndApp.produit.societe">Societe</Translate>
                 </Label>
-                <AvInput id="produit-societe" type="select" className="form-control" name="societeId">
-                  <option value="" key="0" />
+                <AvInput id="produit-societe" type="select" className="form-control" name="societeId" required>
                   {societes
                     ? societes.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -130,6 +124,9 @@ export const ProduitUpdate = (props: IProduitUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/produit" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

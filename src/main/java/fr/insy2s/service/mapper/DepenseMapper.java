@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.Depense;
 import fr.insy2s.service.dto.DepenseDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Depense} and its DTO {@link DepenseDTO}.

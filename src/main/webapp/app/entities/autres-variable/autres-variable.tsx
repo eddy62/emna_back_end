@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './autres-variable.reducer';
-import { IAutresVariable } from 'app/shared/model/autres-variable.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './autres-variable.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IAutresVariableProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -46,9 +45,6 @@ export const AutresVariable = (props: IAutresVariableProps) => {
                   <Translate contentKey="emnaBackEndApp.autresVariable.montant">Montant</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.autresVariable.justificatif">Justificatif</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.autresVariable.mois">Mois</Translate>
                 </th>
                 <th>
@@ -76,7 +72,6 @@ export const AutresVariable = (props: IAutresVariableProps) => {
                     {autresVariable.date ? <TextFormat type="date" value={autresVariable.date} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{autresVariable.montant}</td>
-                  <td>{autresVariable.justificatif}</td>
                   <td>{autresVariable.mois}</td>
                   <td>{autresVariable.annee}</td>
                   <td>

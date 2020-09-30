@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.HeuresSupplementaires} entity.
@@ -16,8 +16,6 @@ public class HeuresSupplementairesDTO implements Serializable {
 
     @NotNull
     private Integer nombreHeure;
-
-    private String justificatif;
 
     @NotNull
     private Integer mois;
@@ -52,14 +50,6 @@ public class HeuresSupplementairesDTO implements Serializable {
 
     public void setNombreHeure(Integer nombreHeure) {
         this.nombreHeure = nombreHeure;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -118,7 +108,6 @@ public class HeuresSupplementairesDTO implements Serializable {
             "id=" + getId() +
             ", date='" + getDate() + "'" +
             ", nombreHeure=" + getNombreHeure() +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             ", etatVariablePaieId=" + getEtatVariablePaieId() +

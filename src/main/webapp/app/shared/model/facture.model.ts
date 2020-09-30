@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { IDocument } from 'app/shared/model/document.model';
 import { ILigneProduit } from 'app/shared/model/ligne-produit.model';
 
@@ -10,10 +9,8 @@ export interface IFacture {
   message?: string;
   date?: string;
   dateEcheance?: string;
-  prixHT?: number;
-  prixTTC?: number;
-  tva?: number;
   moyenDePaiement?: string;
+  devisId?: number;
   listeDocuments?: IDocument[];
   listeLigneProduits?: ILigneProduit[];
   etatFactureId?: number;

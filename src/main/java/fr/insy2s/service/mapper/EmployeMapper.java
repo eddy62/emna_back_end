@@ -1,20 +1,19 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.Employe;
 import fr.insy2s.service.dto.EmployeDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Employe} and its DTO {@link EmployeDTO}.
  */
-@Mapper(componentModel = "spring", uses = {StatutEmployeMapper.class, AdresseMapper.class, TypeContratMapper.class, SocieteMapper.class})
+@Mapper(componentModel = "spring", uses = {StatutEmployeMapper.class, AdresseMapper.class, SocieteMapper.class})
 public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
 
     @Mapping(source = "statutEmploye.id", target = "statutEmployeId")
     @Mapping(source = "adresse.id", target = "adresseId")
-    @Mapping(source = "typeContrat.id", target = "typeContratId")
     @Mapping(source = "societe.id", target = "societeId")
     EmployeDTO toDto(Employe employe);
 
@@ -40,7 +39,6 @@ public interface EmployeMapper extends EntityMapper<EmployeDTO, Employe> {
     @Mapping(target = "removeListeDpae", ignore = true)
     @Mapping(source = "statutEmployeId", target = "statutEmploye")
     @Mapping(source = "adresseId", target = "adresse")
-    @Mapping(source = "typeContratId", target = "typeContrat")
     @Mapping(source = "societeId", target = "societe")
     Employe toEntity(EmployeDTO employeDTO);
 

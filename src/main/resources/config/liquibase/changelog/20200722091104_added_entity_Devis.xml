@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
     
     <!--
@@ -30,22 +28,7 @@
             <column name="date_limite" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="prix_ht" type="double">
-                <constraints nullable="true" />
-            </column>
-            <column name="prix_ttc" type="double">
-                <constraints nullable="true" />
-            </column>
-            <column name="tva" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="chemin_fichier" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="etat_devis_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="societe_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="client_fournisseur_id" type="bigint">
@@ -79,10 +62,6 @@
             <column name="message" type="string"/>
             <column name="date_creation" type="date"/>
             <column name="date_limite" type="date"/>
-            <column name="prix_ht" type="numeric"/>
-            <column name="prix_ttc" type="numeric"/>
-            <column name="tva" type="numeric"/>
-            <column name="chemin_fichier" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

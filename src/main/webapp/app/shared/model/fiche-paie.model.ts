@@ -1,12 +1,12 @@
-import { Moment } from 'moment';
+import { IDocument } from 'app/shared/model/document.model';
 
 export interface IFichePaie {
   id?: number;
   debutPeriode?: string;
   finPeriode?: string;
-  lienDocument?: string;
   mois?: number;
   annee?: number;
+  listeDocuments?: IDocument[];
   employeId?: number;
 }
 

@@ -1,32 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IEtatDevis } from 'app/shared/model/etat-devis.model';
-import { getEntities as getEtatDevis } from 'app/entities/etat-devis/etat-devis.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
-import { getEntities as getClientFournisseurs } from 'app/entities/client-fournisseur/client-fournisseur.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './devis.reducer';
-import { IDevis } from 'app/shared/model/devis.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getEtatDevis} from 'app/entities/etat-devis/etat-devis.reducer';
+import {getEntities as getClientFournisseurs} from 'app/entities/client-fournisseur/client-fournisseur.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './devis.reducer';
 
 export interface IDevisUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const DevisUpdate = (props: IDevisUpdateProps) => {
   const [etatDevisId, setEtatDevisId] = useState('0');
-  const [societeId, setSocieteId] = useState('0');
   const [clientFournisseurId, setClientFournisseurId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { devisEntity, etatDevis, societes, clientFournisseurs, loading, updating } = props;
+  const { devisEntity, etatDevis, clientFournisseurs, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/devis');
@@ -40,7 +31,6 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
     }
 
     props.getEtatDevis();
-    props.getSocietes();
     props.getClientFournisseurs();
   }, []);
 
@@ -119,30 +109,6 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
                 <AvField id="devis-dateLimite" type="date" className="form-control" name="dateLimite" />
               </AvGroup>
               <AvGroup>
-                <Label id="prixHTLabel" for="devis-prixHT">
-                  <Translate contentKey="emnaBackEndApp.devis.prixHT">Prix HT</Translate>
-                </Label>
-                <AvField id="devis-prixHT" type="string" className="form-control" name="prixHT" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="prixTTCLabel" for="devis-prixTTC">
-                  <Translate contentKey="emnaBackEndApp.devis.prixTTC">Prix TTC</Translate>
-                </Label>
-                <AvField id="devis-prixTTC" type="string" className="form-control" name="prixTTC" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="tvaLabel" for="devis-tva">
-                  <Translate contentKey="emnaBackEndApp.devis.tva">Tva</Translate>
-                </Label>
-                <AvField id="devis-tva" type="string" className="form-control" name="tva" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="cheminFichierLabel" for="devis-cheminFichier">
-                  <Translate contentKey="emnaBackEndApp.devis.cheminFichier">Chemin Fichier</Translate>
-                </Label>
-                <AvField id="devis-cheminFichier" type="text" name="cheminFichier" />
-              </AvGroup>
-              <AvGroup>
                 <Label for="devis-etatDevis">
                   <Translate contentKey="emnaBackEndApp.devis.etatDevis">Etat Devis</Translate>
                 </Label>
@@ -150,21 +116,6 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
                   <option value="" key="0" />
                   {etatDevis
                     ? etatDevis.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="devis-societe">
-                  <Translate contentKey="emnaBackEndApp.devis.societe">Societe</Translate>
-                </Label>
-                <AvInput id="devis-societe" type="select" className="form-control" name="societeId">
-                  <option value="" key="0" />
-                  {societes
-                    ? societes.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -210,7 +161,6 @@ export const DevisUpdate = (props: IDevisUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   etatDevis: storeState.etatDevis.entities,
-  societes: storeState.societe.entities,
   clientFournisseurs: storeState.clientFournisseur.entities,
   devisEntity: storeState.devis.entity,
   loading: storeState.devis.loading,
@@ -220,7 +170,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getEtatDevis,
-  getSocietes,
   getClientFournisseurs,
   getEntity,
   updateEntity,

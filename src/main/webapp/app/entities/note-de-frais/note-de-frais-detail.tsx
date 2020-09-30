@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './note-de-frais.reducer';
-import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './note-de-frais.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface INoteDeFraisDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -45,12 +44,6 @@ export const NoteDeFraisDetail = (props: INoteDeFraisDetailProps) => {
             </span>
           </dt>
           <dd>{noteDeFraisEntity.montant}</dd>
-          <dt>
-            <span id="justificatif">
-              <Translate contentKey="emnaBackEndApp.noteDeFrais.justificatif">Justificatif</Translate>
-            </span>
-          </dt>
-          <dd>{noteDeFraisEntity.justificatif}</dd>
           <dt>
             <span id="mois">
               <Translate contentKey="emnaBackEndApp.noteDeFrais.mois">Mois</Translate>

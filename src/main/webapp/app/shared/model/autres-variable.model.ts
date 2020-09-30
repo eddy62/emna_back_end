@@ -1,13 +1,13 @@
-import { Moment } from 'moment';
+import { IDocument } from 'app/shared/model/document.model';
 
 export interface IAutresVariable {
   id?: number;
   description?: string;
   date?: string;
   montant?: number;
-  justificatif?: string;
   mois?: number;
   annee?: number;
+  listeDocuments?: IDocument[];
   etatVariablePaieId?: number;
   employeId?: number;
 }

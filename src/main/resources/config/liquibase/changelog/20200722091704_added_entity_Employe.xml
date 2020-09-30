@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
     
     <!--
@@ -22,10 +20,10 @@
                 <constraints nullable="false" />
             </column>
             <column name="nom_naissance" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="nom_usage" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="prenom" type="varchar(255)">
                 <constraints nullable="false" />
@@ -37,7 +35,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="departement_naissance" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="pays_naisance" type="varchar(255)">
                 <constraints nullable="false" />
@@ -46,7 +44,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="email" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="telephone_fix" type="varchar(255)">
                 <constraints nullable="true" />
@@ -55,15 +53,15 @@
                 <constraints nullable="false" />
             </column>
             <column name="fax" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="salaire_horaire" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
-            <column name="salaire_horaire" type="double">
+            <column name="salaire_brut_mensuelle" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
-            <column name="salaire_brut_mensuelle" type="double">
-                <constraints nullable="false" />
-            </column>
-            <column name="heures_mensuelle" type="double">
+            <column name="heures_mensuelle" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
             <column name="categorie" type="varchar(255)">
@@ -76,7 +74,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="date_sortie" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="periode_essai" type="double">
                 <constraints nullable="false" />
@@ -91,9 +89,6 @@
                 <constraints nullable="false" />
             </column>
             <column name="adresse_id" type="bigint">
-                <constraints nullable="false" />
-            </column>
-            <column name="type_contrat_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="societe_id" type="bigint">
@@ -148,7 +143,6 @@
             <column name="enfants_a_charge" type="numeric"/>
             <column name="statut_employe_id" type="numeric"/>
             <column name="adresse_id" type="numeric"/>
-            <column name="type_contrat_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

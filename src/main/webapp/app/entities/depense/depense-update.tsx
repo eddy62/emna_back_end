@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { IOperation } from 'app/shared/model/operation.model';
-import { getEntities as getOperations } from 'app/entities/operation/operation.reducer';
-import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
-import { getEntities as getClientFournisseurs } from 'app/entities/client-fournisseur/client-fournisseur.reducer';
-import { IEtatDepense } from 'app/shared/model/etat-depense.model';
-import { getEntities as getEtatDepenses } from 'app/entities/etat-depense/etat-depense.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './depense.reducer';
-import { IDepense } from 'app/shared/model/depense.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getSocietes} from 'app/entities/societe/societe.reducer';
+import {getEntities as getOperations} from 'app/entities/operation/operation.reducer';
+import {getEntities as getClientFournisseurs} from 'app/entities/client-fournisseur/client-fournisseur.reducer';
+import {getEntities as getEtatDepenses} from 'app/entities/etat-depense/etat-depense.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './depense.reducer';
 
 export interface IDepenseUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -117,7 +109,7 @@ export const DepenseUpdate = (props: IDepenseUpdateProps) => {
                 <Label id="prixLabel" for="depense-prix">
                   <Translate contentKey="emnaBackEndApp.depense.prix">Prix</Translate>
                 </Label>
-                <AvField id="depense-prix" type="string" className="form-control" name="prix" />
+                <AvField id="depense-prix" type="text" name="prix" />
               </AvGroup>
               <AvGroup>
                 <Label id="moyenDePaiementLabel" for="depense-moyenDePaiement">

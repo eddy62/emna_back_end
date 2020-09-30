@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IContrat } from 'app/shared/model/contrat.model';
-import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
-import { IClause } from 'app/shared/model/clause.model';
-import { getEntities as getClauses } from 'app/entities/clause/clause.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './avenant.reducer';
-import { IAvenant } from 'app/shared/model/avenant.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './avenant.reducer';
 
 export interface IAvenantUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AvenantUpdate = (props: IAvenantUpdateProps) => {
   const [contratId, setContratId] = useState('0');
-  const [listeClausesId, setListeClausesId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { avenantEntity, contrats, clauses, loading, updating } = props;
+  const { avenantEntity, contrats, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/avenant');
@@ -37,7 +29,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
     }
 
     props.getContrats();
-    props.getClauses();
   }, []);
 
   useEffect(() => {
@@ -141,7 +132,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   contrats: storeState.contrat.entities,
-  clauses: storeState.clause.entities,
   avenantEntity: storeState.avenant.entity,
   loading: storeState.avenant.loading,
   updating: storeState.avenant.updating,
@@ -150,7 +140,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getContrats,
-  getClauses,
   getEntity,
   updateEntity,
   createEntity,

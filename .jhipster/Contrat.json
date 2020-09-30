@@ -36,25 +36,18 @@
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "employe",
-      "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "employe",
+      "otherEntityName": "typeContrat",
+      "otherEntityRelationshipName": "contrat",
+      "relationshipValidateRules": "required",
+      "relationshipName": "typeContrat",
       "otherEntityField": "id"
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "societe",
+      "otherEntityName": "employe",
       "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "societe",
+      "relationshipName": "employe",
       "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "clause",
-      "otherEntityRelationshipName": "listeContrats",
-      "relationshipName": "listeClauses",
-      "otherEntityField": "id",
-      "ownerSide": false
     }
   ],
   "changelogDate": "20200722091204",

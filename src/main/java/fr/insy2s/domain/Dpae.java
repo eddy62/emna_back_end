@@ -5,10 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Dpae.
@@ -33,17 +34,13 @@ public class Dpae implements Serializable {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @NotNull
-    @Column(name = "lien_document", nullable = false)
-    private String lienDocument;
+    @OneToMany(mappedBy = "dpae")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeDpaes", allowSetters = true)
     private Employe employe;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeDpaes", allowSetters = true)
-    private Societe societe;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -80,17 +77,29 @@ public class Dpae implements Serializable {
         this.date = date;
     }
 
-    public String getLienDocument() {
-        return lienDocument;
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
     }
 
-    public Dpae lienDocument(String lienDocument) {
-        this.lienDocument = lienDocument;
+    public Dpae listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
         return this;
     }
 
-    public void setLienDocument(String lienDocument) {
-        this.lienDocument = lienDocument;
+    public Dpae addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setDpae(this);
+        return this;
+    }
+
+    public Dpae removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setDpae(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public Employe getEmploye() {
@@ -104,19 +113,6 @@ public class Dpae implements Serializable {
 
     public void setEmploye(Employe employe) {
         this.employe = employe;
-    }
-
-    public Societe getSociete() {
-        return societe;
-    }
-
-    public Dpae societe(Societe societe) {
-        this.societe = societe;
-        return this;
-    }
-
-    public void setSociete(Societe societe) {
-        this.societe = societe;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -143,7 +139,6 @@ public class Dpae implements Serializable {
             "id=" + getId() +
             ", lieu='" + getLieu() + "'" +
             ", date='" + getDate() + "'" +
-            ", lienDocument='" + getLienDocument() + "'" +
             "}";
     }
 }

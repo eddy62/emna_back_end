@@ -1,32 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IEmploye } from 'app/shared/model/employe.model';
-import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { IClause } from 'app/shared/model/clause.model';
-import { getEntities as getClauses } from 'app/entities/clause/clause.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './contrat.reducer';
-import { IContrat } from 'app/shared/model/contrat.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getTypeContrats} from 'app/entities/type-contrat/type-contrat.reducer';
+import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './contrat.reducer';
 
 export interface IContratUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ContratUpdate = (props: IContratUpdateProps) => {
+  const [typeContratId, setTypeContratId] = useState('0');
   const [employeId, setEmployeId] = useState('0');
-  const [societeId, setSocieteId] = useState('0');
-  const [listeClausesId, setListeClausesId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { contratEntity, employes, societes, clauses, loading, updating } = props;
+  const { contratEntity, typeContrats, employes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/contrat');
@@ -39,9 +30,8 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
+    props.getTypeContrats();
     props.getEmployes();
-    props.getSocietes();
-    props.getClauses();
   }, []);
 
   useEffect(() => {
@@ -128,6 +118,23 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
                 </Label>
               </AvGroup>
               <AvGroup>
+                <Label for="contrat-typeContrat">
+                  <Translate contentKey="emnaBackEndApp.contrat.typeContrat">Type Contrat</Translate>
+                </Label>
+                <AvInput id="contrat-typeContrat" type="select" className="form-control" name="typeContratId" required>
+                  {typeContrats
+                    ? typeContrats.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
+              <AvGroup>
                 <Label for="contrat-employe">
                   <Translate contentKey="emnaBackEndApp.contrat.employe">Employe</Translate>
                 </Label>
@@ -135,21 +142,6 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
                   <option value="" key="0" />
                   {employes
                     ? employes.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label for="contrat-societe">
-                  <Translate contentKey="emnaBackEndApp.contrat.societe">Societe</Translate>
-                </Label>
-                <AvInput id="contrat-societe" type="select" className="form-control" name="societeId">
-                  <option value="" key="0" />
-                  {societes
-                    ? societes.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -179,9 +171,8 @@ export const ContratUpdate = (props: IContratUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  typeContrats: storeState.typeContrat.entities,
   employes: storeState.employe.entities,
-  societes: storeState.societe.entities,
-  clauses: storeState.clause.entities,
   contratEntity: storeState.contrat.entity,
   loading: storeState.contrat.loading,
   updating: storeState.contrat.updating,
@@ -189,9 +180,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getTypeContrats,
   getEmployes,
-  getSocietes,
-  getClauses,
   getEntity,
   updateEntity,
   createEntity,

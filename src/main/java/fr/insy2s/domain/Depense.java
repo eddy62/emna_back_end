@@ -5,9 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,8 +34,8 @@ public class Depense implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "prix")
-    private Double prix;
+    @Column(name = "prix", precision = 21, scale = 2)
+    private BigDecimal prix;
 
     @Column(name = "moyen_de_paiement")
     private String moyenDePaiement;
@@ -98,16 +98,16 @@ public class Depense implements Serializable {
         this.date = date;
     }
 
-    public Double getPrix() {
+    public BigDecimal getPrix() {
         return prix;
     }
 
-    public Depense prix(Double prix) {
+    public Depense prix(BigDecimal prix) {
         this.prix = prix;
         return this;
     }
 
-    public void setPrix(Double prix) {
+    public void setPrix(BigDecimal prix) {
         this.prix = prix;
     }
 

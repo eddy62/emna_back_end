@@ -1,5 +1,6 @@
 package fr.insy2s.service.mapper;
 
+
 import fr.insy2s.domain.Absence;
 import fr.insy2s.service.dto.AbsenceDTO;
 import org.mapstruct.Mapper;
@@ -16,6 +17,8 @@ public interface AbsenceMapper extends EntityMapper<AbsenceDTO, Absence> {
     @Mapping(source = "employe.id", target = "employeId")
     AbsenceDTO toDto(Absence absence);
 
+    @Mapping(target = "listeDocuments", ignore = true)
+    @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "typeAbsenceId", target = "typeAbsence")
     @Mapping(source = "etatVariablePaieId", target = "etatVariablePaie")
     @Mapping(source = "employeId", target = "employe")

@@ -18,9 +18,8 @@
       },
       "lieu": "Lieu",
       "date": "Date",
-      "lienDocument": "Lien Document",
-      "employe": "Employe",
-      "societe": "Societe"
+      "listeDocuments": "Liste Documents",
+      "employe": "Employe"
     }
   }
 }

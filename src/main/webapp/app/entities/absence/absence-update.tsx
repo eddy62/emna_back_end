@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { ITypeAbsence } from 'app/shared/model/type-absence.model';
-import { getEntities as getTypeAbsences } from 'app/entities/type-absence/type-absence.reducer';
-import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
-import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
-import { IEmploye } from 'app/shared/model/employe.model';
-import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './absence.reducer';
-import { IAbsence } from 'app/shared/model/absence.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getTypeAbsences} from 'app/entities/type-absence/type-absence.reducer';
+import {getEntities as getEtatVariablePaies} from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
+import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './absence.reducer';
 
 export interface IAbsenceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -117,12 +110,6 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="justificatifLabel" for="absence-justificatif">
-                  <Translate contentKey="emnaBackEndApp.absence.justificatif">Justificatif</Translate>
-                </Label>
-                <AvField id="absence-justificatif" type="text" name="justificatif" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="moisLabel" for="absence-mois">
                   <Translate contentKey="emnaBackEndApp.absence.mois">Mois</Translate>
                 </Label>
@@ -173,8 +160,7 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                 <Label for="absence-etatVariablePaie">
                   <Translate contentKey="emnaBackEndApp.absence.etatVariablePaie">Etat Variable Paie</Translate>
                 </Label>
-                <AvInput id="absence-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
-                  <option value="" key="0" />
+                <AvInput id="absence-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId" required>
                   {etatVariablePaies
                     ? etatVariablePaies.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -183,6 +169,9 @@ export const AbsenceUpdate = (props: IAbsenceUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="absence-employe">

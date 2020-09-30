@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Absence} entity.
@@ -16,8 +16,6 @@ public class AbsenceDTO implements Serializable {
 
     @NotNull
     private LocalDate finAbsence;
-
-    private String justificatif;
 
     @NotNull
     private Integer mois;
@@ -54,14 +52,6 @@ public class AbsenceDTO implements Serializable {
 
     public void setFinAbsence(LocalDate finAbsence) {
         this.finAbsence = finAbsence;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -128,7 +118,6 @@ public class AbsenceDTO implements Serializable {
             "id=" + getId() +
             ", debutAbsence='" + getDebutAbsence() + "'" +
             ", finAbsence='" + getFinAbsence() + "'" +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             ", typeAbsenceId=" + getTypeAbsenceId() +

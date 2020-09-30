@@ -1,8 +1,9 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.AvanceRappelSalaire} entity.
@@ -21,7 +22,7 @@ public class AvanceRappelSalaireDTO implements Serializable {
     private LocalDate finPeriode;
 
     @NotNull
-    private Double montant;
+    private BigDecimal montant;
 
     @NotNull
     private Integer mois;
@@ -66,11 +67,11 @@ public class AvanceRappelSalaireDTO implements Serializable {
         this.finPeriode = finPeriode;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 

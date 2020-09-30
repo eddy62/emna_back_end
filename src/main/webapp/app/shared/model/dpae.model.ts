@@ -1,12 +1,11 @@
-import { Moment } from 'moment';
+import { IDocument } from 'app/shared/model/document.model';
 
 export interface IDpae {
   id?: number;
   lieu?: string;
   date?: string;
-  lienDocument?: string;
+  listeDocuments?: IDocument[];
   employeId?: number;
-  societeId?: number;
 }
 
 export const defaultValue: Readonly<IDpae> = {};

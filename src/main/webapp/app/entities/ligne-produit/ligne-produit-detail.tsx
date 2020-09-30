@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './ligne-produit.reducer';
-import { ILigneProduit } from 'app/shared/model/ligne-produit.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './ligne-produit.reducer';
 
 export interface ILigneProduitDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -32,29 +30,21 @@ export const LigneProduitDetail = (props: ILigneProduitDetailProps) => {
           </dt>
           <dd>{ligneProduitEntity.quantite}</dd>
           <dt>
-            <span id="nom">
-              <Translate contentKey="emnaBackEndApp.ligneProduit.nom">Nom</Translate>
+            <span id="commentaire">
+              <Translate contentKey="emnaBackEndApp.ligneProduit.commentaire">Commentaire</Translate>
             </span>
           </dt>
-          <dd>{ligneProduitEntity.nom}</dd>
+          <dd>{ligneProduitEntity.commentaire}</dd>
           <dt>
-            <span id="description">
-              <Translate contentKey="emnaBackEndApp.ligneProduit.description">Description</Translate>
+            <span id="remise">
+              <Translate contentKey="emnaBackEndApp.ligneProduit.remise">Remise</Translate>
             </span>
           </dt>
-          <dd>{ligneProduitEntity.description}</dd>
+          <dd>{ligneProduitEntity.remise}</dd>
           <dt>
-            <span id="tva">
-              <Translate contentKey="emnaBackEndApp.ligneProduit.tva">Tva</Translate>
-            </span>
+            <Translate contentKey="emnaBackEndApp.ligneProduit.produit">Produit</Translate>
           </dt>
-          <dd>{ligneProduitEntity.tva}</dd>
-          <dt>
-            <span id="prix">
-              <Translate contentKey="emnaBackEndApp.ligneProduit.prix">Prix</Translate>
-            </span>
-          </dt>
-          <dd>{ligneProduitEntity.prix}</dd>
+          <dd>{ligneProduitEntity.produitId ? ligneProduitEntity.produitId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.ligneProduit.facture">Facture</Translate>
           </dt>

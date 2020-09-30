@@ -1,5 +1,6 @@
 package fr.insy2s.service.dto;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -9,9 +10,10 @@ public class ClientFournisseurDTO implements Serializable {
     
     private Long id;
 
+    @NotNull
     private String nom;
 
-    private Integer siren;
+    private String siret;
 
     private String telephone;
 
@@ -38,12 +40,12 @@ public class ClientFournisseurDTO implements Serializable {
         this.nom = nom;
     }
 
-    public Integer getSiren() {
-        return siren;
+    public String getSiret() {
+        return siret;
     }
 
-    public void setSiren(Integer siren) {
-        this.siren = siren;
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 
     public String getTelephone() {
@@ -101,7 +103,7 @@ public class ClientFournisseurDTO implements Serializable {
         return "ClientFournisseurDTO{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", siren=" + getSiren() +
+            ", siret='" + getSiret() + "'" +
             ", telephone='" + getTelephone() + "'" +
             ", email='" + getEmail() + "'" +
             ", adresseId=" + getAdresseId() +

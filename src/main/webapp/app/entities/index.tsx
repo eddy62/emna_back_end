@@ -1,6 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
-
+import {Switch} from 'react-router-dom';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 
@@ -40,6 +39,7 @@ import Dpae from './dpae';
 import Depense from './depense';
 import EtatDepense from './etat-depense';
 import SaisieArticle from './saisie-article';
+import TypeDocument from './type-document';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -82,6 +82,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}depense`} component={Depense} />
       <ErrorBoundaryRoute path={`${match.url}etat-depense`} component={EtatDepense} />
       <ErrorBoundaryRoute path={`${match.url}saisie-article`} component={SaisieArticle} />
+      <ErrorBoundaryRoute path={`${match.url}type-document`} component={TypeDocument} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { IDepense } from 'app/shared/model/depense.model';
-import { IRootState } from 'app/shared/reducers';
-import { getEntity, deleteEntity } from './depense.reducer';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {RouteComponentProps} from 'react-router-dom';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {deleteEntity, getEntity} from './depense.reducer';
 
 export interface IDepenseDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

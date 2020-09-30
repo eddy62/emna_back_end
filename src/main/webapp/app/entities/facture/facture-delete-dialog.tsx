@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { IFacture } from 'app/shared/model/facture.model';
-import { IRootState } from 'app/shared/reducers';
-import { getEntity, deleteEntity } from './facture.reducer';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {RouteComponentProps} from 'react-router-dom';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {deleteEntity, getEntity} from './facture.reducer';
 
 export interface IFactureDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

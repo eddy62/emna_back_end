@@ -5,9 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -38,8 +38,8 @@ public class AvanceRappelSalaire implements Serializable {
     private LocalDate finPeriode;
 
     @NotNull
-    @Column(name = "montant", nullable = false)
-    private Double montant;
+    @Column(name = "montant", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montant;
 
     @NotNull
     @Column(name = "mois", nullable = false)
@@ -49,7 +49,8 @@ public class AvanceRappelSalaire implements Serializable {
     @Column(name = "annee", nullable = false)
     private Integer annee;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "avanceRappelSalaires", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
 
@@ -105,16 +106,16 @@ public class AvanceRappelSalaire implements Serializable {
         this.finPeriode = finPeriode;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public AvanceRappelSalaire montant(Double montant) {
+    public AvanceRappelSalaire montant(BigDecimal montant) {
         this.montant = montant;
         return this;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 

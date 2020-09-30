@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.Operation;
 import fr.insy2s.service.dto.OperationDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Operation} and its DTO {@link OperationDTO}.

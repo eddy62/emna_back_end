@@ -5,9 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,11 +35,11 @@ public class Employe implements Serializable {
     @Column(name = "civilite", nullable = false)
     private String civilite;
 
-    @Column(name = "nom_naissance")
+    @NotNull
+    @Column(name = "nom_naissance", nullable = false)
     private String nomNaissance;
 
-    @NotNull
-    @Column(name = "nom_usage", nullable = false)
+    @Column(name = "nom_usage")
     private String nomUsage;
 
     @NotNull
@@ -54,7 +54,8 @@ public class Employe implements Serializable {
     @Column(name = "ville_naissance", nullable = false)
     private String villeNaissance;
 
-    @Column(name = "departement_naissance")
+    @NotNull
+    @Column(name = "departement_naissance", nullable = false)
     private String departementNaissance;
 
     @NotNull
@@ -65,8 +66,7 @@ public class Employe implements Serializable {
     @Column(name = "numero_securite_sociale", nullable = false)
     private String numeroSecuriteSociale;
 
-    @NotNull
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "telephone_fix")
@@ -76,21 +76,20 @@ public class Employe implements Serializable {
     @Column(name = "telephone_portable", nullable = false)
     private String telephonePortable;
 
-    @NotNull
-    @Column(name = "fax", nullable = false)
+    @Column(name = "fax")
     private String fax;
 
     @NotNull
-    @Column(name = "salaire_horaire", nullable = false)
-    private Double salaireHoraire;
+    @Column(name = "salaire_horaire", precision = 21, scale = 2, nullable = false)
+    private BigDecimal salaireHoraire;
 
     @NotNull
-    @Column(name = "salaire_brut_mensuelle", nullable = false)
-    private Double salaireBrutMensuelle;
+    @Column(name = "salaire_brut_mensuelle", precision = 21, scale = 2, nullable = false)
+    private BigDecimal salaireBrutMensuelle;
 
     @NotNull
-    @Column(name = "heures_mensuelle", nullable = false)
-    private Double heuresMensuelle;
+    @Column(name = "heures_mensuelle", precision = 21, scale = 2, nullable = false)
+    private BigDecimal heuresMensuelle;
 
     @NotNull
     @Column(name = "categorie", nullable = false)
@@ -104,8 +103,7 @@ public class Employe implements Serializable {
     @Column(name = "date_embauche", nullable = false)
     private LocalDate dateEmbauche;
 
-    @NotNull
-    @Column(name = "date_sortie", nullable = false)
+    @Column(name = "date_sortie")
     private LocalDate dateSortie;
 
     @NotNull
@@ -169,11 +167,6 @@ public class Employe implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "employes", allowSetters = true)
     private Adresse adresse;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = "employes", allowSetters = true)
-    private TypeContrat typeContrat;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeEmployes", allowSetters = true)
@@ -370,42 +363,42 @@ public class Employe implements Serializable {
         this.fax = fax;
     }
 
-    public Double getSalaireHoraire() {
+    public BigDecimal getSalaireHoraire() {
         return salaireHoraire;
     }
 
-    public Employe salaireHoraire(Double salaireHoraire) {
+    public Employe salaireHoraire(BigDecimal salaireHoraire) {
         this.salaireHoraire = salaireHoraire;
         return this;
     }
 
-    public void setSalaireHoraire(Double salaireHoraire) {
+    public void setSalaireHoraire(BigDecimal salaireHoraire) {
         this.salaireHoraire = salaireHoraire;
     }
 
-    public Double getSalaireBrutMensuelle() {
+    public BigDecimal getSalaireBrutMensuelle() {
         return salaireBrutMensuelle;
     }
 
-    public Employe salaireBrutMensuelle(Double salaireBrutMensuelle) {
+    public Employe salaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
         this.salaireBrutMensuelle = salaireBrutMensuelle;
         return this;
     }
 
-    public void setSalaireBrutMensuelle(Double salaireBrutMensuelle) {
+    public void setSalaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
         this.salaireBrutMensuelle = salaireBrutMensuelle;
     }
 
-    public Double getHeuresMensuelle() {
+    public BigDecimal getHeuresMensuelle() {
         return heuresMensuelle;
     }
 
-    public Employe heuresMensuelle(Double heuresMensuelle) {
+    public Employe heuresMensuelle(BigDecimal heuresMensuelle) {
         this.heuresMensuelle = heuresMensuelle;
         return this;
     }
 
-    public void setHeuresMensuelle(Double heuresMensuelle) {
+    public void setHeuresMensuelle(BigDecimal heuresMensuelle) {
         this.heuresMensuelle = heuresMensuelle;
     }
 
@@ -774,19 +767,6 @@ public class Employe implements Serializable {
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
-    }
-
-    public TypeContrat getTypeContrat() {
-        return typeContrat;
-    }
-
-    public Employe typeContrat(TypeContrat typeContrat) {
-        this.typeContrat = typeContrat;
-        return this;
-    }
-
-    public void setTypeContrat(TypeContrat typeContrat) {
-        this.typeContrat = typeContrat;
     }
 
     public Societe getSociete() {

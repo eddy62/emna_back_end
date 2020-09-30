@@ -1,5 +1,5 @@
-import { Moment } from 'moment';
 import { ILigneProduit } from 'app/shared/model/ligne-produit.model';
+import { IDocument } from 'app/shared/model/document.model';
 
 export interface IDevis {
   id?: number;
@@ -8,13 +8,9 @@ export interface IDevis {
   message?: string;
   dateCreation?: string;
   dateLimite?: string;
-  prixHT?: number;
-  prixTTC?: number;
-  tva?: number;
-  cheminFichier?: string;
   listeLigneProduits?: ILigneProduit[];
+  listeDocuments?: IDocument[];
   etatDevisId?: number;
-  societeId?: number;
   clientFournisseurId?: number;
 }
 

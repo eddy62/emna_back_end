@@ -1,8 +1,9 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.NoteDeFrais} entity.
@@ -18,9 +19,7 @@ public class NoteDeFraisDTO implements Serializable {
     private LocalDate date;
 
     @NotNull
-    private Double montant;
-
-    private String justificatif;
+    private BigDecimal montant;
 
     @NotNull
     private Integer mois;
@@ -57,20 +56,12 @@ public class NoteDeFraisDTO implements Serializable {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -130,7 +121,6 @@ public class NoteDeFraisDTO implements Serializable {
             ", designation='" + getDesignation() + "'" +
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             ", etatVariablePaieId=" + getEtatVariablePaieId() +

@@ -12,11 +12,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "lienDocument",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "mois",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
@@ -28,6 +23,12 @@
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "fichePaie",
+      "relationshipName": "listeDocuments"
+    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "employe",

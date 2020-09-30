@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IInfoEntreprise } from 'app/shared/model/info-entreprise.model';
-import { getEntities as getInfoEntreprises } from 'app/entities/info-entreprise/info-entreprise.reducer';
-import { IUser } from 'app/shared/model/user.model';
-import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
-import { IComptable } from 'app/shared/model/comptable.model';
-import { getEntities as getComptables } from 'app/entities/comptable/comptable.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './societe.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getInfoEntreprises} from 'app/entities/info-entreprise/info-entreprise.reducer';
+import {getUsers} from 'app/modules/administration/user-management/user-management.reducer';
+import {getEntities as getAdresses} from 'app/entities/adresse/adresse.reducer';
+import {getEntities as getComptables} from 'app/entities/comptable/comptable.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './societe.reducer';
 
 export interface ISocieteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

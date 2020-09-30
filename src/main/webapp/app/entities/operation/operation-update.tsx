@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IReleve } from 'app/shared/model/releve.model';
-import { getEntities as getReleves } from 'app/entities/releve/releve.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './operation.reducer';
-import { IOperation } from 'app/shared/model/operation.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getReleves} from 'app/entities/releve/releve.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './operation.reducer';
 
 export interface IOperationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -108,7 +103,7 @@ export const OperationUpdate = (props: IOperationUpdateProps) => {
                 <Label id="soldeLabel" for="operation-solde">
                   <Translate contentKey="emnaBackEndApp.operation.solde">Solde</Translate>
                 </Label>
-                <AvField id="operation-solde" type="string" className="form-control" name="solde" />
+                <AvField id="operation-solde" type="text" name="solde" />
               </AvGroup>
               <AvGroup>
                 <Label for="operation-releve">

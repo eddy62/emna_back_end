@@ -13,12 +13,8 @@
     },
     {
       "fieldName": "montant",
-      "fieldType": "Double",
+      "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "justificatif",
-      "fieldType": "String"
     },
     {
       "fieldName": "mois",
@@ -33,9 +29,16 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "noteDeFrais",
+      "relationshipName": "listeDocuments"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "etatVariablePaie",
       "otherEntityRelationshipName": "noteDeFrais",
+      "relationshipValidateRules": "required",
       "relationshipName": "etatVariablePaie",
       "otherEntityField": "id"
     },

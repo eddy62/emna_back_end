@@ -19,14 +19,19 @@
       "cheminFichier": "Chemin Fichier",
       "type": "Type",
       "nom": "Nom",
-      "absence": "Absence",
-      "noteDeFrais": "Note De Frais",
-      "autresVariables": "Autres Variables",
+      "typeDocument": "Type Document",
       "facture": "Facture",
       "releve": "Releve",
       "contrat": "Contrat",
       "employe": "Employe",
-      "depense": "Depense"
+      "depense": "Depense",
+      "absence": "Absence",
+      "noteDeFrais": "Note De Frais",
+      "autresVariable": "Autres Variable",
+      "devis": "Devis",
+      "dpae": "Dpae",
+      "fichePaie": "Fiche Paie",
+      "avenant": "Avenant"
     }
   }
 }

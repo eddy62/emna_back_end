@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './absence.reducer';
-import { IAbsence } from 'app/shared/model/absence.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './absence.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IAbsenceProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -43,9 +42,6 @@ export const Absence = (props: IAbsenceProps) => {
                   <Translate contentKey="emnaBackEndApp.absence.finAbsence">Fin Absence</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.absence.justificatif">Justificatif</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.absence.mois">Mois</Translate>
                 </th>
                 <th>
@@ -77,7 +73,6 @@ export const Absence = (props: IAbsenceProps) => {
                   <td>
                     {absence.finAbsence ? <TextFormat type="date" value={absence.finAbsence} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{absence.justificatif}</td>
                   <td>{absence.mois}</td>
                   <td>{absence.annee}</td>
                   <td>{absence.typeAbsenceId ? <Link to={`type-absence/${absence.typeAbsenceId}`}>{absence.typeAbsenceId}</Link> : ''}</td>

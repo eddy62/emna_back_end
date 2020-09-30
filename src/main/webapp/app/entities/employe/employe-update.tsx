@@ -1,35 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IStatutEmploye } from 'app/shared/model/statut-employe.model';
-import { getEntities as getStatutEmployes } from 'app/entities/statut-employe/statut-employe.reducer';
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
-import { ITypeContrat } from 'app/shared/model/type-contrat.model';
-import { getEntities as getTypeContrats } from 'app/entities/type-contrat/type-contrat.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './employe.reducer';
-import { IEmploye } from 'app/shared/model/employe.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getStatutEmployes} from 'app/entities/statut-employe/statut-employe.reducer';
+import {getEntities as getAdresses} from 'app/entities/adresse/adresse.reducer';
+import {getEntities as getSocietes} from 'app/entities/societe/societe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './employe.reducer';
 
 export interface IEmployeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const EmployeUpdate = (props: IEmployeUpdateProps) => {
   const [statutEmployeId, setStatutEmployeId] = useState('0');
   const [adresseId, setAdresseId] = useState('0');
-  const [typeContratId, setTypeContratId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { employeEntity, statutEmployes, adresses, typeContrats, societes, loading, updating } = props;
+  const { employeEntity, statutEmployes, adresses, societes, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/employe');
@@ -44,7 +34,6 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
 
     props.getStatutEmployes();
     props.getAdresses();
-    props.getTypeContrats();
     props.getSocietes();
   }, []);
 
@@ -122,20 +111,20 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <Label id="nomNaissanceLabel" for="employe-nomNaissance">
                   <Translate contentKey="emnaBackEndApp.employe.nomNaissance">Nom Naissance</Translate>
                 </Label>
-                <AvField id="employe-nomNaissance" type="text" name="nomNaissance" />
+                <AvField
+                  id="employe-nomNaissance"
+                  type="text"
+                  name="nomNaissance"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label id="nomUsageLabel" for="employe-nomUsage">
                   <Translate contentKey="emnaBackEndApp.employe.nomUsage">Nom Usage</Translate>
                 </Label>
-                <AvField
-                  id="employe-nomUsage"
-                  type="text"
-                  name="nomUsage"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
+                <AvField id="employe-nomUsage" type="text" name="nomUsage" />
               </AvGroup>
               <AvGroup>
                 <Label id="prenomLabel" for="employe-prenom">
@@ -181,7 +170,14 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <Label id="departementNaissanceLabel" for="employe-departementNaissance">
                   <Translate contentKey="emnaBackEndApp.employe.departementNaissance">Departement Naissance</Translate>
                 </Label>
-                <AvField id="employe-departementNaissance" type="text" name="departementNaissance" />
+                <AvField
+                  id="employe-departementNaissance"
+                  type="text"
+                  name="departementNaissance"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label id="paysNaisanceLabel" for="employe-paysNaisance">
@@ -213,14 +209,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <Label id="emailLabel" for="employe-email">
                   <Translate contentKey="emnaBackEndApp.employe.email">Email</Translate>
                 </Label>
-                <AvField
-                  id="employe-email"
-                  type="text"
-                  name="email"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
+                <AvField id="employe-email" type="text" name="email" />
               </AvGroup>
               <AvGroup>
                 <Label id="telephoneFixLabel" for="employe-telephoneFix">
@@ -245,14 +234,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <Label id="faxLabel" for="employe-fax">
                   <Translate contentKey="emnaBackEndApp.employe.fax">Fax</Translate>
                 </Label>
-                <AvField
-                  id="employe-fax"
-                  type="text"
-                  name="fax"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
+                <AvField id="employe-fax" type="text" name="fax" />
               </AvGroup>
               <AvGroup>
                 <Label id="salaireHoraireLabel" for="employe-salaireHoraire">
@@ -260,8 +242,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 </Label>
                 <AvField
                   id="employe-salaireHoraire"
-                  type="string"
-                  className="form-control"
+                  type="text"
                   name="salaireHoraire"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
@@ -275,8 +256,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 </Label>
                 <AvField
                   id="employe-salaireBrutMensuelle"
-                  type="string"
-                  className="form-control"
+                  type="text"
                   name="salaireBrutMensuelle"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
@@ -290,8 +270,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 </Label>
                 <AvField
                   id="employe-heuresMensuelle"
-                  type="string"
-                  className="form-control"
+                  type="text"
                   name="heuresMensuelle"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
@@ -343,15 +322,7 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <Label id="dateSortieLabel" for="employe-dateSortie">
                   <Translate contentKey="emnaBackEndApp.employe.dateSortie">Date Sortie</Translate>
                 </Label>
-                <AvField
-                  id="employe-dateSortie"
-                  type="date"
-                  className="form-control"
-                  name="dateSortie"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
+                <AvField id="employe-dateSortie" type="date" className="form-control" name="dateSortie" />
               </AvGroup>
               <AvGroup>
                 <Label id="periodeEssaiLabel" for="employe-periodeEssai">
@@ -431,23 +402,6 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 </AvFeedback>
               </AvGroup>
               <AvGroup>
-                <Label for="employe-typeContrat">
-                  <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
-                </Label>
-                <AvInput id="employe-typeContrat" type="select" className="form-control" name="typeContratId" required>
-                  {typeContrats
-                    ? typeContrats.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>
-                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
-                </AvFeedback>
-              </AvGroup>
-              <AvGroup>
                 <Label for="employe-societe">
                   <Translate contentKey="emnaBackEndApp.employe.societe">Societe</Translate>
                 </Label>
@@ -486,7 +440,6 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   statutEmployes: storeState.statutEmploye.entities,
   adresses: storeState.adresse.entities,
-  typeContrats: storeState.typeContrat.entities,
   societes: storeState.societe.entities,
   employeEntity: storeState.employe.entity,
   loading: storeState.employe.loading,
@@ -497,7 +450,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getStatutEmployes,
   getAdresses,
-  getTypeContrats,
   getSocietes,
   getEntity,
   updateEntity,

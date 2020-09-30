@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IEtatFacture } from 'app/shared/model/etat-facture.model';
-import { getEntities as getEtatFactures } from 'app/entities/etat-facture/etat-facture.reducer';
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { IOperation } from 'app/shared/model/operation.model';
-import { getEntities as getOperations } from 'app/entities/operation/operation.reducer';
-import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
-import { getEntities as getClientFournisseurs } from 'app/entities/client-fournisseur/client-fournisseur.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './facture.reducer';
-import { IFacture } from 'app/shared/model/facture.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getDevis} from 'app/entities/devis/devis.reducer';
+import {getEntities as getEtatFactures} from 'app/entities/etat-facture/etat-facture.reducer';
+import {getEntities as getAdresses} from 'app/entities/adresse/adresse.reducer';
+import {getEntities as getSocietes} from 'app/entities/societe/societe.reducer';
+import {getEntities as getOperations} from 'app/entities/operation/operation.reducer';
+import {getEntities as getClientFournisseurs} from 'app/entities/client-fournisseur/client-fournisseur.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './facture.reducer';
 
 export interface IFactureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const FactureUpdate = (props: IFactureUpdateProps) => {
+  const [devisId, setDevisId] = useState('0');
   const [etatFactureId, setEtatFactureId] = useState('0');
   const [adresseId, setAdresseId] = useState('0');
   const [societeId, setSocieteId] = useState('0');
@@ -32,7 +25,7 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
   const [clientFournisseurId, setClientFournisseurId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { factureEntity, etatFactures, adresses, societes, operations, clientFournisseurs, loading, updating } = props;
+  const { factureEntity, devis, etatFactures, adresses, societes, operations, clientFournisseurs, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/facture');
@@ -45,6 +38,7 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
+    props.getDevis();
     props.getEtatFactures();
     props.getAdresses();
     props.getSocietes();
@@ -133,28 +127,25 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
                 <AvField id="facture-dateEcheance" type="date" className="form-control" name="dateEcheance" />
               </AvGroup>
               <AvGroup>
-                <Label id="prixHTLabel" for="facture-prixHT">
-                  <Translate contentKey="emnaBackEndApp.facture.prixHT">Prix HT</Translate>
-                </Label>
-                <AvField id="facture-prixHT" type="string" className="form-control" name="prixHT" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="prixTTCLabel" for="facture-prixTTC">
-                  <Translate contentKey="emnaBackEndApp.facture.prixTTC">Prix TTC</Translate>
-                </Label>
-                <AvField id="facture-prixTTC" type="string" className="form-control" name="prixTTC" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="tvaLabel" for="facture-tva">
-                  <Translate contentKey="emnaBackEndApp.facture.tva">Tva</Translate>
-                </Label>
-                <AvField id="facture-tva" type="string" className="form-control" name="tva" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="moyenDePaiementLabel" for="facture-moyenDePaiement">
                   <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
                 </Label>
                 <AvField id="facture-moyenDePaiement" type="text" name="moyenDePaiement" />
+              </AvGroup>
+              <AvGroup>
+                <Label for="facture-devis">
+                  <Translate contentKey="emnaBackEndApp.facture.devis">Devis</Translate>
+                </Label>
+                <AvInput id="facture-devis" type="select" className="form-control" name="devisId">
+                  <option value="" key="0" />
+                  {devis
+                    ? devis.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="facture-etatFacture">
@@ -253,6 +244,7 @@ export const FactureUpdate = (props: IFactureUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  devis: storeState.devis.entities,
   etatFactures: storeState.etatFacture.entities,
   adresses: storeState.adresse.entities,
   societes: storeState.societe.entities,
@@ -265,6 +257,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getDevis,
   getEtatFactures,
   getAdresses,
   getSocietes,

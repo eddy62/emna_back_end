@@ -10,26 +10,20 @@
       "fieldName": "date",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "lienDocument",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "dpae",
+      "relationshipName": "listeDocuments"
+    },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "employe",
       "otherEntityRelationshipName": "listeDpae",
       "relationshipName": "employe",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "societe",
-      "otherEntityRelationshipName": "listeDpae",
-      "relationshipName": "societe",
       "otherEntityField": "id"
     }
   ],

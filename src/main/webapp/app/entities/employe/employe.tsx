@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './employe.reducer';
-import { IEmploye } from 'app/shared/model/employe.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './employe.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IEmployeProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -115,9 +114,6 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.adresse">Adresse</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.typeContrat">Type Contrat</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.employe.societe">Societe</Translate>
                 </th>
                 <th />
@@ -165,7 +161,6 @@ export const Employe = (props: IEmployeProps) => {
                     {employe.statutEmployeId ? <Link to={`statut-employe/${employe.statutEmployeId}`}>{employe.statutEmployeId}</Link> : ''}
                   </td>
                   <td>{employe.adresseId ? <Link to={`adresse/${employe.adresseId}`}>{employe.adresseId}</Link> : ''}</td>
-                  <td>{employe.typeContratId ? <Link to={`type-contrat/${employe.typeContratId}`}>{employe.typeContratId}</Link> : ''}</td>
                   <td>{employe.societeId ? <Link to={`societe/${employe.societeId}`}>{employe.societeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

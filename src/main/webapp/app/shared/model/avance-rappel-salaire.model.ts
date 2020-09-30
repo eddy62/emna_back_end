@@ -1,5 +1,3 @@
-import { Moment } from 'moment';
-
 export interface IAvanceRappelSalaire {
   id?: number;
   type?: string;

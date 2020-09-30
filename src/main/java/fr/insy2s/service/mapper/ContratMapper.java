@@ -1,29 +1,27 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.Contrat;
 import fr.insy2s.service.dto.ContratDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Contrat} and its DTO {@link ContratDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EmployeMapper.class, SocieteMapper.class})
+@Mapper(componentModel = "spring", uses = {TypeContratMapper.class, EmployeMapper.class})
 public interface ContratMapper extends EntityMapper<ContratDTO, Contrat> {
 
+    @Mapping(source = "typeContrat.id", target = "typeContratId")
     @Mapping(source = "employe.id", target = "employeId")
-    @Mapping(source = "societe.id", target = "societeId")
     ContratDTO toDto(Contrat contrat);
 
     @Mapping(target = "listeAvenants", ignore = true)
     @Mapping(target = "removeListeAvenants", ignore = true)
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
+    @Mapping(source = "typeContratId", target = "typeContrat")
     @Mapping(source = "employeId", target = "employe")
-    @Mapping(source = "societeId", target = "societe")
-    @Mapping(target = "listeClauses", ignore = true)
-    @Mapping(target = "removeListeClauses", ignore = true)
     Contrat toEntity(ContratDTO contratDTO);
 
     default Contrat fromId(Long id) {

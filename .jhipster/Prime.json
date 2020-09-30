@@ -3,7 +3,7 @@
   "fields": [
     {
       "fieldName": "montant",
-      "fieldType": "Double",
+      "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
     {
@@ -30,6 +30,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "etatVariablePaie",
       "otherEntityRelationshipName": "prime",
+      "relationshipValidateRules": "required",
       "relationshipName": "etatVariablePaie",
       "otherEntityField": "id"
     },

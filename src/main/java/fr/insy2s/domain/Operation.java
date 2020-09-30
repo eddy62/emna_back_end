@@ -5,8 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,8 +38,8 @@ public class Operation implements Serializable {
     @Column(name = "rapproche")
     private Boolean rapproche;
 
-    @Column(name = "solde")
-    private Double solde;
+    @Column(name = "solde", precision = 21, scale = 2)
+    private BigDecimal solde;
 
     @OneToMany(mappedBy = "operation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -110,16 +110,16 @@ public class Operation implements Serializable {
         this.rapproche = rapproche;
     }
 
-    public Double getSolde() {
+    public BigDecimal getSolde() {
         return solde;
     }
 
-    public Operation solde(Double solde) {
+    public Operation solde(BigDecimal solde) {
         this.solde = solde;
         return this;
     }
 
-    public void setSolde(Double solde) {
+    public void setSolde(BigDecimal solde) {
         this.solde = solde;
     }
 

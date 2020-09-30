@@ -1,7 +1,7 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Facture} entity.
@@ -22,14 +22,10 @@ public class FactureDTO implements Serializable {
 
     private LocalDate dateEcheance;
 
-    private Integer prixHT;
-
-    private Integer prixTTC;
-
-    private Float tva;
-
     private String moyenDePaiement;
 
+
+    private Long devisId;
 
     private Long etatFactureId;
 
@@ -97,36 +93,20 @@ public class FactureDTO implements Serializable {
         this.dateEcheance = dateEcheance;
     }
 
-    public Integer getPrixHT() {
-        return prixHT;
-    }
-
-    public void setPrixHT(Integer prixHT) {
-        this.prixHT = prixHT;
-    }
-
-    public Integer getPrixTTC() {
-        return prixTTC;
-    }
-
-    public void setPrixTTC(Integer prixTTC) {
-        this.prixTTC = prixTTC;
-    }
-
-    public Float getTva() {
-        return tva;
-    }
-
-    public void setTva(Float tva) {
-        this.tva = tva;
-    }
-
     public String getMoyenDePaiement() {
         return moyenDePaiement;
     }
 
     public void setMoyenDePaiement(String moyenDePaiement) {
         this.moyenDePaiement = moyenDePaiement;
+    }
+
+    public Long getDevisId() {
+        return devisId;
+    }
+
+    public void setDevisId(Long devisId) {
+        this.devisId = devisId;
     }
 
     public Long getEtatFactureId() {
@@ -197,10 +177,8 @@ public class FactureDTO implements Serializable {
             ", message='" + getMessage() + "'" +
             ", date='" + getDate() + "'" +
             ", dateEcheance='" + getDateEcheance() + "'" +
-            ", prixHT=" + getPrixHT() +
-            ", prixTTC=" + getPrixTTC() +
-            ", tva=" + getTva() +
             ", moyenDePaiement='" + getMoyenDePaiement() + "'" +
+            ", devisId=" + getDevisId() +
             ", etatFactureId=" + getEtatFactureId() +
             ", adresseId=" + getAdresseId() +
             ", societeId=" + getSocieteId() +

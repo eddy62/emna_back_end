@@ -4,7 +4,7 @@ import { IDevis } from 'app/shared/model/devis.model';
 export interface IClientFournisseur {
   id?: number;
   nom?: string;
-  siren?: number;
+  siret?: string;
   telephone?: string;
   email?: string;
   listeFactures?: IFacture[];

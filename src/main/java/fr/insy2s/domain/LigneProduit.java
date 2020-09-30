@@ -5,9 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A LigneProduit.
@@ -28,18 +28,16 @@ public class LigneProduit implements Serializable {
     @Column(name = "quantite", nullable = false)
     private Integer quantite;
 
-    @Column(name = "nom")
-    private String nom;
+    @Column(name = "commentaire")
+    private String commentaire;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "remise", precision = 21, scale = 2)
+    private BigDecimal remise;
 
-    @Column(name = "tva")
-    private Float tva;
-
+    @ManyToOne(optional = false)
     @NotNull
-    @Column(name = "prix", nullable = false)
-    private Float prix;
+    @JsonIgnoreProperties(value = "ligneProduits", allowSetters = true)
+    private Produit produit;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeLigneProduits", allowSetters = true)
@@ -71,56 +69,43 @@ public class LigneProduit implements Serializable {
         this.quantite = quantite;
     }
 
-    public String getNom() {
-        return nom;
+    public String getCommentaire() {
+        return commentaire;
     }
 
-    public LigneProduit nom(String nom) {
-        this.nom = nom;
+    public LigneProduit commentaire(String commentaire) {
+        this.commentaire = commentaire;
         return this;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
     }
 
-    public String getDescription() {
-        return description;
+    public BigDecimal getRemise() {
+        return remise;
     }
 
-    public LigneProduit description(String description) {
-        this.description = description;
+    public LigneProduit remise(BigDecimal remise) {
+        this.remise = remise;
         return this;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRemise(BigDecimal remise) {
+        this.remise = remise;
     }
 
-    public Float getTva() {
-        return tva;
+    public Produit getProduit() {
+        return produit;
     }
 
-    public LigneProduit tva(Float tva) {
-        this.tva = tva;
+    public LigneProduit produit(Produit produit) {
+        this.produit = produit;
         return this;
     }
 
-    public void setTva(Float tva) {
-        this.tva = tva;
-    }
-
-    public Float getPrix() {
-        return prix;
-    }
-
-    public LigneProduit prix(Float prix) {
-        this.prix = prix;
-        return this;
-    }
-
-    public void setPrix(Float prix) {
-        this.prix = prix;
+    public void setProduit(Produit produit) {
+        this.produit = produit;
     }
 
     public Facture getFacture() {
@@ -172,10 +157,8 @@ public class LigneProduit implements Serializable {
         return "LigneProduit{" +
             "id=" + getId() +
             ", quantite=" + getQuantite() +
-            ", nom='" + getNom() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", tva=" + getTva() +
-            ", prix=" + getPrix() +
+            ", commentaire='" + getCommentaire() + "'" +
+            ", remise=" + getRemise() +
             "}";
     }
 }

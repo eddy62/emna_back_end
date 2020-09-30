@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { IDocument } from 'app/shared/model/document.model';
 
 export interface IDepense {

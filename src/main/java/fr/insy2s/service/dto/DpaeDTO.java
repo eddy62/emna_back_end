@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Dpae} entity.
@@ -17,13 +17,8 @@ public class DpaeDTO implements Serializable {
     @NotNull
     private LocalDate date;
 
-    @NotNull
-    private String lienDocument;
-
 
     private Long employeId;
-
-    private Long societeId;
     
     public Long getId() {
         return id;
@@ -49,28 +44,12 @@ public class DpaeDTO implements Serializable {
         this.date = date;
     }
 
-    public String getLienDocument() {
-        return lienDocument;
-    }
-
-    public void setLienDocument(String lienDocument) {
-        this.lienDocument = lienDocument;
-    }
-
     public Long getEmployeId() {
         return employeId;
     }
 
     public void setEmployeId(Long employeId) {
         this.employeId = employeId;
-    }
-
-    public Long getSocieteId() {
-        return societeId;
-    }
-
-    public void setSocieteId(Long societeId) {
-        this.societeId = societeId;
     }
 
     @Override
@@ -97,9 +76,7 @@ public class DpaeDTO implements Serializable {
             "id=" + getId() +
             ", lieu='" + getLieu() + "'" +
             ", date='" + getDate() + "'" +
-            ", lienDocument='" + getLienDocument() + "'" +
             ", employeId=" + getEmployeId() +
-            ", societeId=" + getSocieteId() +
             "}";
     }
 }

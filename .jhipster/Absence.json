@@ -12,10 +12,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "justificatif",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "mois",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
@@ -28,6 +24,12 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "absence",
+      "relationshipName": "listeDocuments"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "typeAbsence",
       "otherEntityRelationshipName": "absence",
@@ -39,6 +41,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "etatVariablePaie",
       "otherEntityRelationshipName": "absence",
+      "relationshipValidateRules": "required",
       "relationshipName": "etatVariablePaie",
       "otherEntityField": "id"
     },

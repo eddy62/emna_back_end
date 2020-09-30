@@ -5,10 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Absence.
@@ -33,9 +34,6 @@ public class Absence implements Serializable {
     @Column(name = "fin_absence", nullable = false)
     private LocalDate finAbsence;
 
-    @Column(name = "justificatif")
-    private String justificatif;
-
     @NotNull
     @Column(name = "mois", nullable = false)
     private Integer mois;
@@ -44,12 +42,17 @@ public class Absence implements Serializable {
     @Column(name = "annee", nullable = false)
     private Integer annee;
 
+    @OneToMany(mappedBy = "absence")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "absences", allowSetters = true)
     private TypeAbsence typeAbsence;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "absences", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
 
@@ -92,19 +95,6 @@ public class Absence implements Serializable {
         this.finAbsence = finAbsence;
     }
 
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public Absence justificatif(String justificatif) {
-        this.justificatif = justificatif;
-        return this;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
-    }
-
     public Integer getMois() {
         return mois;
     }
@@ -129,6 +119,31 @@ public class Absence implements Serializable {
 
     public void setAnnee(Integer annee) {
         this.annee = annee;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Absence listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Absence addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setAbsence(this);
+        return this;
+    }
+
+    public Absence removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setAbsence(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public TypeAbsence getTypeAbsence() {
@@ -194,7 +209,6 @@ public class Absence implements Serializable {
             "id=" + getId() +
             ", debutAbsence='" + getDebutAbsence() + "'" +
             ", finAbsence='" + getFinAbsence() + "'" +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             "}";

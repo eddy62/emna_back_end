@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './autres-variable.reducer';
-import { IAutresVariable } from 'app/shared/model/autres-variable.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './autres-variable.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IAutresVariableDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -45,12 +44,6 @@ export const AutresVariableDetail = (props: IAutresVariableDetailProps) => {
             </span>
           </dt>
           <dd>{autresVariableEntity.montant}</dd>
-          <dt>
-            <span id="justificatif">
-              <Translate contentKey="emnaBackEndApp.autresVariable.justificatif">Justificatif</Translate>
-            </span>
-          </dt>
-          <dd>{autresVariableEntity.justificatif}</dd>
           <dt>
             <span id="mois">
               <Translate contentKey="emnaBackEndApp.autresVariable.mois">Mois</Translate>

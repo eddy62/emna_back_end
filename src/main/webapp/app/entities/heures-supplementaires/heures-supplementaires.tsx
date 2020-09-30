@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './heures-supplementaires.reducer';
-import { IHeuresSupplementaires } from 'app/shared/model/heures-supplementaires.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './heures-supplementaires.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IHeuresSupplementairesProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -43,9 +42,6 @@ export const HeuresSupplementaires = (props: IHeuresSupplementairesProps) => {
                   <Translate contentKey="emnaBackEndApp.heuresSupplementaires.nombreHeure">Nombre Heure</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.heuresSupplementaires.justificatif">Justificatif</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.heuresSupplementaires.mois">Mois</Translate>
                 </th>
                 <th>
@@ -74,7 +70,6 @@ export const HeuresSupplementaires = (props: IHeuresSupplementairesProps) => {
                     ) : null}
                   </td>
                   <td>{heuresSupplementaires.nombreHeure}</td>
-                  <td>{heuresSupplementaires.justificatif}</td>
                   <td>{heuresSupplementaires.mois}</td>
                   <td>{heuresSupplementaires.annee}</td>
                   <td>

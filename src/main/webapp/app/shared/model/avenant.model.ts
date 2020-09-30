@@ -1,11 +1,11 @@
-import { IClause } from 'app/shared/model/clause.model';
+import { IDocument } from 'app/shared/model/document.model';
 
 export interface IAvenant {
   id?: number;
   reference?: string;
   signe?: boolean;
+  listeDocuments?: IDocument[];
   contratId?: number;
-  listeClauses?: IClause[];
 }
 
 export const defaultValue: Readonly<IAvenant> = {

@@ -1,17 +1,18 @@
 package fr.insy2s.config;
 
-import java.time.Duration;
-
-import org.ehcache.config.builders.*;
-import org.ehcache.jsr107.Eh107Configuration;
-
-import org.hibernate.cache.jcache.ConfigSettings;
 import io.github.jhipster.config.JHipsterProperties;
-
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.jsr107.Eh107Configuration;
+import org.hibernate.cache.jcache.ConfigSettings;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
 
 @Configuration
 @EnableCaching
@@ -124,6 +125,14 @@ public class CacheConfiguration {
             createCache(cm, fr.insy2s.domain.Depense.class.getName() + ".as");
             createCache(cm, fr.insy2s.domain.EtatDepense.class.getName());
             createCache(cm, fr.insy2s.domain.SaisieArticle.class.getName());
+            createCache(cm, fr.insy2s.domain.Devis.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Avenant.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Absence.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.FichePaie.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.NoteDeFrais.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.AutresVariable.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.Dpae.class.getName() + ".listeDocuments");
+            createCache(cm, fr.insy2s.domain.TypeDocument.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

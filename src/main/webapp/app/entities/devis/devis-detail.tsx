@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './devis.reducer';
-import { IDevis } from 'app/shared/model/devis.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './devis.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IDevisDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -60,37 +59,9 @@ export const DevisDetail = (props: IDevisDetailProps) => {
             {devisEntity.dateLimite ? <TextFormat value={devisEntity.dateLimite} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
           </dd>
           <dt>
-            <span id="prixHT">
-              <Translate contentKey="emnaBackEndApp.devis.prixHT">Prix HT</Translate>
-            </span>
-          </dt>
-          <dd>{devisEntity.prixHT}</dd>
-          <dt>
-            <span id="prixTTC">
-              <Translate contentKey="emnaBackEndApp.devis.prixTTC">Prix TTC</Translate>
-            </span>
-          </dt>
-          <dd>{devisEntity.prixTTC}</dd>
-          <dt>
-            <span id="tva">
-              <Translate contentKey="emnaBackEndApp.devis.tva">Tva</Translate>
-            </span>
-          </dt>
-          <dd>{devisEntity.tva}</dd>
-          <dt>
-            <span id="cheminFichier">
-              <Translate contentKey="emnaBackEndApp.devis.cheminFichier">Chemin Fichier</Translate>
-            </span>
-          </dt>
-          <dd>{devisEntity.cheminFichier}</dd>
-          <dt>
             <Translate contentKey="emnaBackEndApp.devis.etatDevis">Etat Devis</Translate>
           </dt>
           <dd>{devisEntity.etatDevisId ? devisEntity.etatDevisId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.devis.societe">Societe</Translate>
-          </dt>
-          <dd>{devisEntity.societeId ? devisEntity.societeId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.devis.clientFournisseur">Client Fournisseur</Translate>
           </dt>

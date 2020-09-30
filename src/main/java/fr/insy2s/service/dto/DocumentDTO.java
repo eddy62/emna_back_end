@@ -16,11 +16,7 @@ public class DocumentDTO implements Serializable {
     private String nom;
 
 
-    private Long absenceId;
-
-    private Long noteDeFraisId;
-
-    private Long autresVariablesId;
+    private Long typeDocumentId;
 
     private Long factureId;
 
@@ -31,6 +27,20 @@ public class DocumentDTO implements Serializable {
     private Long employeId;
 
     private Long depenseId;
+
+    private Long absenceId;
+
+    private Long noteDeFraisId;
+
+    private Long autresVariableId;
+
+    private Long devisId;
+
+    private Long dpaeId;
+
+    private Long fichePaieId;
+
+    private Long avenantId;
     
     public Long getId() {
         return id;
@@ -64,28 +74,12 @@ public class DocumentDTO implements Serializable {
         this.nom = nom;
     }
 
-    public Long getAbsenceId() {
-        return absenceId;
+    public Long getTypeDocumentId() {
+        return typeDocumentId;
     }
 
-    public void setAbsenceId(Long absenceId) {
-        this.absenceId = absenceId;
-    }
-
-    public Long getNoteDeFraisId() {
-        return noteDeFraisId;
-    }
-
-    public void setNoteDeFraisId(Long noteDeFraisId) {
-        this.noteDeFraisId = noteDeFraisId;
-    }
-
-    public Long getAutresVariablesId() {
-        return autresVariablesId;
-    }
-
-    public void setAutresVariablesId(Long autresVariableId) {
-        this.autresVariablesId = autresVariableId;
+    public void setTypeDocumentId(Long typeDocumentId) {
+        this.typeDocumentId = typeDocumentId;
     }
 
     public Long getFactureId() {
@@ -128,6 +122,62 @@ public class DocumentDTO implements Serializable {
         this.depenseId = depenseId;
     }
 
+    public Long getAbsenceId() {
+        return absenceId;
+    }
+
+    public void setAbsenceId(Long absenceId) {
+        this.absenceId = absenceId;
+    }
+
+    public Long getNoteDeFraisId() {
+        return noteDeFraisId;
+    }
+
+    public void setNoteDeFraisId(Long noteDeFraisId) {
+        this.noteDeFraisId = noteDeFraisId;
+    }
+
+    public Long getAutresVariableId() {
+        return autresVariableId;
+    }
+
+    public void setAutresVariableId(Long autresVariableId) {
+        this.autresVariableId = autresVariableId;
+    }
+
+    public Long getDevisId() {
+        return devisId;
+    }
+
+    public void setDevisId(Long devisId) {
+        this.devisId = devisId;
+    }
+
+    public Long getDpaeId() {
+        return dpaeId;
+    }
+
+    public void setDpaeId(Long dpaeId) {
+        this.dpaeId = dpaeId;
+    }
+
+    public Long getFichePaieId() {
+        return fichePaieId;
+    }
+
+    public void setFichePaieId(Long fichePaieId) {
+        this.fichePaieId = fichePaieId;
+    }
+
+    public Long getAvenantId() {
+        return avenantId;
+    }
+
+    public void setAvenantId(Long avenantId) {
+        this.avenantId = avenantId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -153,14 +203,19 @@ public class DocumentDTO implements Serializable {
             ", cheminFichier='" + getCheminFichier() + "'" +
             ", type='" + getType() + "'" +
             ", nom='" + getNom() + "'" +
-            ", absenceId=" + getAbsenceId() +
-            ", noteDeFraisId=" + getNoteDeFraisId() +
-            ", autresVariablesId=" + getAutresVariablesId() +
+            ", typeDocumentId=" + getTypeDocumentId() +
             ", factureId=" + getFactureId() +
             ", releveId=" + getReleveId() +
             ", contratId=" + getContratId() +
             ", employeId=" + getEmployeId() +
             ", depenseId=" + getDepenseId() +
+            ", absenceId=" + getAbsenceId() +
+            ", noteDeFraisId=" + getNoteDeFraisId() +
+            ", autresVariableId=" + getAutresVariableId() +
+            ", devisId=" + getDevisId() +
+            ", dpaeId=" + getDpaeId() +
+            ", fichePaieId=" + getFichePaieId() +
+            ", avenantId=" + getAvenantId() +
             "}";
     }
 }

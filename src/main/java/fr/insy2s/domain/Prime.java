@@ -5,9 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A Prime.
@@ -25,8 +25,8 @@ public class Prime implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "montant", nullable = false)
-    private Double montant;
+    @Column(name = "montant", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montant;
 
     @NotNull
     @Column(name = "mois", nullable = false)
@@ -41,7 +41,8 @@ public class Prime implements Serializable {
     @JsonIgnoreProperties(value = "primes", allowSetters = true)
     private TypePrime typePrime;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "primes", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
 
@@ -58,16 +59,16 @@ public class Prime implements Serializable {
         this.id = id;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public Prime montant(Double montant) {
+    public Prime montant(BigDecimal montant) {
         this.montant = montant;
         return this;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 

@@ -43,6 +43,7 @@
         "depense": "Depense",
         "etatDepense": "Etat Depense",
         "saisieArticle": "Saisie Article",
+        "typeDocument": "Type Document",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

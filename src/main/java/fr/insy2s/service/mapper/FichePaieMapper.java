@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.FichePaie;
 import fr.insy2s.service.dto.FichePaieDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link FichePaie} and its DTO {@link FichePaieDTO}.
@@ -15,6 +15,8 @@ public interface FichePaieMapper extends EntityMapper<FichePaieDTO, FichePaie> {
     @Mapping(source = "employe.id", target = "employeId")
     FichePaieDTO toDto(FichePaie fichePaie);
 
+    @Mapping(target = "listeDocuments", ignore = true)
+    @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "employeId", target = "employe")
     FichePaie toEntity(FichePaieDTO fichePaieDTO);
 

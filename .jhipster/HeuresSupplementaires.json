@@ -12,10 +12,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "justificatif",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "mois",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
@@ -31,6 +27,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "etatVariablePaie",
       "otherEntityRelationshipName": "heuresSupplementaires",
+      "relationshipValidateRules": "required",
       "relationshipName": "etatVariablePaie",
       "otherEntityField": "id"
     },

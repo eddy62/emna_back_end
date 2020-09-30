@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './facture.reducer';
-import { IFacture } from 'app/shared/model/facture.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './facture.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IFactureDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -66,29 +65,15 @@ export const FactureDetail = (props: IFactureDetailProps) => {
             ) : null}
           </dd>
           <dt>
-            <span id="prixHT">
-              <Translate contentKey="emnaBackEndApp.facture.prixHT">Prix HT</Translate>
-            </span>
-          </dt>
-          <dd>{factureEntity.prixHT}</dd>
-          <dt>
-            <span id="prixTTC">
-              <Translate contentKey="emnaBackEndApp.facture.prixTTC">Prix TTC</Translate>
-            </span>
-          </dt>
-          <dd>{factureEntity.prixTTC}</dd>
-          <dt>
-            <span id="tva">
-              <Translate contentKey="emnaBackEndApp.facture.tva">Tva</Translate>
-            </span>
-          </dt>
-          <dd>{factureEntity.tva}</dd>
-          <dt>
             <span id="moyenDePaiement">
               <Translate contentKey="emnaBackEndApp.facture.moyenDePaiement">Moyen De Paiement</Translate>
             </span>
           </dt>
           <dd>{factureEntity.moyenDePaiement}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.facture.devis">Devis</Translate>
+          </dt>
+          <dd>{factureEntity.devisId ? factureEntity.devisId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.facture.etatFacture">Etat Facture</Translate>
           </dt>

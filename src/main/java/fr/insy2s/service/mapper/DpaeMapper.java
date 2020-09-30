@@ -1,23 +1,23 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.*;
+import fr.insy2s.domain.Dpae;
 import fr.insy2s.service.dto.DpaeDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity {@link Dpae} and its DTO {@link DpaeDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EmployeMapper.class, SocieteMapper.class})
+@Mapper(componentModel = "spring", uses = {EmployeMapper.class})
 public interface DpaeMapper extends EntityMapper<DpaeDTO, Dpae> {
 
     @Mapping(source = "employe.id", target = "employeId")
-    @Mapping(source = "societe.id", target = "societeId")
     DpaeDTO toDto(Dpae dpae);
 
+    @Mapping(target = "listeDocuments", ignore = true)
+    @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "employeId", target = "employe")
-    @Mapping(source = "societeId", target = "societe")
     Dpae toEntity(DpaeDTO dpaeDTO);
 
     default Dpae fromId(Long id) {

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IAutresVariable, defaultValue } from 'app/shared/model/autres-variable.model';
+import { defaultValue, IAutresVariable } from 'app/shared/model/autres-variable.model';
 
 export const ACTION_TYPES = {
   FETCH_AUTRESVARIABLE_LIST: 'autresVariable/FETCH_AUTRESVARIABLE_LIST',

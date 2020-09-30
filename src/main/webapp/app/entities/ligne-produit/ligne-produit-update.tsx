@@ -1,29 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IFacture } from 'app/shared/model/facture.model';
-import { getEntities as getFactures } from 'app/entities/facture/facture.reducer';
-import { IDevis } from 'app/shared/model/devis.model';
-import { getEntities as getDevis } from 'app/entities/devis/devis.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './ligne-produit.reducer';
-import { ILigneProduit } from 'app/shared/model/ligne-produit.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getProduits} from 'app/entities/produit/produit.reducer';
+import {getEntities as getFactures} from 'app/entities/facture/facture.reducer';
+import {getEntities as getDevis} from 'app/entities/devis/devis.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './ligne-produit.reducer';
 
 export interface ILigneProduitUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const LigneProduitUpdate = (props: ILigneProduitUpdateProps) => {
+  const [produitId, setProduitId] = useState('0');
   const [factureId, setFactureId] = useState('0');
   const [devisId, setDevisId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { ligneProduitEntity, factures, devis, loading, updating } = props;
+  const { ligneProduitEntity, produits, factures, devis, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/ligne-produit');
@@ -36,6 +32,7 @@ export const LigneProduitUpdate = (props: ILigneProduitUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
+    props.getProduits();
     props.getFactures();
     props.getDevis();
   }, []);
@@ -100,37 +97,33 @@ export const LigneProduitUpdate = (props: ILigneProduitUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="nomLabel" for="ligne-produit-nom">
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.nom">Nom</Translate>
+                <Label id="commentaireLabel" for="ligne-produit-commentaire">
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.commentaire">Commentaire</Translate>
                 </Label>
-                <AvField id="ligne-produit-nom" type="text" name="nom" />
+                <AvField id="ligne-produit-commentaire" type="text" name="commentaire" />
               </AvGroup>
               <AvGroup>
-                <Label id="descriptionLabel" for="ligne-produit-description">
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.description">Description</Translate>
+                <Label id="remiseLabel" for="ligne-produit-remise">
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.remise">Remise</Translate>
                 </Label>
-                <AvField id="ligne-produit-description" type="text" name="description" />
+                <AvField id="ligne-produit-remise" type="text" name="remise" />
               </AvGroup>
               <AvGroup>
-                <Label id="tvaLabel" for="ligne-produit-tva">
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.tva">Tva</Translate>
+                <Label for="ligne-produit-produit">
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.produit">Produit</Translate>
                 </Label>
-                <AvField id="ligne-produit-tva" type="string" className="form-control" name="tva" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="prixLabel" for="ligne-produit-prix">
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.prix">Prix</Translate>
-                </Label>
-                <AvField
-                  id="ligne-produit-prix"
-                  type="string"
-                  className="form-control"
-                  name="prix"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') },
-                  }}
-                />
+                <AvInput id="ligne-produit-produit" type="select" className="form-control" name="produitId" required>
+                  {produits
+                    ? produits.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="ligne-produit-facture">
@@ -184,6 +177,7 @@ export const LigneProduitUpdate = (props: ILigneProduitUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  produits: storeState.produit.entities,
   factures: storeState.facture.entities,
   devis: storeState.devis.entities,
   ligneProduitEntity: storeState.ligneProduit.entity,
@@ -193,6 +187,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getProduits,
   getFactures,
   getDevis,
   getEntity,

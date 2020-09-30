@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './document.reducer';
-import { IDocument } from 'app/shared/model/document.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './document.reducer';
 
 export interface IDocumentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -44,17 +42,9 @@ export const DocumentDetail = (props: IDocumentDetailProps) => {
           </dt>
           <dd>{documentEntity.nom}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
+            <Translate contentKey="emnaBackEndApp.document.typeDocument">Type Document</Translate>
           </dt>
-          <dd>{documentEntity.absenceId ? documentEntity.absenceId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
-          </dt>
-          <dd>{documentEntity.noteDeFraisId ? documentEntity.noteDeFraisId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.document.autresVariables">Autres Variables</Translate>
-          </dt>
-          <dd>{documentEntity.autresVariablesId ? documentEntity.autresVariablesId : ''}</dd>
+          <dd>{documentEntity.typeDocumentId ? documentEntity.typeDocumentId : ''}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.document.facture">Facture</Translate>
           </dt>
@@ -75,6 +65,34 @@ export const DocumentDetail = (props: IDocumentDetailProps) => {
             <Translate contentKey="emnaBackEndApp.document.depense">Depense</Translate>
           </dt>
           <dd>{documentEntity.depenseId ? documentEntity.depenseId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
+          </dt>
+          <dd>{documentEntity.absenceId ? documentEntity.absenceId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
+          </dt>
+          <dd>{documentEntity.noteDeFraisId ? documentEntity.noteDeFraisId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.autresVariable">Autres Variable</Translate>
+          </dt>
+          <dd>{documentEntity.autresVariableId ? documentEntity.autresVariableId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.devis">Devis</Translate>
+          </dt>
+          <dd>{documentEntity.devisId ? documentEntity.devisId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.dpae">Dpae</Translate>
+          </dt>
+          <dd>{documentEntity.dpaeId ? documentEntity.dpaeId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.fichePaie">Fiche Paie</Translate>
+          </dt>
+          <dd>{documentEntity.fichePaieId ? documentEntity.fichePaieId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.document.avenant">Avenant</Translate>
+          </dt>
+          <dd>{documentEntity.avenantId ? documentEntity.avenantId : ''}</dd>
         </dl>
         <Button tag={Link} to="/document" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -19,7 +19,7 @@
     },
     {
       "fieldName": "solde",
-      "fieldType": "Double"
+      "fieldType": "BigDecimal"
     }
   ],
   "relationships": [

@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Contrat} entity.
@@ -23,9 +23,9 @@ public class ContratDTO implements Serializable {
     private Boolean archive;
 
 
-    private Long employeId;
+    private Long typeContratId;
 
-    private Long societeId;
+    private Long employeId;
     
     public Long getId() {
         return id;
@@ -67,20 +67,20 @@ public class ContratDTO implements Serializable {
         this.archive = archive;
     }
 
+    public Long getTypeContratId() {
+        return typeContratId;
+    }
+
+    public void setTypeContratId(Long typeContratId) {
+        this.typeContratId = typeContratId;
+    }
+
     public Long getEmployeId() {
         return employeId;
     }
 
     public void setEmployeId(Long employeId) {
         this.employeId = employeId;
-    }
-
-    public Long getSocieteId() {
-        return societeId;
-    }
-
-    public void setSocieteId(Long societeId) {
-        this.societeId = societeId;
     }
 
     @Override
@@ -109,8 +109,8 @@ public class ContratDTO implements Serializable {
             ", dateCreation='" + getDateCreation() + "'" +
             ", signe='" + isSigne() + "'" +
             ", archive='" + isArchive() + "'" +
+            ", typeContratId=" + getTypeContratId() +
             ", employeId=" + getEmployeId() +
-            ", societeId=" + getSocieteId() +
             "}";
     }
 }

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IAbsence, defaultValue } from 'app/shared/model/absence.model';
+import { defaultValue, IAbsence } from 'app/shared/model/absence.model';
 
 export const ACTION_TYPES = {
   FETCH_ABSENCE_LIST: 'absence/FETCH_ABSENCE_LIST',

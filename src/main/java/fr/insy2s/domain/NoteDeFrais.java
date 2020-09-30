@@ -5,10 +5,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A NoteDeFrais.
@@ -34,11 +36,8 @@ public class NoteDeFrais implements Serializable {
     private LocalDate date;
 
     @NotNull
-    @Column(name = "montant", nullable = false)
-    private Double montant;
-
-    @Column(name = "justificatif")
-    private String justificatif;
+    @Column(name = "montant", precision = 21, scale = 2, nullable = false)
+    private BigDecimal montant;
 
     @NotNull
     @Column(name = "mois", nullable = false)
@@ -48,7 +47,12 @@ public class NoteDeFrais implements Serializable {
     @Column(name = "annee", nullable = false)
     private Integer annee;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "noteDeFrais")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "noteDeFrais", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
 
@@ -91,30 +95,17 @@ public class NoteDeFrais implements Serializable {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public NoteDeFrais montant(Double montant) {
+    public NoteDeFrais montant(BigDecimal montant) {
         this.montant = montant;
         return this;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public NoteDeFrais justificatif(String justificatif) {
-        this.justificatif = justificatif;
-        return this;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -141,6 +132,31 @@ public class NoteDeFrais implements Serializable {
 
     public void setAnnee(Integer annee) {
         this.annee = annee;
+    }
+
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public NoteDeFrais listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public NoteDeFrais addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setNoteDeFrais(this);
+        return this;
+    }
+
+    public NoteDeFrais removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setNoteDeFrais(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
     }
 
     public EtatVariablePaie getEtatVariablePaie() {
@@ -194,7 +210,6 @@ public class NoteDeFrais implements Serializable {
             ", designation='" + getDesignation() + "'" +
             ", date='" + getDate() + "'" +
             ", montant=" + getMontant() +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             "}";

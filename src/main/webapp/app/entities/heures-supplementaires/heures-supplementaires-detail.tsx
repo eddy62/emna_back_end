@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './heures-supplementaires.reducer';
-import { IHeuresSupplementaires } from 'app/shared/model/heures-supplementaires.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './heures-supplementaires.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IHeuresSupplementairesDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -42,12 +41,6 @@ export const HeuresSupplementairesDetail = (props: IHeuresSupplementairesDetailP
             </span>
           </dt>
           <dd>{heuresSupplementairesEntity.nombreHeure}</dd>
-          <dt>
-            <span id="justificatif">
-              <Translate contentKey="emnaBackEndApp.heuresSupplementaires.justificatif">Justificatif</Translate>
-            </span>
-          </dt>
-          <dd>{heuresSupplementairesEntity.justificatif}</dd>
           <dt>
             <span id="mois">
               <Translate contentKey="emnaBackEndApp.heuresSupplementaires.mois">Mois</Translate>

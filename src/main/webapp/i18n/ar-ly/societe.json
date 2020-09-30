@@ -20,14 +20,9 @@
       "infoEntreprise": "Info Entreprise",
       "user": "User",
       "listeFactures": "Liste Factures",
-      "listeDevis": "Liste Devis",
       "listeReleves": "Liste Releves",
-      "listeProduits": "Liste Produits",
-      "listeContrats": "Liste Contrats",
       "listeClientsFournisseurs": "Liste Clients Fournisseurs",
-      "listeClauses": "Liste Clauses",
       "listeEmployes": "Liste Employes",
-      "listeDpae": "Liste Dpae",
       "adresse": "Adresse",
       "comptable": "Comptable"
     }

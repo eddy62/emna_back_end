@@ -19,9 +19,9 @@
       "designation": "Designation",
       "date": "Date",
       "montant": "Montant",
-      "justificatif": "Justificatif",
       "mois": "Mois",
       "annee": "Annee",
+      "listeDocuments": "Liste Documents",
       "etatVariablePaie": "Etat Variable Paie",
       "employe": "Employe"
     }

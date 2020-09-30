@@ -5,7 +5,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -44,23 +43,18 @@ public class Facture implements Serializable {
     @Column(name = "date_echeance")
     private LocalDate dateEcheance;
 
-    @Column(name = "prix_ht")
-    private Integer prixHT;
-
-    @Column(name = "prix_ttc")
-    private Integer prixTTC;
-
-    @Column(name = "tva")
-    private Float tva;
-
     @Column(name = "moyen_de_paiement")
     private String moyenDePaiement;
 
-    @OneToMany(mappedBy = "facture", cascade = CascadeType.REMOVE)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Devis devis;
+
+    @OneToMany(mappedBy = "facture")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
 
-    @OneToMany(mappedBy = "facture", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "facture")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<LigneProduit> listeLigneProduits = new HashSet<>();
 
@@ -171,45 +165,6 @@ public class Facture implements Serializable {
         this.dateEcheance = dateEcheance;
     }
 
-    public Integer getPrixHT() {
-        return prixHT;
-    }
-
-    public Facture prixHT(Integer prixHT) {
-        this.prixHT = prixHT;
-        return this;
-    }
-
-    public void setPrixHT(Integer prixHT) {
-        this.prixHT = prixHT;
-    }
-
-    public Integer getPrixTTC() {
-        return prixTTC;
-    }
-
-    public Facture prixTTC(Integer prixTTC) {
-        this.prixTTC = prixTTC;
-        return this;
-    }
-
-    public void setPrixTTC(Integer prixTTC) {
-        this.prixTTC = prixTTC;
-    }
-
-    public Float getTva() {
-        return tva;
-    }
-
-    public Facture tva(Float tva) {
-        this.tva = tva;
-        return this;
-    }
-
-    public void setTva(Float tva) {
-        this.tva = tva;
-    }
-
     public String getMoyenDePaiement() {
         return moyenDePaiement;
     }
@@ -221,6 +176,19 @@ public class Facture implements Serializable {
 
     public void setMoyenDePaiement(String moyenDePaiement) {
         this.moyenDePaiement = moyenDePaiement;
+    }
+
+    public Devis getDevis() {
+        return devis;
+    }
+
+    public Facture devis(Devis devis) {
+        this.devis = devis;
+        return this;
+    }
+
+    public void setDevis(Devis devis) {
+        this.devis = devis;
     }
 
     public Set<Document> getListeDocuments() {
@@ -366,9 +334,6 @@ public class Facture implements Serializable {
             ", message='" + getMessage() + "'" +
             ", date='" + getDate() + "'" +
             ", dateEcheance='" + getDateEcheance() + "'" +
-            ", prixHT=" + getPrixHT() +
-            ", prixTTC=" + getPrixTTC() +
-            ", tva=" + getTva() +
             ", moyenDePaiement='" + getMoyenDePaiement() + "'" +
             "}";
     }

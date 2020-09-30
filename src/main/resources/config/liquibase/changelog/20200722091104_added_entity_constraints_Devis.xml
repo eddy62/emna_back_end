@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="etat_devis"/>
 
-        <addForeignKeyConstraint baseColumnNames="societe_id"
-                                 baseTableName="devis"
-                                 constraintName="fk_devis_societe_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="societe"/>
-
         <addForeignKeyConstraint baseColumnNames="client_fournisseur_id"
                                  baseTableName="devis"
                                  constraintName="fk_devis_client_fournisseur_id"

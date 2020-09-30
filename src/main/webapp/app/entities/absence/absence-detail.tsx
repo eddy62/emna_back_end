@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './absence.reducer';
-import { IAbsence } from 'app/shared/model/absence.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './absence.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IAbsenceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -43,12 +42,6 @@ export const AbsenceDetail = (props: IAbsenceDetailProps) => {
           <dd>
             {absenceEntity.finAbsence ? <TextFormat value={absenceEntity.finAbsence} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
           </dd>
-          <dt>
-            <span id="justificatif">
-              <Translate contentKey="emnaBackEndApp.absence.justificatif">Justificatif</Translate>
-            </span>
-          </dt>
-          <dd>{absenceEntity.justificatif}</dd>
           <dt>
             <span id="mois">
               <Translate contentKey="emnaBackEndApp.absence.mois">Mois</Translate>

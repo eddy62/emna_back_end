@@ -1,7 +1,8 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.LigneProduit} entity.
@@ -13,15 +14,12 @@ public class LigneProduitDTO implements Serializable {
     @NotNull
     private Integer quantite;
 
-    private String nom;
+    private String commentaire;
 
-    private String description;
+    private BigDecimal remise;
 
-    private Float tva;
 
-    @NotNull
-    private Float prix;
-
+    private Long produitId;
 
     private Long factureId;
 
@@ -43,36 +41,28 @@ public class LigneProduitDTO implements Serializable {
         this.quantite = quantite;
     }
 
-    public String getNom() {
-        return nom;
+    public String getCommentaire() {
+        return commentaire;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
     }
 
-    public String getDescription() {
-        return description;
+    public BigDecimal getRemise() {
+        return remise;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRemise(BigDecimal remise) {
+        this.remise = remise;
     }
 
-    public Float getTva() {
-        return tva;
+    public Long getProduitId() {
+        return produitId;
     }
 
-    public void setTva(Float tva) {
-        this.tva = tva;
-    }
-
-    public Float getPrix() {
-        return prix;
-    }
-
-    public void setPrix(Float prix) {
-        this.prix = prix;
+    public void setProduitId(Long produitId) {
+        this.produitId = produitId;
     }
 
     public Long getFactureId() {
@@ -114,10 +104,9 @@ public class LigneProduitDTO implements Serializable {
         return "LigneProduitDTO{" +
             "id=" + getId() +
             ", quantite=" + getQuantite() +
-            ", nom='" + getNom() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", tva=" + getTva() +
-            ", prix=" + getPrix() +
+            ", commentaire='" + getCommentaire() + "'" +
+            ", remise=" + getRemise() +
+            ", produitId=" + getProduitId() +
             ", factureId=" + getFactureId() +
             ", devisId=" + getDevisId() +
             "}";

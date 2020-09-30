@@ -1,7 +1,5 @@
-import { Moment } from 'moment';
 import { IAvenant } from 'app/shared/model/avenant.model';
 import { IDocument } from 'app/shared/model/document.model';
-import { IClause } from 'app/shared/model/clause.model';
 
 export interface IContrat {
   id?: number;
@@ -11,9 +9,8 @@ export interface IContrat {
   archive?: boolean;
   listeAvenants?: IAvenant[];
   listeDocuments?: IDocument[];
+  typeContratId?: number;
   employeId?: number;
-  societeId?: number;
-  listeClauses?: IClause[];
 }
 
 export const defaultValue: Readonly<IContrat> = {

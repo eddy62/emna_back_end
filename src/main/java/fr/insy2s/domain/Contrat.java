@@ -1,13 +1,11 @@
 package fr.insy2s.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -51,18 +49,14 @@ public class Contrat implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "contrats", allowSetters = true)
+    private TypeContrat typeContrat;
+
     @ManyToOne
     @JsonIgnoreProperties(value = "listeContrats", allowSetters = true)
     private Employe employe;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeContrats", allowSetters = true)
-    private Societe societe;
-
-    @ManyToMany(mappedBy = "listeContrats")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
-    private Set<Clause> listeClauses = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -175,6 +169,19 @@ public class Contrat implements Serializable {
         this.listeDocuments = documents;
     }
 
+    public TypeContrat getTypeContrat() {
+        return typeContrat;
+    }
+
+    public Contrat typeContrat(TypeContrat typeContrat) {
+        this.typeContrat = typeContrat;
+        return this;
+    }
+
+    public void setTypeContrat(TypeContrat typeContrat) {
+        this.typeContrat = typeContrat;
+    }
+
     public Employe getEmploye() {
         return employe;
     }
@@ -186,44 +193,6 @@ public class Contrat implements Serializable {
 
     public void setEmploye(Employe employe) {
         this.employe = employe;
-    }
-
-    public Societe getSociete() {
-        return societe;
-    }
-
-    public Contrat societe(Societe societe) {
-        this.societe = societe;
-        return this;
-    }
-
-    public void setSociete(Societe societe) {
-        this.societe = societe;
-    }
-
-    public Set<Clause> getListeClauses() {
-        return listeClauses;
-    }
-
-    public Contrat listeClauses(Set<Clause> clauses) {
-        this.listeClauses = clauses;
-        return this;
-    }
-
-    public Contrat addListeClauses(Clause clause) {
-        this.listeClauses.add(clause);
-        clause.getListeContrats().add(this);
-        return this;
-    }
-
-    public Contrat removeListeClauses(Clause clause) {
-        this.listeClauses.remove(clause);
-        clause.getListeContrats().remove(this);
-        return this;
-    }
-
-    public void setListeClauses(Set<Clause> clauses) {
-        this.listeClauses = clauses;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

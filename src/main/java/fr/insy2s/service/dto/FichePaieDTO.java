@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.FichePaie} entity.
@@ -16,9 +16,6 @@ public class FichePaieDTO implements Serializable {
 
     @NotNull
     private LocalDate finPeriode;
-
-    @NotNull
-    private String lienDocument;
 
     @NotNull
     private Integer mois;
@@ -51,14 +48,6 @@ public class FichePaieDTO implements Serializable {
 
     public void setFinPeriode(LocalDate finPeriode) {
         this.finPeriode = finPeriode;
-    }
-
-    public String getLienDocument() {
-        return lienDocument;
-    }
-
-    public void setLienDocument(String lienDocument) {
-        this.lienDocument = lienDocument;
     }
 
     public Integer getMois() {
@@ -109,7 +98,6 @@ public class FichePaieDTO implements Serializable {
             "id=" + getId() +
             ", debutPeriode='" + getDebutPeriode() + "'" +
             ", finPeriode='" + getFinPeriode() + "'" +
-            ", lienDocument='" + getLienDocument() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             ", employeId=" + getEmployeId() +

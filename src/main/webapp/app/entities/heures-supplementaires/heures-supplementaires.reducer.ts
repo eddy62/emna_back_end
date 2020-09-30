@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IHeuresSupplementaires, defaultValue } from 'app/shared/model/heures-supplementaires.model';
+import { defaultValue, IHeuresSupplementaires } from 'app/shared/model/heures-supplementaires.model';
 
 export const ACTION_TYPES = {
   FETCH_HEURESSUPPLEMENTAIRES_LIST: 'heuresSupplementaires/FETCH_HEURESSUPPLEMENTAIRES_LIST',

@@ -1,8 +1,9 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Depense} entity.
@@ -16,7 +17,7 @@ public class DepenseDTO implements Serializable {
 
     private LocalDate date;
 
-    private Double prix;
+    private BigDecimal prix;
 
     private String moyenDePaiement;
 
@@ -55,11 +56,11 @@ public class DepenseDTO implements Serializable {
         this.date = date;
     }
 
-    public Double getPrix() {
+    public BigDecimal getPrix() {
         return prix;
     }
 
-    public void setPrix(Double prix) {
+    public void setPrix(BigDecimal prix) {
         this.prix = prix;
     }
 

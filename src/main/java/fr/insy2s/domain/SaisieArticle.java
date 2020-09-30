@@ -5,8 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -28,11 +27,13 @@ public class SaisieArticle implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "saisieArticles", allowSetters = true)
     private Article article;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "saisieArticles", allowSetters = true)
     private Contrat contrat;
 

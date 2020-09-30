@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './contrat.reducer';
-import { IContrat } from 'app/shared/model/contrat.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './contrat.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IContratDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -54,13 +53,13 @@ export const ContratDetail = (props: IContratDetailProps) => {
           </dt>
           <dd>{contratEntity.archive ? 'true' : 'false'}</dd>
           <dt>
+            <Translate contentKey="emnaBackEndApp.contrat.typeContrat">Type Contrat</Translate>
+          </dt>
+          <dd>{contratEntity.typeContratId ? contratEntity.typeContratId : ''}</dd>
+          <dt>
             <Translate contentKey="emnaBackEndApp.contrat.employe">Employe</Translate>
           </dt>
           <dd>{contratEntity.employeId ? contratEntity.employeId : ''}</dd>
-          <dt>
-            <Translate contentKey="emnaBackEndApp.contrat.societe">Societe</Translate>
-          </dt>
-          <dd>{contratEntity.societeId ? contratEntity.societeId : ''}</dd>
         </dl>
         <Button tag={Link} to="/contrat" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

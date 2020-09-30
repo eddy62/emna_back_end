@@ -3,11 +3,12 @@
   "fields": [
     {
       "fieldName": "nom",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "siren",
-      "fieldType": "Integer"
+      "fieldName": "siret",
+      "fieldType": "String"
     },
     {
       "fieldName": "telephone",

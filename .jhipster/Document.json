@@ -17,23 +17,10 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "absence",
+      "otherEntityName": "typeDocument",
       "otherEntityRelationshipName": "document",
-      "relationshipName": "absence",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "noteDeFrais",
-      "otherEntityRelationshipName": "document",
-      "relationshipName": "noteDeFrais",
-      "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "autresVariable",
-      "otherEntityRelationshipName": "document",
-      "relationshipName": "autresVariables",
+      "relationshipValidateRules": "required",
+      "relationshipName": "typeDocument",
       "otherEntityField": "id"
     },
     {
@@ -69,6 +56,55 @@
       "otherEntityName": "depense",
       "otherEntityRelationshipName": "listeDocuments",
       "relationshipName": "depense",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "absence",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "absence",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "noteDeFrais",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "noteDeFrais",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "autresVariable",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "autresVariable",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "devis",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "devis",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "dpae",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "dpae",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "fichePaie",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "fichePaie",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avenant",
+      "otherEntityRelationshipName": "listeDocuments",
+      "relationshipName": "avenant",
       "otherEntityField": "id"
     }
   ],

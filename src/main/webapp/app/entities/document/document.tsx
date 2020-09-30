@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './document.reducer';
-import { IDocument } from 'app/shared/model/document.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './document.reducer';
 
 export interface IDocumentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -46,13 +44,7 @@ export const Document = (props: IDocumentProps) => {
                   <Translate contentKey="emnaBackEndApp.document.nom">Nom</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.document.autresVariables">Autres Variables</Translate>
+                  <Translate contentKey="emnaBackEndApp.document.typeDocument">Type Document</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.document.facture">Facture</Translate>
@@ -69,6 +61,27 @@ export const Document = (props: IDocumentProps) => {
                 <th>
                   <Translate contentKey="emnaBackEndApp.document.depense">Depense</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.absence">Absence</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.noteDeFrais">Note De Frais</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.autresVariable">Autres Variable</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.devis">Devis</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.dpae">Dpae</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.fichePaie">Fiche Paie</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.document.avenant">Avenant</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -83,22 +96,29 @@ export const Document = (props: IDocumentProps) => {
                   <td>{document.cheminFichier}</td>
                   <td>{document.type}</td>
                   <td>{document.nom}</td>
-                  <td>{document.absenceId ? <Link to={`absence/${document.absenceId}`}>{document.absenceId}</Link> : ''}</td>
                   <td>
-                    {document.noteDeFraisId ? <Link to={`note-de-frais/${document.noteDeFraisId}`}>{document.noteDeFraisId}</Link> : ''}
-                  </td>
-                  <td>
-                    {document.autresVariablesId ? (
-                      <Link to={`autres-variable/${document.autresVariablesId}`}>{document.autresVariablesId}</Link>
-                    ) : (
-                      ''
-                    )}
+                    {document.typeDocumentId ? <Link to={`type-document/${document.typeDocumentId}`}>{document.typeDocumentId}</Link> : ''}
                   </td>
                   <td>{document.factureId ? <Link to={`facture/${document.factureId}`}>{document.factureId}</Link> : ''}</td>
                   <td>{document.releveId ? <Link to={`releve/${document.releveId}`}>{document.releveId}</Link> : ''}</td>
                   <td>{document.contratId ? <Link to={`contrat/${document.contratId}`}>{document.contratId}</Link> : ''}</td>
                   <td>{document.employeId ? <Link to={`employe/${document.employeId}`}>{document.employeId}</Link> : ''}</td>
                   <td>{document.depenseId ? <Link to={`depense/${document.depenseId}`}>{document.depenseId}</Link> : ''}</td>
+                  <td>{document.absenceId ? <Link to={`absence/${document.absenceId}`}>{document.absenceId}</Link> : ''}</td>
+                  <td>
+                    {document.noteDeFraisId ? <Link to={`note-de-frais/${document.noteDeFraisId}`}>{document.noteDeFraisId}</Link> : ''}
+                  </td>
+                  <td>
+                    {document.autresVariableId ? (
+                      <Link to={`autres-variable/${document.autresVariableId}`}>{document.autresVariableId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>{document.devisId ? <Link to={`devis/${document.devisId}`}>{document.devisId}</Link> : ''}</td>
+                  <td>{document.dpaeId ? <Link to={`dpae/${document.dpaeId}`}>{document.dpaeId}</Link> : ''}</td>
+                  <td>{document.fichePaieId ? <Link to={`fiche-paie/${document.fichePaieId}`}>{document.fichePaieId}</Link> : ''}</td>
+                  <td>{document.avenantId ? <Link to={`avenant/${document.avenantId}`}>{document.avenantId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${document.id}`} color="info" size="sm">

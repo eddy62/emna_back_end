@@ -13,149 +13,80 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
-import facture, {
-  FactureState
-} from 'app/entities/facture/facture.reducer';
+import facture, {FactureState} from 'app/entities/facture/facture.reducer';
 // prettier-ignore
-import clientFournisseur, {
-  ClientFournisseurState
-} from 'app/entities/client-fournisseur/client-fournisseur.reducer';
+import clientFournisseur, {ClientFournisseurState} from 'app/entities/client-fournisseur/client-fournisseur.reducer';
 // prettier-ignore
-import produit, {
-  ProduitState
-} from 'app/entities/produit/produit.reducer';
+import produit, {ProduitState} from 'app/entities/produit/produit.reducer';
 // prettier-ignore
-import operation, {
-  OperationState
-} from 'app/entities/operation/operation.reducer';
+import operation, {OperationState} from 'app/entities/operation/operation.reducer';
 // prettier-ignore
-import releve, {
-  ReleveState
-} from 'app/entities/releve/releve.reducer';
+import releve, {ReleveState} from 'app/entities/releve/releve.reducer';
 // prettier-ignore
-import etatReleve, {
-  EtatReleveState
-} from 'app/entities/etat-releve/etat-releve.reducer';
+import etatReleve, {EtatReleveState} from 'app/entities/etat-releve/etat-releve.reducer';
 // prettier-ignore
-import devis, {
-  DevisState
-} from 'app/entities/devis/devis.reducer';
+import devis, {DevisState} from 'app/entities/devis/devis.reducer';
 // prettier-ignore
-import contrat, {
-  ContratState
-} from 'app/entities/contrat/contrat.reducer';
+import contrat, {ContratState} from 'app/entities/contrat/contrat.reducer';
 // prettier-ignore
-import avenant, {
-  AvenantState
-} from 'app/entities/avenant/avenant.reducer';
+import avenant, {AvenantState} from 'app/entities/avenant/avenant.reducer';
 // prettier-ignore
-import clause, {
-  ClauseState
-} from 'app/entities/clause/clause.reducer';
+import clause, {ClauseState} from 'app/entities/clause/clause.reducer';
 // prettier-ignore
-import article, {
-  ArticleState
-} from 'app/entities/article/article.reducer';
+import article, {ArticleState} from 'app/entities/article/article.reducer';
 // prettier-ignore
-import adresse, {
-  AdresseState
-} from 'app/entities/adresse/adresse.reducer';
+import adresse, {AdresseState} from 'app/entities/adresse/adresse.reducer';
 // prettier-ignore
-import employe, {
-  EmployeState
-} from 'app/entities/employe/employe.reducer';
+import employe, {EmployeState} from 'app/entities/employe/employe.reducer';
 // prettier-ignore
-import typeAbsence, {
-  TypeAbsenceState
-} from 'app/entities/type-absence/type-absence.reducer';
+import typeAbsence, {TypeAbsenceState} from 'app/entities/type-absence/type-absence.reducer';
 // prettier-ignore
-import absence, {
-  AbsenceState
-} from 'app/entities/absence/absence.reducer';
+import absence, {AbsenceState} from 'app/entities/absence/absence.reducer';
 // prettier-ignore
-import typePrime, {
-  TypePrimeState
-} from 'app/entities/type-prime/type-prime.reducer';
+import typePrime, {TypePrimeState} from 'app/entities/type-prime/type-prime.reducer';
 // prettier-ignore
-import prime, {
-  PrimeState
-} from 'app/entities/prime/prime.reducer';
+import prime, {PrimeState} from 'app/entities/prime/prime.reducer';
 // prettier-ignore
-import fichePaie, {
-  FichePaieState
-} from 'app/entities/fiche-paie/fiche-paie.reducer';
+import fichePaie, {FichePaieState} from 'app/entities/fiche-paie/fiche-paie.reducer';
 // prettier-ignore
-import heuresSupplementaires, {
-  HeuresSupplementairesState
-} from 'app/entities/heures-supplementaires/heures-supplementaires.reducer';
+import heuresSupplementaires, {HeuresSupplementairesState} from 'app/entities/heures-supplementaires/heures-supplementaires.reducer';
 // prettier-ignore
-import noteDeFrais, {
-  NoteDeFraisState
-} from 'app/entities/note-de-frais/note-de-frais.reducer';
+import noteDeFrais, {NoteDeFraisState} from 'app/entities/note-de-frais/note-de-frais.reducer';
 // prettier-ignore
-import autresVariable, {
-  AutresVariableState
-} from 'app/entities/autres-variable/autres-variable.reducer';
+import autresVariable, {AutresVariableState} from 'app/entities/autres-variable/autres-variable.reducer';
 // prettier-ignore
-import etatFacture, {
-  EtatFactureState
-} from 'app/entities/etat-facture/etat-facture.reducer';
+import etatFacture, {EtatFactureState} from 'app/entities/etat-facture/etat-facture.reducer';
 // prettier-ignore
-import etatDevis, {
-  EtatDevisState
-} from 'app/entities/etat-devis/etat-devis.reducer';
+import etatDevis, {EtatDevisState} from 'app/entities/etat-devis/etat-devis.reducer';
 // prettier-ignore
-import comptable, {
-  ComptableState
-} from 'app/entities/comptable/comptable.reducer';
+import comptable, {ComptableState} from 'app/entities/comptable/comptable.reducer';
 // prettier-ignore
-import societe, {
-  SocieteState
-} from 'app/entities/societe/societe.reducer';
+import societe, {SocieteState} from 'app/entities/societe/societe.reducer';
 // prettier-ignore
-import infoEntreprise, {
-  InfoEntrepriseState
-} from 'app/entities/info-entreprise/info-entreprise.reducer';
+import infoEntreprise, {InfoEntrepriseState} from 'app/entities/info-entreprise/info-entreprise.reducer';
 // prettier-ignore
-import statutEmploye, {
-  StatutEmployeState
-} from 'app/entities/statut-employe/statut-employe.reducer';
+import statutEmploye, {StatutEmployeState} from 'app/entities/statut-employe/statut-employe.reducer';
 // prettier-ignore
-import document, {
-  DocumentState
-} from 'app/entities/document/document.reducer';
+import document, {DocumentState} from 'app/entities/document/document.reducer';
 // prettier-ignore
-import ligneProduit, {
-  LigneProduitState
-} from 'app/entities/ligne-produit/ligne-produit.reducer';
+import ligneProduit, {LigneProduitState} from 'app/entities/ligne-produit/ligne-produit.reducer';
 // prettier-ignore
-import typeContrat, {
-  TypeContratState
-} from 'app/entities/type-contrat/type-contrat.reducer';
+import typeContrat, {TypeContratState} from 'app/entities/type-contrat/type-contrat.reducer';
 // prettier-ignore
-import etatVariablePaie, {
-  EtatVariablePaieState
-} from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
+import etatVariablePaie, {EtatVariablePaieState} from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
 // prettier-ignore
-import avanceRappelSalaire, {
-  AvanceRappelSalaireState
-} from 'app/entities/avance-rappel-salaire/avance-rappel-salaire.reducer';
+import avanceRappelSalaire, {AvanceRappelSalaireState} from 'app/entities/avance-rappel-salaire/avance-rappel-salaire.reducer';
 // prettier-ignore
-import dpae, {
-  DpaeState
-} from 'app/entities/dpae/dpae.reducer';
+import dpae, {DpaeState} from 'app/entities/dpae/dpae.reducer';
 // prettier-ignore
-import depense, {
-  DepenseState
-} from 'app/entities/depense/depense.reducer';
+import depense, {DepenseState} from 'app/entities/depense/depense.reducer';
 // prettier-ignore
-import etatDepense, {
-  EtatDepenseState
-} from 'app/entities/etat-depense/etat-depense.reducer';
+import etatDepense, {EtatDepenseState} from 'app/entities/etat-depense/etat-depense.reducer';
 // prettier-ignore
-import saisieArticle, {
-  SaisieArticleState
-} from 'app/entities/saisie-article/saisie-article.reducer';
+import saisieArticle, {SaisieArticleState} from 'app/entities/saisie-article/saisie-article.reducer';
+// prettier-ignore
+import typeDocument, {TypeDocumentState} from 'app/entities/type-document/type-document.reducer';
+
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -205,6 +136,7 @@ export interface IRootState {
   readonly depense: DepenseState;
   readonly etatDepense: EtatDepenseState;
   readonly saisieArticle: SaisieArticleState;
+  readonly typeDocument: TypeDocumentState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -256,6 +188,7 @@ const rootReducer = combineReducers<IRootState>({
   depense,
   etatDepense,
   saisieArticle,
+  typeDocument,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

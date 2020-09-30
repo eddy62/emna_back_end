@@ -21,13 +21,9 @@
       "message": "Message",
       "dateCreation": "Date Creation",
       "dateLimite": "Date Limite",
-      "prixHT": "Prix HT",
-      "prixTTC": "Prix TTC",
-      "tva": "Tva",
-      "cheminFichier": "Chemin Fichier",
       "listeLigneProduit": "Liste Ligne Produit",
+      "listeDocuments": "Liste Documents",
       "etatDevis": "Etat Devis",
-      "societe": "Societe",
       "clientFournisseur": "Client Fournisseur"
     }
   }

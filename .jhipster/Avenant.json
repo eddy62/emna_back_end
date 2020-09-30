@@ -14,19 +14,17 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "document",
+      "otherEntityRelationshipName": "avenant",
+      "relationshipName": "listeDocuments"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "contrat",
       "otherEntityRelationshipName": "listeAvenants",
       "relationshipName": "contrat",
       "otherEntityField": "id"
-    },
-    {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "clause",
-      "otherEntityRelationshipName": "listeAvenants",
-      "relationshipName": "listeClauses",
-      "otherEntityField": "id",
-      "ownerSide": false
     }
   ],
   "changelogDate": "20200722091304",

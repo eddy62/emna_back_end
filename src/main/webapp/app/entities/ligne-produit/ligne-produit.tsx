@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './ligne-produit.reducer';
-import { ILigneProduit } from 'app/shared/model/ligne-produit.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './ligne-produit.reducer';
 
 export interface ILigneProduitProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -40,16 +38,13 @@ export const LigneProduit = (props: ILigneProduitProps) => {
                   <Translate contentKey="emnaBackEndApp.ligneProduit.quantite">Quantite</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.nom">Nom</Translate>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.commentaire">Commentaire</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.description">Description</Translate>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.remise">Remise</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.tva">Tva</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.ligneProduit.prix">Prix</Translate>
+                  <Translate contentKey="emnaBackEndApp.ligneProduit.produit">Produit</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.ligneProduit.facture">Facture</Translate>
@@ -69,10 +64,9 @@ export const LigneProduit = (props: ILigneProduitProps) => {
                     </Button>
                   </td>
                   <td>{ligneProduit.quantite}</td>
-                  <td>{ligneProduit.nom}</td>
-                  <td>{ligneProduit.description}</td>
-                  <td>{ligneProduit.tva}</td>
-                  <td>{ligneProduit.prix}</td>
+                  <td>{ligneProduit.commentaire}</td>
+                  <td>{ligneProduit.remise}</td>
+                  <td>{ligneProduit.produitId ? <Link to={`produit/${ligneProduit.produitId}`}>{ligneProduit.produitId}</Link> : ''}</td>
                   <td>{ligneProduit.factureId ? <Link to={`facture/${ligneProduit.factureId}`}>{ligneProduit.factureId}</Link> : ''}</td>
                   <td>{ligneProduit.devisId ? <Link to={`devis/${ligneProduit.devisId}`}>{ligneProduit.devisId}</Link> : ''}</td>
                   <td className="text-right">

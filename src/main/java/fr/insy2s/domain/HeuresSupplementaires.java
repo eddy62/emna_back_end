@@ -5,8 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -33,9 +32,6 @@ public class HeuresSupplementaires implements Serializable {
     @Column(name = "nombre_heure", nullable = false)
     private Integer nombreHeure;
 
-    @Column(name = "justificatif")
-    private String justificatif;
-
     @NotNull
     @Column(name = "mois", nullable = false)
     private Integer mois;
@@ -44,7 +40,8 @@ public class HeuresSupplementaires implements Serializable {
     @Column(name = "annee", nullable = false)
     private Integer annee;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "heuresSupplementaires", allowSetters = true)
     private EtatVariablePaie etatVariablePaie;
 
@@ -85,19 +82,6 @@ public class HeuresSupplementaires implements Serializable {
 
     public void setNombreHeure(Integer nombreHeure) {
         this.nombreHeure = nombreHeure;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public HeuresSupplementaires justificatif(String justificatif) {
-        this.justificatif = justificatif;
-        return this;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -176,7 +160,6 @@ public class HeuresSupplementaires implements Serializable {
             "id=" + getId() +
             ", date='" + getDate() + "'" +
             ", nombreHeure=" + getNombreHeure() +
-            ", justificatif='" + getJustificatif() + "'" +
             ", mois=" + getMois() +
             ", annee=" + getAnnee() +
             "}";

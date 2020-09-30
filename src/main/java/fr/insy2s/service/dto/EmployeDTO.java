@@ -1,8 +1,9 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Employe} entity.
@@ -17,9 +18,9 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String civilite;
 
+    @NotNull
     private String nomNaissance;
 
-    @NotNull
     private String nomUsage;
 
     @NotNull
@@ -31,6 +32,7 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String villeNaissance;
 
+    @NotNull
     private String departementNaissance;
 
     @NotNull
@@ -39,7 +41,6 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String numeroSecuriteSociale;
 
-    @NotNull
     private String email;
 
     private String telephoneFix;
@@ -47,17 +48,16 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private String telephonePortable;
 
-    @NotNull
     private String fax;
 
     @NotNull
-    private Double salaireHoraire;
+    private BigDecimal salaireHoraire;
 
     @NotNull
-    private Double salaireBrutMensuelle;
+    private BigDecimal salaireBrutMensuelle;
 
     @NotNull
-    private Double heuresMensuelle;
+    private BigDecimal heuresMensuelle;
 
     @NotNull
     private String categorie;
@@ -68,7 +68,6 @@ public class EmployeDTO implements Serializable {
     @NotNull
     private LocalDate dateEmbauche;
 
-    @NotNull
     private LocalDate dateSortie;
 
     @NotNull
@@ -84,8 +83,6 @@ public class EmployeDTO implements Serializable {
     private Long statutEmployeId;
 
     private Long adresseId;
-
-    private Long typeContratId;
 
     private Long societeId;
     
@@ -209,27 +206,27 @@ public class EmployeDTO implements Serializable {
         this.fax = fax;
     }
 
-    public Double getSalaireHoraire() {
+    public BigDecimal getSalaireHoraire() {
         return salaireHoraire;
     }
 
-    public void setSalaireHoraire(Double salaireHoraire) {
+    public void setSalaireHoraire(BigDecimal salaireHoraire) {
         this.salaireHoraire = salaireHoraire;
     }
 
-    public Double getSalaireBrutMensuelle() {
+    public BigDecimal getSalaireBrutMensuelle() {
         return salaireBrutMensuelle;
     }
 
-    public void setSalaireBrutMensuelle(Double salaireBrutMensuelle) {
+    public void setSalaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
         this.salaireBrutMensuelle = salaireBrutMensuelle;
     }
 
-    public Double getHeuresMensuelle() {
+    public BigDecimal getHeuresMensuelle() {
         return heuresMensuelle;
     }
 
-    public void setHeuresMensuelle(Double heuresMensuelle) {
+    public void setHeuresMensuelle(BigDecimal heuresMensuelle) {
         this.heuresMensuelle = heuresMensuelle;
     }
 
@@ -305,14 +302,6 @@ public class EmployeDTO implements Serializable {
         this.adresseId = adresseId;
     }
 
-    public Long getTypeContratId() {
-        return typeContratId;
-    }
-
-    public void setTypeContratId(Long typeContratId) {
-        this.typeContratId = typeContratId;
-    }
-
     public Long getSocieteId() {
         return societeId;
     }
@@ -369,7 +358,6 @@ public class EmployeDTO implements Serializable {
             ", enfantsACharge=" + getEnfantsACharge() +
             ", statutEmployeId=" + getStatutEmployeId() +
             ", adresseId=" + getAdresseId() +
-            ", typeContratId=" + getTypeContratId() +
             ", societeId=" + getSocieteId() +
             "}";
     }

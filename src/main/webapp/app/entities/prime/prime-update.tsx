@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { ITypePrime } from 'app/shared/model/type-prime.model';
-import { getEntities as getTypePrimes } from 'app/entities/type-prime/type-prime.reducer';
-import { IEtatVariablePaie } from 'app/shared/model/etat-variable-paie.model';
-import { getEntities as getEtatVariablePaies } from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
-import { IEmploye } from 'app/shared/model/employe.model';
-import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './prime.reducer';
-import { IPrime } from 'app/shared/model/prime.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getTypePrimes} from 'app/entities/type-prime/type-prime.reducer';
+import {getEntities as getEtatVariablePaies} from 'app/entities/etat-variable-paie/etat-variable-paie.reducer';
+import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './prime.reducer';
 
 export interface IPrimeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -94,8 +87,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                 </Label>
                 <AvField
                   id="prime-montant"
-                  type="string"
-                  className="form-control"
+                  type="text"
                   name="montant"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
@@ -154,8 +146,7 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                 <Label for="prime-etatVariablePaie">
                   <Translate contentKey="emnaBackEndApp.prime.etatVariablePaie">Etat Variable Paie</Translate>
                 </Label>
-                <AvInput id="prime-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId">
-                  <option value="" key="0" />
+                <AvInput id="prime-etatVariablePaie" type="select" className="form-control" name="etatVariablePaieId" required>
                   {etatVariablePaies
                     ? etatVariablePaies.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -164,6 +155,9 @@ export const PrimeUpdate = (props: IPrimeUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="prime-employe">

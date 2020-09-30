@@ -5,7 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -32,17 +32,10 @@ public class Document implements Serializable {
     @Column(name = "nom")
     private String nom;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = "documents", allowSetters = true)
-    private Absence absence;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "documents", allowSetters = true)
-    private NoteDeFrais noteDeFrais;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "documents", allowSetters = true)
-    private AutresVariable autresVariables;
+    private TypeDocument typeDocument;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
@@ -63,6 +56,34 @@ public class Document implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
     private Depense depense;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private Absence absence;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private NoteDeFrais noteDeFrais;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private AutresVariable autresVariable;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private Devis devis;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private Dpae dpae;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private FichePaie fichePaie;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeDocuments", allowSetters = true)
+    private Avenant avenant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -112,43 +133,17 @@ public class Document implements Serializable {
         this.nom = nom;
     }
 
-    public Absence getAbsence() {
-        return absence;
+    public TypeDocument getTypeDocument() {
+        return typeDocument;
     }
 
-    public Document absence(Absence absence) {
-        this.absence = absence;
+    public Document typeDocument(TypeDocument typeDocument) {
+        this.typeDocument = typeDocument;
         return this;
     }
 
-    public void setAbsence(Absence absence) {
-        this.absence = absence;
-    }
-
-    public NoteDeFrais getNoteDeFrais() {
-        return noteDeFrais;
-    }
-
-    public Document noteDeFrais(NoteDeFrais noteDeFrais) {
-        this.noteDeFrais = noteDeFrais;
-        return this;
-    }
-
-    public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
-        this.noteDeFrais = noteDeFrais;
-    }
-
-    public AutresVariable getAutresVariables() {
-        return autresVariables;
-    }
-
-    public Document autresVariables(AutresVariable autresVariable) {
-        this.autresVariables = autresVariable;
-        return this;
-    }
-
-    public void setAutresVariables(AutresVariable autresVariable) {
-        this.autresVariables = autresVariable;
+    public void setTypeDocument(TypeDocument typeDocument) {
+        this.typeDocument = typeDocument;
     }
 
     public Facture getFacture() {
@@ -214,6 +209,97 @@ public class Document implements Serializable {
 
     public void setDepense(Depense depense) {
         this.depense = depense;
+    }
+
+    public Absence getAbsence() {
+        return absence;
+    }
+
+    public Document absence(Absence absence) {
+        this.absence = absence;
+        return this;
+    }
+
+    public void setAbsence(Absence absence) {
+        this.absence = absence;
+    }
+
+    public NoteDeFrais getNoteDeFrais() {
+        return noteDeFrais;
+    }
+
+    public Document noteDeFrais(NoteDeFrais noteDeFrais) {
+        this.noteDeFrais = noteDeFrais;
+        return this;
+    }
+
+    public void setNoteDeFrais(NoteDeFrais noteDeFrais) {
+        this.noteDeFrais = noteDeFrais;
+    }
+
+    public AutresVariable getAutresVariable() {
+        return autresVariable;
+    }
+
+    public Document autresVariable(AutresVariable autresVariable) {
+        this.autresVariable = autresVariable;
+        return this;
+    }
+
+    public void setAutresVariable(AutresVariable autresVariable) {
+        this.autresVariable = autresVariable;
+    }
+
+    public Devis getDevis() {
+        return devis;
+    }
+
+    public Document devis(Devis devis) {
+        this.devis = devis;
+        return this;
+    }
+
+    public void setDevis(Devis devis) {
+        this.devis = devis;
+    }
+
+    public Dpae getDpae() {
+        return dpae;
+    }
+
+    public Document dpae(Dpae dpae) {
+        this.dpae = dpae;
+        return this;
+    }
+
+    public void setDpae(Dpae dpae) {
+        this.dpae = dpae;
+    }
+
+    public FichePaie getFichePaie() {
+        return fichePaie;
+    }
+
+    public Document fichePaie(FichePaie fichePaie) {
+        this.fichePaie = fichePaie;
+        return this;
+    }
+
+    public void setFichePaie(FichePaie fichePaie) {
+        this.fichePaie = fichePaie;
+    }
+
+    public Avenant getAvenant() {
+        return avenant;
+    }
+
+    public Document avenant(Avenant avenant) {
+        this.avenant = avenant;
+        return this;
+    }
+
+    public void setAvenant(Avenant avenant) {
+        this.avenant = avenant;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

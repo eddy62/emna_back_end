@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './note-de-frais.reducer';
-import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './note-de-frais.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface INoteDeFraisProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -46,9 +45,6 @@ export const NoteDeFrais = (props: INoteDeFraisProps) => {
                   <Translate contentKey="emnaBackEndApp.noteDeFrais.montant">Montant</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.noteDeFrais.justificatif">Justificatif</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.noteDeFrais.mois">Mois</Translate>
                 </th>
                 <th>
@@ -74,7 +70,6 @@ export const NoteDeFrais = (props: INoteDeFraisProps) => {
                   <td>{noteDeFrais.designation}</td>
                   <td>{noteDeFrais.date ? <TextFormat type="date" value={noteDeFrais.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{noteDeFrais.montant}</td>
-                  <td>{noteDeFrais.justificatif}</td>
                   <td>{noteDeFrais.mois}</td>
                   <td>{noteDeFrais.annee}</td>
                   <td>

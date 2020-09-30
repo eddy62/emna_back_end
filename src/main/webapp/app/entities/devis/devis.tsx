@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './devis.reducer';
-import { IDevis } from 'app/shared/model/devis.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './devis.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IDevisProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -52,22 +51,7 @@ export const Devis = (props: IDevisProps) => {
                   <Translate contentKey="emnaBackEndApp.devis.dateLimite">Date Limite</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.devis.prixHT">Prix HT</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.devis.prixTTC">Prix TTC</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.devis.tva">Tva</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.devis.cheminFichier">Chemin Fichier</Translate>
-                </th>
-                <th>
                   <Translate contentKey="emnaBackEndApp.devis.etatDevis">Etat Devis</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.devis.societe">Societe</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.devis.clientFournisseur">Client Fournisseur</Translate>
@@ -90,12 +74,7 @@ export const Devis = (props: IDevisProps) => {
                     {devis.dateCreation ? <TextFormat type="date" value={devis.dateCreation} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{devis.dateLimite ? <TextFormat type="date" value={devis.dateLimite} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
-                  <td>{devis.prixHT}</td>
-                  <td>{devis.prixTTC}</td>
-                  <td>{devis.tva}</td>
-                  <td>{devis.cheminFichier}</td>
                   <td>{devis.etatDevisId ? <Link to={`etat-devis/${devis.etatDevisId}`}>{devis.etatDevisId}</Link> : ''}</td>
-                  <td>{devis.societeId ? <Link to={`societe/${devis.societeId}`}>{devis.societeId}</Link> : ''}</td>
                   <td>
                     {devis.clientFournisseurId ? (
                       <Link to={`client-fournisseur/${devis.clientFournisseurId}`}>{devis.clientFournisseurId}</Link>

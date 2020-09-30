@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './client-fournisseur.reducer';
-import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './client-fournisseur.reducer';
 
 export interface IClientFournisseurDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -33,11 +31,11 @@ export const ClientFournisseurDetail = (props: IClientFournisseurDetailProps) =>
           </dt>
           <dd>{clientFournisseurEntity.nom}</dd>
           <dt>
-            <span id="siren">
-              <Translate contentKey="emnaBackEndApp.clientFournisseur.siren">Siren</Translate>
+            <span id="siret">
+              <Translate contentKey="emnaBackEndApp.clientFournisseur.siret">Siret</Translate>
             </span>
           </dt>
-          <dd>{clientFournisseurEntity.siren}</dd>
+          <dd>{clientFournisseurEntity.siret}</dd>
           <dt>
             <span id="telephone">
               <Translate contentKey="emnaBackEndApp.clientFournisseur.telephone">Telephone</Translate>

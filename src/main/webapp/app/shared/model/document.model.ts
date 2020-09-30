@@ -3,14 +3,19 @@ export interface IDocument {
   cheminFichier?: string;
   type?: string;
   nom?: string;
-  absenceId?: number;
-  noteDeFraisId?: number;
-  autresVariablesId?: number;
+  typeDocumentId?: number;
   factureId?: number;
   releveId?: number;
   contratId?: number;
   employeId?: number;
   depenseId?: number;
+  absenceId?: number;
+  noteDeFraisId?: number;
+  autresVariableId?: number;
+  devisId?: number;
+  dpaeId?: number;
+  fichePaieId?: number;
+  avenantId?: number;
 }
 
 export const defaultValue: Readonly<IDocument> = {};

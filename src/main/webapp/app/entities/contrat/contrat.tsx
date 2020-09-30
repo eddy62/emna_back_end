@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './contrat.reducer';
-import { IContrat } from 'app/shared/model/contrat.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './contrat.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IContratProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -49,10 +48,10 @@ export const Contrat = (props: IContratProps) => {
                   <Translate contentKey="emnaBackEndApp.contrat.archive">Archive</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.contrat.employe">Employe</Translate>
+                  <Translate contentKey="emnaBackEndApp.contrat.typeContrat">Type Contrat</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.contrat.societe">Societe</Translate>
+                  <Translate contentKey="emnaBackEndApp.contrat.employe">Employe</Translate>
                 </th>
                 <th />
               </tr>
@@ -71,8 +70,8 @@ export const Contrat = (props: IContratProps) => {
                   </td>
                   <td>{contrat.signe ? 'true' : 'false'}</td>
                   <td>{contrat.archive ? 'true' : 'false'}</td>
+                  <td>{contrat.typeContratId ? <Link to={`type-contrat/${contrat.typeContratId}`}>{contrat.typeContratId}</Link> : ''}</td>
                   <td>{contrat.employeId ? <Link to={`employe/${contrat.employeId}`}>{contrat.employeId}</Link> : ''}</td>
-                  <td>{contrat.societeId ? <Link to={`societe/${contrat.societeId}`}>{contrat.societeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${contrat.id}`} color="info" size="sm">

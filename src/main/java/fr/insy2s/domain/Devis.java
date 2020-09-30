@@ -5,7 +5,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -41,29 +40,17 @@ public class Devis implements Serializable {
     @Column(name = "date_limite")
     private LocalDate dateLimite;
 
-    @Column(name = "prix_ht")
-    private Double prixHT;
-
-    @Column(name = "prix_ttc")
-    private Double prixTTC;
-
-    @Column(name = "tva")
-    private Float tva;
-
-    @Column(name = "chemin_fichier")
-    private String cheminFichier;
-
     @OneToMany(mappedBy = "devis")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<LigneProduit> listeLigneProduits = new HashSet<>();
 
+    @OneToMany(mappedBy = "devis")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Document> listeDocuments = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties(value = "devis", allowSetters = true)
     private EtatDevis etatDevis;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeDevis", allowSetters = true)
-    private Societe societe;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "listeDevis", allowSetters = true)
@@ -143,58 +130,6 @@ public class Devis implements Serializable {
         this.dateLimite = dateLimite;
     }
 
-    public Double getPrixHT() {
-        return prixHT;
-    }
-
-    public Devis prixHT(Double prixHT) {
-        this.prixHT = prixHT;
-        return this;
-    }
-
-    public void setPrixHT(Double prixHT) {
-        this.prixHT = prixHT;
-    }
-
-    public Double getPrixTTC() {
-        return prixTTC;
-    }
-
-    public Devis prixTTC(Double prixTTC) {
-        this.prixTTC = prixTTC;
-        return this;
-    }
-
-    public void setPrixTTC(Double prixTTC) {
-        this.prixTTC = prixTTC;
-    }
-
-    public Float getTva() {
-        return tva;
-    }
-
-    public Devis tva(Float tva) {
-        this.tva = tva;
-        return this;
-    }
-
-    public void setTva(Float tva) {
-        this.tva = tva;
-    }
-
-    public String getCheminFichier() {
-        return cheminFichier;
-    }
-
-    public Devis cheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-        return this;
-    }
-
-    public void setCheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-    }
-
     public Set<LigneProduit> getListeLigneProduits() {
         return listeLigneProduits;
     }
@@ -220,6 +155,31 @@ public class Devis implements Serializable {
         this.listeLigneProduits = ligneProduits;
     }
 
+    public Set<Document> getListeDocuments() {
+        return listeDocuments;
+    }
+
+    public Devis listeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+        return this;
+    }
+
+    public Devis addListeDocuments(Document document) {
+        this.listeDocuments.add(document);
+        document.setDevis(this);
+        return this;
+    }
+
+    public Devis removeListeDocuments(Document document) {
+        this.listeDocuments.remove(document);
+        document.setDevis(null);
+        return this;
+    }
+
+    public void setListeDocuments(Set<Document> documents) {
+        this.listeDocuments = documents;
+    }
+
     public EtatDevis getEtatDevis() {
         return etatDevis;
     }
@@ -231,19 +191,6 @@ public class Devis implements Serializable {
 
     public void setEtatDevis(EtatDevis etatDevis) {
         this.etatDevis = etatDevis;
-    }
-
-    public Societe getSociete() {
-        return societe;
-    }
-
-    public Devis societe(Societe societe) {
-        this.societe = societe;
-        return this;
-    }
-
-    public void setSociete(Societe societe) {
-        this.societe = societe;
     }
 
     public ClientFournisseur getClientFournisseur() {
@@ -286,10 +233,6 @@ public class Devis implements Serializable {
             ", message='" + getMessage() + "'" +
             ", dateCreation='" + getDateCreation() + "'" +
             ", dateLimite='" + getDateLimite() + "'" +
-            ", prixHT=" + getPrixHT() +
-            ", prixTTC=" + getPrixTTC() +
-            ", tva=" + getTva() +
-            ", cheminFichier='" + getCheminFichier() + "'" +
             "}";
     }
 }

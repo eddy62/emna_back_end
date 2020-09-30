@@ -1,7 +1,7 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Devis} entity.
@@ -20,18 +20,8 @@ public class DevisDTO implements Serializable {
 
     private LocalDate dateLimite;
 
-    private Double prixHT;
-
-    private Double prixTTC;
-
-    private Float tva;
-
-    private String cheminFichier;
-
 
     private Long etatDevisId;
-
-    private Long societeId;
 
     private Long clientFournisseurId;
     
@@ -83,52 +73,12 @@ public class DevisDTO implements Serializable {
         this.dateLimite = dateLimite;
     }
 
-    public Double getPrixHT() {
-        return prixHT;
-    }
-
-    public void setPrixHT(Double prixHT) {
-        this.prixHT = prixHT;
-    }
-
-    public Double getPrixTTC() {
-        return prixTTC;
-    }
-
-    public void setPrixTTC(Double prixTTC) {
-        this.prixTTC = prixTTC;
-    }
-
-    public Float getTva() {
-        return tva;
-    }
-
-    public void setTva(Float tva) {
-        this.tva = tva;
-    }
-
-    public String getCheminFichier() {
-        return cheminFichier;
-    }
-
-    public void setCheminFichier(String cheminFichier) {
-        this.cheminFichier = cheminFichier;
-    }
-
     public Long getEtatDevisId() {
         return etatDevisId;
     }
 
     public void setEtatDevisId(Long etatDevisId) {
         this.etatDevisId = etatDevisId;
-    }
-
-    public Long getSocieteId() {
-        return societeId;
-    }
-
-    public void setSocieteId(Long societeId) {
-        this.societeId = societeId;
     }
 
     public Long getClientFournisseurId() {
@@ -166,12 +116,7 @@ public class DevisDTO implements Serializable {
             ", message='" + getMessage() + "'" +
             ", dateCreation='" + getDateCreation() + "'" +
             ", dateLimite='" + getDateLimite() + "'" +
-            ", prixHT=" + getPrixHT() +
-            ", prixTTC=" + getPrixTTC() +
-            ", tva=" + getTva() +
-            ", cheminFichier='" + getCheminFichier() + "'" +
             ", etatDevisId=" + getEtatDevisId() +
-            ", societeId=" + getSocieteId() +
             ", clientFournisseurId=" + getClientFournisseurId() +
             "}";
     }

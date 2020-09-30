@@ -20,12 +20,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="adresse"/>
 
-        <addForeignKeyConstraint baseColumnNames="type_contrat_id"
-                                 baseTableName="employe"
-                                 constraintName="fk_employe_type_contrat_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="type_contrat"/>
-
         <addForeignKeyConstraint baseColumnNames="societe_id"
                                  baseTableName="employe"
                                  constraintName="fk_employe_societe_id"

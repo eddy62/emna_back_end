@@ -12,6 +12,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "article",
       "otherEntityRelationshipName": "saisieArticle",
+      "relationshipValidateRules": "required",
       "relationshipName": "article",
       "otherEntityField": "id"
     },
@@ -19,6 +20,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "contrat",
       "otherEntityRelationshipName": "saisieArticle",
+      "relationshipValidateRules": "required",
       "relationshipName": "contrat",
       "otherEntityField": "id"
     }

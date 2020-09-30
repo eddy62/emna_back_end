@@ -26,23 +26,19 @@
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "prixHT",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "prixTTC",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "tva",
-      "fieldType": "Float"
-    },
-    {
       "fieldName": "moyenDePaiement",
       "fieldType": "String"
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "devis",
+      "otherEntityRelationshipName": "facture",
+      "relationshipName": "devis",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "document",

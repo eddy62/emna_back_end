@@ -1,13 +1,14 @@
 package fr.insy2s.service.dto;
 
-import java.time.LocalDate;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Operation} entity.
  */
 public class OperationDTO implements Serializable {
-
+    
     private Long id;
 
     private LocalDate date;
@@ -18,11 +19,11 @@ public class OperationDTO implements Serializable {
 
     private Boolean rapproche;
 
-    private Double solde;
+    private BigDecimal solde;
 
 
     private Long releveId;
-
+    
     public Long getId() {
         return id;
     }
@@ -63,11 +64,11 @@ public class OperationDTO implements Serializable {
         this.rapproche = rapproche;
     }
 
-    public Double getSolde() {
+    public BigDecimal getSolde() {
         return solde;
     }
 
-    public void setSolde(Double solde) {
+    public void setSolde(BigDecimal solde) {
         this.solde = solde;
     }
 

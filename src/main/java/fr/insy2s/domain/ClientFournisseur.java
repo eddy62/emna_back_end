@@ -5,7 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,11 +25,12 @@ public class ClientFournisseur implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "nom")
+    @NotNull
+    @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Column(name = "siren")
-    private Integer siren;
+    @Column(name = "siret")
+    private String siret;
 
     @Column(name = "telephone")
     private String telephone;
@@ -75,17 +76,17 @@ public class ClientFournisseur implements Serializable {
         this.nom = nom;
     }
 
-    public Integer getSiren() {
-        return siren;
+    public String getSiret() {
+        return siret;
     }
 
-    public ClientFournisseur siren(Integer siren) {
-        this.siren = siren;
+    public ClientFournisseur siret(String siret) {
+        this.siret = siret;
         return this;
     }
 
-    public void setSiren(Integer siren) {
-        this.siren = siren;
+    public void setSiret(String siret) {
+        this.siret = siret;
     }
 
     public String getTelephone() {
@@ -213,7 +214,7 @@ public class ClientFournisseur implements Serializable {
         return "ClientFournisseur{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", siren=" + getSiren() +
+            ", siret='" + getSiret() + "'" +
             ", telephone='" + getTelephone() + "'" +
             ", email='" + getEmail() + "'" +
             "}";

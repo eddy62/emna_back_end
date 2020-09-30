@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IAdresse } from 'app/shared/model/adresse.model';
-import { getEntities as getAdresses } from 'app/entities/adresse/adresse.reducer';
-import { ISociete } from 'app/shared/model/societe.model';
-import { getEntities as getSocietes } from 'app/entities/societe/societe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './client-fournisseur.reducer';
-import { IClientFournisseur } from 'app/shared/model/client-fournisseur.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getAdresses} from 'app/entities/adresse/adresse.reducer';
+import {getEntities as getSocietes} from 'app/entities/societe/societe.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './client-fournisseur.reducer';
 
 export interface IClientFournisseurUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -88,13 +82,20 @@ export const ClientFournisseurUpdate = (props: IClientFournisseurUpdateProps) =>
                 <Label id="nomLabel" for="client-fournisseur-nom">
                   <Translate contentKey="emnaBackEndApp.clientFournisseur.nom">Nom</Translate>
                 </Label>
-                <AvField id="client-fournisseur-nom" type="text" name="nom" />
+                <AvField
+                  id="client-fournisseur-nom"
+                  type="text"
+                  name="nom"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
-                <Label id="sirenLabel" for="client-fournisseur-siren">
-                  <Translate contentKey="emnaBackEndApp.clientFournisseur.siren">Siren</Translate>
+                <Label id="siretLabel" for="client-fournisseur-siret">
+                  <Translate contentKey="emnaBackEndApp.clientFournisseur.siret">Siret</Translate>
                 </Label>
-                <AvField id="client-fournisseur-siren" type="string" className="form-control" name="siren" />
+                <AvField id="client-fournisseur-siret" type="text" name="siret" />
               </AvGroup>
               <AvGroup>
                 <Label id="telephoneLabel" for="client-fournisseur-telephone">
