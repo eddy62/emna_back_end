@@ -1,5 +1,6 @@
 package fr.insy2s.utils.wrapper;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class WrapperListeDepense {
@@ -64,7 +65,7 @@ public class WrapperListeDepense {
         this.etatDepense = etatDepense;
     }
 
-    public WrapperListeDepense(Long id, Long numero, LocalDate date, Double prix, String nomFournisseur, String etatDepense) {
+    public WrapperListeDepense(Long id, Long numero, LocalDate date, BigDecimal prix, String nomFournisseur, String etatDepense) {
         this.id = id;
         this.numero = numero;
         this.date = date;
