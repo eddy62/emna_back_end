@@ -84,9 +84,8 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
         for (Absence absence : absenceList) {
-            List<Document> documentList = documentRepository.findAllByAbsenceId(absence.getId());
             List<DocumentDTO> documentDTOList = new ArrayList<>();
-            for (Document document : documentList){
+            for (Document document : absence.getListeDocuments()){
                 documentDTOList.add(documentMapper.toDto(document));
             }
             WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()),documentDTOList);
@@ -96,9 +95,8 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         List<AutresVariable> autresVariableList = autresVariableRepository.findAllAutresVariablesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAutresVariable> wrapperAutresVariableList = new ArrayList<>();
         for (AutresVariable autresVariable : autresVariableList) {
-            List<Document> documentList = documentRepository.findAllByAutresVariablesId(autresVariable.getId());
             List<DocumentDTO> documentDTOList = new ArrayList<>();
-            for (Document document : documentList){
+            for (Document document : autresVariable.getListeDocuments()){
                 documentDTOList.add(documentMapper.toDto(document));
             }
             WrapperAutresVariable wrapperAutresVariable = new WrapperAutresVariable(autresVariableMapper.toDto(autresVariable),documentDTOList);
@@ -114,9 +112,8 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperNoteDeFrais> wrapperNoteDeFraisList = new ArrayList<>();
         for (NoteDeFrais noteDeFrais : noteDeFraisList) {
-            List<Document> documentList = documentRepository.findAllByNoteDeFraisId(noteDeFrais.getId());
             List<DocumentDTO> documentDTOList = new ArrayList<>();
-            for (Document document : documentList){
+            for (Document document : noteDeFrais.getListeDocuments()){
                 documentDTOList.add(documentMapper.toDto(document));
             }
             WrapperNoteDeFrais wrapperNoteDeFrais = new WrapperNoteDeFrais(noteDeFraisMapper.toDto(noteDeFrais),documentDTOList);
