@@ -26,7 +26,6 @@ public class WrapperAbsenceMapper {
         wrapperAbsence.setId(absenceDTO.getId());
         wrapperAbsence.setDebutAbsence(absenceDTO.getDebutAbsence());
         wrapperAbsence.setFinAbsence(absenceDTO.getFinAbsence());
-        wrapperAbsence.setJustificatif(absenceDTO.getJustificatif());
         wrapperAbsence.setAnnee(absenceDTO.getAnnee());
         wrapperAbsence.setMois(absenceDTO.getMois());
         wrapperAbsence.setEmployeId(absenceDTO.getEmployeId());
@@ -53,7 +52,6 @@ public class WrapperAbsenceMapper {
         absenceDTO.setId(wrapperAbsence.getId());
         absenceDTO.setDebutAbsence(wrapperAbsence.getDebutAbsence());
         absenceDTO.setFinAbsence(wrapperAbsence.getFinAbsence());
-        absenceDTO.setJustificatif(wrapperAbsence.getJustificatif());
         absenceDTO.setAnnee(wrapperAbsence.getAnnee());
         absenceDTO.setMois(wrapperAbsence.getMois());
         absenceDTO.setEmployeId(wrapperAbsence.getEmployeId());
