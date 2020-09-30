@@ -50,6 +50,4 @@ public interface ContratService {
      * @return the entity.
      */
     List<IContratAllInfoProjection> getContratAllInfos(Long id);
-
-    List<IContratEmployerProjection> getAllContratEmployerById(Long id);
 }
