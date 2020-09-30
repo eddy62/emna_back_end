@@ -25,7 +25,6 @@ public class WrapperNoteDeFraisMapper {
         wrapperNoteDeFrais.setDate(noteDeFraisDTO.getDate());
         wrapperNoteDeFrais.setDesignation(noteDeFraisDTO.getDesignation());
         wrapperNoteDeFrais.setMontant(noteDeFraisDTO.getMontant());
-        wrapperNoteDeFrais.setJustificatif(noteDeFraisDTO.getJustificatif());
         wrapperNoteDeFrais.setAnnee(noteDeFraisDTO.getAnnee());
         wrapperNoteDeFrais.setMois(noteDeFraisDTO.getMois());
         wrapperNoteDeFrais.setEmployeId(noteDeFraisDTO.getEmployeId());
@@ -49,7 +48,6 @@ public class WrapperNoteDeFraisMapper {
         noteDeFraisDTO.setDate(wrapperNoteDeFrais.getDate());
         noteDeFraisDTO.setDesignation(wrapperNoteDeFrais.getDesignation());
         noteDeFraisDTO.setMontant(wrapperNoteDeFrais.getMontant());
-        noteDeFraisDTO.setJustificatif(wrapperNoteDeFrais.getJustificatif());
         noteDeFraisDTO.setAnnee(wrapperNoteDeFrais.getAnnee());
         noteDeFraisDTO.setMois(wrapperNoteDeFrais.getMois());
         noteDeFraisDTO.setEmployeId(wrapperNoteDeFrais.getEmployeId());

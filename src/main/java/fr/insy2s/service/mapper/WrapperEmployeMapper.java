@@ -19,7 +19,7 @@ public class WrapperEmployeMapper {
 
     /**
      * Builder WrapperEmploye
-     * 
+     *
      * @param employe
      * @param adresse
      * @param statutEmploye
@@ -28,7 +28,7 @@ public class WrapperEmployeMapper {
      * @return
      */
     public WrapperEmploye builderWrapperEmploye(final EmployeDTO employe, final AdresseDTO adresse, final StatutEmployeDTO statutEmploye, final SocieteDTO societe,
-                    final InfoEntrepriseDTO infoEntreprise, final TypeContratDTO typeContratDTO) {
+                    final InfoEntrepriseDTO infoEntreprise) {
         final WrapperEmploye wrapperEmploye = new WrapperEmploye();
 
         wrapperEmploye.setId(employe.getId());
@@ -73,10 +73,6 @@ public class WrapperEmployeMapper {
 
         wrapperEmploye.setInfoEntrepriseId(infoEntreprise.getId());
         wrapperEmploye.setRaisonSociale(infoEntreprise.getRaisonSociale());
-        
-        wrapperEmploye.setTypeContratId(typeContratDTO.getId());
-        wrapperEmploye.setCodeTypeContrat(typeContratDTO.getCodeRef());
-        wrapperEmploye.setIntituleTypeContrat(typeContratDTO.getIntitule());
 
         return wrapperEmploye;
     }
@@ -85,7 +81,7 @@ public class WrapperEmployeMapper {
 
     /**
      * Mappe WrapperEmploye to EmployeDto
-     * 
+     *
      * @param wrapperEmploye
      * @return
      */
@@ -120,7 +116,6 @@ public class WrapperEmployeMapper {
         employeDTO.setAdresseId(wrapperEmploye.getAdresseId());
         employeDTO.setStatutEmployeId(wrapperEmploye.getStatutEmployeId());
         employeDTO.setSocieteId(wrapperEmploye.getSocieteId());
-        employeDTO.setTypeContratId(wrapperEmploye.getTypeContratId());
         employeDTO.setPeriodeEssai(wrapperEmploye.getPeriodeEssai());
 
         return employeDTO;
@@ -147,7 +142,7 @@ public class WrapperEmployeMapper {
         return adresseDTO;
 
     }
-    
+
     //WrapperEmploye to StatutEmployeDTO
     /**
      * Mappe wrapperEmploye to StatutEmployeDto
@@ -155,17 +150,17 @@ public class WrapperEmployeMapper {
      * @return statutEmployeDTO
      */
     public StatutEmployeDTO toStatutEmploye(final WrapperEmploye wrapperEmploye) {
-        
+
         final StatutEmployeDTO statutEmployeDTO = new StatutEmployeDTO();
-        
+
         statutEmployeDTO.setId(wrapperEmploye.getStatutEmployeId());
         statutEmployeDTO.setCodeRef(wrapperEmploye.getCodeRef());
         statutEmployeDTO.setLibelle(wrapperEmploye.getLibelle());
-        
+
         return statutEmployeDTO;
-        
+
     }
-    
+
     //WrapperEmploye to SocieteDTO
     /**
      * Mappe wrapperEmploye to societeDTO
@@ -174,13 +169,13 @@ public class WrapperEmployeMapper {
      */
     public SocieteDTO toSocieteDto(final WrapperEmploye wrapperEmploye) {
         final SocieteDTO societeDTO = new SocieteDTO();
-        
+
         societeDTO.setId(wrapperEmploye.getSocieteId());
 
         return societeDTO;
-        
+
     }
-    
+
     //WrapperEmploye to InfoEntreprise
     /**
      * Mappe wrapperEmploye to infoEntrepriseDTO
@@ -188,33 +183,13 @@ public class WrapperEmployeMapper {
      * @return infoEntrepriseDTO
      */
     public InfoEntrepriseDTO toInfoEntrepriseDto(final WrapperEmploye wrapperEmploye) {
-        
+
         final InfoEntrepriseDTO infoEntrepriseDTO= new InfoEntrepriseDTO();
-        
+
         infoEntrepriseDTO.setId(wrapperEmploye.getInfoEntrepriseId());
         infoEntrepriseDTO.setRaisonSociale(wrapperEmploye.getRaisonSociale());
-        
-        return infoEntrepriseDTO;
-        
-    }
-    
-  //WrapperEmploye to TypeContratDTO
-    /**
-     * Mappe wrapperEmploye to typeContratDto
-     * @param wrapperEmploye
-     * @return typeContratDto
-     */
-    public TypeContratDTO toTypeContratDTO(final WrapperEmploye wrapperEmploye) {
-        
-        final TypeContratDTO typeContratDTO= new TypeContratDTO();
-        
-        typeContratDTO.setId(wrapperEmploye.getTypeContratId());
-        typeContratDTO.setCodeRef(wrapperEmploye.getCodeTypeContrat());
-        typeContratDTO.setIntitule(wrapperEmploye.getIntituleTypeContrat());
-        
-        return typeContratDTO;
-        
-    }
-    
 
+        return infoEntrepriseDTO;
+
+    }
 }
