@@ -54,6 +54,8 @@ public interface FactureService {
 
     Long getLastNumFact(Long id);
 
+    Integer mergeOperationByIdFacture(Long idFacture, Long idOperation);
+
     /**
      * Get all the factures
      *

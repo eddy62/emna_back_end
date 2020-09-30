@@ -1,13 +1,11 @@
-package fr.insy2s.service.dto;
+package fr.insy2s.utils.wrapper;
 
+import fr.insy2s.service.dto.ReleveDTO;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.io.Serializable;
 
-/**
- * A DTO for the {@link fr.insy2s.domain.Releve} entity.
- */
-public class ReleveDTO implements Serializable {
-    
+public class WrapperReleveSolde {
     private Long id;
 
     private LocalDate dateDebut;
@@ -20,7 +18,25 @@ public class ReleveDTO implements Serializable {
     private Long etatReleveId;
 
     private Long societeId;
-    
+
+    private BigDecimal solde;
+
+    public WrapperReleveSolde(Long id, LocalDate dateDebut, LocalDate dateFin, String banque, Long etatReleveId, Long societeId, BigDecimal solde) {
+        this.id = id;
+
+        this.dateDebut = dateDebut;
+
+        this.dateFin = dateFin;
+
+        this.banque = banque;
+
+        this.etatReleveId = etatReleveId;
+
+        this.societeId = societeId;
+
+        this.solde = solde;
+    }
+
     public Long getId() {
         return id;
     }
@@ -69,33 +85,11 @@ public class ReleveDTO implements Serializable {
         this.societeId = societeId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ReleveDTO)) {
-            return false;
-        }
-
-        return id != null && id.equals(((ReleveDTO) o).id);
+    public BigDecimal getSolde() {
+        return solde;
     }
 
-    @Override
-    public int hashCode() {
-        return 31;
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "ReleveDTO{" +
-            "id=" + getId() +
-            ", dateDebut='" + getDateDebut() + "'" +
-            ", dateFin='" + getDateFin() + "'" +
-            ", banque='" + getBanque() + "'" +
-            ", etatReleveId=" + getEtatReleveId() +
-            ", societeId=" + getSocieteId() +
-            "}";
+    public void setSolde(BigDecimal solde) {
+        this.solde = solde;
     }
 }

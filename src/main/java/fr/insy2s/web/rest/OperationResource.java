@@ -6,6 +6,7 @@ import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.OperationDTO;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.utils.CheckUtil;
+import fr.insy2s.utils.wrapper.WrapperReleveSolde;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -59,10 +61,10 @@ public class OperationResource {
             throw new BadRequestAlertException("A new operation cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        Optional<ReleveDTO> optionalReleveDTO = releveService.findOne(operationDTO.getReleveId());
+        Optional<WrapperReleveSolde> optionalReleveDTO = releveService.findOne(operationDTO.getReleveId());
 
         if (optionalReleveDTO.isPresent()) {
-            ReleveDTO releve = optionalReleveDTO.get();
+            WrapperReleveSolde releve = optionalReleveDTO.get();
             if (operationDTO.getDate() == null || !CheckUtil.isDateBetween(
                     operationDTO.getDate(),
                     releve.getDateDebut(),
@@ -98,6 +100,12 @@ public class OperationResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, operationDTO.getId().toString()))
             .body(result);
+    }
+
+    @PutMapping("/operations/{idOperation}")
+    public void updateRapprochementOperation(@PathVariable Long idOperation){
+        log.debug("REST request to update rapprochement operation by id operation");
+        operationService.updateRapprochementOperation(idOperation);
     }
 
     /**
@@ -142,4 +150,6 @@ public class OperationResource {
         log.debug("REST request to get all Operations by Releve id ");
         return operationService.findAllByReleveId(id);
     }
+
+
 }
