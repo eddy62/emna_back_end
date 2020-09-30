@@ -79,7 +79,6 @@ public class FichePaieServiceImpl implements FichePaieService {
                 FichePaieDTOtmp.setId(fichePaie.getId());
                 FichePaieDTOtmp.setDebutPeriode(fichePaie.getDebutPeriode());
                 FichePaieDTOtmp.setFinPeriode(fichePaie.getFinPeriode());
-                FichePaieDTOtmp.setLienDocument(fichePaie.getLienDocument());
                 FichePaieDTOtmp.setMois(fichePaie.getMois());
                 FichePaieDTOtmp.setAnnee(fichePaie.getAnnee());
                 FichePaieDTOtmp.setEmployeId(fichePaie.getEmploye().getId());

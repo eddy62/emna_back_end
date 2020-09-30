@@ -25,7 +25,6 @@ public class WrapperAutresVariableMapper {
         wrapperAutresVariable.setDate(autresVariableDTO.getDate());
         wrapperAutresVariable.setDescription(autresVariableDTO.getDescription());
         wrapperAutresVariable.setMontant(autresVariableDTO.getMontant());
-        wrapperAutresVariable.setJustificatif(autresVariableDTO.getJustificatif());
         wrapperAutresVariable.setAnnee(autresVariableDTO.getAnnee());
         wrapperAutresVariable.setMois(autresVariableDTO.getMois());
         wrapperAutresVariable.setEmployeId(autresVariableDTO.getEmployeId());
@@ -49,7 +48,6 @@ public class WrapperAutresVariableMapper {
         autresVariableDTO.setDate(wrapperAutresVariable.getDate());
         autresVariableDTO.setDescription(wrapperAutresVariable.getDescription());
         autresVariableDTO.setMontant(wrapperAutresVariable.getMontant());
-        autresVariableDTO.setJustificatif(wrapperAutresVariable.getJustificatif());
         autresVariableDTO.setAnnee(wrapperAutresVariable.getAnnee());
         autresVariableDTO.setMois(wrapperAutresVariable.getMois());
         autresVariableDTO.setEmployeId(wrapperAutresVariable.getEmployeId());
