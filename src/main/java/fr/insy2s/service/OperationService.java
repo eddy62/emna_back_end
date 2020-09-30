@@ -41,4 +41,5 @@ public interface OperationService {
      */
     void delete(Long id);
     List<OperationDTO> findAllByReleveId(Long id);
+    void updateRapprochementOperation(Long idOperation);
 }

@@ -2,6 +2,7 @@ package fr.insy2s.repository;
 
 import fr.insy2s.domain.Facture;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,13 +22,19 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
 
     @Query("select f From Facture f " +
             "where f.date >= (select r.dateDebut from Releve r where r.id=:idReleve) " +
-            "and f.date <= (select r.dateFin from Releve r where r.id=:idReleve)")
+            "and f.date <= (select r.dateFin from Releve r where r.id=:idReleve)" +
+            "and f.operation is null")
     List<Facture> findAllInvoicesByStatement(@Param("idReleve") Long idReleve);
 
     @Query("select sum(f.prixTTC) from Facture f " +
         "where f.operation.id =:idOperation")
     Optional<BigDecimal> balanceOfInvoicesByTransaction(@Param("idOperation") Long idOperation);
 
+    @Modifying
+    @Query("update Facture f "+
+            "set f.operation.id =:idOperation " +
+            "where f.id=:idFacture")
+    Integer mergeOperationByIdFacture(@Param("idFacture") Long idFacture,@Param("idOperation") Long idOperation);
     @Query("select f from Facture f " +
     "where f.operation.id=:idOperation")
     List<Facture> findAllInvoicesByOperationId(@Param("idOperation") Long idOperation);
