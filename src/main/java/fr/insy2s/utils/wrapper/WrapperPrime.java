@@ -3,6 +3,7 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.PrimeDTO;
 import fr.insy2s.service.dto.TypePrimeDTO;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -13,7 +14,7 @@ public class WrapperPrime {
     // Prime
     private Long id;
     private String type;
-    private Double montant;
+    private BigDecimal montant;
     private Integer annee;
     private Integer mois;
     private Long employeId;
@@ -76,11 +77,11 @@ public class WrapperPrime {
         this.type = type;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 
