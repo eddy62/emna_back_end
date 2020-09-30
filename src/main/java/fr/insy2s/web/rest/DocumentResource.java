@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.io.File;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Document}.
@@ -116,6 +117,21 @@ public class DocumentResource {
     public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
         log.debug("REST request to delete Document : {}", id);
         documentService.delete(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @DeleteMapping("/documents/{id}/{fileName}")
+    public ResponseEntity<Void> deleteDocumentWithFile(@PathVariable Long id, @PathVariable String fileName) {
+        try{
+            File fileToDelete = new File("./fichiers/" + fileName);
+            log.debug("fileToDelete : {}", fileToDelete);
+            fileToDelete.delete();
+        } catch(Exception e) {
+
+        }
+        log.debug("REST request to delete Document : {}", id);
+        documentService.delete(id);
+        log.debug("fileName : {}", fileName);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
