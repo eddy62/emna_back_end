@@ -24,11 +24,11 @@ public class FactureTemp {
 
     private LocalDate dateEcheance;
 
-    private Integer prixHT;
+    /*private Integer prixHT;
 
     private Integer prixTTC;
 
-    private Float tva;
+    private Float tva;*/
 
     private String moyenDePaiement;
 
@@ -80,7 +80,7 @@ public class FactureTemp {
         this.dateEcheance = dateEcheance;
     }
 
-    public Integer getPrixHT() {
+    /*public Integer getPrixHT() {
         return prixHT;
     }
 
@@ -102,7 +102,7 @@ public class FactureTemp {
 
     public void setTva(Float tva) {
         this.tva = tva;
-    }
+    }*/
 
     public String getMoyenDePaiement() {
         return moyenDePaiement;
@@ -176,14 +176,14 @@ public class FactureTemp {
         this.client = client;
     }
 
-    public FactureTemp(Long numfact, String message, LocalDate date, LocalDate dateEcheance, Integer prixHT, Integer prixTTC, Float tva, String moyenDePaiement, String client, String numRue, String nomRue, String codePostal, String ville, String pays, Long societeId, MultipartFile[] listeFiles) {
+    public FactureTemp(Long numfact, String message, LocalDate date, LocalDate dateEcheance, String moyenDePaiement, String client, String numRue, String nomRue, String codePostal, String ville, String pays, Long societeId, MultipartFile[] listeFiles) {
         this.numfact = numfact;
         this.message = message;
         this.date = date;
         this.dateEcheance = dateEcheance;
-        this.prixHT = prixHT;
+        /*this.prixHT = prixHT;
         this.prixTTC = prixTTC;
-        this.tva = tva;
+        this.tva = tva;*/
         this.moyenDePaiement = moyenDePaiement;
         this.client = client;
         this.numRue = numRue;
@@ -201,9 +201,9 @@ public class FactureTemp {
         facture.setMessage(this.getMessage());
         facture.setMoyenDePaiement(this.getMoyenDePaiement());
         facture.setNumfact(this.getNumfact());
-        facture.setPrixHT(this.getPrixHT());
+        /*facture.setPrixHT(this.getPrixHT());
         facture.setPrixTTC(this.getPrixTTC());
-        facture.setTva(this.getTva());
+        facture.setTva(this.getTva());*/
         facture.setDateEcheance(this.getDateEcheance());
         return facture;
     }

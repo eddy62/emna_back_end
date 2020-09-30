@@ -3,6 +3,7 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.NoteDeFraisDTO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +18,7 @@ public class WrapperNoteDeFrais {
     private Long id;
     private String designation;
     private LocalDate date;
-    private Double montant;
-    private String justificatif;
+    private BigDecimal montant;
     private Integer mois;
     private Integer annee;
     private Long etatVariablePaieId;
@@ -49,7 +49,6 @@ public class WrapperNoteDeFrais {
         this.designation = noteDeFraisDTO.getDesignation();
         this.date = noteDeFraisDTO.getDate();
         this.montant = noteDeFraisDTO.getMontant();
-        this.justificatif = noteDeFraisDTO.getJustificatif();
         this.mois = noteDeFraisDTO.getMois();
         this.annee = noteDeFraisDTO.getAnnee();
         this.etatVariablePaieId = noteDeFraisDTO.getEtatVariablePaieId();
@@ -87,20 +86,12 @@ public class WrapperNoteDeFrais {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -152,7 +143,6 @@ public class WrapperNoteDeFrais {
                 getDesignation().equals(that.getDesignation()) &&
                 getDate().equals(that.getDate()) &&
                 getMontant().equals(that.getMontant()) &&
-                getJustificatif().equals(that.getJustificatif()) &&
                 getMois().equals(that.getMois()) &&
                 getAnnee().equals(that.getAnnee()) &&
                 getEtatVariablePaieId().equals(that.getEtatVariablePaieId()) &&
@@ -162,7 +152,7 @@ public class WrapperNoteDeFrais {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDesignation(), getDate(), getMontant(), getJustificatif(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId(), getDocumentDTOList());
+        return Objects.hash(getId(), getDesignation(), getDate(), getMontant(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId(), getDocumentDTOList());
     }
 
     @Override
@@ -172,7 +162,6 @@ public class WrapperNoteDeFrais {
                 ", designation='" + designation + '\'' +
                 ", date=" + date +
                 ", montant=" + montant +
-                ", justificatif='" + justificatif + '\'' +
                 ", mois=" + mois +
                 ", annee=" + annee +
                 ", etatVariablePaieId=" + etatVariablePaieId +

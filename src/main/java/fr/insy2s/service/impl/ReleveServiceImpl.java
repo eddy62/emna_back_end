@@ -143,7 +143,7 @@ public class ReleveServiceImpl implements ReleveService {
             do {
                 Long idOperation = operations.get(i).getId();
                 BigDecimal sommeFacture = factureRepository.balanceOfInvoicesByTransaction(idOperation).orElse(new BigDecimal(0));
-                isSoldeEquals = operations.get(i).getSolde().compareTo(sommeFacture) == 0;
+                isSoldeEquals = operations.get(i).getSolde().equals(sommeFacture);
                 i++;
             }
             while (isSoldeEquals && i < operations.size());

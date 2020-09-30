@@ -119,7 +119,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         try {
             client.setEmail(clientFournisseur.getEmail());
             client.setNom(clientFournisseur.getNom().toUpperCase());
-            client.setSiren(clientFournisseur.getSiren());
+            client.setSiret(clientFournisseur.getSiret());
             client.setTelephone(clientFournisseur.getTelephone());
             if (clientFournisseur.getIdSociete() != null) {
                 Optional<Societe> societe = societeRepository.findById(clientFournisseur.getIdSociete());
@@ -203,7 +203,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             wrapperCLient.setNom(clientSaved.getNom());
             wrapperCLient.setEmail(clientSaved.getEmail());
             wrapperCLient.setTelephone(clientSaved.getTelephone());
-            wrapperCLient.setSiren(clientSaved.getSiren());
+            wrapperCLient.setSiret(clientSaved.getSiret());
             wrapperCLient.setIdSociete(clientSaved.getSocieteId());
 
             if (client.getAdresse()!=null) {
@@ -247,7 +247,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
         try {
             client.setEmail(wrapperClientFournisseur.getEmail());
             client.setNom(wrapperClientFournisseur.getNom());
-            client.setSiren(wrapperClientFournisseur.getSiren());
+            client.setSiret(wrapperClientFournisseur.getSiret());
             client.setTelephone(wrapperClientFournisseur.getTelephone());
             if (wrapperClientFournisseur.getIdSociete() != null) {
                 Optional<Societe> societe = societeRepository.findById(wrapperClientFournisseur.getIdSociete());

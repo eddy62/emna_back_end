@@ -1,3 +1,4 @@
+/*
 package fr.insy2s.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,9 +12,11 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+*/
 /**
  * A Clause.
- */
+ *//*
+
 @Entity
 @Table(name = "clause")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -177,3 +180,4 @@ public class Clause implements Serializable {
             "}";
     }
 }
+*/

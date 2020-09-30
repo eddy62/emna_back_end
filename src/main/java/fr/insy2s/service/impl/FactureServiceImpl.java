@@ -139,7 +139,7 @@ public class FactureServiceImpl implements FactureService {
         List<WrapperListeFacture> wrapperListeFactures = new ArrayList<WrapperListeFacture>();
         for (Facture facture: listeFacture) {
             if (facture.getType().equals("Vente")) {
-                WrapperListeFacture wrapperListeFacture = new WrapperListeFacture(facture.getId(), facture.getNumfact(), facture.getType(), facture.getDate(), facture.getPrixTTC(), facture.getClientFournisseur().getNom(), facture.getEtatFacture().getLibelle());
+                WrapperListeFacture wrapperListeFacture = new WrapperListeFacture(facture.getId(), facture.getNumfact(), facture.getType(), facture.getDate(), facture.getClientFournisseur().getNom(), facture.getEtatFacture().getLibelle());
                 wrapperListeFactures.add(wrapperListeFacture);
             }
         }

@@ -1,5 +1,6 @@
 package fr.insy2s.utils.wrapper;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import fr.insy2s.service.dto.AdresseDTO;
@@ -31,9 +32,9 @@ public class WrapperEmploye {
     private String    telephoneFix;
     private String    telephonePortable;
     private String    fax;
-    private Double    salaireHoraire;
-    private Double    salaireBrutMensuelle;
-    private Double    heuresMensuelle;
+    private BigDecimal salaireHoraire;
+    private BigDecimal    salaireBrutMensuelle;
+    private BigDecimal    heuresMensuelle;
     private String    categorie;
     private String    poste;
     private LocalDate dateEmbauche;
@@ -63,11 +64,6 @@ public class WrapperEmploye {
     private Long      infoEntrepriseId;
     private String    raisonSociale;
 
-    //TypeContrat
-    private Long      typeContratId;
-    private String    codeTypeContrat;
-    private String    intituleTypeContrat;
-
     /**
      * Constructeur par defaut
      */
@@ -78,15 +74,15 @@ public class WrapperEmploye {
 
     /**
      * Constructeur avec field
-     * 
+     *
      * @param employeDTO
      * @param adresseDTO
      * @param statutEmployeDTO
      * @param societeDTO
      * @param infoEntrepriseDTO
      */
-    public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO,
-                    final TypeContratDTO typeContratDTO) {
+    public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO
+                    ) {
         super();
         //employe
         this.id = employeDTO.getAdresseId();
@@ -131,11 +127,6 @@ public class WrapperEmploye {
         //infoEntreprise
         this.infoEntrepriseId = societeDTO.getInfoEntrepriseId();
         this.raisonSociale = infoEntrepriseDTO.getRaisonSociale();
-        //typeContrat
-        this.typeContratId = typeContratDTO.getId();
-        this.codeTypeContrat = typeContratDTO.getCodeRef();
-        this.intituleTypeContrat = typeContratDTO.getIntitule();
-
     }
 
     public Long getId() {
@@ -258,27 +249,27 @@ public class WrapperEmploye {
         this.fax = fax;
     }
 
-    public Double getSalaireHoraire() {
+    public BigDecimal getSalaireHoraire() {
         return salaireHoraire;
     }
 
-    public void setSalaireHoraire(Double salaireHoraire) {
+    public void setSalaireHoraire(BigDecimal salaireHoraire) {
         this.salaireHoraire = salaireHoraire;
     }
 
-    public Double getSalaireBrutMensuelle() {
+    public BigDecimal getSalaireBrutMensuelle() {
         return salaireBrutMensuelle;
     }
 
-    public void setSalaireBrutMensuelle(Double salaireBrutMensuelle) {
+    public void setSalaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
         this.salaireBrutMensuelle = salaireBrutMensuelle;
     }
 
-    public Double getHeuresMensuelle() {
+    public BigDecimal getHeuresMensuelle() {
         return heuresMensuelle;
     }
 
-    public void setHeuresMensuelle(Double heuresMensuelle) {
+    public void setHeuresMensuelle(BigDecimal heuresMensuelle) {
         this.heuresMensuelle = heuresMensuelle;
     }
 
@@ -434,30 +425,6 @@ public class WrapperEmploye {
         this.raisonSociale = raisonSociale;
     }
 
-    public Long getTypeContratId() {
-        return typeContratId;
-    }
-
-    public void setTypeContratId(Long typeContratId) {
-        this.typeContratId = typeContratId;
-    }
-
-    public String getCodeTypeContrat() {
-        return codeTypeContrat;
-    }
-
-    public void setCodeTypeContrat(String codeTypeContrat) {
-        this.codeTypeContrat = codeTypeContrat;
-    }
-
-    public String getIntituleTypeContrat() {
-        return intituleTypeContrat;
-    }
-
-    public void setIntituleTypeContrat(String intituleTypeContrat) {
-        this.intituleTypeContrat = intituleTypeContrat;
-    }
-
     public Double getPeriodeEssai() {
         return periodeEssai;
     }
@@ -465,7 +432,7 @@ public class WrapperEmploye {
     public void setPeriodeEssai(Double periodeEssai) {
         this.periodeEssai = periodeEssai;
     }
-    
-    
+
+
 
 }
