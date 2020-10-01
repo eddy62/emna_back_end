@@ -15,6 +15,7 @@ public class WrapperListeFacture {
 
     private BigDecimal prixTTC;
 
+
     private String nomClient;
 
     private String etatFacture;
@@ -51,7 +52,9 @@ public class WrapperListeFacture {
         this.date = date;
     }
 
+
     public BigDecimal getPrixTTC() {
+
         return prixTTC;
     }
 
@@ -74,6 +77,7 @@ public class WrapperListeFacture {
     public void setEtatFacture(String etatFacture) {
         this.etatFacture = etatFacture;
     }
+
 
     public WrapperListeFacture(Long id, Long numfact, String type, LocalDate date, BigDecimal prixTTC, String nomClient, String etatFacture) {
         this.id = id;

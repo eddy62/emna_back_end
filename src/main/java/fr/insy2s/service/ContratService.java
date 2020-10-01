@@ -52,6 +52,7 @@ public interface ContratService {
      */
     List<IContratAllInfoProjection> getContratAllInfos(Long id);
 
+
     List<IContratEmployerProjection> getAllContratEmployerById(Long id);
 
     Contrat getActiveContratEmployee(Long id);

@@ -18,7 +18,9 @@ public class WrapperAbsence {
     private Long id;
     private LocalDate debutAbsence;
     private LocalDate finAbsence;
+
     //private String justificatif;
+
     private Integer annee;
     private Integer mois;
     private Long employeId;
@@ -57,6 +59,7 @@ public class WrapperAbsence {
         this.debutAbsence = absenceDTO.getDebutAbsence();
         this.finAbsence = absenceDTO.getFinAbsence();
         //this.justificatif = absenceDTO.getJustificatif();
+
         this.annee = absenceDTO.getAnnee();
         this.mois = absenceDTO.getMois();
         this.employeId = absenceDTO.getEmployeId();
@@ -99,6 +102,7 @@ public class WrapperAbsence {
     public void setFinAbsence(LocalDate finAbsence) {
         this.finAbsence = finAbsence;
     }
+
 
     /*public String getJustificatif() {
         return justificatif;

@@ -26,7 +26,7 @@ public class WrapperPrimeMapper {
         final WrapperPrime wrapperPrime = new WrapperPrime();
         // Prime
         wrapperPrime.setId(primeDTO.getId());
-        wrapperPrime.setMontant(primeDTO.getMontant().doubleValue());
+        wrapperPrime.setMontant(primeDTO.getMontant());
         wrapperPrime.setAnnee(primeDTO.getAnnee());
         wrapperPrime.setMois(primeDTO.getMois());
         wrapperPrime.setEmployeId(primeDTO.getEmployeId());
@@ -51,7 +51,7 @@ public class WrapperPrimeMapper {
         PrimeDTO primeDTO = new PrimeDTO();
 
         primeDTO.setId(wrapperPrime.getId());
-        primeDTO.setMontant(BigDecimal.valueOf(wrapperPrime.getMontant()));
+        primeDTO.setMontant(wrapperPrime.getMontant());
         primeDTO.setAnnee(wrapperPrime.getAnnee());
         primeDTO.setMois(wrapperPrime.getMois());
         primeDTO.setEmployeId(wrapperPrime.getEmployeId());

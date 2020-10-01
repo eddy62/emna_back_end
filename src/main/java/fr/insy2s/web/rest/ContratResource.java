@@ -1,18 +1,13 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Clause;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
-import fr.insy2s.repository.projection.IContratEmployerProjection;
 import fr.insy2s.service.ClauseService;
 import fr.insy2s.service.ContratService;
 import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
-import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.*;
 import io.github.jhipster.web.util.HeaderUtil;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
@@ -68,7 +62,6 @@ public class ContratResource {
 
         ContratDTO contratDTO = new ContratDTO();
 
-        //contratDTO.setSocieteId(contratVM.getSocieteId());
         contratDTO.setEmployeId(contratVM.getEmployeId());
         contratDTO.setArchive(contratVM.getArchive());
         contratDTO.setSigne(contratVM.getSigne());
@@ -171,16 +164,5 @@ public class ContratResource {
         if(!iContratAllInfoProjections.isEmpty())
         contratAllInfoVM.get().setContratId(iContratAllInfoProjections.get(0).getContratId());
         return ResponseEntity.ok(contratAllInfoVM.get());
-    }
-
-    @GetMapping("/contrats/employer/{id}")
-    public List<ContratEmployerVM> getAllContratEmployerByIdSociete(@PathVariable Long id) {
-        List<ContratEmployerVM> contratEmployerVMS = new ArrayList<>();
-        List<IContratEmployerProjection> iContratEmployerProjections = this.contratService.getAllContratEmployerById(id);
-        for (IContratEmployerProjection iContratEmployerProjection: iContratEmployerProjections) {
-            System.err.println(contratEmployerVMS);
-            contratEmployerVMS.add(new ContratEmployerVM(iContratEmployerProjection.getEmployerId(), iContratEmployerProjection.getContratTitre(), iContratEmployerProjection.getEmployerNom(), iContratEmployerProjection.getEmployerPrenom(), iContratEmployerProjection.getContratSigner(), iContratEmployerProjection.getContratArchiver()));
-        }
-        return contratEmployerVMS;
     }
 }

@@ -148,6 +148,7 @@ public class ReleveServiceImpl implements ReleveService {
                 }
                 double sommeF = sommeFacture.doubleValue();
                 isSoldeEquals = Double.compare(operations.get(i).getSolde().doubleValue(), sommeF) == 0;
+
                 i++;
             }
             while (isSoldeEquals && i < operations.size());
@@ -178,7 +179,9 @@ public class ReleveServiceImpl implements ReleveService {
         assert releveDTO != null;
         Optional<Societe> societeDTO = societeRepository.findById(releveDTO.getSocieteId());
         List<Operation> operationDTOList = operationRepository.findAllByReleveId(idStatement);
-        List<Facture> factureDTOList = factureRepository.findAllInvoicesByStatement(idStatement);
+        /* Might be used later :
+           List<Facture> factureDTOList = factureRepository.findAllInvoicesByStatement(idStatement);
+        */
         return new WrapperArchivedStatement(
             releveDTO.getId(),
             DateUtil.convertToFrenchDate(releveDTO.getDateDebut()),

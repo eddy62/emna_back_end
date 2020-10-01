@@ -65,5 +65,5 @@ public interface ClauseService {
      * @param idSociety the id of the society
      * @return the list of entities.
      */
-    List<ClauseDTO> findAllClausesBySocietyId(Long idSociete);
+    List<ClauseDTO> findAllClausesBySocietyId(Long idSociety);
 }

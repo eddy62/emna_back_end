@@ -3,6 +3,7 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.AutresVariableDTO;
 import fr.insy2s.service.dto.DocumentDTO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -17,8 +18,7 @@ public class WrapperAutresVariable {
     private Long id;
     private String description;
     private LocalDate date;
-    private Double montant;
-    private String justificatif;
+    private BigDecimal montant;
     private Integer mois;
     private Integer annee;
     private Long etatVariablePaieId;
@@ -48,8 +48,8 @@ public class WrapperAutresVariable {
         this.id = autresVariableDTO.getId();
         this.description = autresVariableDTO.getDescription();
         this.date = autresVariableDTO.getDate();
-        this.montant = autresVariableDTO.getMontant().doubleValue();
-        //this.justificatif = autresVariableDTO.getJustificatif();
+
+        this.montant = autresVariableDTO.getMontant();
         this.mois = autresVariableDTO.getMois();
         this.annee = autresVariableDTO.getAnnee();
         this.etatVariablePaieId = autresVariableDTO.getEtatVariablePaieId();
@@ -85,20 +85,12 @@ public class WrapperAutresVariable {
         this.date = date;
     }
 
-    public Double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(Double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public String getJustificatif() {
-        return justificatif;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
     }
 
     public Integer getMois() {
@@ -150,7 +142,6 @@ public class WrapperAutresVariable {
                 getDescription().equals(that.getDescription()) &&
                 getDate().equals(that.getDate()) &&
                 getMontant().equals(that.getMontant()) &&
-                getJustificatif().equals(that.getJustificatif()) &&
                 getMois().equals(that.getMois()) &&
                 getAnnee().equals(that.getAnnee()) &&
                 getEtatVariablePaieId().equals(that.getEtatVariablePaieId()) &&
@@ -160,7 +151,7 @@ public class WrapperAutresVariable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDescription(), getDate(), getMontant(), getJustificatif(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId(), getDocumentDTOList());
+        return Objects.hash(getId(), getDescription(), getDate(), getMontant(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId(), getDocumentDTOList());
     }
 
     @Override
@@ -170,7 +161,6 @@ public class WrapperAutresVariable {
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 ", montant=" + montant +
-                ", justificatif='" + justificatif + '\'' +
                 ", mois=" + mois +
                 ", annee=" + annee +
                 ", etatVariablePaieId=" + etatVariablePaieId +

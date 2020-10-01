@@ -99,8 +99,9 @@ public class WrapperClientFournisseur {
         this.nom = nom;
     }
 
-    public void setSiret(String siren) {
-        this.siret = siren;
+    public void setSiret(String siret) {
+
+        this.siret = siret;
     }
 
     public void setTelephone(String telephone) {
@@ -153,7 +154,7 @@ public class WrapperClientFournisseur {
             "idSociete=" + idSociete +
             ", id=" + id +
             ", nom='" + nom + '\'' +
-            ", siren=" + siret +
+            ", siret=" + siret +
             ", telephone='" + telephone + '\'' +
             ", email='" + email + '\'' +
             ", idAdresse=" + idAdresse +
