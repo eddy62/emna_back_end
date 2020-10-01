@@ -4,7 +4,6 @@ import fr.insy2s.domain.*;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.VariableDePaieService;
 import fr.insy2s.service.dto.AvanceRappelSalaireDTO;
-import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.HeuresSupplementairesDTO;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.wrapper.*;
@@ -38,8 +37,9 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
     private final PrimeRepository                   primeRepository;
     private final PrimeMapper                       primeMapper;
     private final TypePrimeMapper                   typePrimeMapper;
-    private final DocumentRepository                documentRepository;
     private final DocumentMapper                    documentMapper;
+    private final TypeDocumentMapper typeDocumentMapper;
+    private final WrapperDocumentMapper wrapperDocumentMapper;
 
 
     public VariableDePaieServiceImpl(AbsenceRepository absenceRepository,
@@ -56,8 +56,9 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
                                      PrimeRepository primeRepository,
                                      PrimeMapper primeMapper,
                                      TypePrimeMapper typePrimeMapper,
-                                     DocumentRepository documentRepository,
-                                     DocumentMapper documentMapper) {
+                                     DocumentMapper documentMapper,
+                                     TypeDocumentMapper typeDocumentMapper,
+                                     WrapperDocumentMapper wrapperDocumentMapper) {
 
         this.absenceRepository = absenceRepository;
         this.absenceMapper = absenceMapper;
@@ -73,8 +74,9 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         this.primeRepository = primeRepository;
         this.primeMapper = primeMapper;
         this.typePrimeMapper = typePrimeMapper;
-        this.documentRepository = documentRepository;
         this.documentMapper = documentMapper;
+        this.typeDocumentMapper = typeDocumentMapper;
+        this.wrapperDocumentMapper = wrapperDocumentMapper;
     }
 
     @Override
@@ -83,23 +85,31 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         // Absences
         List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
-        for (Absence absence : absenceList) {
-            List<DocumentDTO> documentDTOList = new ArrayList<>();
+        for (Absence absence : absenceList){
+            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
             for (Document document : absence.getListeDocuments()){
-                documentDTOList.add(documentMapper.toDto(document));
+                WrapperDocument wrapperDocument
+                        = wrapperDocumentMapper.builderWrapperDocument(
+                        documentMapper.toDto(document),
+                        typeDocumentMapper.toDto(document.getTypeDocument()));
+                wrapperDocumentList.add(wrapperDocument);
             }
-            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()),documentDTOList);
+            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()), wrapperDocumentList);
             wrapperAbsenceList.add(wrapperAbsence);
         }
         // Autres Variable
         List<AutresVariable> autresVariableList = autresVariableRepository.findAllAutresVariablesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAutresVariable> wrapperAutresVariableList = new ArrayList<>();
-        for (AutresVariable autresVariable : autresVariableList) {
-            List<DocumentDTO> documentDTOList = new ArrayList<>();
+        for (AutresVariable autresVariable : autresVariableList){
+            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
             for (Document document : autresVariable.getListeDocuments()){
-                documentDTOList.add(documentMapper.toDto(document));
+                WrapperDocument wrapperDocument
+                        = wrapperDocumentMapper.builderWrapperDocument(
+                        documentMapper.toDto(document),
+                        typeDocumentMapper.toDto(document.getTypeDocument()));
+                wrapperDocumentList.add(wrapperDocument);
             }
-            WrapperAutresVariable wrapperAutresVariable = new WrapperAutresVariable(autresVariableMapper.toDto(autresVariable),documentDTOList);
+            WrapperAutresVariable wrapperAutresVariable = new WrapperAutresVariable(autresVariableMapper.toDto(autresVariable), wrapperDocumentList);
             wrapperAutresVariableList.add(wrapperAutresVariable);
         }
         // Avance/RappelSalaire
@@ -111,12 +121,16 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         // Notes de Frais
         List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperNoteDeFrais> wrapperNoteDeFraisList = new ArrayList<>();
-        for (NoteDeFrais noteDeFrais : noteDeFraisList) {
-            List<DocumentDTO> documentDTOList = new ArrayList<>();
+        for (NoteDeFrais noteDeFrais : noteDeFraisList){
+            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
             for (Document document : noteDeFrais.getListeDocuments()){
-                documentDTOList.add(documentMapper.toDto(document));
+                WrapperDocument wrapperDocument
+                        = wrapperDocumentMapper.builderWrapperDocument(
+                        documentMapper.toDto(document),
+                        typeDocumentMapper.toDto(document.getTypeDocument()));
+                wrapperDocumentList.add(wrapperDocument);
             }
-            WrapperNoteDeFrais wrapperNoteDeFrais = new WrapperNoteDeFrais(noteDeFraisMapper.toDto(noteDeFrais),documentDTOList);
+            WrapperNoteDeFrais wrapperNoteDeFrais = new WrapperNoteDeFrais(noteDeFraisMapper.toDto(noteDeFrais), wrapperDocumentList);
             wrapperNoteDeFraisList.add(wrapperNoteDeFrais);
         }
         // Primes

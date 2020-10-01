@@ -3,14 +3,11 @@ package fr.insy2s.service.impl;
 import fr.insy2s.domain.Absence;
 import fr.insy2s.domain.Document;
 import fr.insy2s.repository.AbsenceRepository;
-import fr.insy2s.repository.DocumentRepository;
 import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.dto.AbsenceDTO;
-import fr.insy2s.service.dto.DocumentDTO;
-import fr.insy2s.service.mapper.AbsenceMapper;
-import fr.insy2s.service.mapper.DocumentMapper;
-import fr.insy2s.service.mapper.TypeAbsenceMapper;
+import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
+import fr.insy2s.utils.wrapper.WrapperDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,16 +34,19 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     private final TypeAbsenceMapper typeAbsenceMapper;
 
-    private final DocumentRepository documentRepository;
-
     private final DocumentMapper documentMapper;
 
-    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper, DocumentRepository documentRepository, DocumentMapper documentMapper) {
+    private final TypeDocumentMapper typeDocumentMapper;
+
+    private final WrapperDocumentMapper wrapperDocumentMapper;
+
+    public AbsenceServiceImpl(AbsenceRepository absenceRepository, AbsenceMapper absenceMapper, TypeAbsenceMapper typeAbsenceMapper, DocumentMapper documentMapper, TypeDocumentMapper typeDocumentMapper, WrapperDocumentMapper wrapperDocumentMapper) {
         this.absenceRepository = absenceRepository;
         this.absenceMapper = absenceMapper;
         this.typeAbsenceMapper = typeAbsenceMapper;
-        this.documentRepository = documentRepository;
         this.documentMapper = documentMapper;
+        this.typeDocumentMapper = typeDocumentMapper;
+        this.wrapperDocumentMapper = wrapperDocumentMapper;
     }
 
     @Override
@@ -88,11 +88,15 @@ public class AbsenceServiceImpl implements AbsenceService {
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
 
         for (Absence absence : absenceList){
-            List<DocumentDTO> documentDTOList = new ArrayList<>();
+            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
             for (Document document : absence.getListeDocuments()){
-                documentDTOList.add(documentMapper.toDto(document));
+                WrapperDocument wrapperDocument
+                        = wrapperDocumentMapper.builderWrapperDocument(
+                                documentMapper.toDto(document),
+                                typeDocumentMapper.toDto(document.getTypeDocument()));
+                wrapperDocumentList.add(wrapperDocument);
             };
-            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()), documentDTOList);
+            WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()), wrapperDocumentList);
             wrapperAbsenceList.add(wrapperAbsence);
         }
         return wrapperAbsenceList;

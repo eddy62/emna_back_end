@@ -1,6 +1,5 @@
 package fr.insy2s.utils.wrapper;
 
-import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.NoteDeFraisDTO;
 
 import java.math.BigDecimal;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Wrapper NoteDeFrais with documentDTOList
+ * Wrapper NoteDeFrais with wrapperDocumentList
  *
  */
 public class WrapperNoteDeFrais {
@@ -26,7 +25,7 @@ public class WrapperNoteDeFrais {
     private Long employeId;
 
     // Documents
-    private List<DocumentDTO> documentDTOList;
+    private List<WrapperDocument> wrapperDocumentList;
 
     /**
      * Constructeur WrapperNoteDeFrais par défaut
@@ -40,9 +39,9 @@ public class WrapperNoteDeFrais {
      * Constructeur WrapperNoteDeFrais avec paramètres
      *
      * @param noteDeFraisDTO the noteDeFraisDTO
-     * @param documentDTOList the list of DocumentDTO
+     * @param wrapperDocumentList the list of wrapperDocument
      */
-    public WrapperNoteDeFrais(NoteDeFraisDTO noteDeFraisDTO, List<DocumentDTO> documentDTOList){
+    public WrapperNoteDeFrais(NoteDeFraisDTO noteDeFraisDTO, List<WrapperDocument> wrapperDocumentList){
 
         super();
         // NoteDeFrais
@@ -57,7 +56,7 @@ public class WrapperNoteDeFrais {
         this.employeId = noteDeFraisDTO.getEtatVariablePaieId();
 
         // Documents
-        this.documentDTOList = documentDTOList;
+        this.wrapperDocumentList = wrapperDocumentList;
 
 
     }
@@ -128,12 +127,12 @@ public class WrapperNoteDeFrais {
         this.employeId = employeId;
     }
 
-    public List<DocumentDTO> getDocumentDTOList() {
-        return documentDTOList;
+    public List<WrapperDocument> getWrapperDocumentList() {
+        return wrapperDocumentList;
     }
 
-    public void setDocumentDTOList(List<DocumentDTO> documentDTOList) {
-        this.documentDTOList = documentDTOList;
+    public void setWrapperDocumentList(List<WrapperDocument> wrapperDocumentList) {
+        this.wrapperDocumentList = wrapperDocumentList;
     }
 
     @Override
@@ -148,13 +147,12 @@ public class WrapperNoteDeFrais {
                 getMois().equals(that.getMois()) &&
                 getAnnee().equals(that.getAnnee()) &&
                 getEtatVariablePaieId().equals(that.getEtatVariablePaieId()) &&
-                getEmployeId().equals(that.getEmployeId()) &&
-                getDocumentDTOList().equals(that.getDocumentDTOList());
+                getEmployeId().equals(that.getEmployeId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDesignation(), getDate(), getMontant(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId(), getDocumentDTOList());
+        return Objects.hash(getId(), getDesignation(), getDate(), getMontant(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId());
     }
 
     @Override

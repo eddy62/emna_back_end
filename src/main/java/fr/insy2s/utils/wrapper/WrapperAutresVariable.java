@@ -1,7 +1,6 @@
 package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.service.dto.AutresVariableDTO;
-import fr.insy2s.service.dto.DocumentDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Wrapper AutresVariable with documentDTOList
+ * Wrapper AutresVariable with wrapperDocumentList
  *
  */
 public class WrapperAutresVariable {
@@ -25,7 +24,7 @@ public class WrapperAutresVariable {
     private Long employeId;
 
     // Documents
-    private List<DocumentDTO> documentDTOList;
+    private List<WrapperDocument> wrapperDocumentList;
 
     /**
      * Constructeur WrapperAutresVariable par défaut
@@ -39,9 +38,9 @@ public class WrapperAutresVariable {
      * Constructeur WrapperAutresVariable avec paramètres
      *
      * @param autresVariableDTO the autresVariableDTO
-     * @param documentDTOList the list of DocumentDTO
+     * @param wrapperDocumentList the list of wrapperDocument
      */
-    public WrapperAutresVariable(AutresVariableDTO autresVariableDTO, List<DocumentDTO> documentDTOList){
+    public WrapperAutresVariable(AutresVariableDTO autresVariableDTO, List<WrapperDocument> wrapperDocumentList){
 
         super();
         // AutresVariable
@@ -56,7 +55,7 @@ public class WrapperAutresVariable {
         this.employeId = autresVariableDTO.getEtatVariablePaieId();
 
         // Documents
-        this.documentDTOList = documentDTOList;
+        this.wrapperDocumentList = wrapperDocumentList;
     }
 
     // Getters / Setters
@@ -125,12 +124,12 @@ public class WrapperAutresVariable {
         this.employeId = employeId;
     }
 
-    public List<DocumentDTO> getDocumentDTOList() {
-        return documentDTOList;
+    public List<WrapperDocument> getWrapperDocumentList() {
+        return wrapperDocumentList;
     }
 
-    public void setDocumentDTOList(List<DocumentDTO> documentDTOList) {
-        this.documentDTOList = documentDTOList;
+    public void setWrapperDocumentList(List<WrapperDocument> wrapperDocumentList) {
+        this.wrapperDocumentList = wrapperDocumentList;
     }
 
     @Override
@@ -145,13 +144,12 @@ public class WrapperAutresVariable {
                 getMois().equals(that.getMois()) &&
                 getAnnee().equals(that.getAnnee()) &&
                 getEtatVariablePaieId().equals(that.getEtatVariablePaieId()) &&
-                getEmployeId().equals(that.getEmployeId()) &&
-                getDocumentDTOList().equals(that.getDocumentDTOList());
+                getEmployeId().equals(that.getEmployeId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDescription(), getDate(), getMontant(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId(), getDocumentDTOList());
+        return Objects.hash(getId(), getDescription(), getDate(), getMontant(), getMois(), getAnnee(), getEtatVariablePaieId(), getEmployeId());
     }
 
     @Override
