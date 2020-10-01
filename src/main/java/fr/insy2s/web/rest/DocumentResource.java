@@ -146,7 +146,7 @@ public class DocumentResource {
 
     @GetMapping("/getPdfFile/{path}")
     public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
-        Path completePath = Paths.get("./fichiers/" + path);
+        Path completePath = Paths.get("./fichiers/social/variablesdepaie/" + path);
         byte[] pdfContents = null;
         try {
             pdfContents = Files.readAllBytes(completePath);
