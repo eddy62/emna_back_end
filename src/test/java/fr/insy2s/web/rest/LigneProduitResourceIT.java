@@ -72,11 +72,11 @@ public class LigneProduitResourceIT {
      */
     public static LigneProduit createEntity(EntityManager em) {
         LigneProduit ligneProduit = new LigneProduit()
-            .quantite(DEFAULT_QUANTITE)
-            .nom(DEFAULT_NOM)
-            .description(DEFAULT_DESCRIPTION)
-            .tva(DEFAULT_TVA)
-            .prix(DEFAULT_PRIX);
+            .quantite(DEFAULT_QUANTITE);
+            //.nom(DEFAULT_NOM)
+            //.description(DEFAULT_DESCRIPTION)
+            //.tva(DEFAULT_TVA)
+            //.prix(DEFAULT_PRIX);
         return ligneProduit;
     }
     /**
@@ -87,11 +87,7 @@ public class LigneProduitResourceIT {
      */
     public static LigneProduit createUpdatedEntity(EntityManager em) {
         LigneProduit ligneProduit = new LigneProduit()
-            .quantite(UPDATED_QUANTITE)
-            .nom(UPDATED_NOM)
-            .description(UPDATED_DESCRIPTION)
-            .tva(UPDATED_TVA)
-            .prix(UPDATED_PRIX);
+            .quantite(UPDATED_QUANTITE);
         return ligneProduit;
     }
 
@@ -116,10 +112,6 @@ public class LigneProduitResourceIT {
         assertThat(ligneProduitList).hasSize(databaseSizeBeforeCreate + 1);
         LigneProduit testLigneProduit = ligneProduitList.get(ligneProduitList.size() - 1);
         assertThat(testLigneProduit.getQuantite()).isEqualTo(DEFAULT_QUANTITE);
-        assertThat(testLigneProduit.getNom()).isEqualTo(DEFAULT_NOM);
-        assertThat(testLigneProduit.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testLigneProduit.getTva()).isEqualTo(DEFAULT_TVA);
-        assertThat(testLigneProduit.getPrix()).isEqualTo(DEFAULT_PRIX);
     }
 
     @Test
@@ -168,7 +160,6 @@ public class LigneProduitResourceIT {
     public void checkPrixIsRequired() throws Exception {
         int databaseSizeBeforeTest = ligneProduitRepository.findAll().size();
         // set the field null
-        ligneProduit.setPrix(null);
 
         // Create the LigneProduit, which fails.
         LigneProduitDTO ligneProduitDTO = ligneProduitMapper.toDto(ligneProduit);
@@ -200,7 +191,7 @@ public class LigneProduitResourceIT {
             .andExpect(jsonPath("$.[*].tva").value(hasItem(DEFAULT_TVA.doubleValue())))
             .andExpect(jsonPath("$.[*].prix").value(hasItem(DEFAULT_PRIX.doubleValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLigneProduit() throws Exception {
@@ -239,11 +230,7 @@ public class LigneProduitResourceIT {
         // Disconnect from session so that the updates on updatedLigneProduit are not directly saved in db
         em.detach(updatedLigneProduit);
         updatedLigneProduit
-            .quantite(UPDATED_QUANTITE)
-            .nom(UPDATED_NOM)
-            .description(UPDATED_DESCRIPTION)
-            .tva(UPDATED_TVA)
-            .prix(UPDATED_PRIX);
+            .quantite(UPDATED_QUANTITE);
         LigneProduitDTO ligneProduitDTO = ligneProduitMapper.toDto(updatedLigneProduit);
 
         restLigneProduitMockMvc.perform(put("/api/ligne-produits")
@@ -256,10 +243,6 @@ public class LigneProduitResourceIT {
         assertThat(ligneProduitList).hasSize(databaseSizeBeforeUpdate);
         LigneProduit testLigneProduit = ligneProduitList.get(ligneProduitList.size() - 1);
         assertThat(testLigneProduit.getQuantite()).isEqualTo(UPDATED_QUANTITE);
-        assertThat(testLigneProduit.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testLigneProduit.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testLigneProduit.getTva()).isEqualTo(UPDATED_TVA);
-        assertThat(testLigneProduit.getPrix()).isEqualTo(UPDATED_PRIX);
     }
 
     @Test

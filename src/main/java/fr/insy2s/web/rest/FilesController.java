@@ -73,6 +73,7 @@ public class FilesController {
                     documentDTO.setNoteDeFraisId(noteDeFraisId);
                     documentDTO.setType(type);
                 } else if (isAutre) {
+
                     documentDTO.setAutresVariableId(autresVariableId);
                     documentDTO.setType(type);
                 }

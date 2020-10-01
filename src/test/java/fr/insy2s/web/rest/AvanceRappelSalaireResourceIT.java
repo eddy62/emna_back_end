@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -43,8 +44,8 @@ public class AvanceRappelSalaireResourceIT {
     private static final LocalDate DEFAULT_FIN_PERIODE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FIN_PERIODE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Double DEFAULT_MONTANT = 1D;
-    private static final Double UPDATED_MONTANT = 2D;
+    private static final BigDecimal DEFAULT_MONTANT = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_MONTANT = BigDecimal.valueOf(2D);
 
     private static final Integer DEFAULT_MOIS = 1;
     private static final Integer UPDATED_MOIS = 2;
@@ -289,7 +290,7 @@ public class AvanceRappelSalaireResourceIT {
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getAvanceRappelSalaire() throws Exception {

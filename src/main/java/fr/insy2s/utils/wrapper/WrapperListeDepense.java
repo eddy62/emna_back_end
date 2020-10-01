@@ -11,7 +11,7 @@ public class WrapperListeDepense {
 
     private LocalDate date;
 
-    private Double prix;
+    private BigDecimal prix;
 
     private String nomFournisseur;
 
@@ -41,11 +41,11 @@ public class WrapperListeDepense {
         this.date = date;
     }
 
-    public Double getPrix() {
+    public BigDecimal getPrix() {
         return prix;
     }
 
-    public void setPrix(Double prix) {
+    public void setPrix(BigDecimal prix) {
         this.prix = prix;
     }
 

@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -40,8 +41,8 @@ public class AutresVariableResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Double DEFAULT_MONTANT = 1D;
-    private static final Double UPDATED_MONTANT = 2D;
+    private static final BigDecimal DEFAULT_MONTANT = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_MONTANT = BigDecimal.valueOf(2D);
 
     private static final String DEFAULT_JUSTIFICATIF = "AAAAAAAAAA";
     private static final String UPDATED_JUSTIFICATIF = "BBBBBBBBBB";
@@ -80,7 +81,7 @@ public class AutresVariableResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .date(DEFAULT_DATE)
             .montant(DEFAULT_MONTANT)
-            .justificatif(DEFAULT_JUSTIFICATIF)
+            //.justificatif(DEFAULT_JUSTIFICATIF)
             .mois(DEFAULT_MOIS)
             .annee(DEFAULT_ANNEE);
         return autresVariable;
@@ -96,7 +97,7 @@ public class AutresVariableResourceIT {
             .description(UPDATED_DESCRIPTION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF)
+            //.justificatif(UPDATED_JUSTIFICATIF)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         return autresVariable;
@@ -125,7 +126,7 @@ public class AutresVariableResourceIT {
         assertThat(testAutresVariable.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testAutresVariable.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testAutresVariable.getMontant()).isEqualTo(DEFAULT_MONTANT);
-        assertThat(testAutresVariable.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        //assertThat(testAutresVariable.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
         assertThat(testAutresVariable.getMois()).isEqualTo(DEFAULT_MOIS);
         assertThat(testAutresVariable.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
@@ -209,7 +210,7 @@ public class AutresVariableResourceIT {
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getAutresVariable() throws Exception {
@@ -252,7 +253,7 @@ public class AutresVariableResourceIT {
             .description(UPDATED_DESCRIPTION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF)
+            //.justificatif(UPDATED_JUSTIFICATIF)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         AutresVariableDTO autresVariableDTO = autresVariableMapper.toDto(updatedAutresVariable);
@@ -269,7 +270,7 @@ public class AutresVariableResourceIT {
         assertThat(testAutresVariable.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testAutresVariable.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testAutresVariable.getMontant()).isEqualTo(UPDATED_MONTANT);
-        assertThat(testAutresVariable.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        //assertThat(testAutresVariable.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
         assertThat(testAutresVariable.getMois()).isEqualTo(UPDATED_MOIS);
         assertThat(testAutresVariable.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }

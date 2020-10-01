@@ -35,8 +35,8 @@ public class ClientFournisseurResourceIT {
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_SIREN = 1;
-    private static final Integer UPDATED_SIREN = 2;
+    private static final String DEFAULT_SIREN = "aasasa";
+    private static final String UPDATED_SIREN = "sSSXSQX";
 
     private static final String DEFAULT_TELEPHONE = "AAAAAAAAAA";
     private static final String UPDATED_TELEPHONE = "BBBBBBBBBB";
@@ -70,7 +70,7 @@ public class ClientFournisseurResourceIT {
     public static ClientFournisseur createEntity(EntityManager em) {
         ClientFournisseur clientFournisseur = new ClientFournisseur()
             .nom(DEFAULT_NOM)
-            .siren(DEFAULT_SIREN)
+            .siret(DEFAULT_SIREN)
             .telephone(DEFAULT_TELEPHONE)
             .email(DEFAULT_EMAIL);
         return clientFournisseur;
@@ -84,7 +84,7 @@ public class ClientFournisseurResourceIT {
     public static ClientFournisseur createUpdatedEntity(EntityManager em) {
         ClientFournisseur clientFournisseur = new ClientFournisseur()
             .nom(UPDATED_NOM)
-            .siren(UPDATED_SIREN)
+            .siret(UPDATED_SIREN)
             .telephone(UPDATED_TELEPHONE)
             .email(UPDATED_EMAIL);
         return clientFournisseur;
@@ -111,7 +111,7 @@ public class ClientFournisseurResourceIT {
         assertThat(clientFournisseurList).hasSize(databaseSizeBeforeCreate + 1);
         ClientFournisseur testClientFournisseur = clientFournisseurList.get(clientFournisseurList.size() - 1);
         assertThat(testClientFournisseur.getNom()).isEqualTo(DEFAULT_NOM);
-        assertThat(testClientFournisseur.getSiren()).isEqualTo(DEFAULT_SIREN);
+        assertThat(testClientFournisseur.getSiret()).isEqualTo(DEFAULT_SIREN);
         assertThat(testClientFournisseur.getTelephone()).isEqualTo(DEFAULT_TELEPHONE);
         assertThat(testClientFournisseur.getEmail()).isEqualTo(DEFAULT_EMAIL);
     }
@@ -153,7 +153,7 @@ public class ClientFournisseurResourceIT {
             .andExpect(jsonPath("$.[*].telephone").value(hasItem(DEFAULT_TELEPHONE)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
     }
-    
+
     @Test
     @Transactional
     public void getClientFournisseur() throws Exception {
@@ -192,7 +192,7 @@ public class ClientFournisseurResourceIT {
         em.detach(updatedClientFournisseur);
         updatedClientFournisseur
             .nom(UPDATED_NOM)
-            .siren(UPDATED_SIREN)
+            .siret(UPDATED_SIREN)
             .telephone(UPDATED_TELEPHONE)
             .email(UPDATED_EMAIL);
         ClientFournisseurDTO clientFournisseurDTO = clientFournisseurMapper.toDto(updatedClientFournisseur);
@@ -207,7 +207,7 @@ public class ClientFournisseurResourceIT {
         assertThat(clientFournisseurList).hasSize(databaseSizeBeforeUpdate);
         ClientFournisseur testClientFournisseur = clientFournisseurList.get(clientFournisseurList.size() - 1);
         assertThat(testClientFournisseur.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testClientFournisseur.getSiren()).isEqualTo(UPDATED_SIREN);
+        assertThat(testClientFournisseur.getSiret()).isEqualTo(UPDATED_SIREN);
         assertThat(testClientFournisseur.getTelephone()).isEqualTo(UPDATED_TELEPHONE);
         assertThat(testClientFournisseur.getEmail()).isEqualTo(UPDATED_EMAIL);
     }

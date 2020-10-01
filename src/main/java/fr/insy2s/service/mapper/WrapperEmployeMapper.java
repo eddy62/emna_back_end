@@ -10,6 +10,8 @@ import fr.insy2s.service.dto.StatutEmployeDTO;
 import fr.insy2s.service.dto.TypeContratDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 
+import java.math.BigDecimal;
+
 /**
  * Mapper for the entity Employe, Adresse, StatutEmploye, Societe, InfoEntreprise and the DTO WrapperEmploye.
  *
@@ -74,6 +76,7 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setInfoEntrepriseId(infoEntreprise.getId());
         wrapperEmploye.setRaisonSociale(infoEntreprise.getRaisonSociale());
 
+
         return wrapperEmploye;
     }
 
@@ -116,6 +119,7 @@ public class WrapperEmployeMapper {
         employeDTO.setAdresseId(wrapperEmploye.getAdresseId());
         employeDTO.setStatutEmployeId(wrapperEmploye.getStatutEmployeId());
         employeDTO.setSocieteId(wrapperEmploye.getSocieteId());
+
         employeDTO.setPeriodeEssai(wrapperEmploye.getPeriodeEssai());
 
         return employeDTO;
@@ -188,8 +192,8 @@ public class WrapperEmployeMapper {
 
         infoEntrepriseDTO.setId(wrapperEmploye.getInfoEntrepriseId());
         infoEntrepriseDTO.setRaisonSociale(wrapperEmploye.getRaisonSociale());
-
         return infoEntrepriseDTO;
-
     }
+
+
 }

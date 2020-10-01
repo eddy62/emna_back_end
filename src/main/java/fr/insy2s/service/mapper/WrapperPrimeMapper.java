@@ -5,6 +5,8 @@ import fr.insy2s.service.dto.TypePrimeDTO;
 import fr.insy2s.utils.wrapper.WrapperPrime;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * Mapper for the entity Prime,  and the DTO WrapperPrime.
  *

@@ -1,5 +1,6 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Contrat;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
 import fr.insy2s.service.dto.ContratDTO;
@@ -50,4 +51,9 @@ public interface ContratService {
      * @return the entity.
      */
     List<IContratAllInfoProjection> getContratAllInfos(Long id);
+
+
+    List<IContratEmployerProjection> getAllContratEmployerById(Long id);
+
+    Contrat getActiveContratEmployee(Long id);
 }

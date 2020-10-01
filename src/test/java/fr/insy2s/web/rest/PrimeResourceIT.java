@@ -18,6 +18,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,8 +37,8 @@ public class PrimeResourceIT {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
-    private static final Double DEFAULT_MONTANT = 1D;
-    private static final Double UPDATED_MONTANT = 2D;
+    private static final BigDecimal DEFAULT_MONTANT = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_MONTANT = BigDecimal.valueOf(2D);
 
     private static final Integer DEFAULT_MOIS = 1;
     private static final Integer UPDATED_MOIS = 2;

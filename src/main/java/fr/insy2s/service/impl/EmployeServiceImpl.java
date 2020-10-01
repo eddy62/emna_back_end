@@ -6,6 +6,7 @@ import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.*;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.EmployeMapper;
+import fr.insy2s.service.mapper.TypeContratMapper;
 import fr.insy2s.service.mapper.WrapperEmployeMapper;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class EmployeServiceImpl implements EmployeService {
     private final DocumentService                 documentService;
     private final DpaeService                     dpaeService;
     private final ContratService                  contratService;
+    private final TypeContratMapper typeContratMapper;
 
     /* Variables de Paie */
     private final AbsenceService                  absenceService;
@@ -54,7 +56,7 @@ public class EmployeServiceImpl implements EmployeService {
     private final NoteDeFraisService              noteDeFraisService;
     private final PrimeService                    primeService;
 
-    public EmployeServiceImpl(EmployeRepository employeRepository,
+    public EmployeServiceImpl(EmployeRepository employeRepository,TypeContratMapper typeContratMapper,
                               EmployeMapper employeMapper,
                               WrapperEmployeMapper wrapperEmployeMapper,
                               AdresseService adresseService,
@@ -85,7 +87,7 @@ public class EmployeServiceImpl implements EmployeService {
         this.dpaeService = dpaeService;
         this.contratService = contratService;
         this.absenceService = absenceService;
-
+        this.typeContratMapper =typeContratMapper;
         /* Variables de Paie */
         this.autresVariableService = autresVariableService;
         this.avanceRappelSalaireService = avanceRappelSalaireService;
@@ -153,11 +155,15 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     public Optional<WrapperEmploye> findById(final Long id) {
         log.debug("Request to get WrapperEmploye : {}", id);
+        Contrat contrat= contratService.getActiveContratEmployee(id);
         final EmployeDTO employeDTO = findOne(id).get();
         final AdresseDTO adresseDTO = adresseService.findOne(employeDTO.getAdresseId()).get();
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
         final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+
+        final TypeContratDTO typeContratDTO = typeContratMapper.toDto(contrat.getTypeContrat());
+
         final Optional<WrapperEmploye> wrapperEmploye = Optional
                         .of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();

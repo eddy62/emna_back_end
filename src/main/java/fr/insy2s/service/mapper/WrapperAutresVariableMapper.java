@@ -4,6 +4,8 @@ import fr.insy2s.service.dto.AutresVariableDTO;
 import fr.insy2s.utils.wrapper.WrapperAutresVariable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * Mapper for the AutresVariableDTO to WrapperAutresVariable,  WrapperAutresVariable to AutresVariableDTO.
  *
@@ -24,6 +26,7 @@ public class WrapperAutresVariableMapper {
         wrapperAutresVariable.setId(autresVariableDTO.getId());
         wrapperAutresVariable.setDate(autresVariableDTO.getDate());
         wrapperAutresVariable.setDescription(autresVariableDTO.getDescription());
+
         wrapperAutresVariable.setMontant(autresVariableDTO.getMontant());
         wrapperAutresVariable.setAnnee(autresVariableDTO.getAnnee());
         wrapperAutresVariable.setMois(autresVariableDTO.getMois());
@@ -47,7 +50,9 @@ public class WrapperAutresVariableMapper {
         autresVariableDTO.setId(wrapperAutresVariable.getId());
         autresVariableDTO.setDate(wrapperAutresVariable.getDate());
         autresVariableDTO.setDescription(wrapperAutresVariable.getDescription());
+
         autresVariableDTO.setMontant(wrapperAutresVariable.getMontant());
+
         autresVariableDTO.setAnnee(wrapperAutresVariable.getAnnee());
         autresVariableDTO.setMois(wrapperAutresVariable.getMois());
         autresVariableDTO.setEmployeId(wrapperAutresVariable.getEmployeId());

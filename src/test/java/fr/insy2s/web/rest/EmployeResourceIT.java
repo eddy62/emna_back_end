@@ -10,6 +10,7 @@ import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.mapper.EmployeMapper;
 
+import liquibase.pro.packaged.B;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -79,14 +81,14 @@ public class EmployeResourceIT {
     private static final String DEFAULT_FAX = "AAAAAAAAAA";
     private static final String UPDATED_FAX = "BBBBBBBBBB";
 
-    private static final Double DEFAULT_SALAIRE_HORAIRE = 1D;
-    private static final Double UPDATED_SALAIRE_HORAIRE = 2D;
+    private static final BigDecimal DEFAULT_SALAIRE_HORAIRE = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_SALAIRE_HORAIRE = BigDecimal.valueOf(2D);
 
-    private static final Double DEFAULT_SALAIRE_BRUT_MENSUELLE = 1D;
-    private static final Double UPDATED_SALAIRE_BRUT_MENSUELLE = 2D;
+    private static final BigDecimal DEFAULT_SALAIRE_BRUT_MENSUELLE = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_SALAIRE_BRUT_MENSUELLE = BigDecimal.valueOf(2D);
 
-    private static final Double DEFAULT_HEURES_MENSUELLE = 1D;
-    private static final Double UPDATED_HEURES_MENSUELLE = 2D;
+    private static final BigDecimal DEFAULT_HEURES_MENSUELLE = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_HEURES_MENSUELLE = BigDecimal.valueOf(2D);
 
     private static final String DEFAULT_CATEGORIE = "AAAAAAAAAA";
     private static final String UPDATED_CATEGORIE = "BBBBBBBBBB";
@@ -187,7 +189,7 @@ public class EmployeResourceIT {
         } else {
             typeContrat = TestUtil.findAll(em, TypeContrat.class).get(0);
         }
-        employe.setTypeContrat(typeContrat);
+        //employe.setTypeContrat(typeContrat);
         return employe;
     }
     /**
@@ -251,7 +253,7 @@ public class EmployeResourceIT {
         } else {
             typeContrat = TestUtil.findAll(em, TypeContrat.class).get(0);
         }
-        employe.setTypeContrat(typeContrat);
+        //employe.setTypeContrat(typeContrat);
         return employe;
     }
 
@@ -778,7 +780,7 @@ public class EmployeResourceIT {
             .andExpect(jsonPath("$.[*].situationFamiliale").value(hasItem(DEFAULT_SITUATION_FAMILIALE)))
             .andExpect(jsonPath("$.[*].enfantsACharge").value(hasItem(DEFAULT_ENFANTS_A_CHARGE)));
     }
-    
+
     @Test
     @Transactional
     public void getEmploye() throws Exception {

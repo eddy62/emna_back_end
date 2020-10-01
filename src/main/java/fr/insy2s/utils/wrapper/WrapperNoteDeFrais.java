@@ -18,6 +18,7 @@ public class WrapperNoteDeFrais {
     private Long id;
     private String designation;
     private LocalDate date;
+
     private BigDecimal montant;
     private Integer mois;
     private Integer annee;
@@ -48,6 +49,7 @@ public class WrapperNoteDeFrais {
         this.id = noteDeFraisDTO.getId();
         this.designation = noteDeFraisDTO.getDesignation();
         this.date = noteDeFraisDTO.getDate();
+
         this.montant = noteDeFraisDTO.getMontant();
         this.mois = noteDeFraisDTO.getMois();
         this.annee = noteDeFraisDTO.getAnnee();

@@ -48,6 +48,7 @@ public class WrapperAutresVariable {
         this.id = autresVariableDTO.getId();
         this.description = autresVariableDTO.getDescription();
         this.date = autresVariableDTO.getDate();
+
         this.montant = autresVariableDTO.getMontant();
         this.mois = autresVariableDTO.getMois();
         this.annee = autresVariableDTO.getAnnee();

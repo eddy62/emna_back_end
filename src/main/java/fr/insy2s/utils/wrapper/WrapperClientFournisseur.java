@@ -99,7 +99,8 @@ public class WrapperClientFournisseur {
         this.nom = nom;
     }
 
-    public void setSiret(String siren) {
+    public void setSiret(String siret) {
+
         this.siret = siret;
     }
 

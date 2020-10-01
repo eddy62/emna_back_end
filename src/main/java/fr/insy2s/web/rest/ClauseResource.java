@@ -1,4 +1,4 @@
-/*
+
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.ClauseService;
@@ -19,10 +19,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-*/
+
 /**
  * REST controller for managing {@link fr.insy2s.domain.Clause}.
- *//*
+ */
 
 @RestController
 @RequestMapping("/api")
@@ -41,14 +41,14 @@ public class ClauseResource {
         this.clauseService = clauseService;
     }
 
-    */
+
 /**
      * {@code POST  /clauses} : Create a new clause.
      *
      * @param clauseDTO the clauseDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new clauseDTO, or with status {@code 400 (Bad Request)} if the clause has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
-     *//*
+     */
 
     @PostMapping("/clauses")
     public ResponseEntity<ClauseDTO> createClause(@Valid @RequestBody ClauseDTO clauseDTO) throws URISyntaxException {
@@ -62,7 +62,7 @@ public class ClauseResource {
             .body(result);
     }
 
-    */
+
 /**
      * {@code PUT  /clauses} : Updates an existing clause.
      *
@@ -71,7 +71,7 @@ public class ClauseResource {
      * or with status {@code 400 (Bad Request)} if the clauseDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the clauseDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
-     *//*
+     */
 
     @PutMapping("/clauses")
     public ResponseEntity<ClauseDTO> updateClause(@Valid @RequestBody ClauseDTO clauseDTO) throws URISyntaxException {
@@ -85,13 +85,13 @@ public class ClauseResource {
             .body(result);
     }
 
-    */
+
 /**
      * {@code GET  /clauses} : get all the clauses.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clauses in body.
-     *//*
+     */
 
     @GetMapping("/clauses")
     public List<ClauseDTO> getAllClauses(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
@@ -99,13 +99,13 @@ public class ClauseResource {
         return clauseService.findAll();
     }
 
-    */
+
 /**
      * {@code GET  /clauses/:id} : get the "id" clause.
      *
      * @param id the id of the clauseDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the clauseDTO, or with status {@code 404 (Not Found)}.
-     *//*
+     */
 
     @GetMapping("/clauses/{id}")
     public ResponseEntity<ClauseDTO> getClause(@PathVariable Long id) {
@@ -114,13 +114,13 @@ public class ClauseResource {
         return ResponseUtil.wrapOrNotFound(clauseDTO);
     }
 
-    */
+
 /**
      * {@code DELETE  /clauses/:id} : delete the "id" clause.
      *
      * @param id the id of the clauseDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     *//*
+     */
 
     @DeleteMapping("/clauses/{id}")
     public ResponseEntity<Void> deleteClause(@PathVariable Long id) {
@@ -129,13 +129,13 @@ public class ClauseResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-    */
+
 /**
      * {@code GET  /clauses/society/:id} : get all the clauses by society id.
      *
      * @param idSociete the id of the society.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clauses in body.
-     *//*
+     */
 
     @GetMapping("/clauses/society/{idSociete}")
     public List<ClauseDTO> getAllClausesBySocietyId(@PathVariable Long idSociete) {
@@ -143,4 +143,4 @@ public class ClauseResource {
         return clauseService.findAllClausesBySocietyId(idSociete);
     }
 }
-*/
+

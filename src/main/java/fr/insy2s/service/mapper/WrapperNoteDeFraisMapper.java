@@ -4,6 +4,8 @@ import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.utils.wrapper.WrapperNoteDeFrais;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * Mapper for the entity NoteDeFrais,  and the DTO WrapperNoteDeFrais.
  *
@@ -24,6 +26,7 @@ public class WrapperNoteDeFraisMapper {
         wrapperNoteDeFrais.setId(noteDeFraisDTO.getId());
         wrapperNoteDeFrais.setDate(noteDeFraisDTO.getDate());
         wrapperNoteDeFrais.setDesignation(noteDeFraisDTO.getDesignation());
+
         wrapperNoteDeFrais.setMontant(noteDeFraisDTO.getMontant());
         wrapperNoteDeFrais.setAnnee(noteDeFraisDTO.getAnnee());
         wrapperNoteDeFrais.setMois(noteDeFraisDTO.getMois());

@@ -1,11 +1,8 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.domain.Facture;
-import fr.insy2s.domain.Operation;
-import fr.insy2s.domain.Societe;
+import fr.insy2s.domain.*;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.ReleveService;
-import fr.insy2s.domain.Releve;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
 import fr.insy2s.utils.DateUtil;
@@ -142,13 +139,29 @@ public class ReleveServiceImpl implements ReleveService {
             int i = 0;
             do {
                 Long idOperation = operations.get(i).getId();
-                BigDecimal sommeFacture = factureRepository.balanceOfInvoicesByTransaction(idOperation).orElse(new BigDecimal(0));
-                isSoldeEquals = operations.get(i).getSolde().equals(sommeFacture);
+                List<Facture> factureListByOperation= factureRepository.balanceOfInvoicesByTransaction(idOperation);
+                BigDecimal sommeFacture=BigDecimal.valueOf(0D);
+                if(!factureListByOperation.isEmpty()) {
+                    for (Facture facture : factureListByOperation) {
+                        sommeFacture.add(prixTTCoFFacture(facture));
+                    }
+                }
+                double sommeF = sommeFacture.doubleValue();
+                isSoldeEquals = Double.compare(operations.get(i).getSolde().doubleValue(), sommeF) == 0;
+
                 i++;
             }
             while (isSoldeEquals && i < operations.size());
         }
         return isSoldeEquals;
+    }
+
+    private BigDecimal prixTTCoFFacture(Facture facture) {
+        BigDecimal sommeFacture=BigDecimal.valueOf(0D);
+        for(LigneProduit ligne :facture.getListeLigneProduits()){
+            sommeFacture.add((BigDecimal.valueOf(ligne.getQuantite()).multiply(ligne.getProduit().getPrix())).add((BigDecimal.valueOf(ligne.getQuantite()).multiply(ligne.getProduit().getPrix()).multiply(ligne.getProduit().getTva().divide(BigDecimal.valueOf(100D))))));
+        }
+        return sommeFacture;
     }
 
     @Override
