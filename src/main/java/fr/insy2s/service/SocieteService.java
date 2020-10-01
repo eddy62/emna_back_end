@@ -1,9 +1,12 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Employe;
 import fr.insy2s.service.dto.ComptableInfoEntrepriseAdresseUserDTO;
+import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.SocieteInfoEntrepriseAdresseUserDTO;
 import fr.insy2s.utils.wrapper.WrapperComptable;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.utils.wrapper.WrapperSociete;
 
 import java.util.List;
@@ -58,4 +61,11 @@ public interface SocieteService {
 
     WrapperSociete creerOuModifierSociete(SocieteInfoEntrepriseAdresseUserDTO societeInfoEntrepriseAdresseUserDTO, String callingMethode);
     WrapperSociete getSociete(Long id);
+
+    /**
+     * Get all the WrapperEmploye by society
+     *
+     * @return the list of Employe
+     */
+    List<EmployeDTO> findAllEmployeBySociete(Long societeId);
 }
