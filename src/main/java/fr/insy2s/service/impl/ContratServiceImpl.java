@@ -71,9 +71,4 @@ public class ContratServiceImpl implements ContratService {
     public List<IContratAllInfoProjection> getContratAllInfos(Long id) {
         return this.contratRepository.getContratAllInfo(id);
     }
-
-    @Override
-    public List<IContratEmployerProjection> getAllContratEmployerById(Long id) {
-        return this.contratRepository.getAllContratEmployerByEmployeId(id);
-    }
 }

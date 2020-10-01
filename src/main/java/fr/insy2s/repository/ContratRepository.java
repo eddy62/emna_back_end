@@ -40,9 +40,4 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
             "INNER JOIN SOCIETE s ON  s.ID = a.SOCIETE_ID INNER JOIN ADRESSE ad2 ON  s.ADRESSE_ID = ad2.ID " +
             "INNER JOIN INFO_ENTREPRISE ie ON  ie.ID = s.INFO_ENTREPRISE_ID WHERE c.EMPLOYE_ID =:id")
     List<IContratAllInfoProjection> getContratAllInfo(@Param("id") Long id);
-
-    @Query(nativeQuery = true, value = "SELECT e.ID AS employerId, e.NOM_USAGE AS employerNom, e.PRENOM AS employerPrenom," +
-        " c.TITRE AS contratTitre, c.SIGNE AS contratSigner , c.ARCHIVE AS contratArchiver " +
-        "FROM EMPLOYE e INNER JOIN CONTRAT c ON c.EMPLOYE_ID = e.ID WHERE e.SOCIETE_ID =:id")
-    List<IContratEmployerProjection> getAllContratEmployerByEmployeId(@Param("id") Long id);
 }
