@@ -96,7 +96,7 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         List<AutresVariable> autresVariableList = autresVariableRepository.findAllAutresVariablesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAutresVariable> wrapperAutresVariableList = new ArrayList<>();
         for (AutresVariable autresVariable : autresVariableList) {
-            List<Document> documentList = documentRepository.findAllByAutresVariablesId(autresVariable.getId());
+            List<Document> documentList = documentRepository.findAllByAutresVariableId(autresVariable.getId());
             List<DocumentDTO> documentDTOList = new ArrayList<>();
             for (Document document : documentList){
                 documentDTOList.add(documentMapper.toDto(document));

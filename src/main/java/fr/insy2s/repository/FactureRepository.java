@@ -26,9 +26,9 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
             "and f.operation is null")
     List<Facture> findAllInvoicesByStatement(@Param("idReleve") Long idReleve);
 
-    @Query("select sum(f.prixTTC) from Facture f " +
+    @Query("select f from Facture f " +
         "where f.operation.id =:idOperation")
-    Optional<BigDecimal> balanceOfInvoicesByTransaction(@Param("idOperation") Long idOperation);
+    List<Facture> balanceOfInvoicesByTransaction(@Param("idOperation") Long idOperation);
 
     @Modifying
     @Query("update Facture f "+

@@ -95,9 +95,6 @@ public class FactureResourceIT {
             .message(DEFAULT_MESSAGE)
             .date(DEFAULT_DATE)
             .dateEcheance(DEFAULT_DATE_ECHEANCE)
-            .prixHT(DEFAULT_PRIX_HT)
-            .prixTTC(DEFAULT_PRIX_TTC)
-            .tva(DEFAULT_TVA)
             .moyenDePaiement(DEFAULT_MOYEN_DE_PAIEMENT);
         return facture;
     }
@@ -115,9 +112,6 @@ public class FactureResourceIT {
             .message(UPDATED_MESSAGE)
             .date(UPDATED_DATE)
             .dateEcheance(UPDATED_DATE_ECHEANCE)
-            .prixHT(UPDATED_PRIX_HT)
-            .prixTTC(UPDATED_PRIX_TTC)
-            .tva(UPDATED_TVA)
             .moyenDePaiement(UPDATED_MOYEN_DE_PAIEMENT);
         return facture;
     }
@@ -148,9 +142,6 @@ public class FactureResourceIT {
         assertThat(testFacture.getMessage()).isEqualTo(DEFAULT_MESSAGE);
         assertThat(testFacture.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testFacture.getDateEcheance()).isEqualTo(DEFAULT_DATE_ECHEANCE);
-        assertThat(testFacture.getPrixHT()).isEqualTo(DEFAULT_PRIX_HT);
-        assertThat(testFacture.getPrixTTC()).isEqualTo(DEFAULT_PRIX_TTC);
-        assertThat(testFacture.getTva()).isEqualTo(DEFAULT_TVA);
         assertThat(testFacture.getMoyenDePaiement()).isEqualTo(DEFAULT_MOYEN_DE_PAIEMENT);
     }
 
@@ -197,7 +188,7 @@ public class FactureResourceIT {
             .andExpect(jsonPath("$.[*].tva").value(hasItem(DEFAULT_TVA.doubleValue())))
             .andExpect(jsonPath("$.[*].moyenDePaiement").value(hasItem(DEFAULT_MOYEN_DE_PAIEMENT)));
     }
-    
+
     @Test
     @Transactional
     public void getFacture() throws Exception {
@@ -247,9 +238,6 @@ public class FactureResourceIT {
             .message(UPDATED_MESSAGE)
             .date(UPDATED_DATE)
             .dateEcheance(UPDATED_DATE_ECHEANCE)
-            .prixHT(UPDATED_PRIX_HT)
-            .prixTTC(UPDATED_PRIX_TTC)
-            .tva(UPDATED_TVA)
             .moyenDePaiement(UPDATED_MOYEN_DE_PAIEMENT);
         FactureDTO factureDTO = factureMapper.toDto(updatedFacture);
 
@@ -268,9 +256,6 @@ public class FactureResourceIT {
         assertThat(testFacture.getMessage()).isEqualTo(UPDATED_MESSAGE);
         assertThat(testFacture.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testFacture.getDateEcheance()).isEqualTo(UPDATED_DATE_ECHEANCE);
-        assertThat(testFacture.getPrixHT()).isEqualTo(UPDATED_PRIX_HT);
-        assertThat(testFacture.getPrixTTC()).isEqualTo(UPDATED_PRIX_TTC);
-        assertThat(testFacture.getTva()).isEqualTo(UPDATED_TVA);
         assertThat(testFacture.getMoyenDePaiement()).isEqualTo(UPDATED_MOYEN_DE_PAIEMENT);
     }
 

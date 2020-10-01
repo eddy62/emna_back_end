@@ -21,4 +21,7 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
 
     @Query(nativeQuery = true, value = "SELECT e.ID AS employerId, e.NOM_USAGE AS employerNom, e.PRENOM AS employerPrenom, c.TITRE AS contratTitre, c.SIGNE AS contratSigner , c.ARCHIVE AS contratArchiver FROM EMPLOYE e INNER JOIN CONTRAT c ON c.EMPLOYE_ID = e.ID WHERE e.SOCIETE_ID =:id")
     List<IContratEmployerProjection> getAllContratEmployerByEmployeId(@Param("id") Long id);
+
+    @Query("from Contrat c where c.employe.id=:idEmployee and c.archive=false")
+    Contrat getActiveContratEmployee(@Param("idEmployee")Long id);
 }

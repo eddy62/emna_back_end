@@ -69,8 +69,8 @@ public class DpaeResourceIT {
     public static Dpae createEntity(EntityManager em) {
         Dpae dpae = new Dpae()
             .lieu(DEFAULT_LIEU)
-            .date(DEFAULT_DATE)
-            .lienDocument(DEFAULT_LIEN_DOCUMENT);
+            .date(DEFAULT_DATE);
+            //.lienDocument(DEFAULT_LIEN_DOCUMENT);
         return dpae;
     }
     /**
@@ -82,8 +82,8 @@ public class DpaeResourceIT {
     public static Dpae createUpdatedEntity(EntityManager em) {
         Dpae dpae = new Dpae()
             .lieu(UPDATED_LIEU)
-            .date(UPDATED_DATE)
-            .lienDocument(UPDATED_LIEN_DOCUMENT);
+            .date(UPDATED_DATE);
+            //.lienDocument(UPDATED_LIEN_DOCUMENT);
         return dpae;
     }
 
@@ -109,7 +109,7 @@ public class DpaeResourceIT {
         Dpae testDpae = dpaeList.get(dpaeList.size() - 1);
         assertThat(testDpae.getLieu()).isEqualTo(DEFAULT_LIEU);
         assertThat(testDpae.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testDpae.getLienDocument()).isEqualTo(DEFAULT_LIEN_DOCUMENT);
+
     }
 
     @Test
@@ -178,7 +178,6 @@ public class DpaeResourceIT {
     public void checkLienDocumentIsRequired() throws Exception {
         int databaseSizeBeforeTest = dpaeRepository.findAll().size();
         // set the field null
-        dpae.setLienDocument(null);
 
         // Create the Dpae, which fails.
         DpaeDTO dpaeDTO = dpaeMapper.toDto(dpae);
@@ -208,7 +207,7 @@ public class DpaeResourceIT {
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].lienDocument").value(hasItem(DEFAULT_LIEN_DOCUMENT)));
     }
-    
+
     @Test
     @Transactional
     public void getDpae() throws Exception {
@@ -246,8 +245,7 @@ public class DpaeResourceIT {
         em.detach(updatedDpae);
         updatedDpae
             .lieu(UPDATED_LIEU)
-            .date(UPDATED_DATE)
-            .lienDocument(UPDATED_LIEN_DOCUMENT);
+            .date(UPDATED_DATE);
         DpaeDTO dpaeDTO = dpaeMapper.toDto(updatedDpae);
 
         restDpaeMockMvc.perform(put("/api/dpaes")
@@ -261,7 +259,6 @@ public class DpaeResourceIT {
         Dpae testDpae = dpaeList.get(dpaeList.size() - 1);
         assertThat(testDpae.getLieu()).isEqualTo(UPDATED_LIEU);
         assertThat(testDpae.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testDpae.getLienDocument()).isEqualTo(UPDATED_LIEN_DOCUMENT);
     }
 
     @Test

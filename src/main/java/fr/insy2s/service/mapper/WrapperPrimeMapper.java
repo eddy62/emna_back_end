@@ -5,6 +5,8 @@ import fr.insy2s.service.dto.TypePrimeDTO;
 import fr.insy2s.utils.wrapper.WrapperPrime;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * Mapper for the entity Prime,  and the DTO WrapperPrime.
  *
@@ -24,7 +26,7 @@ public class WrapperPrimeMapper {
         final WrapperPrime wrapperPrime = new WrapperPrime();
         // Prime
         wrapperPrime.setId(primeDTO.getId());
-        wrapperPrime.setMontant(primeDTO.getMontant());
+        wrapperPrime.setMontant(primeDTO.getMontant().doubleValue());
         wrapperPrime.setAnnee(primeDTO.getAnnee());
         wrapperPrime.setMois(primeDTO.getMois());
         wrapperPrime.setEmployeId(primeDTO.getEmployeId());
@@ -49,7 +51,7 @@ public class WrapperPrimeMapper {
         PrimeDTO primeDTO = new PrimeDTO();
 
         primeDTO.setId(wrapperPrime.getId());
-        primeDTO.setMontant(wrapperPrime.getMontant());
+        primeDTO.setMontant(BigDecimal.valueOf(wrapperPrime.getMontant()));
         primeDTO.setAnnee(wrapperPrime.getAnnee());
         primeDTO.setMois(wrapperPrime.getMois());
         primeDTO.setEmployeId(wrapperPrime.getEmployeId());

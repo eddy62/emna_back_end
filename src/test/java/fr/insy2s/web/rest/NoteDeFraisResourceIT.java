@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -40,8 +41,8 @@ public class NoteDeFraisResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Double DEFAULT_MONTANT = 1D;
-    private static final Double UPDATED_MONTANT = 2D;
+    private static final BigDecimal DEFAULT_MONTANT = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_MONTANT = BigDecimal.valueOf(2D);
 
     private static final String DEFAULT_JUSTIFICATIF = "AAAAAAAAAA";
     private static final String UPDATED_JUSTIFICATIF = "BBBBBBBBBB";
@@ -80,7 +81,7 @@ public class NoteDeFraisResourceIT {
             .designation(DEFAULT_DESIGNATION)
             .date(DEFAULT_DATE)
             .montant(DEFAULT_MONTANT)
-            .justificatif(DEFAULT_JUSTIFICATIF)
+            //.justificatif(DEFAULT_JUSTIFICATIF)
             .mois(DEFAULT_MOIS)
             .annee(DEFAULT_ANNEE);
         return noteDeFrais;
@@ -96,7 +97,7 @@ public class NoteDeFraisResourceIT {
             .designation(UPDATED_DESIGNATION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF)
+            //.justificatif(UPDATED_JUSTIFICATIF)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         return noteDeFrais;
@@ -125,7 +126,7 @@ public class NoteDeFraisResourceIT {
         assertThat(testNoteDeFrais.getDesignation()).isEqualTo(DEFAULT_DESIGNATION);
         assertThat(testNoteDeFrais.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testNoteDeFrais.getMontant()).isEqualTo(DEFAULT_MONTANT);
-        assertThat(testNoteDeFrais.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        //assertThat(testNoteDeFrais.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
         assertThat(testNoteDeFrais.getMois()).isEqualTo(DEFAULT_MOIS);
         assertThat(testNoteDeFrais.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
@@ -269,7 +270,7 @@ public class NoteDeFraisResourceIT {
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getNoteDeFrais() throws Exception {
@@ -312,7 +313,7 @@ public class NoteDeFraisResourceIT {
             .designation(UPDATED_DESIGNATION)
             .date(UPDATED_DATE)
             .montant(UPDATED_MONTANT)
-            .justificatif(UPDATED_JUSTIFICATIF)
+            //.justificatif(UPDATED_JUSTIFICATIF)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         NoteDeFraisDTO noteDeFraisDTO = noteDeFraisMapper.toDto(updatedNoteDeFrais);
@@ -329,7 +330,7 @@ public class NoteDeFraisResourceIT {
         assertThat(testNoteDeFrais.getDesignation()).isEqualTo(UPDATED_DESIGNATION);
         assertThat(testNoteDeFrais.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testNoteDeFrais.getMontant()).isEqualTo(UPDATED_MONTANT);
-        assertThat(testNoteDeFrais.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        //assertThat(testNoteDeFrais.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
         assertThat(testNoteDeFrais.getMois()).isEqualTo(UPDATED_MOIS);
         assertThat(testNoteDeFrais.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }

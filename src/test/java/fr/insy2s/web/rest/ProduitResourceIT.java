@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,14 +36,14 @@ public class ProduitResourceIT {
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_REFERENCE = 1;
-    private static final Integer UPDATED_REFERENCE = 2;
+    private static final String DEFAULT_REFERENCE = "1";
+    private static final String UPDATED_REFERENCE = "2";
 
-    private static final Float DEFAULT_TVA = 1F;
-    private static final Float UPDATED_TVA = 2F;
+    private static final BigDecimal DEFAULT_TVA = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_TVA = BigDecimal.valueOf(2D);
 
-    private static final Double DEFAULT_PRIX = 1D;
-    private static final Double UPDATED_PRIX = 2D;
+    private static final BigDecimal DEFAULT_PRIX = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_PRIX = BigDecimal.valueOf(2D);
 
     private static final String DEFAULT_UNITE = "AAAAAAAAAA";
     private static final String UPDATED_UNITE = "BBBBBBBBBB";
@@ -167,7 +168,7 @@ public class ProduitResourceIT {
             .andExpect(jsonPath("$.[*].unite").value(hasItem(DEFAULT_UNITE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
-    
+
     @Test
     @Transactional
     public void getProduit() throws Exception {

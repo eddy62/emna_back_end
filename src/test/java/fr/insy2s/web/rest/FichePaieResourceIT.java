@@ -76,7 +76,6 @@ public class FichePaieResourceIT {
         FichePaie fichePaie = new FichePaie()
             .debutPeriode(DEFAULT_DEBUT_PERIODE)
             .finPeriode(DEFAULT_FIN_PERIODE)
-            .lienDocument(DEFAULT_LIEN_DOCUMENT)
             .mois(DEFAULT_MOIS)
             .annee(DEFAULT_ANNEE);
         return fichePaie;
@@ -91,7 +90,6 @@ public class FichePaieResourceIT {
         FichePaie fichePaie = new FichePaie()
             .debutPeriode(UPDATED_DEBUT_PERIODE)
             .finPeriode(UPDATED_FIN_PERIODE)
-            .lienDocument(UPDATED_LIEN_DOCUMENT)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         return fichePaie;
@@ -119,7 +117,6 @@ public class FichePaieResourceIT {
         FichePaie testFichePaie = fichePaieList.get(fichePaieList.size() - 1);
         assertThat(testFichePaie.getDebutPeriode()).isEqualTo(DEFAULT_DEBUT_PERIODE);
         assertThat(testFichePaie.getFinPeriode()).isEqualTo(DEFAULT_FIN_PERIODE);
-        assertThat(testFichePaie.getLienDocument()).isEqualTo(DEFAULT_LIEN_DOCUMENT);
         assertThat(testFichePaie.getMois()).isEqualTo(DEFAULT_MOIS);
         assertThat(testFichePaie.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
@@ -190,7 +187,6 @@ public class FichePaieResourceIT {
     public void checkLienDocumentIsRequired() throws Exception {
         int databaseSizeBeforeTest = fichePaieRepository.findAll().size();
         // set the field null
-        fichePaie.setLienDocument(null);
 
         // Create the FichePaie, which fails.
         FichePaieDTO fichePaieDTO = fichePaieMapper.toDto(fichePaie);
@@ -262,7 +258,7 @@ public class FichePaieResourceIT {
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getFichePaie() throws Exception {
@@ -303,7 +299,6 @@ public class FichePaieResourceIT {
         updatedFichePaie
             .debutPeriode(UPDATED_DEBUT_PERIODE)
             .finPeriode(UPDATED_FIN_PERIODE)
-            .lienDocument(UPDATED_LIEN_DOCUMENT)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         FichePaieDTO fichePaieDTO = fichePaieMapper.toDto(updatedFichePaie);
@@ -319,7 +314,6 @@ public class FichePaieResourceIT {
         FichePaie testFichePaie = fichePaieList.get(fichePaieList.size() - 1);
         assertThat(testFichePaie.getDebutPeriode()).isEqualTo(UPDATED_DEBUT_PERIODE);
         assertThat(testFichePaie.getFinPeriode()).isEqualTo(UPDATED_FIN_PERIODE);
-        assertThat(testFichePaie.getLienDocument()).isEqualTo(UPDATED_LIEN_DOCUMENT);
         assertThat(testFichePaie.getMois()).isEqualTo(UPDATED_MOIS);
         assertThat(testFichePaie.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }

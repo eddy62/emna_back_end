@@ -10,7 +10,7 @@ public class WrapperClientFournisseur {
     private  Long idSociete ;
     private Long id ;
     private String nom;
-    private Integer siren;
+    private String siret;
     private String telephone;
     private String email;
 
@@ -26,12 +26,12 @@ public class WrapperClientFournisseur {
     public WrapperClientFournisseur() {
     }
 
-    public WrapperClientFournisseur(Long idSociete, Long id, String nom, Integer siren, String telephone, String email, Long idAdresse, String numeroRue,
+    public WrapperClientFournisseur(Long idSociete, Long id, String nom, String siret, String telephone, String email, Long idAdresse, String numeroRue,
                                     String boitePostale, String nomRue, String codePostal, String ville , String pays) {
         this.idSociete = idSociete;
         this.id = id;
         this.nom = nom;
-        this.siren = siren;
+        this.siret = siret;
         this.telephone = telephone;
         this.email = email;
         this.idAdresse = idAdresse;
@@ -55,8 +55,8 @@ public class WrapperClientFournisseur {
         return nom;
     }
 
-    public Integer getSiren() {
-        return siren;
+    public String getSiret() {
+        return siret;
     }
 
     public String getTelephone() {
@@ -99,8 +99,8 @@ public class WrapperClientFournisseur {
         this.nom = nom;
     }
 
-    public void setSiren(Integer siren) {
-        this.siren = siren;
+    public void setSiret(String siren) {
+        this.siret = siren;
     }
 
     public void setTelephone(String telephone) {
@@ -153,7 +153,7 @@ public class WrapperClientFournisseur {
             "idSociete=" + idSociete +
             ", id=" + id +
             ", nom='" + nom + '\'' +
-            ", siren=" + siren +
+            ", siren=" + siret +
             ", telephone='" + telephone + '\'' +
             ", email='" + email + '\'' +
             ", idAdresse=" + idAdresse +

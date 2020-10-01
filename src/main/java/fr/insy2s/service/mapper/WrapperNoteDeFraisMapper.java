@@ -4,6 +4,8 @@ import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.utils.wrapper.WrapperNoteDeFrais;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * Mapper for the entity NoteDeFrais,  and the DTO WrapperNoteDeFrais.
  *
@@ -24,8 +26,8 @@ public class WrapperNoteDeFraisMapper {
         wrapperNoteDeFrais.setId(noteDeFraisDTO.getId());
         wrapperNoteDeFrais.setDate(noteDeFraisDTO.getDate());
         wrapperNoteDeFrais.setDesignation(noteDeFraisDTO.getDesignation());
-        wrapperNoteDeFrais.setMontant(noteDeFraisDTO.getMontant());
-        wrapperNoteDeFrais.setJustificatif(noteDeFraisDTO.getJustificatif());
+        wrapperNoteDeFrais.setMontant(noteDeFraisDTO.getMontant().doubleValue());
+        //wrapperNoteDeFrais.setJustificatif(noteDeFraisDTO.getJustificatif());
         wrapperNoteDeFrais.setAnnee(noteDeFraisDTO.getAnnee());
         wrapperNoteDeFrais.setMois(noteDeFraisDTO.getMois());
         wrapperNoteDeFrais.setEmployeId(noteDeFraisDTO.getEmployeId());
@@ -48,8 +50,8 @@ public class WrapperNoteDeFraisMapper {
         noteDeFraisDTO.setId(wrapperNoteDeFrais.getId());
         noteDeFraisDTO.setDate(wrapperNoteDeFrais.getDate());
         noteDeFraisDTO.setDesignation(wrapperNoteDeFrais.getDesignation());
-        noteDeFraisDTO.setMontant(wrapperNoteDeFrais.getMontant());
-        noteDeFraisDTO.setJustificatif(wrapperNoteDeFrais.getJustificatif());
+        noteDeFraisDTO.setMontant(BigDecimal.valueOf(wrapperNoteDeFrais.getMontant()));
+       // noteDeFraisDTO.setJustificatif(wrapperNoteDeFrais.getJustificatif());
         noteDeFraisDTO.setAnnee(wrapperNoteDeFrais.getAnnee());
         noteDeFraisDTO.setMois(wrapperNoteDeFrais.getMois());
         noteDeFraisDTO.setEmployeId(wrapperNoteDeFrais.getEmployeId());

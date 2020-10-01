@@ -195,7 +195,7 @@ public class ClientFournisseurResource {
         if (clientFournisseur.getNom() == null || clientFournisseur.getNom().isEmpty()) {
             throw new BadRequestAlertException("Le nome de client founisseur est  vide", ENTITY_NAME, " nom null");
         }
-        if (clientFournisseur.getSiren() == null || "".equals(clientFournisseur.getSiren())) {
+        if (clientFournisseur.getSiret() == null || "".equals(clientFournisseur.getSiret())) {
             throw new BadRequestAlertException("SIREN de client founisseur est vide", ENTITY_NAME, " SIREN null");
         }
         if (clientFournisseur.getEmail() == null || "".equals(clientFournisseur.getEmail())){

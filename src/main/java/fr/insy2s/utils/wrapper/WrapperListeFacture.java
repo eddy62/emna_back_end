@@ -1,5 +1,6 @@
 package fr.insy2s.utils.wrapper;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class WrapperListeFacture {
@@ -12,7 +13,7 @@ public class WrapperListeFacture {
 
     private LocalDate date;
 
-    private Integer prixTTC;
+    private BigDecimal prixTTC;
 
     private String nomClient;
 
@@ -50,11 +51,11 @@ public class WrapperListeFacture {
         this.date = date;
     }
 
-    public Integer getPrixTTC() {
+    public BigDecimal getPrixTTC() {
         return prixTTC;
     }
 
-    public void setPrixTTC(Integer prixTTC) {
+    public void setPrixTTC(BigDecimal prixTTC) {
         this.prixTTC = prixTTC;
     }
 
@@ -74,7 +75,7 @@ public class WrapperListeFacture {
         this.etatFacture = etatFacture;
     }
 
-    public WrapperListeFacture(Long id, Long numfact, String type, LocalDate date, Integer prixTTC, String nomClient, String etatFacture) {
+    public WrapperListeFacture(Long id, Long numfact, String type, LocalDate date, BigDecimal prixTTC, String nomClient, String etatFacture) {
         this.id = id;
         this.numfact = numfact;
         this.type = type;

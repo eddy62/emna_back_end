@@ -22,6 +22,7 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
 
     List<Employe> findBySocieteId(@Param(value = "id") Long id);
 
+    @Query("select e from Employe e, Contrat c where e.id=c.employe.id and c.archive=false and c.typeContrat.intitule=:typeContrat")
     List<Employe> findByTypeContrat(@Param(value = "typeContrat") String typeContrat);
 
     Employe findByMatricule(@Param(value = "matricule")String matricule);

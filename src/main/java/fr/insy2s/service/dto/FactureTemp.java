@@ -201,9 +201,9 @@ public class FactureTemp {
         facture.setMessage(this.getMessage());
         facture.setMoyenDePaiement(this.getMoyenDePaiement());
         facture.setNumfact(this.getNumfact());
-        facture.setPrixHT(this.getPrixHT());
-        facture.setPrixTTC(this.getPrixTTC());
-        facture.setTva(this.getTva());
+        //facture.setPrixHT(this.getPrixHT());
+        //facture.setPrixTTC(this.getPrixTTC());
+        //facture.setTva(this.getTva());
         facture.setDateEcheance(this.getDateEcheance());
         return facture;
     }

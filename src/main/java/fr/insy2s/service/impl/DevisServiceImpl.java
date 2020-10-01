@@ -69,6 +69,7 @@ public class DevisServiceImpl implements DevisService {
     @Override
     public List<DevisDTO> findAllQuotesBySocietyId(Long idSociete) {
         log.debug("Request to get all the quotes by society id: {}", idSociete);
+
         return this.devisRepository.findAllQuotesBySocietyId(idSociete)
             .stream()
             .map(devisMapper::toDto)

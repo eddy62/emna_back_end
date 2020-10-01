@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -46,8 +47,8 @@ public class OperationResourceIT {
     private static final Boolean DEFAULT_RAPPROCHE = false;
     private static final Boolean UPDATED_RAPPROCHE = true;
 
-    private static final Double DEFAULT_SOLDE = 1D;
-    private static final Double UPDATED_SOLDE = 2D;
+    private static final BigDecimal DEFAULT_SOLDE = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_SOLDE = BigDecimal.valueOf(2D);
 
     @Autowired
     private OperationRepository operationRepository;
@@ -162,7 +163,7 @@ public class OperationResourceIT {
             .andExpect(jsonPath("$.[*].rapproche").value(hasItem(DEFAULT_RAPPROCHE.booleanValue())))
             .andExpect(jsonPath("$.[*].solde").value(hasItem(DEFAULT_SOLDE.doubleValue())));
     }
-    
+
     @Test
     @Transactional
     public void getOperation() throws Exception {

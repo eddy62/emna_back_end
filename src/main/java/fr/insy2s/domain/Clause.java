@@ -98,13 +98,13 @@ public class Clause implements Serializable {
 
     public Clause addListeContrats(Contrat contrat) {
         this.listeContrats.add(contrat);
-        contrat.getListeClauses().add(this);
+        //contrat.getListeClauses().add(this);
         return this;
     }
 
     public Clause removeListeContrats(Contrat contrat) {
         this.listeContrats.remove(contrat);
-        contrat.getListeClauses().remove(this);
+        //contrat.getListeClauses().remove(this);
         return this;
     }
 
@@ -123,13 +123,13 @@ public class Clause implements Serializable {
 
     public Clause addListeAvenants(Avenant avenant) {
         this.listeAvenants.add(avenant);
-        avenant.getListeClauses().add(this);
+        //avenant.getListeClauses().add(this);
         return this;
     }
 
     public Clause removeListeAvenants(Avenant avenant) {
         this.listeAvenants.remove(avenant);
-        avenant.getListeClauses().remove(this);
+        //avenant.getListeClauses().remove(this);
         return this;
     }
 

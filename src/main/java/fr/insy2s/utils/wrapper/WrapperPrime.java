@@ -44,7 +44,7 @@ public class WrapperPrime {
         super();
         // Prime
         this.id = primeDTO.getId();
-        this.montant = primeDTO.getMontant();
+        this.montant = primeDTO.getMontant().doubleValue();
         this.annee = primeDTO.getAnnee();
         this.mois = primeDTO.getMois();
         this.employeId = primeDTO.getEmployeId();

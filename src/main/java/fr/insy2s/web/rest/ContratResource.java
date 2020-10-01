@@ -68,7 +68,7 @@ public class ContratResource {
 
         ContratDTO contratDTO = new ContratDTO();
 
-        contratDTO.setSocieteId(contratVM.getSocieteId());
+        //contratDTO.setSocieteId(contratVM.getSocieteId());
         contratDTO.setEmployeId(contratVM.getEmployeId());
         contratDTO.setArchive(contratVM.getArchive());
         contratDTO.setSigne(contratVM.getSigne());

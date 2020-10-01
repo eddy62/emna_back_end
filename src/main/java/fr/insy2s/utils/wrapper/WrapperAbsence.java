@@ -18,7 +18,7 @@ public class WrapperAbsence {
     private Long id;
     private LocalDate debutAbsence;
     private LocalDate finAbsence;
-    private String justificatif;
+    //private String justificatif;
     private Integer annee;
     private Integer mois;
     private Long employeId;
@@ -56,7 +56,7 @@ public class WrapperAbsence {
         this.id = absenceDTO.getId();
         this.debutAbsence = absenceDTO.getDebutAbsence();
         this.finAbsence = absenceDTO.getFinAbsence();
-        this.justificatif = absenceDTO.getJustificatif();
+        //this.justificatif = absenceDTO.getJustificatif();
         this.annee = absenceDTO.getAnnee();
         this.mois = absenceDTO.getMois();
         this.employeId = absenceDTO.getEmployeId();
@@ -100,13 +100,13 @@ public class WrapperAbsence {
         this.finAbsence = finAbsence;
     }
 
-    public String getJustificatif() {
+    /*public String getJustificatif() {
         return justificatif;
     }
 
     public void setJustificatif(String justificatif) {
         this.justificatif = justificatif;
-    }
+    }*/
 
     public Integer getAnnee() {
         return annee;
@@ -188,7 +188,6 @@ public class WrapperAbsence {
         return Objects.equals(id, that.id) &&
                 Objects.equals(debutAbsence, that.debutAbsence) &&
                 Objects.equals(finAbsence, that.finAbsence) &&
-                Objects.equals(justificatif, that.justificatif) &&
                 Objects.equals(annee, that.annee) &&
                 Objects.equals(mois, that.mois) &&
                 Objects.equals(employeId, that.employeId) &&
@@ -201,7 +200,7 @@ public class WrapperAbsence {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, debutAbsence, finAbsence, justificatif, annee, mois, employeId, etatVariablePaieId, typeAbsenceId, idTypeAbsence, codeRef, intitule);
+        return Objects.hash(id, debutAbsence, finAbsence, annee, mois, employeId, etatVariablePaieId, typeAbsenceId, idTypeAbsence, codeRef, intitule);
     }
 
     @Override
@@ -210,7 +209,6 @@ public class WrapperAbsence {
                 "id=" + id +
                 ", debutAbsence=" + debutAbsence +
                 ", finAbsence=" + finAbsence +
-                ", justificatif='" + justificatif + '\'' +
                 ", annee=" + annee +
                 ", mois=" + mois +
                 ", employeId=" + employeId +

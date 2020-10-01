@@ -77,7 +77,7 @@ public class AbsenceResourceIT {
         Absence absence = new Absence()
             .debutAbsence(DEFAULT_DEBUT_ABSENCE)
             .finAbsence(DEFAULT_FIN_ABSENCE)
-            .justificatif(DEFAULT_JUSTIFICATIF)
+            //.justificatif(DEFAULT_JUSTIFICATIF)
             .mois(DEFAULT_MOIS)
             .annee(DEFAULT_ANNEE);
         // Add required entity
@@ -102,7 +102,7 @@ public class AbsenceResourceIT {
         Absence absence = new Absence()
             .debutAbsence(UPDATED_DEBUT_ABSENCE)
             .finAbsence(UPDATED_FIN_ABSENCE)
-            .justificatif(UPDATED_JUSTIFICATIF)
+            //.justificatif(UPDATED_JUSTIFICATIF)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         // Add required entity
@@ -140,7 +140,7 @@ public class AbsenceResourceIT {
         Absence testAbsence = absenceList.get(absenceList.size() - 1);
         assertThat(testAbsence.getDebutAbsence()).isEqualTo(DEFAULT_DEBUT_ABSENCE);
         assertThat(testAbsence.getFinAbsence()).isEqualTo(DEFAULT_FIN_ABSENCE);
-        assertThat(testAbsence.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
+        //assertThat(testAbsence.getJustificatif()).isEqualTo(DEFAULT_JUSTIFICATIF);
         assertThat(testAbsence.getMois()).isEqualTo(DEFAULT_MOIS);
         assertThat(testAbsence.getAnnee()).isEqualTo(DEFAULT_ANNEE);
     }
@@ -263,7 +263,7 @@ public class AbsenceResourceIT {
             .andExpect(jsonPath("$.[*].mois").value(hasItem(DEFAULT_MOIS)))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getAbsence() throws Exception {
@@ -304,7 +304,7 @@ public class AbsenceResourceIT {
         updatedAbsence
             .debutAbsence(UPDATED_DEBUT_ABSENCE)
             .finAbsence(UPDATED_FIN_ABSENCE)
-            .justificatif(UPDATED_JUSTIFICATIF)
+            //.justificatif(UPDATED_JUSTIFICATIF)
             .mois(UPDATED_MOIS)
             .annee(UPDATED_ANNEE);
         AbsenceDTO absenceDTO = absenceMapper.toDto(updatedAbsence);
@@ -320,7 +320,7 @@ public class AbsenceResourceIT {
         Absence testAbsence = absenceList.get(absenceList.size() - 1);
         assertThat(testAbsence.getDebutAbsence()).isEqualTo(UPDATED_DEBUT_ABSENCE);
         assertThat(testAbsence.getFinAbsence()).isEqualTo(UPDATED_FIN_ABSENCE);
-        assertThat(testAbsence.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
+        //assertThat(testAbsence.getJustificatif()).isEqualTo(UPDATED_JUSTIFICATIF);
         assertThat(testAbsence.getMois()).isEqualTo(UPDATED_MOIS);
         assertThat(testAbsence.getAnnee()).isEqualTo(UPDATED_ANNEE);
     }

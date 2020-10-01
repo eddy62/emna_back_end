@@ -4,6 +4,7 @@ import fr.insy2s.domain.Depense;
 import fr.insy2s.domain.Facture;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class DepenseTemp {
@@ -105,7 +106,7 @@ public class DepenseTemp {
         depense.setRaison(this.getMessage());
         depense.setMoyenDePaiement(this.getMoyenDePaiement());
         depense.setNumero(this.getNumfact());
-        depense.setPrix(this.getPrixTTC());
+        depense.setPrix(BigDecimal.valueOf(this.getPrixTTC()));
         return depense;
     }
 }

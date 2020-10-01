@@ -73,7 +73,7 @@ public class FilesController {
                     documentDTO.setNoteDeFraisId(noteDeFraisId);
                     documentDTO.setType(type);
                 } else if (isAutre) {
-                    documentDTO.setAutresVariablesId(autresVariableId);
+                    //documentDTO.setAutresVariablesId(autresVariableId);
                     documentDTO.setType(type);
                 }
                 String extension[] = file.getContentType().split("/");

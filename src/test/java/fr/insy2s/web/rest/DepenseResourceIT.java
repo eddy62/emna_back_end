@@ -17,6 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -40,8 +41,8 @@ public class DepenseResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Double DEFAULT_PRIX = 1D;
-    private static final Double UPDATED_PRIX = 2D;
+    private static final BigDecimal DEFAULT_PRIX = BigDecimal.valueOf(1D);
+    private static final BigDecimal UPDATED_PRIX = BigDecimal.valueOf(2D);
 
     private static final String DEFAULT_MOYEN_DE_PAIEMENT = "AAAAAAAAAA";
     private static final String UPDATED_MOYEN_DE_PAIEMENT = "BBBBBBBBBB";
@@ -182,7 +183,7 @@ public class DepenseResourceIT {
             .andExpect(jsonPath("$.[*].moyenDePaiement").value(hasItem(DEFAULT_MOYEN_DE_PAIEMENT)))
             .andExpect(jsonPath("$.[*].raison").value(hasItem(DEFAULT_RAISON)));
     }
-    
+
     @Test
     @Transactional
     public void getDepense() throws Exception {

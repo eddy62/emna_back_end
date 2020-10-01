@@ -78,7 +78,7 @@ public class WrapperEmploye {
 
     /**
      * Constructeur avec field
-     * 
+     *
      * @param employeDTO
      * @param adresseDTO
      * @param statutEmployeDTO
@@ -104,9 +104,9 @@ public class WrapperEmploye {
         this.telephoneFix = employeDTO.getTelephoneFix();
         this.telephonePortable = employeDTO.getTelephonePortable();
         this.fax = employeDTO.getFax();
-        this.salaireHoraire = employeDTO.getSalaireHoraire();
-        this.salaireBrutMensuelle = employeDTO.getSalaireBrutMensuelle();
-        this.heuresMensuelle = employeDTO.getHeuresMensuelle();
+        this.salaireHoraire = employeDTO.getSalaireHoraire().doubleValue();
+        this.salaireBrutMensuelle = employeDTO.getSalaireBrutMensuelle().doubleValue();
+        this.heuresMensuelle = employeDTO.getHeuresMensuelle().doubleValue();
         this.categorie = employeDTO.getCategorie();
         this.poste = employeDTO.getPoste();
         this.dateEmbauche = employeDTO.getDateEmbauche();
@@ -465,7 +465,7 @@ public class WrapperEmploye {
     public void setPeriodeEssai(Double periodeEssai) {
         this.periodeEssai = periodeEssai;
     }
-    
-    
+
+
 
 }
