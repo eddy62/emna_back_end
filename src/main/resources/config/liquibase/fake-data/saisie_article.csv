@@ -1,11 +1,11 @@
-id;libelle
-1;disintermediate
-2;Forward Kroon invoice
-3;Martinique Movies
-4;Dynamic
-5;Automated transmitting
-6;process improvement
-7;GB sky blue
-8;Way cyan
-9;orange Games
-10;Synergistic communities
+id;libelle;article_id;contrat_id
+1;disintermediate;1;1
+2;Forward Kroon invoice;1;1
+3;Martinique Movies;1;1
+4;Dynamic;1;1
+5;Automated transmitting;1;1
+6;process improvement;1;1
+7;GB sky blue;1;1
+8;Way cyan;1;1
+9;orange Games;1;1
+10;Synergistic communities;1;1
