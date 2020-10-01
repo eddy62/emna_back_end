@@ -1,4 +1,4 @@
-id;nom;siren;telephone;email;adresse_id;societe_id
+id;nom;siret;telephone;email;adresse_id;societe_id
 1;AUCHAN SUPERMARCHE;410409460;09773110055;auchan@gmail.com;1;1
 2;ivory transmit Salad;58214;06880626690;Kenyatta77@yahoo.com;2;1
 3;SHETAK;565314019;09298170424;SHETAK@yahoo.com;3;1

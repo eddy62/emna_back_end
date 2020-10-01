@@ -88,9 +88,8 @@ public class AbsenceServiceImpl implements AbsenceService {
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
 
         for (Absence absence : absenceList){
-            List<Document> documentList = documentRepository.findAllByAbsenceId(absence.getId());
             List<DocumentDTO> documentDTOList = new ArrayList<>();
-            for (Document document : documentList){
+            for (Document document : absence.getListeDocuments()){
                 documentDTOList.add(documentMapper.toDto(document));
             };
             WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()), documentDTOList);

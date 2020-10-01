@@ -1,5 +1,4 @@
-id;debut_periode;fin_periode;lien_document;mois;annee;employe_id
-1;2020-01-01;2020-01-31;"./fichiers/ficheDePaieJanvier.pdf";1;2020;1
-2;2020-07-01;2020-07-31;"./fichiers/ficheDePaieJuillet.pdf";7;2020;1
-3;2020-06-01;2020-06-30;"./fichiers/ficheDePaieJuin.pdf";6;2020;1
-git pu
+id;debut_periode;fin_periode;mois;annee;employe_id
+1;2020-01-01;2020-01-31;1;2020;1
+2;2020-07-01;2020-07-31;7;2020;1
+3;2020-06-01;2020-06-30;6;2020;1

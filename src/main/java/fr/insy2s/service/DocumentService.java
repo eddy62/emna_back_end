@@ -59,26 +59,5 @@ public interface DocumentService {
      */
     Document multiPartFileToDocument(MultipartFile file);
 
-    /**
-     * Get all the documents by "id" Absence.
-     *
-     * @param id the id of Absence to get all documents from.
-     * @return the list of DocumentDTO.
-     */
-    List<DocumentDTO> findAllByAbsenceId(Long id);
 
-    /**
-     * Get all the documents by "id" Note de Frais
-     *
-     * @return the list of entities.
-     */
-    List<DocumentDTO> findAllByNoteDeFraisId(Long id);
-
-    /**
-     * Get all the documents by "id" AutresVariable
-     *
-     * @param id the id of AutresVariable to get all documents from.
-     * @return the list of DocumentDTO.
-     */
-    List<DocumentDTO> findAllByAutresVariablesId(Long id);
 }

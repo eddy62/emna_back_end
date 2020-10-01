@@ -1,4 +1,4 @@
 id;libelle;code_ref
-1;Relever non valide;RNV
-2;Relever non archiver;RNA
-3;Relever archiver;RA
+1;Relevé non validé;RNV
+2;Relevé non archivé;RNA
+3;Relevé archivé;RA

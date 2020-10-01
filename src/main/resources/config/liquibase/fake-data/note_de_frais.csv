@@ -1,5 +1,5 @@
-id;designation;date;montant;justificatif;mois;annee;etat_variable_paie_id;employe_id
-1;Frais d'Hôtel pour 3 Nuits;2020-07-21;250;Facture;7;2020;1;1
-2;Frais de déplacement en voiture;2020-07-21;170;Facture;7;2020;1;1
+id;designation;date;montant;mois;annee;etat_variable_paie_id;employe_id
+1;Frais d'Hôtel pour 3 Nuits;2020-07-21;250;7;2020;1;1
+2;Frais de déplacement en voiture;2020-07-21;170;7;2020;1;1
 
 

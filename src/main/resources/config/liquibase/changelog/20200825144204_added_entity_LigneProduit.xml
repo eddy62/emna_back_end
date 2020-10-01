@@ -59,6 +59,8 @@
             <column name="remise" type="numeric"/>
             <column name="produit_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+            <column name="facture_id" type="numeric"/>
+            <column name="devis_id" type="numeric"/>
         </loadData>
     </changeSet>
 

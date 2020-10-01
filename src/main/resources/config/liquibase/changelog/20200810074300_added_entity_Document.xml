@@ -97,9 +97,9 @@
             <column name="employe_id" type="numeric"/>
             <column name="absence_id" type="numeric"/>
             <column name="note_de_frais_id" type="numeric"/>
-            <column name="autres_variables_id" type="numeric"/>
+            <column name="autres_variable_id" type="numeric"/>
             <column name="dpae_id" type="numeric"/>
-            <column name="fichepaie_id" type="numeric"/>
+            <column name="fiche_paie_id" type="numeric"/>
             <column name="avenant_id" type="numeric"/>
         </loadData>
     </changeSet>

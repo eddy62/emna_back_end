@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,7 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.io.File;
 
 /**
  * REST controller for managing {@link fr.insy2s.domain.Document}.
@@ -135,41 +135,7 @@ public class DocumentResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-    /**
-     * {@code GET  /documentsAbsence/:id} : get all documents by "id" Absence.
-     *
-     * @param id the id of Absence.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
-     */
-    @GetMapping("/documentsAbsence/{id}")
-    public List<DocumentDTO> getDocumentsByAbsencesId(@PathVariable Long id) {
-        log.debug("REST request to get all Documents by Absence id");
-        return documentService.findAllByAbsenceId(id);
-    }
 
-    /**
-     * {@code GET  /documentsNoteDeFrais/:id} : get all documents by "id" Note de Frais.
-     *
-     * @param id the id of Absence.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
-     */
-    @GetMapping("/documentsNoteDeFrais/{id}")
-    public List<DocumentDTO> getDocumentsByNoteDeFraisId(@PathVariable Long id) {
-        log.debug("REST request to get all Documents by Note de Frais id");
-        return documentService.findAllByNoteDeFraisId(id);
-    }
-
-    /**
-     * {@code GET  /documentsAutre/:id} : get all documents by "id" Autre.
-     *
-     * @param id the id of Autre.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and single or List Documents in body.
-     */
-    @GetMapping("/documentsAutre/{id}")
-    public List<DocumentDTO> getDocumentsByAutresVariablesId(@PathVariable Long id) {
-        log.debug("REST request to get all Documents by Autre id");
-        return documentService.findAllByAutresVariablesId(id);
-    }
 
     /**
      * {@code GET  /documentsPdf/:id} : get PDF File by path name.

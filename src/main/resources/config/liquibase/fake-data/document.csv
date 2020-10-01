@@ -1,8 +1,8 @@
-id;chemin_fichier;type;nom;facture_id;releve_id;contrat_id;depense_id;employe_id;absence_id;note_de_frais_id;autres_variables_id;dpae_id;fichepaie_id;avenant_id
-1;./fichiers/social/variablesdepaie/absence_1_1.pdf;absence de 1 jour;absence_1_1.pdf;;;;;;;1;;;;
-2;./fichiers/social/variablesdepaie/absence_1_2.pdf;absence non-justifiée;absence_1_2.pdf;;;;;;;1;;;;
-3;./fichiers/social/variablesdepaie/note_de_frais_1_1.pdf;ticket péage;note_de_frais_1_1.pdf;;;;;;;;1;;;
-4;./fichiers/social/variablesdepaie/note_de_frais_2_1.pdf;inclassable;autres_variables_1_1.pdf;;;;;;;;2;;;
-5;./fichiers/social/variablesdepaie/autres_variables_1_1.pdf;inclassable;autres_variables_2_1.pdf;;;;;;;;;2;;
-6;./fichiers/comptabilite/factures/facture_1_1.pdf;fac1_1;facture_1_1.pdf;1;;;;;;;;;;
-7;./fichiers/comptabilite/factures/facture_2_1.pdf;fac2_1;facture_2_1.pdf;2;;;;;;;;;;
+id;chemin_fichier;type;nom;type_document_id;facture_id;releve_id;contrat_id;depense_id;employe_id;absence_id;note_de_frais_id;autres_variable_id;dpae_id;fiche_paie_id;avenant_id
+1;./fichiers/social/variablesdepaie/absence_1_1.pdf;absence de 1 jour;absence_1_1.pdf;1;;;;;;1;;;;;
+2;./fichiers/social/variablesdepaie/absence_1_2.pdf;absence non-justifiée;absence_1_2.pdf;1;;;;;;1;;;;;
+3;./fichiers/social/variablesdepaie/note_de_frais_1_1.pdf;ticket péage;note_de_frais_1_1.pdf;1;;;;;;;1;;;;
+4;./fichiers/social/variablesdepaie/note_de_frais_2_1.pdf;inclassable;autres_variables_1_1.pdf;1;;;;;;;2;;;;
+5;./fichiers/social/variablesdepaie/autres_variables_1_1.pdf;inclassable;autres_variables_2_1.pdf;1;;;;;;;;2;;;
+6;./fichiers/comptabilite/factures/facture_1_1.pdf;fac1_1;facture_1_1.pdf;1;1;;;;;;;;;;
+7;./fichiers/comptabilite/factures/facture_2_1.pdf;fac2_1;facture_2_1.pdf;1;2;;;;;;;;;;
