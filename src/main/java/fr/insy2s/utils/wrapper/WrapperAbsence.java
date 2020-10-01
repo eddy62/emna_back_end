@@ -1,7 +1,6 @@
 package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.service.dto.AbsenceDTO;
-import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.TypeAbsenceDTO;
 
 import java.time.LocalDate;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Wrapper Absence avec TypeAbsence
+ * Wrapper Absence avec TypeAbsence et wrapperDocumentList
  *
  */
 public class WrapperAbsence {
@@ -34,7 +33,7 @@ public class WrapperAbsence {
     private String intitule;
 
     // Documents
-    private List<DocumentDTO> documentDTOList;
+    private List<WrapperDocument> wrapperDocumentList;
 
     /**
      * Constructeur WrapperAbsence par défaut
@@ -49,17 +48,15 @@ public class WrapperAbsence {
      *
      * @param absenceDTO the absenceDTO
      * @param typeAbsenceDTO the typeAbsenceDTO
-     * @param documentDTOList the list of documentDTOList
+     * @param wrapperDocumentList the list of wrapperDocument
      */
-    public  WrapperAbsence(AbsenceDTO absenceDTO, TypeAbsenceDTO typeAbsenceDTO, List<DocumentDTO> documentDTOList){
+    public  WrapperAbsence(AbsenceDTO absenceDTO, TypeAbsenceDTO typeAbsenceDTO, List<WrapperDocument> wrapperDocumentList){
 
         super();
         // Absence
         this.id = absenceDTO.getId();
         this.debutAbsence = absenceDTO.getDebutAbsence();
         this.finAbsence = absenceDTO.getFinAbsence();
-        //this.justificatif = absenceDTO.getJustificatif();
-
         this.annee = absenceDTO.getAnnee();
         this.mois = absenceDTO.getMois();
         this.employeId = absenceDTO.getEmployeId();
@@ -72,7 +69,7 @@ public class WrapperAbsence {
         this.intitule = typeAbsenceDTO.getIntitule();
 
         // Documents
-        this.documentDTOList = documentDTOList;
+        this.wrapperDocumentList = wrapperDocumentList;
 
 
     }
@@ -102,15 +99,6 @@ public class WrapperAbsence {
     public void setFinAbsence(LocalDate finAbsence) {
         this.finAbsence = finAbsence;
     }
-
-
-    /*public String getJustificatif() {
-        return justificatif;
-    }
-
-    public void setJustificatif(String justificatif) {
-        this.justificatif = justificatif;
-    }*/
 
     public Integer getAnnee() {
         return annee;
@@ -176,12 +164,12 @@ public class WrapperAbsence {
         this.intitule = intitule;
     }
 
-    public List<DocumentDTO> getDocumentDTOList() {
-        return documentDTOList;
+    public List<WrapperDocument> getWrapperDocumentList() {
+        return wrapperDocumentList;
     }
 
-    public void setDocumentDTOList(List<DocumentDTO> documentDTOList) {
-        this.documentDTOList = documentDTOList;
+    public void setWrapperDocumentList(List<WrapperDocument> wrapperDocumentList) {
+        this.wrapperDocumentList = wrapperDocumentList;
     }
 
     @Override
