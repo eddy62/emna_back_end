@@ -1,9 +1,13 @@
 package fr.insy2s.service.mapper;
 
+import fr.insy2s.domain.Document;
 import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.TypeDocumentDTO;
 import fr.insy2s.utils.wrapper.WrapperDocument;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Mapper for the entity Document,  and the DTO WrapperDocument.
@@ -11,6 +15,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class WrapperDocumentMapper {
+
+    private final DocumentMapper documentMapper;
+    private final TypeDocumentMapper typeDocumentMapper;
+
+    public WrapperDocumentMapper(DocumentMapper documentMapper, TypeDocumentMapper typeDocumentMapper) {
+        this.documentMapper = documentMapper;
+        this.typeDocumentMapper = typeDocumentMapper;
+    }
 
     /**
      * Builder WrapperDocument
@@ -53,7 +65,7 @@ public class WrapperDocumentMapper {
      *
      * @param wrapperDocument the wrapperDocument to map to documentDTO
      *
-     * @return documentDTO
+     * @return documentDTO a DTO of Document
      */
     public DocumentDTO toDocumentDTO(final WrapperDocument wrapperDocument){
         DocumentDTO documentDTO = new DocumentDTO();
@@ -84,7 +96,7 @@ public class WrapperDocumentMapper {
      *
      * @param wrapperDocument the wrapperDocument to map to typeDocumentDTO
      *
-     * @return typeDocumentDTO
+     * @return typeDocumentDTO a DTO of TypeDocument
      */    public TypeDocumentDTO toTypeDocumentDTO(final WrapperDocument wrapperDocument){
         TypeDocumentDTO typeDocumentDTO = new TypeDocumentDTO();
 
@@ -93,6 +105,26 @@ public class WrapperDocumentMapper {
         typeDocumentDTO.setIntitule(wrapperDocument.getIntitule());
 
         return typeDocumentDTO;
+    }
+
+
+    /**
+     * Mappe une liste de Document en liste de WrapperDocument
+     *
+     * @param documentList the documentList to map to WrapperDocumentList
+     * @return wrapperDocumentList a list of wrapperDocument
+     */
+    public List<WrapperDocument> documentListToWrapperDocumentList(List<Document> documentList){
+        List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
+            for (Document document : documentList){
+                WrapperDocument wrapperDocument
+                        = this.builderWrapperDocument(
+                        documentMapper.toDto(document),
+                        typeDocumentMapper.toDto(document.getTypeDocument()));
+                wrapperDocumentList.add(wrapperDocument);
+            }
+            return wrapperDocumentList;
+
     }
 
 }
