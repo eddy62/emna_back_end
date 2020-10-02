@@ -1,9 +1,9 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
-import fr.insy2s.service.ClauseService;
+//import fr.insy2s.service.ClauseService;
 import fr.insy2s.service.ContratService;
-import fr.insy2s.service.dto.ClauseDTO;
+//import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.*;
@@ -35,11 +35,11 @@ public class ContratResource {
     private String applicationName;
 
     private final ContratService contratService;
-    private final ClauseService clauseService;
+    //private final ClauseService clauseService;
 
-    public ContratResource(ContratService contratService, ClauseService clauseService) {
+    public ContratResource(ContratService contratService) {
         this.contratService = contratService;
-        this.clauseService = clauseService;
+        //this.clauseService = clauseService;
     }
 
     /**
@@ -70,7 +70,7 @@ public class ContratResource {
         contratDTO  = contratService.save(contratDTO);
 
 
-        List<ClauseVm> listClauseVm = contratVM.getClauses();
+        /*List<ClauseVm> listClauseVm = contratVM.getClauses();
         ClauseDTO clauseDto = null;
         if (!listClauseVm.isEmpty()) {
             for (ClauseVm clauseVm : listClauseVm) {
@@ -84,7 +84,7 @@ public class ContratResource {
             }
         }
 
-        Long contratId = clauseDto.getListeContrats().stream().findFirst().get().getId();
+        Long contratId = clauseDto.getListeContrats().stream().findFirst().get().getId();*/
 
      //   System.err.println("------------------        JE GENERE LE PDF        ------------------");
      //   ContratPdfVm contratPdfVm = new ContratPdfVm();
