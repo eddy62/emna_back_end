@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import sun.tools.jconsole.JConsole;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -123,6 +124,26 @@ public class DocumentServiceImpl implements DocumentService {
         }
 
         return document;
+    }
+
+    @Override
+    public DocumentDTO findOneDocumentByPlayslipId(Long idPayslip) {
+        log.debug("Request to get one document associated to a Payslip idPayslip:{}", idPayslip );
+        Document document = documentRepository.findOneDocumentByPayslipId(idPayslip);
+        DocumentDTO documentDTO = new DocumentDTO();
+        if(document != null){
+            // conversion document vers documentDTO
+            documentDTO.setId(document.getId());
+            documentDTO.setCheminFichier(document.getCheminFichier());
+            documentDTO.setType(document.getType());
+            documentDTO.setNom(document.getNom());
+
+            documentDTO.setTypeDocumentId(document.getTypeDocument().getId());
+            documentDTO.setFichePaieId(document.getFichePaie().getId());
+            documentDTO.getFichePaieId();
+        }
+        return documentDTO ;
+
     }
 
 

@@ -1,5 +1,7 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Facture;
+import fr.insy2s.domain.LigneProduit;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.utils.wrapper.WrapperListeFacture;
@@ -63,4 +65,10 @@ public interface FactureService {
      * @return the list of entities
      */
     List<FactureDTO> findAllInvoicesByOperationId(Long idOperation);
+
+    Facture findFactureById(Long idFacture);
+
+
+    List<LigneProduit> findAllLigneProduitByIdFacture(Long idFacture);
+
 }

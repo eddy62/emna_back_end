@@ -1,16 +1,17 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.domain.Facture;
+import fr.insy2s.domain.LigneProduit;
 import fr.insy2s.service.FactureService;
-import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureTemp;
+import fr.insy2s.service.dto.OperationDTO;
 import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FactureDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.checkerframework.checker.nullness.Opt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -95,6 +95,8 @@ public class FactureResource {
         return factureService.findAll();
     }
 
+
+
     /**
      * {@code GET  /factures/:id} : get the "id" facture.
      *
@@ -106,6 +108,12 @@ public class FactureResource {
         log.debug("REST request to get Facture : {}", id);
         Optional<FactureDTO> factureDTO = factureService.findOne(id);
         return ResponseUtil.wrapOrNotFound(factureDTO);
+    }
+
+    @GetMapping("/facture/{id}")
+    public List<LigneProduit> getLigneProduitByIdFacture(@PathVariable Long idFacture){
+        log.debug("REST request to get ligne des produit by id facture");
+        return factureService.findAllLigneProduitByIdFacture(idFacture);
     }
 
     /**
@@ -171,6 +179,4 @@ public class FactureResource {
         log.debug("REST request to merge operation to invoices");
             factureService.mergeOperationByIdFacture(idFacture,idOperation);
     }
-
-
 }
