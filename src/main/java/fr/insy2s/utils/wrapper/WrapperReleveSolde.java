@@ -1,7 +1,5 @@
 package fr.insy2s.utils.wrapper;
 
-import fr.insy2s.service.dto.ReleveDTO;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
