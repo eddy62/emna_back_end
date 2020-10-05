@@ -146,7 +146,7 @@ public class DocumentResource {
 
     @GetMapping("/getPdfFile/{path}")
     public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
-        Path completePath = Paths.get("./fichiers/" + path);
+        Path completePath = Paths.get("./fichiers/social/variablesdepaie/" + path);
         byte[] pdfContents = null;
         try {
             pdfContents = Files.readAllBytes(completePath);
@@ -161,6 +161,20 @@ public class DocumentResource {
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
             pdfContents, headers, HttpStatus.OK);
         return response;
+    }
+
+
+    /**
+     * {@code GET  /documents/idPaySlip/:id} : get document Playslip by id.
+     *
+     * @param idPayslip the id of the playslip of the file.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} PDF File.
+     */
+
+    @GetMapping("/documents/idPaySlip/{idPayslip}")
+    public DocumentDTO getDocumentByIdPayslip(@PathVariable Long idPayslip) {
+        log.debug("REST request to get the document path of a playslip by idPayslip:{}", idPayslip);
+        return documentService.findOneDocumentByPlayslipId(idPayslip);
     }
 
 }

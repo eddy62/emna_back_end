@@ -1,11 +1,11 @@
-id;numfact;nom;type;message;date;date_echeance;moyen_de_paiement;etat_facture_id;societe_id;operation_id;client_fournisseur_id
-1;1;a supprimer;Achat;24/7 Avon Consultant;2020-07-22;2020-07-21;Chèque;1;1;4;1
-2;2;a supprimer;Achat;deposit input input;2020-07-21;2020-07-22;Espèces;1;1;4;2
-3;3;a supprimer;Achat;collaboration;2020-07-22;2020-07-21;Virement;1;1;7;3
-4;4;a supprimer;Vente;Riel;2020-07-22;2020-07-22;Chèque;1;1;7;4
-5;5;a supprimer;Vente;e-enable Distributed disintermediate;2020-07-21;2020-07-21;Espèces;1;1;14;5
-6;6;a supprimer;Vente;Buckinghamshire Regional Legacy;2020-07-21;2020-07-21;Virement;1;1;14;6
-7;7;a supprimer;Vente;Accountability;2020-07-22;2020-07-21;Carte Bancaire;1;1;15;7
-8;8;a supprimer;Vente;South Africa;2020-07-22;2020-07-22;Chèque;1;1;15;8
-9;9;a supprimer;Vente;feed mint green Unbranded Steel Pants;2020-07-21;2020-07-21;Espèces;1;1;15;1
-10;10;a supprimer;Vente;task-force Ohio;2020-07-21;2020-07-21;Chèque;1;1;2;1
+id;numfact;nom;type;message;date;date_echeance;moyen_de_paiement;etat_facture_id;societe_id;operation_id;client_fournisseur_id;devis_id
+1;1;a supprimer;Achat;24/7 Avon Consultant;22/07/2020;21/07/2020;Chèque;1;1;4;1;
+2;2;a supprimer;Achat;deposit input input;21/07/2020;22/07/2020;Espèces;1;1;4;2;
+3;3;a supprimer;Achat;collaboration;22/07/2020;21/07/2020;Virement;1;1;7;3;
+4;4;a supprimer;Vente;Riel;22/07/2020;22/07/2020;Chèque;1;1;7;4;
+5;5;a supprimer;Vente;e-enable Distributed disintermediate;21/07/2020;21/07/2020;Espèces;1;1;14;5;
+6;6;a supprimer;Vente;Buckinghamshire Regional Legacy;21/07/2020;21/07/2020;Virement;1;1;14;6;
+7;7;a supprimer;Vente;Accountability;22/07/2020;21/07/2020;Carte Bancaire;1;1;15;7;
+8;8;a supprimer;Vente;South Africa;22/07/2020;22/07/2020;Chèque;1;1;15;8;
+9;9;a supprimer;Vente;feed mint green Unbranded Steel Pants;21/07/2020;21/07/2020;Espèces;1;1;15;1;
+10;10;a supprimer;Vente;task-force Ohio;21/07/2020;21/07/2020;Chèque;1;1;2;1;

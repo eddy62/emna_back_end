@@ -2,12 +2,10 @@ package fr.insy2s.utils.wrapper;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
-import fr.insy2s.service.dto.AdresseDTO;
-import fr.insy2s.service.dto.InfoEntrepriseDTO;
-import fr.insy2s.service.dto.SocieteDTO;
-import fr.insy2s.service.dto.UserDTO;
+import fr.insy2s.service.dto.*;
 
 public class WrapperSociete {
 

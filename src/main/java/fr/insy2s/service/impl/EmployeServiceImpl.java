@@ -5,9 +5,11 @@ import fr.insy2s.repository.EmployeRepository;
 import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.*;
 import fr.insy2s.service.dto.*;
+import fr.insy2s.service.mapper.ContratMapper;
 import fr.insy2s.service.mapper.EmployeMapper;
 import fr.insy2s.service.mapper.TypeContratMapper;
 import fr.insy2s.service.mapper.WrapperEmployeMapper;
+import fr.insy2s.utils.wrapper.WrapperContrat;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,33 +32,35 @@ import java.util.stream.Collectors;
 @Transactional
 public class EmployeServiceImpl implements EmployeService {
 
-    private final Logger                          log = LoggerFactory.getLogger(EmployeServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(EmployeServiceImpl.class);
 
-    private final EmployeRepository               employeRepository;
+    private final EmployeRepository employeRepository;
 
-    private final EmployeMapper                   employeMapper;
+    private final EmployeMapper employeMapper;
 
-    private final WrapperEmployeMapper            wrapperEmployeMapper;
-    private final AdresseService                  adresseService;
-    private final StatutEmployeService            statutEmployeService;
-    private final SocieteService                  societeService;
-    private final InfoEntrepriseService           infoEntrepriseService;
-    private final TypeContratService              typeContratService;
-    private final FichePaieService                fichePaieService;
-    private final DocumentService                 documentService;
-    private final DpaeService                     dpaeService;
-    private final ContratService                  contratService;
+    private final WrapperEmployeMapper wrapperEmployeMapper;
+    private final AdresseService adresseService;
+    private final StatutEmployeService statutEmployeService;
+    private final SocieteService societeService;
+    private final InfoEntrepriseService infoEntrepriseService;
+    private final TypeContratService typeContratService;
+    private final FichePaieService fichePaieService;
+    private final DocumentService documentService;
+    private final DpaeService dpaeService;
+    private final ContratService contratService;
+
+    private final ContratMapper contratMapper;
     private final TypeContratMapper typeContratMapper;
 
     /* Variables de Paie */
-    private final AbsenceService                  absenceService;
-    private final AutresVariableService           autresVariableService;
-    private final AvanceRappelSalaireService      avanceRappelSalaireService;
-    private final HeuresSupplementairesService    heuresSupplementairesService;
-    private final NoteDeFraisService              noteDeFraisService;
-    private final PrimeService                    primeService;
+    private final AbsenceService absenceService;
+    private final AutresVariableService autresVariableService;
+    private final AvanceRappelSalaireService avanceRappelSalaireService;
+    private final HeuresSupplementairesService heuresSupplementairesService;
+    private final NoteDeFraisService noteDeFraisService;
+    private final PrimeService primeService;
 
-    public EmployeServiceImpl(EmployeRepository employeRepository,TypeContratMapper typeContratMapper,
+    public EmployeServiceImpl(EmployeRepository employeRepository, TypeContratMapper typeContratMapper,
                               EmployeMapper employeMapper,
                               WrapperEmployeMapper wrapperEmployeMapper,
                               AdresseService adresseService,
@@ -73,7 +77,8 @@ public class EmployeServiceImpl implements EmployeService {
                               AvanceRappelSalaireService avanceRappelSalaireService,
                               HeuresSupplementairesService heuresSupplementairesService,
                               NoteDeFraisService noteDeFraisService,
-                              PrimeService primeService) {
+                              PrimeService primeService,
+                              ContratMapper contratMapper) {
         this.employeRepository = employeRepository;
         this.employeMapper = employeMapper;
         this.wrapperEmployeMapper = wrapperEmployeMapper;
@@ -87,7 +92,10 @@ public class EmployeServiceImpl implements EmployeService {
         this.dpaeService = dpaeService;
         this.contratService = contratService;
         this.absenceService = absenceService;
-        this.typeContratMapper =typeContratMapper;
+
+        // contrat
+        this.contratMapper = contratMapper;
+        this.typeContratMapper = typeContratMapper;
         /* Variables de Paie */
         this.autresVariableService = autresVariableService;
         this.avanceRappelSalaireService = avanceRappelSalaireService;
@@ -155,18 +163,20 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     public Optional<WrapperEmploye> findById(final Long id) {
         log.debug("Request to get WrapperEmploye : {}", id);
-        Contrat contrat= contratService.getActiveContratEmployee(id);
+        Contrat contrat = contratService.getActiveContratEmployee(id);
         final EmployeDTO employeDTO = findOne(id).get();
         final AdresseDTO adresseDTO = adresseService.findOne(employeDTO.getAdresseId()).get();
         final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
         final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
 
-        final TypeContratDTO typeContratDTO = typeContratMapper.toDto(contrat.getTypeContrat());
+        final ContratDTO contratDTO = contrat != null ? contratMapper.toDto(contrat) : new ContratDTO();
+        final TypeContratDTO typeContratDTO = contrat != null ? typeContratMapper.toDto(contrat.getTypeContrat()) : new TypeContratDTO();
 
         final Optional<WrapperEmploye> wrapperEmploye = Optional
-                        .of(wrapperEmployeMapper.builderWrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO));
+            .of(new WrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, new WrapperContrat(contratDTO, typeContratDTO)));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
+
     }
 
     @Override
@@ -174,7 +184,7 @@ public class EmployeServiceImpl implements EmployeService {
         final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
-        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
+        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRefStatut());
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
@@ -194,15 +204,16 @@ public class EmployeServiceImpl implements EmployeService {
         final SocieteDTO societeDTO = societeService.findOne(wrapperEmploye.getSocieteId()).get();
         final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
         final AdresseDTO newAdresseDTO = adresseService.save(wrapperEmployeMapper.toAdresseDto(wrapperEmploye));
-        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRef());
+        final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findByCodeRef(wrapperEmploye.getCodeRefStatut());
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
         if (wrapperEmploye.getStatutEmployeId() == 3) {
             employeDTO.setStatutEmployeId(1L);
             employeDTO.setDateEmbauche(LocalDate.now());
             employeDTO.setDateSortie(LocalDate.now());
-        }else {
-        employeDTO.setStatutEmployeId(statutEmployeDTO.getId());}
+        } else {
+            employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
+        }
         final EmployeDTO newEmployeDTO = employeMapper.toDto(employeRepository.save(employeMapper.toEntity(employeDTO)));
         final WrapperEmploye newWrapperEmploye = wrapperEmployeMapper.builderWrapperEmploye(newEmployeDTO, newAdresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO);
         return newWrapperEmploye;
@@ -291,7 +302,7 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public WrapperEmploye archiveWrapperEmploye(@Valid WrapperEmploye wrapperEmploye) {
-        wrapperEmploye.setCodeRef("EMPEND");
+        wrapperEmploye.setCodeRefStatut("EMPEND");
         wrapperEmploye.setDateSortie(LocalDate.now());
         final WrapperEmploye archivedWrapperemploye = updateWrapperEmploye(wrapperEmploye);
         return archivedWrapperemploye;
@@ -300,7 +311,7 @@ public class EmployeServiceImpl implements EmployeService {
     @Override
     public boolean isEmployeMatriculeExist(final String matricule, final Long idSociete) {
         final Employe employe = employeRepository.findByMatricule(matricule);
-        if ((employe != null) && (employe.getSociete().getId()== idSociete)) {
+        if ((employe != null) && (employe.getSociete().getId() == idSociete)) {
             return true;
         }
         return false;

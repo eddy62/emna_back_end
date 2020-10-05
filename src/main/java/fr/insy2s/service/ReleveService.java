@@ -46,7 +46,7 @@ public interface ReleveService {
 
     List<ReleveDTO> findAllBySocieteId(Long id);
 
-    List<ReleveDTO> findAllByEtatReleveId(Long id);
+    List<WrapperReleveSolde> findAllByEtatReleveId(Long id);
 
     List<WrapperReleveSolde> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete);
 

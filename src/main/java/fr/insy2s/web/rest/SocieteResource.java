@@ -5,9 +5,12 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import fr.insy2s.domain.Employe;
 import fr.insy2s.service.dto.ComptableInfoEntrepriseAdresseUserDTO;
+import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.SocieteInfoEntrepriseAdresseUserDTO;
 import fr.insy2s.utils.wrapper.WrapperComptable;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -290,5 +293,18 @@ public class SocieteResource {
             }
 
         }
+    }
+
+    /**
+     * {@code GET /employes/society/:id} : get all the wrapperEmployes by society.
+     *
+     * @param id of the society
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of society's Employes in body.
+     */
+    @GetMapping("/employes/society/{id}")
+    public List<EmployeDTO> getAllEmployesBySociety(@PathVariable Long id) {
+        log.debug("REST request to get all Employes by society : {}", id);
+        List<EmployeDTO> list = societeService.findAllEmployeBySociete(id);
+        return list;
     }
 }

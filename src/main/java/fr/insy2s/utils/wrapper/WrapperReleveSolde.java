@@ -1,5 +1,8 @@
 package fr.insy2s.utils.wrapper;
 
+import fr.insy2s.domain.Releve;
+import fr.insy2s.service.dto.ReleveDTO;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -18,6 +21,22 @@ public class WrapperReleveSolde {
     private Long societeId;
 
     private BigDecimal solde;
+
+    public WrapperReleveSolde(ReleveDTO releveDTO, BigDecimal solde) {
+        this.id = releveDTO.getId();
+
+        this.dateDebut = releveDTO.getDateDebut();
+
+        this.dateFin = releveDTO.getDateFin();
+
+        this.banque = releveDTO.getBanque();
+
+        this.etatReleveId = releveDTO.getEtatReleveId();
+
+        this.societeId = releveDTO.getSocieteId();
+
+        this.solde = solde;
+    }
 
     public WrapperReleveSolde(Long id, LocalDate dateDebut, LocalDate dateFin, String banque, Long etatReleveId, Long societeId, BigDecimal solde) {
         this.id = id;

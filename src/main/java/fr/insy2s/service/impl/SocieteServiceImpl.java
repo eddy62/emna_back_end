@@ -9,7 +9,7 @@ import fr.insy2s.domain.Societe;
 import fr.insy2s.repository.SocieteRepository;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
-import fr.insy2s.utils.wrapper.WrapperComptable;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.utils.wrapper.WrapperSociete;
 
 import org.slf4j.Logger;
@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -39,15 +40,17 @@ public class SocieteServiceImpl implements SocieteService {
 
     private final SocieteMapper societeMapper;
     private final UserMapper userMapper;
+    private final EmployeMapper employeMapper;
 
 
-    public SocieteServiceImpl(SocieteRepository societeRepository, SocieteMapper societeMapper, AdresseService adresseService, InfoEntrepriseService infoEntrepriseService, UserService userService,UserMapper userMapper) {
+    public SocieteServiceImpl(SocieteRepository societeRepository, SocieteMapper societeMapper, AdresseService adresseService, InfoEntrepriseService infoEntrepriseService, UserService userService, UserMapper userMapper, EmployeMapper employeMapper) {
         this.societeRepository = societeRepository;
         this.societeMapper = societeMapper;
         this.adresseService= adresseService;
         this.infoEntrepriseService=infoEntrepriseService;
         this.userService=userService;
         this.userMapper=userMapper;
+        this.employeMapper = employeMapper;
     }
 
     @Override
@@ -167,6 +170,13 @@ public class SocieteServiceImpl implements SocieteService {
     public Optional<SocieteDTO> findByUser(Long id) {
         log.debug("Request to get Society from a specific User id : {}", id);
         return societeRepository.findByUserId(id).map(societeMapper::toDto);
+    }
+
+    @Override
+    public List<EmployeDTO> findAllEmployeBySociete(Long societeId) {
+        log.debug("Request to get Employe from a specific Societe id : {}", societeId);
+        Optional <Societe> societe = societeRepository.findById(societeId);
+        return societe.get().getListeEmployes().stream().map(employeMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
 }
