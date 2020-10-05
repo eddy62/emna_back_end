@@ -6,7 +6,6 @@ import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
-import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
@@ -33,6 +32,8 @@ public class FactureServiceImpl implements FactureService {
 
     private final FactureRepository factureRepository;
 
+    private final LigneProduitRepository ligneProduitRepository;
+
     private final FactureMapper factureMapper;
 
     private final SocieteRepository societeRepository;
@@ -48,10 +49,11 @@ public class FactureServiceImpl implements FactureService {
     private final EtatFactureRepository etatFactureRepository;
 
 
-    public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository, AdresseRepository adresseRepository, EtatFactureRepository etatFactureRepository) {
+    public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, LigneProduitRepository ligneProduitRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository, AdresseRepository adresseRepository, EtatFactureRepository etatFactureRepository) {
 
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
+        this.ligneProduitRepository = ligneProduitRepository;
         this.societeRepository = societeRepository;
         this.clientFournisseurService = clientFournisseurService;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -134,16 +136,19 @@ public class FactureServiceImpl implements FactureService {
     }
 
     @Override
-
     public List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id) {
         List<Facture> listeFacture = factureRepository.findAllBySocieteIdOrderByNumfactDesc(id);
         List<WrapperListeFacture> wrapperListeFactures = new ArrayList<WrapperListeFacture>();
         for (Facture facture: listeFacture) {
             if (facture.getType().equals("Vente")) {
-
                 BigDecimal totalFactureTTC= BigDecimal.valueOf(0);
                 for(LigneProduit ligneProduits:facture.getListeLigneProduits()){
-                    totalFactureTTC.add(ligneProduits.getProduit().getPrix().multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))).add(ligneProduits.getProduit().getPrix().multiply(BigDecimal.valueOf(ligneProduits.getQuantite())).multiply(ligneProduits.getProduit().getTva().divide(BigDecimal.valueOf(100D))));
+                    totalFactureTTC= totalFactureTTC.add(ligneProduits.getProduit().getPrix()
+                        .multiply(ligneProduits.getRemise())
+                            .multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))
+                            .multiply(ligneProduits.getProduit().getTva()
+                                .divide(BigDecimal.valueOf(100D))
+                                .add(BigDecimal.valueOf(1D))));
                 }
                 WrapperListeFacture wrapperListeFacture = new WrapperListeFacture(facture.getId(), facture.getNumfact(), facture.getType(), facture.getDate(), totalFactureTTC, facture.getClientFournisseur().getNom(), facture.getEtatFacture().getLibelle());
 
@@ -175,6 +180,8 @@ public class FactureServiceImpl implements FactureService {
          return max;
     }
 
+
+
     @Override
     public List<FactureDTO> findAllInvoicesByOperationId(Long idOperation) {
         log.debug("Request to get all factures from id operation");
@@ -185,9 +192,22 @@ public class FactureServiceImpl implements FactureService {
     }
 
     @Override
+    public Facture findFactureById(Long idFacture) {
+        return null;
+    }
+
+    @Override
     public Integer mergeOperationByIdFacture(Long idFacture, Long idOperation) {
         return factureRepository.mergeOperationByIdFacture(idFacture,idOperation);
 
     }
+
+    @Override
+    public List<LigneProduit> findAllLigneProduitByIdFacture(Long idFacture) {
+        log.debug("Request to get all ligneProduit from id Facture");
+        return this.factureRepository.getLigneProduitByIdFacture(idFacture);
+    }
+
+
 
 }

@@ -312,7 +312,7 @@ public class EmployeResource {
         List<WrapperEmploye> list = employeService.findAllWrapperEmployeBySociete(id);
         List<WrapperEmploye> listeSelect = new ArrayList<WrapperEmploye>();
         for (WrapperEmploye wrapperEmploye : list) {
-            if (wrapperEmploye.getCodeRef().equals(codestatut)) {
+            if (wrapperEmploye.getCodeRefStatut().equals(codestatut)) {
                 listeSelect.add(wrapperEmploye);
             }
         }

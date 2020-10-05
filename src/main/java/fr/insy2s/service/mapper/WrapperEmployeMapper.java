@@ -68,7 +68,7 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setPays(adresse.getPays());
 
         wrapperEmploye.setStatutEmployeId(statutEmploye.getId());
-        wrapperEmploye.setCodeRef(statutEmploye.getCodeRef());
+        wrapperEmploye.setCodeRefStatut(statutEmploye.getCodeRef());
         wrapperEmploye.setLibelle(statutEmploye.getLibelle());
 
         wrapperEmploye.setSocieteId(societe.getId());
@@ -158,7 +158,7 @@ public class WrapperEmployeMapper {
         final StatutEmployeDTO statutEmployeDTO = new StatutEmployeDTO();
 
         statutEmployeDTO.setId(wrapperEmploye.getStatutEmployeId());
-        statutEmployeDTO.setCodeRef(wrapperEmploye.getCodeRef());
+        statutEmployeDTO.setCodeRef(wrapperEmploye.getCodeRefStatut());
         statutEmployeDTO.setLibelle(wrapperEmploye.getLibelle());
 
         return statutEmployeDTO;

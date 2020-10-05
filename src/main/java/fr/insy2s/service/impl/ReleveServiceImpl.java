@@ -157,9 +157,13 @@ public class ReleveServiceImpl implements ReleveService {
     }
 
     private BigDecimal prixTTCoFFacture(Facture facture) {
-        BigDecimal sommeFacture=BigDecimal.valueOf(0D);
-        for(LigneProduit ligne :facture.getListeLigneProduits()){
-            sommeFacture.add((BigDecimal.valueOf(ligne.getQuantite()).multiply(ligne.getProduit().getPrix())).add((BigDecimal.valueOf(ligne.getQuantite()).multiply(ligne.getProduit().getPrix()).multiply(ligne.getProduit().getTva().divide(BigDecimal.valueOf(100D))))));
+        BigDecimal sommeFacture= BigDecimal.valueOf(0);
+        for(LigneProduit ligneProduits:facture.getListeLigneProduits()){
+            sommeFacture.add(ligneProduits.getProduit().getPrix()
+                .multiply(ligneProduits.getRemise())
+                .multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))
+                .multiply(ligneProduits.getProduit().getTva()
+                    .divide(BigDecimal.valueOf(100D))));
         }
         return sommeFacture;
     }

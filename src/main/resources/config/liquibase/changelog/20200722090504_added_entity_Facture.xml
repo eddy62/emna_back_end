@@ -82,6 +82,7 @@
             <column name="date" type="date"/>
             <column name="date_echeance" type="date"/>
             <column name="moyen_de_paiement" type="string"/>
+            <column name="devis_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
