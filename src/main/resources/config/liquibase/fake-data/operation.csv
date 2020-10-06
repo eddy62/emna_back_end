@@ -9,8 +9,8 @@ id;date;description;type;rapproche;solde;releve_id
 8;22/07/2020;withdrawal;Savings Account;true;10462;2
 9;22/07/2020;salmon Bedfordshire;partnerships Crescent Incredible;false;65571;3
 10;22/07/2020;holistic Senegal matrix;Ball;false;39907;1
-11;25/08/2020;testeOperation;type1;false;73.85;10
-12;25/08/2020;testeOperation2;type1;false;63.30;10
-13;25/08/2020;testeOperation3;type1;false;211;10
+11;2020-07-22;testeOperation;type1;false;73.85;10
+12;2020-07-22;testeOperation2;type1;false;63.30;10
+13;2020-07-22;testeOperation3;type1;false;211;10
 14;25/08/2020;testeOperation1;type1;true;100;8
 15;25/08/2020;testeOperation2;type1;true;100;8
