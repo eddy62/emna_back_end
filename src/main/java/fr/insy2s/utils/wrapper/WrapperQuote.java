@@ -2,6 +2,7 @@ package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.service.dto.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * - adresse client
  * - lignes produits
  * - documents relatifs
+ * - prix TTC
  */
 public class WrapperQuote {
 
@@ -45,11 +47,14 @@ public class WrapperQuote {
     // documents relatifs
     private List<DocumentDTO> documentDTOList;
 
+    // prix TTC
+    private BigDecimal prixTTC;
+
 
     public WrapperQuote() {
     }
 
-    public WrapperQuote(DevisDTO devisDTO, ClientFournisseurDTO clientFournisseurDTO, AdresseDTO adresseDTO, List<LigneProduitDTO> ligneProduitDTOList, List<DocumentDTO> documentDTOList) {
+    public WrapperQuote(DevisDTO devisDTO, ClientFournisseurDTO clientFournisseurDTO, AdresseDTO adresseDTO, List<LigneProduitDTO> ligneProduitDTOList, List<DocumentDTO> documentDTOList, BigDecimal prixTTC) {
         super();
 
         // informations devis
@@ -82,9 +87,12 @@ public class WrapperQuote {
         // documents relatifs
         this.documentDTOList = documentDTOList;
 
+        // prix TTC
+        this.prixTTC = prixTTC;
     }
 
     // getter & setter
+
     public Long getId() {
         return id;
     }
@@ -243,5 +251,40 @@ public class WrapperQuote {
 
     public void setDocumentDTOList(List<DocumentDTO> documentDTOList) {
         this.documentDTOList = documentDTOList;
+    }
+
+    public BigDecimal getPrixTTC() {
+        return prixTTC;
+    }
+
+    public void setPrixTTC(BigDecimal prixTTC) {
+        this.prixTTC = prixTTC;
+    }
+
+    @Override
+    public String toString() {
+        return "WrapperQuote{" +
+            "id=" + id +
+            ", numDevis=" + numDevis +
+            ", nom='" + nom + '\'' +
+            ", message='" + message + '\'' +
+            ", dateCreation=" + dateCreation +
+            ", dateLimite=" + dateLimite +
+            ", clientFournisseurId=" + clientFournisseurId +
+            ", clientFournisseurNom='" + clientFournisseurNom + '\'' +
+            ", clientFournisseurSiret='" + clientFournisseurSiret + '\'' +
+            ", clientFournisseurTelephone='" + clientFournisseurTelephone + '\'' +
+            ", clientFournisseurEmail='" + clientFournisseurEmail + '\'' +
+            ", adresseId=" + adresseId +
+            ", numeroRue='" + numeroRue + '\'' +
+            ", boitePostale='" + boitePostale + '\'' +
+            ", nomRue='" + nomRue + '\'' +
+            ", codePostal='" + codePostal + '\'' +
+            ", ville='" + ville + '\'' +
+            ", pays='" + pays + '\'' +
+            ", ligneProduitDTOList=" + ligneProduitDTOList +
+            ", documentDTOList=" + documentDTOList +
+            ", prixTTC=" + prixTTC +
+            '}';
     }
 }
