@@ -10,7 +10,7 @@ import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
 import fr.insy2s.service.mapper.FactureMapper;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
+import fr.insy2s.utils.wrapper.WrapperInvoiceWithBalance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,26 +136,26 @@ public class FactureServiceImpl implements FactureService {
     }
 
     @Override
-    public List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id) {
+    public List<WrapperInvoiceWithBalance> findAllWrapperVenteBySocieteId(Long id) {
         List<Facture> listeFacture = factureRepository.findAllBySocieteIdOrderByNumfactDesc(id);
-        List<WrapperListeFacture> wrapperListeFactures = new ArrayList<WrapperListeFacture>();
+        List<WrapperInvoiceWithBalance> wrapperInvoiceWithBalances = new ArrayList<WrapperInvoiceWithBalance>();
         for (Facture facture: listeFacture) {
             if (facture.getType().equals("Vente")) {
                 BigDecimal totalFactureTTC= BigDecimal.valueOf(0);
                 for(LigneProduit ligneProduits:facture.getListeLigneProduits()){
-                    totalFactureTTC= totalFactureTTC.add(ligneProduits.getProduit().getPrix()
+                    totalFactureTTC = totalFactureTTC.add(ligneProduits.getProduit().getPrix()
                         .multiply(ligneProduits.getRemise())
                             .multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))
                             .multiply(ligneProduits.getProduit().getTva()
                                 .divide(BigDecimal.valueOf(100D))
                                 .add(BigDecimal.valueOf(1D))));
                 }
-                WrapperListeFacture wrapperListeFacture = new WrapperListeFacture(facture.getId(), facture.getNumfact(), facture.getType(), facture.getDate(), totalFactureTTC, facture.getClientFournisseur().getNom(), facture.getEtatFacture().getLibelle());
+                WrapperInvoiceWithBalance wrapperInvoiceWithBalance = new WrapperInvoiceWithBalance(facture,totalFactureTTC);
 
-                wrapperListeFactures.add(wrapperListeFacture);
+                wrapperInvoiceWithBalances.add(wrapperInvoiceWithBalance);
             }
         }
-        return wrapperListeFactures;
+        return wrapperInvoiceWithBalances;
     }
 
     public List<FactureDTO> findAllInvoicesByStatement(Long idReleve) {
@@ -207,7 +207,5 @@ public class FactureServiceImpl implements FactureService {
         log.debug("Request to get all ligneProduit from id Facture");
         return this.factureRepository.getLigneProduitByIdFacture(idFacture);
     }
-
-
 
 }

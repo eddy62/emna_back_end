@@ -2,7 +2,6 @@ package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.domain.Document;
-import fr.insy2s.domain.Facture;
 import fr.insy2s.repository.*;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DepenseService;
@@ -11,11 +10,9 @@ import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.DepenseDTO;
 import fr.insy2s.service.dto.DepenseTemp;
-import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
 import fr.insy2s.service.mapper.DepenseMapper;
 import fr.insy2s.utils.wrapper.WrapperListeDepense;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

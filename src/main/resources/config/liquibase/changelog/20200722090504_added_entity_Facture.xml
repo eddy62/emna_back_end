@@ -83,11 +83,12 @@
             <column name="date_echeance" type="date"/>
             <column name="moyen_de_paiement" type="string"/>
             <column name="devis_id" type="numeric"/>
+            <column name="operation_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
 
-    <changeSet id="20200722090504-1-data-2" author="jhipster" context="faker">
+    <!--<changeSet id="20200722090504-1-data-2" author="jhipster" context="faker">
         <loadData
             file="config/liquibase/fake-data/facture_avec_id_operation.csv"
             separator=";"
@@ -101,8 +102,8 @@
             <column name="date_echeance" type="date"/>
             <column name="moyen_de_paiement" type="string"/>
             <column name="operation_id" type="numeric"/>
-            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+            &lt;!&ndash; jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here &ndash;&gt;
         </loadData>
-    </changeSet>
+    </changeSet>-->
 
 </databaseChangeLog>

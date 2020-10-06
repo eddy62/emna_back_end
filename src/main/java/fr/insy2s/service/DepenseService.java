@@ -2,9 +2,7 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.DepenseDTO;
 import fr.insy2s.service.dto.DepenseTemp;
-import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.utils.wrapper.WrapperListeDepense;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
 
 import java.util.List;
 import java.util.Optional;
