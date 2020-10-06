@@ -1,17 +1,14 @@
 package fr.insy2s.web.rest;
 
-import fr.insy2s.domain.Facture;
 import fr.insy2s.domain.LigneProduit;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.FactureTemp;
-import fr.insy2s.service.dto.OperationDTO;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
+import fr.insy2s.utils.wrapper.WrapperInvoiceWithBalance;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.FactureDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.checkerframework.checker.nullness.Opt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,7 +107,7 @@ public class FactureResource {
         return ResponseUtil.wrapOrNotFound(factureDTO);
     }
 
-    @GetMapping("/facture/{id}")
+    @GetMapping("/facture/{idFacture}")
     public List<LigneProduit> getLigneProduitByIdFacture(@PathVariable Long idFacture){
         log.debug("REST request to get ligne des produit by id facture");
         return factureService.findAllLigneProduitByIdFacture(idFacture);
@@ -139,7 +136,7 @@ public class FactureResource {
     }
 
     @GetMapping("/factures/societe/{id}")
-    public List<WrapperListeFacture> getAllFactureBySocieteId(@PathVariable Long id) {
+    public List<WrapperInvoiceWithBalance> getAllFactureBySocieteId(@PathVariable Long id) {
         log.debug("REST request to get all Factures By User");
         return factureService.findAllWrapperVenteBySocieteId(id);
     }
@@ -151,7 +148,7 @@ public class FactureResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
      */
     @GetMapping("/factures/relevé/{idReleve}")
-    public List<FactureDTO> getAllInvoicesByStatement(@PathVariable Long idReleve) {
+    public List<WrapperInvoiceWithBalance> getAllInvoicesByStatement(@PathVariable Long idReleve) {
         log.debug("REST request to get all invoices of the statement concerned : {}", idReleve);
         return factureService.findAllInvoicesByStatement(idReleve);
     }
