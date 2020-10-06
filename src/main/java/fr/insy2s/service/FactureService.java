@@ -52,7 +52,7 @@ public interface FactureService {
 
     List<WrapperInvoiceWithBalance> findAllWrapperVenteBySocieteId(Long id);
 
-    List<FactureDTO> findAllInvoicesByStatement(Long idReleve);
+    List<WrapperInvoiceWithBalance> findAllInvoicesByStatement(Long idReleve);
 
     Long getLastNumFact(Long id);
 

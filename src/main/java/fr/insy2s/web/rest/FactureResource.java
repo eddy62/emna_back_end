@@ -148,7 +148,7 @@ public class FactureResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of factures in body.
      */
     @GetMapping("/factures/relevé/{idReleve}")
-    public List<FactureDTO> getAllInvoicesByStatement(@PathVariable Long idReleve) {
+    public List<WrapperInvoiceWithBalance> getAllInvoicesByStatement(@PathVariable Long idReleve) {
         log.debug("REST request to get all invoices of the statement concerned : {}", idReleve);
         return factureService.findAllInvoicesByStatement(idReleve);
     }
