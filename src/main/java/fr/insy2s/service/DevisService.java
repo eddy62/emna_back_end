@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.DevisDTO;
+import fr.insy2s.utils.wrapper.WrapperQuote;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,4 +49,12 @@ public interface DevisService {
      * @return the list of entities
      */
     List<DevisDTO> findAllQuotesBySocietyId(Long idSociete);
+
+    /**
+     * Get all the WrapperQuotes by society id.
+     *
+     * @param id the id of the society.
+     * @return the list of entities Wrapper
+     */
+    List<WrapperQuote> findAllWrapperQuotes(Long id);
 }

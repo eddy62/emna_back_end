@@ -4,7 +4,7 @@ import fr.insy2s.domain.Facture;
 import fr.insy2s.domain.LigneProduit;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
+import fr.insy2s.utils.wrapper.WrapperInvoiceWithBalance;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,9 +50,9 @@ public interface FactureService {
     List<FactureDTO> findAllBySocieteId(Long id);
 
 
-    List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id);
+    List<WrapperInvoiceWithBalance> findAllWrapperVenteBySocieteId(Long id);
 
-    List<FactureDTO> findAllInvoicesByStatement(Long idReleve);
+    List<WrapperInvoiceWithBalance> findAllInvoicesByStatement(Long idReleve);
 
     Long getLastNumFact(Long id);
 

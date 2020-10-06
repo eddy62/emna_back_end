@@ -2,9 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.service.DepenseService;
 import fr.insy2s.service.dto.DepenseTemp;
-import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.utils.wrapper.WrapperListeDepense;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.DepenseDTO;
 

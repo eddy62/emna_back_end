@@ -9,3 +9,4 @@ id;nom;reference;tva;prix;unite;description;societe_id
 8;produit8;11196;20;55;km;descriptionn 8;1
 9;produit9;14975;1.5;65;j;calculate enterprise 9;1
 10;produit10;64075;15;140;h;description 10;1
+11;produit11;12345;5.5;10;kg;;1
