@@ -3,8 +3,11 @@ package fr.insy2s.web.rest;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import fr.insy2s.security.AuthoritiesConstants;
+import fr.insy2s.service.ContratService;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.dto.DocumentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +31,8 @@ public class FilesController {
     FilesStorageService storageService;
     @Autowired
     DocumentService documentService;
+    @Autowired
+    ContratService contratService;
 
 
     /**
@@ -115,4 +121,27 @@ public class FilesController {
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }*/
+
+    /**
+     * {@code POST  /upload/contracts/{id}} : Upload a new file.
+     *
+     * @param file  the file to upload.
+     * @param id    the ID of the Contrat.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body a personalized message,
+     * or with status {@code 400 (Bad Request)} if the Document cannot be created,
+     * or with status {@code 417 (Expectation Failed) if an error occured during upload}
+     */
+    @Secured({AuthoritiesConstants.SOCIETY, AuthoritiesConstants.ADMIN})
+    @PostMapping("/upload/contracts/{id}")
+    public ResponseEntity<String> uploadSignedContract(@RequestParam("file") MultipartFile file, @PathVariable Long id) {
+        String message = "";
+        try {
+            storageService.save(file,"contrat", id + "", "1");
+            message = "File uploaded with success: " + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        } catch (Exception e) {
+            message = "Error: could not create the entity Document linked to: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+    }
 }
