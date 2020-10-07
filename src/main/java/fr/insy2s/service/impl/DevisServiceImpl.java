@@ -9,6 +9,7 @@ import fr.insy2s.service.dto.DevisDTO;
 import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.dto.LigneProduitDTO;
 import fr.insy2s.service.mapper.*;
+import fr.insy2s.utils.TotalUtil;
 import fr.insy2s.utils.wrapper.WrapperQuote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,7 +118,14 @@ public class DevisServiceImpl implements DevisService {
                 ligneProduitDTOList.add(ligneProduitMapper.toDto(ligneProduit));
             }
 
-            WrapperQuote wrapperQuote = new WrapperQuote(devisMapper.toDto(devis), clientFournisseurMapper.toDto(devis.getClientFournisseur()), adresseMapper.toDto(devis.getClientFournisseur().getAdresse()), ligneProduitDTOList, documentDTOList);
+            WrapperQuote wrapperQuote = new WrapperQuote(
+                devisMapper.toDto(devis),
+                clientFournisseurMapper.toDto(devis.getClientFournisseur()),
+                adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
+                ligneProduitDTOList,
+                documentDTOList,
+                TotalUtil.getTTCDevis(devis));
+
             wrapperQuoteList.add(wrapperQuote);
         }
         return wrapperQuoteList;

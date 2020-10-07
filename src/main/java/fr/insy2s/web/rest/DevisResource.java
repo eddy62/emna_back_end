@@ -134,7 +134,7 @@ public class DevisResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of WrapperQuotes in body.
      */
     @GetMapping("/devis/liste/societe/{id}")
-    public List<WrapperQuote> getAllWrapperQuotes(@PathVariable Long id) {
+    public List<WrapperQuote> getQuotesBySociety(@PathVariable Long id) {
         log.debug("Request to get all the WrapperQuotes by society id: {}", id);
         return devisService.findAllWrapperQuotes(id);
     }
