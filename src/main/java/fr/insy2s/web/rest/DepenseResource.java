@@ -1,11 +1,11 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.DepenseService;
+import fr.insy2s.service.dto.DepenseDTO;
 import fr.insy2s.service.dto.DepenseTemp;
+import fr.insy2s.utils.wrapper.WrapperDepense;
 import fr.insy2s.utils.wrapper.WrapperListeDepense;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.DepenseDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -99,9 +99,9 @@ public class DepenseResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the depenseDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/depenses/{id}")
-    public ResponseEntity<DepenseDTO> getDepense(@PathVariable Long id) {
+    public ResponseEntity<WrapperDepense> getDepense(@PathVariable Long id) {
         log.debug("REST request to get Depense : {}", id);
-        Optional<DepenseDTO> depenseDTO = depenseService.findOne(id);
+      Optional<WrapperDepense> depenseDTO = depenseService.findOne(id);
         return ResponseUtil.wrapOrNotFound(depenseDTO);
     }
 
