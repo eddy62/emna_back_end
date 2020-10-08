@@ -4,7 +4,9 @@ import fr.insy2s.domain.Contrat;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
 import fr.insy2s.service.dto.ContratDTO;
+import fr.insy2s.utils.wrapper.WrapperContrat;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,4 +58,12 @@ public interface ContratService {
     List<IContratEmployerProjection> getAllContratEmployerById(Long id);
 
     Contrat getActiveContratEmployee(Long id);
+
+    /**
+     * Create a WrapperContrat
+     *
+     * @param wrapperContrat wrapperContrat to create
+     * @return the created WrapperContrat
+     */
+    Optional<WrapperContrat> createWrapperContrat(@Valid WrapperContrat wrapperContrat);
 }

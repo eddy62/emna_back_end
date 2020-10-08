@@ -5,9 +5,11 @@ import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.service.ContratService;
 //import fr.insy2s.service.dto.ClauseDTO;
 import fr.insy2s.service.dto.ContratDTO;
+import fr.insy2s.utils.wrapper.WrapperContrat;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.*;
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +58,7 @@ public class ContratResource {
         if (contratVM.getId() != null) {
             throw new BadRequestAlertException("A new contrat cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        contratVM.setDateCreation(LocalDate.now());
+        //contratVM.setDateCreation(LocalDate.now());
         contratVM.setSigne(false);
         contratVM.setArchive(false);
 
@@ -67,7 +69,7 @@ public class ContratResource {
         contratDTO.setSigne(contratVM.getSigne());
         contratDTO.setDateCreation(contratVM.getDateCreation());
         contratDTO.setTitre(contratVM.getTitre());
-        contratDTO  = contratService.save(contratDTO);
+        contratDTO = contratService.save(contratDTO);
 
 
         /*List<ClauseVm> listClauseVm = contratVM.getClauses();
@@ -86,16 +88,16 @@ public class ContratResource {
 
         Long contratId = clauseDto.getListeContrats().stream().findFirst().get().getId();*/
 
-     //   System.err.println("------------------        JE GENERE LE PDF        ------------------");
-     //   ContratPdfVm contratPdfVm = new ContratPdfVm();
-     //   contratPdfVm.setTitre(contratDTO.getTitre());
-     //   String pdfName = contratDTO.getTitre()+contratDTO.getId();
-     //   byte[] bytes= PdfUtil.generatePDFContrat(contratPdfVm);
+        //   System.err.println("------------------        JE GENERE LE PDF        ------------------");
+        //   ContratPdfVm contratPdfVm = new ContratPdfVm();
+        //   contratPdfVm.setTitre(contratDTO.getTitre());
+        //   String pdfName = contratDTO.getTitre()+contratDTO.getId();
+        //   byte[] bytes= PdfUtil.generatePDFContrat(contratPdfVm);
 
-    //     return ResponseEntity.ok()
-     //       .header("Content-Type", "application/pdf; charset=UTF-8")
-     //       .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"") //
-      //      .body(bytes);
+        //     return ResponseEntity.ok()
+        //       .header("Content-Type", "application/pdf; charset=UTF-8")
+        //       .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"") //
+        //      .body(bytes);
     }
 
     /**
@@ -161,8 +163,26 @@ public class ContratResource {
         log.debug("REST request to get details Contrat : {}", id);
         List<IContratAllInfoProjection> iContratAllInfoProjections = this.contratService.getContratAllInfos(id);
         Optional<ContratAllInfoVM> contratAllInfoVM = Optional.of(new ContratAllInfoVM());
-        if(!iContratAllInfoProjections.isEmpty())
-        contratAllInfoVM.get().setContratId(iContratAllInfoProjections.get(0).getContratId());
+        if (!iContratAllInfoProjections.isEmpty())
+            contratAllInfoVM.get().setContratId(iContratAllInfoProjections.get(0).getContratId());
         return ResponseEntity.ok(contratAllInfoVM.get());
+    }
+
+    /**
+     * {@code POST  /wrapperContrat} : Create a new contrat.
+     *
+     * @param wrapperContrat the wrapperContrat to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wrapperContrat, or with status {@code 400 (Bad Request)} if the contrat has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/wrapperContrat")
+    public ResponseEntity<WrapperContrat> createWrapperContrat(@Valid @RequestBody WrapperContrat wrapperContrat) throws URISyntaxException, JRException {
+        log.debug("REST request to save Contrat : {}", wrapperContrat);
+        if (wrapperContrat.getId() != null) {
+            throw new BadRequestAlertException("A new contrat cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Optional<WrapperContrat> result = contratService.createWrapperContrat(wrapperContrat);
+
+        return ResponseUtil.wrapOrNotFound(result);
     }
 }
