@@ -4,5 +4,5 @@ id;chemin_fichier;type;nom;type_document_id;facture_id;releve_id;contrat_id;depe
 3;./fichiers/social/variablesdepaie/note_de_frais_1_1.pdf;ticket péage;note_de_frais_1_1.pdf;7;;;;;;;1;;;;
 4;./fichiers/social/variablesdepaie/note_de_frais_2_1.pdf;inclassable;autres_variables_1_1.pdf;8;;;;;;;2;;;;
 5;./fichiers/social/variablesdepaie/autres_variables_1_1.pdf;inclassable;autres_variables_2_1.pdf;8;;;;;;;;1;;;
-6;./fichiers/comptabilite/factures/facture_1_1.pdf;fac1_1;facture_1_1.pdf;1;1;;;;;;;;;;
-7;./fichiers/comptabilite/factures/facture_2_1.pdf;fac2_1;facture_2_1.pdf;1;2;;;;;;;;;;
+6;./fichiers/comptabilite/factures/facture_1_1.pdf;fac1_1;facture_1_1.pdf;1;1;1;1;1;1;;;;;;
+7;./fichiers/comptabilite/factures/facture_2_1.pdf;fac2_1;facture_2_1.pdf;1;2;2;2;2;2;;;;;;
