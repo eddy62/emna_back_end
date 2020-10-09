@@ -2,18 +2,21 @@ package fr.insy2s.utils.files;
 
 import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
+import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import fr.insy2s.web.rest.vm.ContratPdfVm;
-
-import java.io.InputStream;
-import java.util.*;
-
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PdfUtil {
 
@@ -21,9 +24,9 @@ public class PdfUtil {
 
     private static final String URL_TEMPLATE_MACHIN         = "/templates/pdf/machin/machin.jasper";
 
-    private static final String URL_TEMPLATE_CONTRAT        = "/templates/Pdf/Contrat/TemplateContrat.jasper";
-
+    private static final String URL_TEMPLATE_CONTRAT = "/templates/Pdf/Contrat/TemplateContrat.jasper";
     private static final String URL_TEMPLATE_RELEVE_ARCHIVE = "/templates/pdf/statement/archived_statement.jasper";
+    private static final String URL_TEMPLATE_DPAE = "/templates/pdf/dpae/TemplateDpae.jasper";
 
 
     static {
@@ -86,6 +89,24 @@ public class PdfUtil {
         );
     }
 
+    /**
+     * Methode permettant de générer un PDF d'une DPAE à partir d'un objet WrapperPdfDpae
+     *
+     * @param wrapper the WrapperPdfDpae to map in the the template TemplateDpae.jasper
+     * @return one document PDF in byte array based on the template TemplateDpae.jasper
+     * @throws JRException the exception throwned
+     * @author Erik DUNAIS
+     */
+    public static byte[] generateDpaeAsBytes(WrapperPdfDpae wrapper) throws JRException {
+        String userLogin = SecurityUtils.getCurrentUserLogin().get();
+        Map<String, Object> params = new HashMap<>();
+
+        return PdfUtil.generatePdfReportAsBytes(
+                URL_TEMPLATE_DPAE,
+                params,
+                Collections.singletonList(wrapper)
+        );
+    }
     /**
      * Methode generique permettant de charger un template pdf jaspersoft, et de lui donner les params et données dont il a besoin
      *

@@ -80,6 +80,7 @@ public class VariableDePaieResource {
      * @param annee     year in all VariablesPaie
      * @param mois      month in all VariablesPaie
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the wrapperVariablesPaie in body
+     * @author Erik DUNAIS
      */
     @GetMapping("/wrappervariablespaie/employe/{idEmploye}/annee/{annee}/mois/{mois}")
     public WrapperVariablesPaie getOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(@PathVariable Long idEmploye, @PathVariable Integer annee, @PathVariable Integer mois) {
@@ -97,6 +98,7 @@ public class VariableDePaieResource {
      * or with status {@code 206 (Partial Content)} if partial Variables de Paie were updated,
      * or with status {@code 400 (Bad Request)} if none Variables de Paie were updated,
      * and with body the String "Variables de paie traitées : x / y " And eventual Variables de Paie not updated
+     * @author Erik DUNAIS
      */
     @PutMapping("/wrappervariablespaie/process-variablespaie/{idOperation}")
     public ResponseEntity<String> updateConfirmWrapperVariablesPaie(@Valid @RequestBody WrapperVariablesPaie wrapperVariablesPaieToUpdate, @PathVariable Integer idOperation) {
