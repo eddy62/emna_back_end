@@ -90,4 +90,17 @@ public class WrapperInvoiceWithBalance {
         this.nomClient = facture.getClientFournisseur().getNom();
         this.etatFacture = facture.getEtatFacture().getLibelle();
     }
+
+    @Override
+    public String toString() {
+        return "WrapperInvoiceWithBalance{" +
+            "id=" + id +
+            ", numfact=" + numfact +
+            ", type='" + type + '\'' +
+            ", date=" + date +
+            ", prixTTC=" + prixTTC +
+            ", nomClient='" + nomClient + '\'' +
+            ", etatFacture='" + etatFacture + '\'' +
+            '}';
+    }
 }
