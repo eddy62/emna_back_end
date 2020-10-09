@@ -6,12 +6,12 @@ import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.FactureService;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
-import fr.insy2s.service.dto.DepenseTemp;
 import fr.insy2s.service.dto.FactureDTO;
 import fr.insy2s.service.dto.FactureTemp;
 import fr.insy2s.service.mapper.ClientFournisseurMapper;
 import fr.insy2s.service.mapper.FactureMapper;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
+import fr.insy2s.utils.TotalUtil;
+import fr.insy2s.utils.wrapper.WrapperInvoiceWithBalance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +33,8 @@ public class FactureServiceImpl implements FactureService {
 
     private final FactureRepository factureRepository;
 
+    private final LigneProduitRepository ligneProduitRepository;
+
     private final FactureMapper factureMapper;
 
     private final SocieteRepository societeRepository;
@@ -48,10 +50,11 @@ public class FactureServiceImpl implements FactureService {
     private final EtatFactureRepository etatFactureRepository;
 
 
-    public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository, AdresseRepository adresseRepository, EtatFactureRepository etatFactureRepository) {
+    public FactureServiceImpl(FactureRepository factureRepository, FactureMapper factureMapper, DocumentService documentService, DocumentRepository documentRepository, LigneProduitRepository ligneProduitRepository, SocieteRepository societeRepository, ClientFournisseurService clientFournisseurService, ClientFournisseurMapper clientFournisseurMapper, ClientFournisseurRepository clientFournisseurRepository, AdresseRepository adresseRepository, EtatFactureRepository etatFactureRepository) {
 
         this.factureRepository = factureRepository;
         this.factureMapper = factureMapper;
+        this.ligneProduitRepository = ligneProduitRepository;
         this.societeRepository = societeRepository;
         this.clientFournisseurService = clientFournisseurService;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -134,60 +137,74 @@ public class FactureServiceImpl implements FactureService {
     }
 
     @Override
-
-    public List<WrapperListeFacture> findAllWrapperVenteBySocieteId(Long id) {
+    public List<WrapperInvoiceWithBalance> findAllWrapperVenteBySocieteId(Long id) {
         List<Facture> listeFacture = factureRepository.findAllBySocieteIdOrderByNumfactDesc(id);
-        List<WrapperListeFacture> wrapperListeFactures = new ArrayList<WrapperListeFacture>();
-        for (Facture facture: listeFacture) {
+        List<WrapperInvoiceWithBalance> wrapperInvoiceWithBalances = new ArrayList<WrapperInvoiceWithBalance>();
+        for (Facture facture : listeFacture) {
             if (facture.getType().equals("Vente")) {
 
-                BigDecimal totalFactureTTC= BigDecimal.valueOf(0);
-                for(LigneProduit ligneProduits:facture.getListeLigneProduits()){
-                    totalFactureTTC.add(ligneProduits.getProduit().getPrix().multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))).add(ligneProduits.getProduit().getPrix().multiply(BigDecimal.valueOf(ligneProduits.getQuantite())).multiply(ligneProduits.getProduit().getTva().divide(BigDecimal.valueOf(100D))));
-                }
-                WrapperListeFacture wrapperListeFacture = new WrapperListeFacture(facture.getId(), facture.getNumfact(), facture.getType(), facture.getDate(), totalFactureTTC, facture.getClientFournisseur().getNom(), facture.getEtatFacture().getLibelle());
+                WrapperInvoiceWithBalance wrapperInvoiceWithBalance = new WrapperInvoiceWithBalance(
+                    facture, TotalUtil.getTTCFacture(facture));
 
-                wrapperListeFactures.add(wrapperListeFacture);
+                wrapperInvoiceWithBalances.add(wrapperInvoiceWithBalance);
             }
         }
-        return wrapperListeFactures;
+        return wrapperInvoiceWithBalances;
     }
 
-    public List<FactureDTO> findAllInvoicesByStatement(Long idReleve) {
-        log.debug("Request to get all Factures for the statement concerned: {}", idReleve);
-        return this.factureRepository.findAllInvoicesByStatement(idReleve)
-                                     .stream()
-                                     .map(factureMapper::toDto)
-                                     .collect(Collectors.toCollection(LinkedList::new));
+
+    public List<WrapperInvoiceWithBalance> findAllInvoicesByStatement(Long idReleve) {
+        List<Facture> listeFacture = factureRepository.findAllInvoicesByStatement(idReleve);
+        List<WrapperInvoiceWithBalance> wrapperInvoiceWithBalances = new ArrayList<WrapperInvoiceWithBalance>();
+        for (Facture facture : listeFacture) {
+                WrapperInvoiceWithBalance wrapperInvoiceWithBalance = new WrapperInvoiceWithBalance(
+                    facture, TotalUtil.getTTCFacture(facture));
+
+                wrapperInvoiceWithBalances.add(wrapperInvoiceWithBalance);
+        }
+        return wrapperInvoiceWithBalances;
     }
 
     @Override
-    public Long getLastNumFact(Long id) {
-         List<Facture> factureList  = factureRepository.findAllBySocieteIdOrderByNumfactDesc(id);
-         Long max = 0L;
 
-        for (Facture facture: factureList
-             ) {
-            if (facture.getNumfact()!=null && facture.getNumfact()>max){
+    public Long getLastNumFact(Long id) {
+        List<Facture> factureList = factureRepository.findAllBySocieteIdOrderByNumfactDesc(id);
+        Long max = 0L;
+
+        for (Facture facture : factureList
+        ) {
+            if (facture.getNumfact() != null && facture.getNumfact() > max) {
                 max = facture.getNumfact();
             }
         }
-         return max;
+        return max;
     }
+
 
     @Override
     public List<FactureDTO> findAllInvoicesByOperationId(Long idOperation) {
         log.debug("Request to get all factures from id operation");
         return this.factureRepository.findAllInvoicesByOperationId(idOperation)
-                                     .stream()
-                                     .map(factureMapper::toDto)
-                                     .collect(Collectors.toList());
+            .stream()
+            .map(factureMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public Facture findFactureById(Long idFacture) {
+        return null;
     }
 
     @Override
     public Integer mergeOperationByIdFacture(Long idFacture, Long idOperation) {
-        return factureRepository.mergeOperationByIdFacture(idFacture,idOperation);
+        return factureRepository.mergeOperationByIdFacture(idFacture, idOperation);
 
+    }
+
+    @Override
+    public List<LigneProduit> findAllLigneProduitByIdFacture(Long idFacture) {
+        log.debug("Request to get all ligneProduit from id Facture");
+        return this.factureRepository.getLigneProduitByIdFacture(idFacture);
     }
 
 }

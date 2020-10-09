@@ -223,16 +223,19 @@ public class Devis implements Serializable {
         return 31;
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
         return "Devis{" +
-            "id=" + getId() +
-            ", numDevis=" + getNumDevis() +
-            ", nom='" + getNom() + "'" +
-            ", message='" + getMessage() + "'" +
-            ", dateCreation='" + getDateCreation() + "'" +
-            ", dateLimite='" + getDateLimite() + "'" +
-            "}";
+            "id=" + id +
+            ", numDevis=" + numDevis +
+            ", nom='" + nom + '\'' +
+            ", message='" + message + '\'' +
+            ", dateCreation=" + dateCreation +
+            ", dateLimite=" + dateLimite +
+            ", listeLigneProduits=" + listeLigneProduits +
+            ", listeDocuments=" + listeDocuments +
+            ", etatDevis=" + etatDevis +
+            ", clientFournisseur=" + clientFournisseur +
+            '}';
     }
 }

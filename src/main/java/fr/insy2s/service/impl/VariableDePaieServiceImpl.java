@@ -23,22 +23,20 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
 
     private final Logger log = LoggerFactory.getLogger(VariableDePaieServiceImpl.class);
 
-    private final AbsenceRepository                 absenceRepository;
-    private final AbsenceMapper                     absenceMapper;
-    private final TypeAbsenceMapper                 typeAbsenceMapper;
-    private final AutresVariableRepository          autresVariableRepository;
-    private final AutresVariableMapper              autresVariableMapper;
-    private final AvanceRappelSalaireRepository     avanceRappelSalaireRepository;
-    private final AvanceRappelSalaireMapper         avanceRappelSalaireMapper;
-    private final HeuresSupplementairesRepository   heuresSupplementairesRepository;
-    private final HeuresSupplementairesMapper       heuresSupplementairesMapper;
-    private final NoteDeFraisRepository             noteDeFraisRepository;
-    private final NoteDeFraisMapper                 noteDeFraisMapper;
-    private final PrimeRepository                   primeRepository;
-    private final PrimeMapper                       primeMapper;
-    private final TypePrimeMapper                   typePrimeMapper;
-    private final DocumentMapper                    documentMapper;
-    private final TypeDocumentMapper typeDocumentMapper;
+    private final AbsenceRepository absenceRepository;
+    private final AbsenceMapper absenceMapper;
+    private final TypeAbsenceMapper typeAbsenceMapper;
+    private final AutresVariableRepository autresVariableRepository;
+    private final AutresVariableMapper autresVariableMapper;
+    private final AvanceRappelSalaireRepository avanceRappelSalaireRepository;
+    private final AvanceRappelSalaireMapper avanceRappelSalaireMapper;
+    private final HeuresSupplementairesRepository heuresSupplementairesRepository;
+    private final HeuresSupplementairesMapper heuresSupplementairesMapper;
+    private final NoteDeFraisRepository noteDeFraisRepository;
+    private final NoteDeFraisMapper noteDeFraisMapper;
+    private final PrimeRepository primeRepository;
+    private final PrimeMapper primeMapper;
+    private final TypePrimeMapper typePrimeMapper;
     private final WrapperDocumentMapper wrapperDocumentMapper;
 
 
@@ -56,8 +54,6 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
                                      PrimeRepository primeRepository,
                                      PrimeMapper primeMapper,
                                      TypePrimeMapper typePrimeMapper,
-                                     DocumentMapper documentMapper,
-                                     TypeDocumentMapper typeDocumentMapper,
                                      WrapperDocumentMapper wrapperDocumentMapper) {
 
         this.absenceRepository = absenceRepository;
@@ -74,44 +70,39 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         this.primeRepository = primeRepository;
         this.primeMapper = primeMapper;
         this.typePrimeMapper = typePrimeMapper;
-        this.documentMapper = documentMapper;
-        this.typeDocumentMapper = typeDocumentMapper;
         this.wrapperDocumentMapper = wrapperDocumentMapper;
     }
 
+    /**
+     * Get one wrapperVariablesPaie by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in all VariablesPaie
+     * @param annee     year in all VariablesPaie
+     * @param mois      month in all VariablesPaie
+     * @return the WrapperVariablesPaie
+     * @author Erik DUNAIS
+     */
     @Override
     public WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
         log.debug("Request to get one WrapperVariablesPaie with Employe:{}, Annee:{}, Mois:{}", idEmploye, annee, mois);
         // Absences
         List<Absence> absenceList = absenceRepository.findAllAbsenceByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAbsence> wrapperAbsenceList = new ArrayList<>();
-        for (Absence absence : absenceList){
-            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
-            for (Document document : absence.getListeDocuments()){
-                WrapperDocument wrapperDocument
-                        = wrapperDocumentMapper.builderWrapperDocument(
-                        documentMapper.toDto(document),
-                        typeDocumentMapper.toDto(document.getTypeDocument()));
-                wrapperDocumentList.add(wrapperDocument);
-            }
+        absenceList.forEach(absence -> {
+            List<Document> documentList = new ArrayList<>(absence.getListeDocuments());
+            List<WrapperDocument> wrapperDocumentList = wrapperDocumentMapper.documentListToWrapperDocumentList(documentList);
             WrapperAbsence wrapperAbsence = new WrapperAbsence(absenceMapper.toDto(absence), typeAbsenceMapper.toDto(absence.getTypeAbsence()), wrapperDocumentList);
             wrapperAbsenceList.add(wrapperAbsence);
-        }
+        });
         // Autres Variable
         List<AutresVariable> autresVariableList = autresVariableRepository.findAllAutresVariablesByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperAutresVariable> wrapperAutresVariableList = new ArrayList<>();
-        for (AutresVariable autresVariable : autresVariableList){
-            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
-            for (Document document : autresVariable.getListeDocuments()){
-                WrapperDocument wrapperDocument
-                        = wrapperDocumentMapper.builderWrapperDocument(
-                        documentMapper.toDto(document),
-                        typeDocumentMapper.toDto(document.getTypeDocument()));
-                wrapperDocumentList.add(wrapperDocument);
-            }
+        autresVariableList.forEach(autresVariable -> {
+            List<Document> documentList = new ArrayList<>(autresVariable.getListeDocuments());
+            List<WrapperDocument> wrapperDocumentList = wrapperDocumentMapper.documentListToWrapperDocumentList(documentList);
             WrapperAutresVariable wrapperAutresVariable = new WrapperAutresVariable(autresVariableMapper.toDto(autresVariable), wrapperDocumentList);
             wrapperAutresVariableList.add(wrapperAutresVariable);
-        }
+        });
         // Avance/RappelSalaire
         List<AvanceRappelSalaireDTO> avanceRappelSalaireDTOList = avanceRappelSalaireRepository.findAllAvanceRappelSalaireByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
                 .map(avanceRappelSalaireMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
@@ -121,18 +112,12 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         // Notes de Frais
         List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperNoteDeFrais> wrapperNoteDeFraisList = new ArrayList<>();
-        for (NoteDeFrais noteDeFrais : noteDeFraisList){
-            List<WrapperDocument> wrapperDocumentList = new ArrayList<>();
-            for (Document document : noteDeFrais.getListeDocuments()){
-                WrapperDocument wrapperDocument
-                        = wrapperDocumentMapper.builderWrapperDocument(
-                        documentMapper.toDto(document),
-                        typeDocumentMapper.toDto(document.getTypeDocument()));
-                wrapperDocumentList.add(wrapperDocument);
-            }
+        noteDeFraisList.forEach(noteDeFrais -> {
+            List<Document> documentList = new ArrayList<>(noteDeFrais.getListeDocuments());
+            List<WrapperDocument> wrapperDocumentList = wrapperDocumentMapper.documentListToWrapperDocumentList(documentList);
             WrapperNoteDeFrais wrapperNoteDeFrais = new WrapperNoteDeFrais(noteDeFraisMapper.toDto(noteDeFrais), wrapperDocumentList);
             wrapperNoteDeFraisList.add(wrapperNoteDeFrais);
-        }
+        });
         // Primes
         List<Prime> primeList = primeRepository.findAllPrimeByIdEmployeAndAnneeAndMois(idEmploye, annee, mois);
         List<WrapperPrime> wrapperPrimeList = new ArrayList<>();

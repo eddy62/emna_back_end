@@ -168,4 +168,18 @@ public class DocumentResource {
         return response;
     }
 
+
+    /**
+     * {@code GET  /documents/idPaySlip/:id} : get document Playslip by id.
+     *
+     * @param idPayslip the id of the playslip of the file.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} PDF File.
+     */
+
+    @GetMapping("/documents/idPaySlip/{idPayslip}")
+    public DocumentDTO getDocumentByIdPayslip(@PathVariable Long idPayslip) {
+        log.debug("REST request to get the document path of a playslip by idPayslip:{}", idPayslip);
+        return documentService.findOneDocumentByPlayslipId(idPayslip);
+    }
+
 }

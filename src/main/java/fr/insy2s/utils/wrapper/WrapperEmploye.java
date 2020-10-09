@@ -1,91 +1,100 @@
 package fr.insy2s.utils.wrapper;
 
+import fr.insy2s.service.dto.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import fr.insy2s.service.dto.AdresseDTO;
-import fr.insy2s.service.dto.EmployeDTO;
-import fr.insy2s.service.dto.InfoEntrepriseDTO;
-import fr.insy2s.service.dto.SocieteDTO;
-import fr.insy2s.service.dto.StatutEmployeDTO;
-import fr.insy2s.service.dto.TypeContratDTO;
-
 /**
- * WrappeurEmploye
+ * WrapperEmploye
  *
+ * @author De ? et Cédric Belot
  */
 public class WrapperEmploye {
 
-    //Employe
-    private Long      id;
-    private String    matricule;
-    private String    civilite;
-    private String    nomNaissance;
-    private String    nomUsage;
-    private String    prenom;
+    //employe
+    private Long id;
+    private String matricule;
+    private String civilite;
+    private String nomNaissance;
+    private String nomUsage;
+    private String prenom;
     private LocalDate dateNaissance;
-    private String    villeNaissance;
-    private String    departementNaissance;
-    private String    paysNaisance;
-    private String    numeroSecuriteSociale;
-    private String    email;
-    private String    telephoneFix;
-    private String    telephonePortable;
-    private String    fax;
+    private String villeNaissance;
+    private String departementNaissance;
+    private String paysNaisance;
+    private String numeroSecuriteSociale;
+    private String email;
+    private String telephoneFix;
+    private String telephonePortable;
+    private String fax;
     private BigDecimal salaireHoraire;
-    private BigDecimal    salaireBrutMensuelle;
-    private BigDecimal    heuresMensuelle;
-    private String    categorie;
-    private String    poste;
+    private BigDecimal salaireBrutMensuelle;
+    private BigDecimal heuresMensuelle;
+    private String categorie;
+    private String poste;
     private LocalDate dateEmbauche;
     private LocalDate dateSortie;
-    private String    situationFamiliale;
-    private Integer   enfantsACharge;
+    private String situationFamiliale;
+    private Integer enfantsACharge;
     private Double periodeEssai;
 
-    //Adresse
-    private Long      adresseId;
-    private String    numeroRue;
-    private String    nomRue;
-    private String    boitePostale;
-    private String    codePostal;
-    private String    ville;
-    private String    pays;
+    //adresse
+    private Long adresseId;
+    private String numeroRue;
+    private String nomRue;
+    private String boitePostale;
+    private String codePostal;
+    private String ville;
+    private String pays;
 
-    //Statut
-    private Long      statutEmployeId;
-    private String    codeRef;
-    private String    libelle;
+    //statutEmploye
+    private Long statutEmployeId;
+    private String codeRefStatut;
+    private String libelle;
 
-    //Sociéte
-    private Long      societeId;
+    //societe
+    private Long societeId;
 
-    //InfosEntreprise
-    private Long      infoEntrepriseId;
-    private String    raisonSociale;
+    //infoEntreprise
+    private Long infoEntrepriseId;
+    private String raisonSociale;
+
+    //contrat
+    private Long idContrat;
+    private String titre;
+    private LocalDate dateCreation;
+    private Boolean signe;
+    private Boolean archive;
+
+    //typeContrat
+    private Long idTypeContrat;
+    private String codeRefContrat;
+    private String intitule;
 
     /**
-     * Constructeur par defaut
+     * Empty constructor
      */
     public WrapperEmploye() {
         //empty method
-
     }
 
+    //better use builderWrapperEmploye in WrapperEmployeMapper (centralization)
     /**
-     * Constructeur avec field
+     * Parameterized constructor
      *
-     * @param employeDTO
-     * @param adresseDTO
-     * @param statutEmployeDTO
-     * @param societeDTO
-     * @param infoEntrepriseDTO
+     * @param employeDTO        the DTO containing employe attributes
+     * @param adresseDTO        the DTO containing adresse attributes
+     * @param statutEmployeDTO  the DTO containing statutEmploye attributes
+     * @param societeDTO        the DTO containing societe attributes
+     * @param infoEntrepriseDTO the DTO containing infoEntreprise attributes
+     * @param contratDTO        the DTO containing contrat attributes
+     * @param typeContratDTO    the DTO containing typeContrat attributes
      */
-    public WrapperEmploye(final EmployeDTO employeDTO, final AdresseDTO adresseDTO, final StatutEmployeDTO statutEmployeDTO, final SocieteDTO societeDTO, final InfoEntrepriseDTO infoEntrepriseDTO
-                    ) {
+    public WrapperEmploye(EmployeDTO employeDTO, AdresseDTO adresseDTO, StatutEmployeDTO statutEmployeDTO, SocieteDTO societeDTO, InfoEntrepriseDTO infoEntrepriseDTO, ContratDTO contratDTO, TypeContratDTO typeContratDTO) {
         super();
         //employe
-        this.id = employeDTO.getAdresseId();
+        this.id = employeDTO.getId();
         this.matricule = employeDTO.getMatricule();
         this.civilite = employeDTO.getCivilite();
         this.nomNaissance = employeDTO.getNomNaissance();
@@ -120,15 +129,26 @@ public class WrapperEmploye {
         this.pays = adresseDTO.getPays();
         //statutEmploye
         this.statutEmployeId = employeDTO.getStatutEmployeId();
-        this.codeRef = statutEmployeDTO.getCodeRef();
+        this.codeRefStatut = statutEmployeDTO.getCodeRef();
         this.libelle = statutEmployeDTO.getLibelle();
         //societe
         this.societeId = employeDTO.getSocieteId();
         //infoEntreprise
         this.infoEntrepriseId = societeDTO.getInfoEntrepriseId();
         this.raisonSociale = infoEntrepriseDTO.getRaisonSociale();
+        //contrat
+        this.idContrat = contratDTO.getId();
+        this.titre = contratDTO.getTitre();
+        this.dateCreation = contratDTO.getDateCreation();
+        this.signe = contratDTO.isSigne();
+        this.archive = contratDTO.isArchive();
+        //typeContrat
+        this.idTypeContrat = typeContratDTO.getId();
+        this.codeRefContrat = typeContratDTO.getCodeRef();
+        this.intitule = typeContratDTO.getIntitule();
     }
 
+    // getters setters
     public Long getId() {
         return id;
     }
@@ -321,6 +341,14 @@ public class WrapperEmploye {
         this.enfantsACharge = enfantsACharge;
     }
 
+    public Double getPeriodeEssai() {
+        return periodeEssai;
+    }
+
+    public void setPeriodeEssai(Double periodeEssai) {
+        this.periodeEssai = periodeEssai;
+    }
+
     public Long getAdresseId() {
         return adresseId;
     }
@@ -385,12 +413,12 @@ public class WrapperEmploye {
         this.statutEmployeId = statutEmployeId;
     }
 
-    public String getCodeRef() {
-        return codeRef;
+    public String getCodeRefStatut() {
+        return codeRefStatut;
     }
 
-    public void setCodeRef(String codeRef) {
-        this.codeRef = codeRef;
+    public void setCodeRefStatut(String codeRefStatut) {
+        this.codeRefStatut = codeRefStatut;
     }
 
     public String getLibelle() {
@@ -425,14 +453,68 @@ public class WrapperEmploye {
         this.raisonSociale = raisonSociale;
     }
 
-    public Double getPeriodeEssai() {
-        return periodeEssai;
+    public Long getIdContrat() {
+        return idContrat;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
-        this.periodeEssai = periodeEssai;
+    public void setIdContrat(Long idContrat) {
+        this.idContrat = idContrat;
     }
 
+    public String getTitre() {
+        return titre;
+    }
 
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public Boolean getSigne() {
+        return signe;
+    }
+
+    public void setSigne(Boolean signe) {
+        this.signe = signe;
+    }
+
+    public Boolean getArchive() {
+        return archive;
+    }
+
+    public void setArchive(Boolean archive) {
+        this.archive = archive;
+    }
+
+    public Long getIdTypeContrat() {
+        return idTypeContrat;
+    }
+
+    public void setIdTypeContrat(Long idTypeContrat) {
+        this.idTypeContrat = idTypeContrat;
+    }
+
+    public String getCodeRefContrat() {
+        return codeRefContrat;
+    }
+
+    public void setCodeRefContrat(String codeRefContrat) {
+        this.codeRefContrat = codeRefContrat;
+    }
+
+    public String getIntitule() {
+        return intitule;
+    }
+
+    public void setIntitule(String intitule) {
+        this.intitule = intitule;
+    }
 
 }

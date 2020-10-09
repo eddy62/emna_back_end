@@ -60,4 +60,10 @@ public interface DocumentService {
     Document multiPartFileToDocument(MultipartFile file);
 
 
+    /**
+     * Get one Document associate the "id" of the playslip.
+     *
+     * @param idPayslip the id of the playslip associate to the document .
+     */
+    DocumentDTO findOneDocumentByPlayslipId(Long idPayslip);
 }

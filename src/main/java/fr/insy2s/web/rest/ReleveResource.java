@@ -145,7 +145,7 @@ public class ReleveResource {
     }
 
     @GetMapping("/releve/etat/{id}")
-    public List<ReleveDTO> getAllRelevesByEtatReleveId(@PathVariable Long id) {
+    public List<WrapperReleveSolde> getAllRelevesByEtatReleveId(@PathVariable Long id) {
         log.debug("REST request to get all Operations by Releve id ");
         return releveService.findAllByEtatReleveId(id);
     }

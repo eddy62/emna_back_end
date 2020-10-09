@@ -2,9 +2,8 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.DepenseDTO;
 import fr.insy2s.service.dto.DepenseTemp;
-import fr.insy2s.service.dto.FactureDTO;
+import fr.insy2s.utils.wrapper.WrapperDepense;
 import fr.insy2s.utils.wrapper.WrapperListeDepense;
-import fr.insy2s.utils.wrapper.WrapperListeFacture;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public interface DepenseService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<DepenseDTO> findOne(Long id);
+    Optional<WrapperDepense> findOne(Long id);
 
     /**
      * Delete the "id" depense.

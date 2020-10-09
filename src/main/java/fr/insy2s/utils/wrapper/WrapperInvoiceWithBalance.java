@@ -1,9 +1,11 @@
 package fr.insy2s.utils.wrapper;
 
+import fr.insy2s.domain.Facture;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class WrapperListeFacture {
+public class WrapperInvoiceWithBalance {
 
     private Long id;
 
@@ -79,13 +81,26 @@ public class WrapperListeFacture {
     }
 
 
-    public WrapperListeFacture(Long id, Long numfact, String type, LocalDate date, BigDecimal prixTTC, String nomClient, String etatFacture) {
-        this.id = id;
-        this.numfact = numfact;
-        this.type = type;
-        this.date = date;
+    public WrapperInvoiceWithBalance(Facture facture, BigDecimal prixTTC) {
+        this.id = facture.getId();
+        this.numfact = facture.getNumfact();
+        this.type = facture.getType();
+        this.date = facture.getDate();
         this.prixTTC = prixTTC;
-        this.nomClient = nomClient;
-        this.etatFacture = etatFacture;
+        this.nomClient = facture.getClientFournisseur().getNom();
+        this.etatFacture = facture.getEtatFacture().getLibelle();
+    }
+
+    @Override
+    public String toString() {
+        return "WrapperInvoiceWithBalance{" +
+            "id=" + id +
+            ", numfact=" + numfact +
+            ", type='" + type + '\'' +
+            ", date=" + date +
+            ", prixTTC=" + prixTTC +
+            ", nomClient='" + nomClient + '\'' +
+            ", etatFacture='" + etatFacture + '\'' +
+            '}';
     }
 }

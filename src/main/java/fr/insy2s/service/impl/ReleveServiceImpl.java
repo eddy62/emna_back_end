@@ -75,11 +75,9 @@ public class ReleveServiceImpl implements ReleveService {
         Optional<BigDecimal> solde = getReleveSoldeById(releve.get().getId());
         BigDecimal soldeBig = solde.orElse(new BigDecimal(0));
         ReleveDTO releveDTO = releve.orElse(new ReleveDTO());
-        Optional<WrapperReleveSolde> wrapperReleveSolde =
-            Optional.of(new WrapperReleveSolde(
-                releveDTO.getId(), releveDTO.getDateDebut(), releveDTO.getDateFin(), releveDTO.getBanque(),
-                releveDTO.getEtatReleveId(),releveDTO.getSocieteId(), soldeBig));
-        return wrapperReleveSolde;
+        return Optional.of(new WrapperReleveSolde(
+            releveDTO.getId(), releveDTO.getDateDebut(), releveDTO.getDateFin(), releveDTO.getBanque(),
+            releveDTO.getEtatReleveId(),releveDTO.getSocieteId(), soldeBig));
     }
 
     @Override
@@ -94,25 +92,26 @@ public class ReleveServiceImpl implements ReleveService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public List<ReleveDTO> findAllByEtatReleveId(Long id) {
+    public List<WrapperReleveSolde> findAllByEtatReleveId(Long id) {
         log.debug("Request to get all Releves by Societe Id");
-        return releveRepository.findAllByEtatReleveId(id).stream().map(releveMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        return getListWrapperReleverSolde(releveRepository.findAllByEtatReleveId(id));
     }
 
     public List<WrapperReleveSolde> findAllByEtatReleveIdAndSocieteId(Long idEtat, Long idSociete) {
         log.debug("Request to get all Releves by Societe Id");
-        List<ReleveDTO> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete)
-            .stream().map(releveMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+        List<Releve> releves = releveRepository.findAllByEtatReleveIdAndSocieteId(idEtat, idSociete);
+
+        return getListWrapperReleverSolde(releves);
+    }
+
+    private List<WrapperReleveSolde> getListWrapperReleverSolde(List<Releve> releves) {
         List<WrapperReleveSolde> wrapperReleveSoldes = new ArrayList<>();
         Optional<BigDecimal> solde;
+        ReleveDTO releveDTO;
         for (int i = 0; i < releves.size(); i++) {
+            releveDTO = releveMapper.toDto(releves.get(i));
             solde = getReleveSoldeById(releves.get(i).getId());
-            ReleveDTO releveDTO = releves.get(i);
-            WrapperReleveSolde wrapperReleveSolde = new WrapperReleveSolde(
-                releveDTO.getId(), releveDTO.getDateDebut(), releveDTO.getDateFin(), releveDTO.getBanque(),
-                releveDTO.getEtatReleveId(),releveDTO.getSocieteId(), solde.orElse(new BigDecimal(0)));
+            WrapperReleveSolde wrapperReleveSolde = new WrapperReleveSolde(releveDTO, solde.orElse(new BigDecimal(0)));
             wrapperReleveSoldes.add(wrapperReleveSolde);
         }
         return wrapperReleveSoldes;
@@ -157,9 +156,13 @@ public class ReleveServiceImpl implements ReleveService {
     }
 
     private BigDecimal prixTTCoFFacture(Facture facture) {
-        BigDecimal sommeFacture=BigDecimal.valueOf(0D);
-        for(LigneProduit ligne :facture.getListeLigneProduits()){
-            sommeFacture.add((BigDecimal.valueOf(ligne.getQuantite()).multiply(ligne.getProduit().getPrix())).add((BigDecimal.valueOf(ligne.getQuantite()).multiply(ligne.getProduit().getPrix()).multiply(ligne.getProduit().getTva().divide(BigDecimal.valueOf(100D))))));
+        BigDecimal sommeFacture= BigDecimal.valueOf(0);
+        for(LigneProduit ligneProduits:facture.getListeLigneProduits()){
+            sommeFacture.add(ligneProduits.getProduit().getPrix()
+                .multiply(ligneProduits.getRemise())
+                .multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))
+                .multiply(ligneProduits.getProduit().getTva()
+                    .divide(BigDecimal.valueOf(100D))));
         }
         return sommeFacture;
     }
