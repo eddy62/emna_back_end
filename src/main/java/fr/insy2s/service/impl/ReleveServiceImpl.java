@@ -6,6 +6,7 @@ import fr.insy2s.service.ReleveService;
 import fr.insy2s.service.dto.ReleveDTO;
 import fr.insy2s.service.mapper.ReleveMapper;
 import fr.insy2s.utils.DateUtil;
+import fr.insy2s.utils.TotalUtil;
 import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
 import fr.insy2s.utils.wrapper.WrapperPDFSingleOperation;
 import fr.insy2s.utils.wrapper.WrapperReleveSolde;
@@ -139,10 +140,10 @@ public class ReleveServiceImpl implements ReleveService {
             do {
                 Long idOperation = operations.get(i).getId();
                 List<Facture> factureListByOperation= factureRepository.balanceOfInvoicesByTransaction(idOperation);
-                BigDecimal sommeFacture=BigDecimal.valueOf(0D);
+                BigDecimal sommeFacture=BigDecimal.valueOf(0);
                 if(!factureListByOperation.isEmpty()) {
                     for (Facture facture : factureListByOperation) {
-                        sommeFacture.add(prixTTCoFFacture(facture));
+                        sommeFacture = sommeFacture.add(TotalUtil.getTTCFacture(facture));
                     }
                 }
                 double sommeF = sommeFacture.doubleValue();
@@ -153,18 +154,6 @@ public class ReleveServiceImpl implements ReleveService {
             while (isSoldeEquals && i < operations.size());
         }
         return isSoldeEquals;
-    }
-
-    private BigDecimal prixTTCoFFacture(Facture facture) {
-        BigDecimal sommeFacture= BigDecimal.valueOf(0);
-        for(LigneProduit ligneProduits:facture.getListeLigneProduits()){
-            sommeFacture.add(ligneProduits.getProduit().getPrix()
-                .multiply(ligneProduits.getRemise())
-                .multiply(BigDecimal.valueOf(ligneProduits.getQuantite()))
-                .multiply(ligneProduits.getProduit().getTva()
-                    .divide(BigDecimal.valueOf(100D))));
-        }
-        return sommeFacture;
     }
 
     @Override

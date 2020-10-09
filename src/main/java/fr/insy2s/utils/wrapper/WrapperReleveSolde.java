@@ -109,4 +109,17 @@ public class WrapperReleveSolde {
     public void setSolde(BigDecimal solde) {
         this.solde = solde;
     }
+
+    @Override
+    public String toString() {
+        return "WrapperReleveSolde{" +
+            "id=" + id +
+            ", dateDebut=" + dateDebut +
+            ", dateFin=" + dateFin +
+            ", banque='" + banque + '\'' +
+            ", etatReleveId=" + etatReleveId +
+            ", societeId=" + societeId +
+            ", solde=" + solde +
+            '}';
+    }
 }
