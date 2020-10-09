@@ -120,10 +120,17 @@ public class DocumentResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
+    /**
+     * {@code DELETE  /documents/:id/:fileName} : delete file with "fileName" and document with "id" document.
+     *
+     * @param id the id of the documentDTO to delete.
+     * @param fileName the name of file to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     */
     @DeleteMapping("/documents/{id}/{fileName}")
     public ResponseEntity<Void> deleteDocumentWithFile(@PathVariable Long id, @PathVariable String fileName) {
         try{
-            File fileToDelete = new File("./fichiers/" + fileName);
+            File fileToDelete = new File("./fichiers/social/variablesdepaie/" + fileName);
             log.debug("fileToDelete : {}", fileToDelete);
             fileToDelete.delete();
         } catch(Exception e) {
@@ -134,8 +141,6 @@ public class DocumentResource {
         log.debug("fileName : {}", fileName);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
-
-
 
     /**
      * {@code GET  /documentsPdf/:id} : get PDF File by path name.

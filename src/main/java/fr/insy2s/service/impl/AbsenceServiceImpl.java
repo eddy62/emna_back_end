@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,5 +101,18 @@ public class AbsenceServiceImpl implements AbsenceService {
             wrapperAbsenceList.add(wrapperAbsence);
         }
         return wrapperAbsenceList;
+    }
+
+    @Override
+    public Optional<AbsenceDTO> findAllOverlappingAbsencesByIdEmploye(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence) {
+        List<Absence> absenceList = absenceRepository.findAllOverlappingAbsencesByIdEmploye(idEmploye, debutAbsence, finAbsence);
+        Optional<AbsenceDTO> absenceDTO = Optional.empty();
+        if(!absenceList.isEmpty()) {
+            absenceDTO = Optional.ofNullable(absenceMapper.toDto(absenceList.get(0)));
+            return absenceDTO;
+        }
+        else {
+            return absenceDTO;
+        }
     }
 }

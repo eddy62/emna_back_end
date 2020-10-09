@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
 
-    private final Path root = Paths.get("fichiers");
+    private final Path root = Paths.get("fichiers/social/variablesdepaie");
 
     @Override
     public void init() {
@@ -30,10 +30,10 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file, String type, String id, String fileNumber) {
+    public void save(MultipartFile file, String type, String id, String fileNumber, String timestamp) {
         try {
             String extension[] = file.getContentType().split("/");
-            Files.copy(file.getInputStream(), this.root.resolve(id + "_" + type + "_" + fileNumber + "." + extension[1]));
+            Files.copy(file.getInputStream(), this.root.resolve(id + "_" + type + "_" + fileNumber + "_" + timestamp + "." + extension[1]));
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
