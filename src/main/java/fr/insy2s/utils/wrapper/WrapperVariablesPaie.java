@@ -10,6 +10,7 @@ import java.util.List;
  *  avec wrapperAbsenceList + wrapperAutresVariableList + avanceRappelSalaireDTOList
  *  + heuresSupplementairesDTOList + noteDeFraisDTOList + wrapperPrimeList
  *
+ * @author Erik DUNAIS
  */
 public class WrapperVariablesPaie {
 

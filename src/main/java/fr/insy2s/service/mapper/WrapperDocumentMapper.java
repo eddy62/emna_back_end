@@ -113,6 +113,7 @@ public class WrapperDocumentMapper {
      *
      * @param documentList the documentList to map to WrapperDocumentList
      * @return wrapperDocumentList a list of wrapperDocument
+     * @author Erik DUNAIS
      */
     public List<WrapperDocument> documentListToWrapperDocumentList(List<Document> documentList){
         List<WrapperDocument> wrapperDocumentList = new ArrayList<>();

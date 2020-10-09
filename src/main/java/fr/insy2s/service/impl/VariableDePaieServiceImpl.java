@@ -73,6 +73,15 @@ public class VariableDePaieServiceImpl implements VariableDePaieService {
         this.wrapperDocumentMapper = wrapperDocumentMapper;
     }
 
+    /**
+     * Get one wrapperVariablesPaie by one employe, by one year and by one month.
+     *
+     * @param idEmploye id of the Employe in all VariablesPaie
+     * @param annee     year in all VariablesPaie
+     * @param mois      month in all VariablesPaie
+     * @return the WrapperVariablesPaie
+     * @author Erik DUNAIS
+     */
     @Override
     public WrapperVariablesPaie findOneWrapperVariablesPaieByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois) {
         log.debug("Request to get one WrapperVariablesPaie with Employe:{}, Annee:{}, Mois:{}", idEmploye, annee, mois);

@@ -47,6 +47,7 @@ public class WrapperDocument {
      *
      * @param documentDTO the documentDTO to construct the wrapperDocument
      * @param typeDocumentDTO the documentDTO to construct the wrapperDocument
+     * @author Erik DUNAIS
      */
     public WrapperDocument(DocumentDTO documentDTO, TypeDocumentDTO typeDocumentDTO){
 
