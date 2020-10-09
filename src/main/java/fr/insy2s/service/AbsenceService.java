@@ -3,6 +3,7 @@ package fr.insy2s.service;
 import fr.insy2s.service.dto.AbsenceDTO;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,4 +65,5 @@ public interface AbsenceService {
     WrapperAbsence updateWrapperAbsence(WrapperAbsence wrapperAbsence);
 */
 
+    Optional<AbsenceDTO> findAllOverlappingAbsencesByIdEmploye(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence);
 }

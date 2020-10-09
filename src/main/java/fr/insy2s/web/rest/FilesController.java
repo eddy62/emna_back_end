@@ -40,8 +40,8 @@ public class FilesController {
      */
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("absenceId") Long absenceId,
-        @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId,
-        @RequestParam("fileNumber") String fileNumber) {
+                                             @RequestParam("noteDeFraisId") Long noteDeFraisId, @RequestParam("autresVariableId") Long autresVariableId,
+                                             @RequestParam("fileNumber") String fileNumber, @RequestParam("timestamp") String timestamp) {
         String message = "";
         boolean isAbsence = false;
         boolean isNoteDeFrais = false;
@@ -62,24 +62,26 @@ public class FilesController {
                 type = "Autre";
                 id = autresVariableId.toString();
             }
-            storageService.save(file, type, id, fileNumber);
+            storageService.save(file, type, id, fileNumber, timestamp);
             try {
                 /* Crée l'entité Document liée */
                 DocumentDTO documentDTO = new DocumentDTO();
                 if (isAbsence) {
                     documentDTO.setAbsenceId(absenceId);
                     documentDTO.setType(type);
+                    documentDTO.setTypeDocumentId(6L);
                 } else if (isNoteDeFrais) {
                     documentDTO.setNoteDeFraisId(noteDeFraisId);
                     documentDTO.setType(type);
+                    documentDTO.setTypeDocumentId(7L);
                 } else if (isAutre) {
-
                     documentDTO.setAutresVariableId(autresVariableId);
                     documentDTO.setType(type);
+                    documentDTO.setTypeDocumentId(8L);
                 }
                 String extension[] = file.getContentType().split("/");
-                documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/");
-                documentDTO.setNom(id + "_" + type + "_" + fileNumber + "." + extension[1]);
+                documentDTO.setCheminFichier("./" + storageService.getRoot().toString() + "/" + id + "_" + type + "_" + fileNumber + "_" + timestamp + "." + extension[1]);
+                documentDTO.setNom(id + "_" + type + "_" + fileNumber + "_" + timestamp + "." + extension[1]);
                 documentService.save(documentDTO);
             } catch (Exception e) {
                 message = "Error: could not create the entity Document linked to: " + file.getOriginalFilename() + "!";
