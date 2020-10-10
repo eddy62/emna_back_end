@@ -6,7 +6,6 @@ import fr.insy2s.utils.wrapper.WrapperAbsence;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ErrorMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
