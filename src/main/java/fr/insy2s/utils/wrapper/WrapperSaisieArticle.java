@@ -1,10 +1,7 @@
 package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.service.dto.ArticleDTO;
-import fr.insy2s.service.dto.ContratDTO;
 import fr.insy2s.service.dto.SaisieArticleDTO;
-
-import java.time.LocalDate;
 
 /**
  * WrapperArticle
@@ -20,6 +17,9 @@ public class WrapperSaisieArticle {
 
     //Article
     private Long idArticle;
+    private String titre;
+    private String intitule;
+    private String description;
 
     //Contrat
     private Long idContrat;
@@ -34,8 +34,8 @@ public class WrapperSaisieArticle {
     /**
      * Parameterized constructor
      *
-     * @param saisieArticleDTO  the DTO containing saisieArticle attributes
-     * @param articleDTO        the DTO containing article attributes
+     * @param saisieArticleDTO the DTO containing saisieArticle attributes
+     * @param articleDTO       the DTO containing article attributes
      */
     public WrapperSaisieArticle(SaisieArticleDTO saisieArticleDTO, ArticleDTO articleDTO) {
         super();
@@ -44,6 +44,9 @@ public class WrapperSaisieArticle {
         this.libelle = saisieArticleDTO.getLibelle();
         //Article
         this.idArticle = articleDTO.getId();
+        this.titre = articleDTO.getTitre();
+        this.intitule = articleDTO.getIntitule();
+        this.description = articleDTO.getDescription();
         //Contrat
         this.idContrat = saisieArticleDTO.getContratId();
     }
@@ -80,4 +83,27 @@ public class WrapperSaisieArticle {
         this.idContrat = idContrat;
     }
 
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getIntitule() {
+        return intitule;
+    }
+
+    public void setIntitule(String intitule) {
+        this.intitule = intitule;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
