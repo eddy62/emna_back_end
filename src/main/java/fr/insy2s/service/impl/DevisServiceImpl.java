@@ -1,13 +1,9 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.domain.Document;
-import fr.insy2s.domain.LigneProduit;
+import fr.insy2s.domain.*;
 import fr.insy2s.service.DevisService;
-import fr.insy2s.domain.Devis;
 import fr.insy2s.repository.DevisRepository;
-import fr.insy2s.service.dto.DevisDTO;
-import fr.insy2s.service.dto.DocumentDTO;
-import fr.insy2s.service.dto.LigneProduitDTO;
+import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.TotalUtil;
 import fr.insy2s.utils.wrapper.WrapperQuote;
@@ -84,16 +80,6 @@ public class DevisServiceImpl implements DevisService {
         devisRepository.deleteById(id);
     }
 
-    @Override
-    public List<DevisDTO> findAllQuotesBySocietyId(Long idSociete) {
-        log.debug("Request to get all the quotes by society id: {}", idSociete);
-
-        return this.devisRepository.findAllQuotesBySocietyId(idSociete)
-            .stream()
-            .map(devisMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
     /**
      * Get all the WrapperQuotes by society id.
      *
@@ -131,4 +117,40 @@ public class DevisServiceImpl implements DevisService {
         return wrapperQuoteList;
     }
 
+    /**
+     * Get the WrapperQuote by id.
+     *
+     * @param id the id of the entity.
+     * @return the Quote Wrapper
+     */
+    @Override
+    public WrapperQuote findQuote(Long id) {
+        log.debug("Request to get Quote : {}", id);
+
+        List<Devis> quoteList = devisRepository.findQuoteById(id);
+
+        for (Devis devis : quoteList){
+
+            List<DocumentDTO> documentDTOList = new ArrayList<>();
+            for (Document document : devis.getListeDocuments()){
+                documentDTOList.add(documentMapper.toDto(document));
+            }
+
+            List<LigneProduitDTO> ligneProduitDTOList = new ArrayList<>();
+            for (LigneProduit ligneProduit : devis.getListeLigneProduits()){
+                ligneProduitDTOList.add(ligneProduitMapper.toDto(ligneProduit));
+            }
+
+            WrapperQuote wrapperQuote = new WrapperQuote(
+                devisMapper.toDto(devis),
+                clientFournisseurMapper.toDto(devis.getClientFournisseur()),
+                adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
+                ligneProduitDTOList,
+                documentDTOList,
+                TotalUtil.getTTCDevis(devis));
+
+            return wrapperQuote;
+        }
+     return null;
+    }
 }
