@@ -51,11 +51,7 @@ public class WrapperQuote {
     private BigDecimal prixTTC;
 
 
-    public WrapperQuote() {
-    }
-
     public WrapperQuote(DevisDTO devisDTO, ClientFournisseurDTO clientFournisseurDTO, AdresseDTO adresseDTO, List<LigneProduitDTO> ligneProduitDTOList, List<DocumentDTO> documentDTOList, BigDecimal prixTTC) {
-        super();
 
         // informations devis
         this.id = devisDTO.getId();
@@ -90,6 +86,7 @@ public class WrapperQuote {
         // prix TTC
         this.prixTTC = prixTTC;
     }
+
 
     // getter & setter
 
