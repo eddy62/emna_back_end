@@ -186,9 +186,6 @@ public class EmployeServiceImpl implements EmployeService {
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
-        if (employeDTO.getDateSortie() == null) {
-            employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
-        }
         if (isEmployeMatriculeExist(employeDTO.getMatricule(), employeDTO.getSocieteId())) {
             return Optional.empty();
         }

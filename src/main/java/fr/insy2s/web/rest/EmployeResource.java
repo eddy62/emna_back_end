@@ -288,11 +288,11 @@ public class EmployeResource {
      */
     @GetMapping("/wrapperemployes/society/{id}/typecontrat/{type}")
     public List<WrapperEmploye> getAllWrapperEmployesBySocietyAndTypeContrat(@PathVariable Long id, @PathVariable String type) {
-        log.debug("REST request to get all WrapperEmployes by society and by type of Contract : {}", id, type);
+        log.debug("REST request to get all WrapperEmployes by society and by type of Contract : {}/{}", id, type);
         List<WrapperEmploye> list = employeService.findAllWrapperEmployeBySociete(id);
-        List<WrapperEmploye> listeSelect = new ArrayList<WrapperEmploye>();
+        List<WrapperEmploye> listeSelect = new ArrayList<>();
         for (WrapperEmploye wrapperEmploye : list) {
-            if ((wrapperEmploye.getStatutEmployeId() == 2)) {
+            if (wrapperEmploye.getStatutEmployeId() == 2 && wrapperEmploye.getCodeRefContrat().equals(type)) {
                 listeSelect.add(wrapperEmploye);
             }
         }
