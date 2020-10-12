@@ -68,15 +68,12 @@ public class FilesController {
                 DocumentDTO documentDTO = new DocumentDTO();
                 if (isAbsence) {
                     documentDTO.setAbsenceId(absenceId);
-                    documentDTO.setType(type);
                     documentDTO.setTypeDocumentId(6L);
                 } else if (isNoteDeFrais) {
                     documentDTO.setNoteDeFraisId(noteDeFraisId);
-                    documentDTO.setType(type);
                     documentDTO.setTypeDocumentId(7L);
                 } else if (isAutre) {
                     documentDTO.setAutresVariableId(autresVariableId);
-                    documentDTO.setType(type);
                     documentDTO.setTypeDocumentId(8L);
                 }
                 String extension[] = file.getContentType().split("/");
