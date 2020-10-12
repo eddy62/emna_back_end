@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
 import fr.insy2s.domain.Contrat;
+import fr.insy2s.domain.TypeContrat;
 import fr.insy2s.repository.ContratRepository;
 import fr.insy2s.service.ContratService;
 import fr.insy2s.service.dto.ContratDTO;
@@ -75,6 +76,16 @@ public class ContratResourceIT {
             .dateCreation(DEFAULT_DATE_CREATION)
             .signe(DEFAULT_SIGNE)
             .archive(DEFAULT_ARCHIVE);
+        // Add required entity
+        TypeContrat typeContrat;
+        if (TestUtil.findAll(em, TypeContrat.class).isEmpty()) {
+            typeContrat = TypeContratResourceIT.createEntity(em);
+            em.persist(typeContrat);
+            em.flush();
+        } else {
+            typeContrat = TestUtil.findAll(em, TypeContrat.class).get(0);
+        }
+        contrat.setTypeContrat(typeContrat);
         return contrat;
     }
     /**
@@ -89,6 +100,16 @@ public class ContratResourceIT {
             .dateCreation(UPDATED_DATE_CREATION)
             .signe(UPDATED_SIGNE)
             .archive(UPDATED_ARCHIVE);
+        // Add required entity
+        TypeContrat typeContrat;
+        if (TestUtil.findAll(em, TypeContrat.class).isEmpty()) {
+            typeContrat = TypeContratResourceIT.createUpdatedEntity(em);
+            em.persist(typeContrat);
+            em.flush();
+        } else {
+            typeContrat = TestUtil.findAll(em, TypeContrat.class).get(0);
+        }
+        contrat.setTypeContrat(typeContrat);
         return contrat;
     }
 

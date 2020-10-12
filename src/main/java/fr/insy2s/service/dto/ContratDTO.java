@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Contrat} entity.

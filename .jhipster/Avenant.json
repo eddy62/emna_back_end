@@ -21,9 +21,9 @@
     },
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "contrat",
-      "otherEntityRelationshipName": "listeAvenants",
-      "relationshipName": "contrat",
+      "otherEntityName": "saisieArticle",
+      "otherEntityRelationshipName": "listeAvenant",
+      "relationshipName": "saisieArticle",
       "otherEntityField": "id"
     }
   ],

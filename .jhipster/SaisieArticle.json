@@ -9,6 +9,12 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "avenant",
+      "otherEntityRelationshipName": "saisieArticle",
+      "relationshipName": "listeAvenant"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "article",
       "otherEntityRelationshipName": "saisieArticle",

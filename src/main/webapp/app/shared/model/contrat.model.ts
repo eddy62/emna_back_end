@@ -1,4 +1,4 @@
-import { IAvenant } from 'app/shared/model/avenant.model';
+import { Moment } from 'moment';
 import { IDocument } from 'app/shared/model/document.model';
 
 export interface IContrat {
@@ -7,7 +7,6 @@ export interface IContrat {
   dateCreation?: string;
   signe?: boolean;
   archive?: boolean;
-  listeAvenants?: IAvenant[];
   listeDocuments?: IDocument[];
   typeContratId?: number;
   employeId?: number;

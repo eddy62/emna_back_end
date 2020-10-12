@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.Contrat;
+import fr.insy2s.domain.*;
 import fr.insy2s.service.dto.ContratDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity {@link Contrat} and its DTO {@link ContratDTO}.
@@ -16,8 +16,6 @@ public interface ContratMapper extends EntityMapper<ContratDTO, Contrat> {
     @Mapping(source = "employe.id", target = "employeId")
     ContratDTO toDto(Contrat contrat);
 
-    @Mapping(target = "listeAvenants", ignore = true)
-    @Mapping(target = "removeListeAvenants", ignore = true)
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
     @Mapping(source = "typeContratId", target = "typeContrat")

@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Table} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Col, Row, Table } from 'reactstrap';
+import { Translate, ICrudGetAllAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntities} from './document.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntities } from './document.reducer';
+import { IDocument } from 'app/shared/model/document.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IDocumentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -36,9 +38,6 @@ export const Document = (props: IDocumentProps) => {
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.document.cheminFichier">Chemin Fichier</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="emnaBackEndApp.document.type">Type</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.document.nom">Nom</Translate>
@@ -94,7 +93,6 @@ export const Document = (props: IDocumentProps) => {
                     </Button>
                   </td>
                   <td>{document.cheminFichier}</td>
-                  <td>{document.type}</td>
                   <td>{document.nom}</td>
                   <td>
                     {document.typeDocumentId ? <Link to={`type-document/${document.typeDocumentId}`}>{document.typeDocumentId}</Link> : ''}

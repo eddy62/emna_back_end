@@ -5,7 +5,7 @@ export interface IAvenant {
   reference?: string;
   signe?: boolean;
   listeDocuments?: IDocument[];
-  contratId?: number;
+  saisieArticleId?: number;
 }
 
 export const defaultValue: Readonly<IAvenant> = {

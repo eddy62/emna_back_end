@@ -17,7 +17,6 @@
         "title": "Document"
       },
       "cheminFichier": "Chemin Fichier",
-      "type": "Type",
       "nom": "Nom",
       "typeDocument": "Type Document",
       "facture": "Facture",

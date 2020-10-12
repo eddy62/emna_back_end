@@ -5,8 +5,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A SaisieArticle.
@@ -26,6 +29,10 @@ public class SaisieArticle implements Serializable {
     @NotNull
     @Column(name = "libelle", nullable = false)
     private String libelle;
+
+    @OneToMany(mappedBy = "saisieArticle")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Avenant> listeAvenants = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -57,6 +64,31 @@ public class SaisieArticle implements Serializable {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    public Set<Avenant> getListeAvenants() {
+        return listeAvenants;
+    }
+
+    public SaisieArticle listeAvenants(Set<Avenant> avenants) {
+        this.listeAvenants = avenants;
+        return this;
+    }
+
+    public SaisieArticle addListeAvenant(Avenant avenant) {
+        this.listeAvenants.add(avenant);
+        avenant.setSaisieArticle(this);
+        return this;
+    }
+
+    public SaisieArticle removeListeAvenant(Avenant avenant) {
+        this.listeAvenants.remove(avenant);
+        avenant.setSaisieArticle(null);
+        return this;
+    }
+
+    public void setListeAvenants(Set<Avenant> avenants) {
+        this.listeAvenants = avenants;
     }
 
     public Article getArticle() {

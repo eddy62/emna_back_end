@@ -87,6 +87,22 @@ import saisieArticle, {SaisieArticleState} from 'app/entities/saisie-article/sai
 // prettier-ignore
 import typeDocument, {TypeDocumentState} from 'app/entities/type-document/type-document.reducer';
 
+// prettier-ignore
+import contrat, {
+  ContratState
+} from 'app/entities/contrat/contrat.reducer';
+// prettier-ignore
+import avenant, {
+  AvenantState
+} from 'app/entities/avenant/avenant.reducer';
+// prettier-ignore
+import document, {
+  DocumentState
+} from 'app/entities/document/document.reducer';
+// prettier-ignore
+import saisieArticle, {
+  SaisieArticleState
+} from 'app/entities/saisie-article/saisie-article.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
