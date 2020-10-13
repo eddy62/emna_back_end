@@ -47,4 +47,5 @@ public interface DepenseService {
     List<WrapperListeDepense> findAllDepenseBySocieteId(Long id);
 
     DepenseDTO postDepenseWithFile(DepenseTemp depenseTemp);
+    DepenseDTO createFromWrapperDepense(WrapperDepense wrapperDepense);
 }

@@ -105,7 +105,7 @@ public class DepenseServiceImpl implements DepenseService {
     @Override
     public DepenseDTO postDepenseWithFile(DepenseTemp depenseTemp) {
         Depense depense = depenseTemp.toDepense();
-        if(depenseTemp.getListeFiles()!=null) {
+        if (depenseTemp.getListeFiles() != null) {
             Set<Document> documents = documentService.multiPartFilesToDocuments(Arrays.asList(depenseTemp.getListeFiles()));
             for (Document document : documents
             ) {
@@ -114,15 +114,15 @@ public class DepenseServiceImpl implements DepenseService {
             depense.setListeDocuments(documents);
         }
 
-        List<Depense> depenseList  = depenseRepository.findAllBySocieteIdOrderByNumeroDesc(depenseTemp.getSocieteId());
+        List<Depense> depenseList = depenseRepository.findAllBySocieteIdOrderByNumeroDesc(depenseTemp.getSocieteId());
         Long max = 0L;
-        for (Depense depenseOfList: depenseList
+        for (Depense depenseOfList : depenseList
         ) {
-            if (depenseOfList.getNumero()>max){
+            if (depenseOfList.getNumero() > max) {
                 max = depenseOfList.getNumero();
             }
         }
-        depense.setNumero(max+1);
+        depense.setNumero(max + 1);
 
         depense.setSociete(societeRepository.getOne(depenseTemp.getSocieteId()));
 
@@ -140,7 +140,7 @@ public class DepenseServiceImpl implements DepenseService {
 
         Depense maDepense = depenseRepository.save(depense);
 
-        if(depense.getListeDocuments()!=null) {
+        if (depense.getListeDocuments() != null) {
             documentRepository.saveAll(depense.getListeDocuments());
         }
 
@@ -151,12 +151,24 @@ public class DepenseServiceImpl implements DepenseService {
     public List<WrapperListeDepense> findAllDepenseBySocieteId(Long id) {
         List<Depense> depenseList = depenseRepository.findAllBySocieteIdOrderByNumeroDesc(id);
         List<WrapperListeDepense> listeWrapper = new ArrayList<>();
-        for (Depense depense: depenseList) {
-                WrapperListeDepense wrapperListeDepense = new WrapperListeDepense(depense.getId(), depense.getNumero(), depense.getDate(), depense.getPrix(), depense.getClientFournisseur().getNom(), depense.getEtatDepense().getLibelle());
-                listeWrapper.add(wrapperListeDepense);
+        for (Depense depense : depenseList) {
+            WrapperListeDepense wrapperListeDepense = new WrapperListeDepense(depense.getId(), depense.getNumero(), depense.getDate(), depense.getPrix(), depense.getClientFournisseur().getNom(), depense.getEtatDepense().getLibelle());
+            listeWrapper.add(wrapperListeDepense);
 
         }
         return listeWrapper;
+    }
+
+    @Override
+    public DepenseDTO createFromWrapperDepense(WrapperDepense wrapperDepense) {
+        List<Depense> depenseList = depenseRepository.findAllBySocieteIdOrderByNumeroDesc(wrapperDepense.getSocieteId());
+        Optional<Depense> max = depenseList.stream().max(Comparator.comparing(Depense::getNumero));
+
+        wrapperDepense.setNumero(max.get().getNumero() + 1);
+        wrapperDepense.setEtatDepenseId(1L);
+        System.out.println("========================================");
+        System.out.println(wrapperDepense);
+        return save(WrapperDepense.toDTO(wrapperDepense));
     }
 
 }
