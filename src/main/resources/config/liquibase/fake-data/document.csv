@@ -6,3 +6,5 @@ id;chemin_fichier;nom;type_document_id;facture_id;releve_id;contrat_id;depense_i
 5;./fichiers/social/variablesdepaie/autres_variables_1_1.pdf;autres_variables_2_1.pdf;8;;;;;;;;1;;;
 6;./fichiers/comptabilite/factures/facture_1_1.pdf;facture_1_1.pdf;1;1;1;1;1;1;;;;;;
 7;./fichiers/comptabilite/factures/facture_2_1.pdf;facture_2_1.pdf;1;2;2;2;2;2;;;;;;
+8;./fichiers/juridique/contrats/avenant_1_1.pdf;avenant_1_1.pdf;11;;;;;;;;;;;1
+9;./fichiers/juridique/contrats/avenant_1_1.pdf;avenant_2_1.pdf;11;;;;;;;;;;;2
