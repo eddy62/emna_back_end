@@ -135,6 +135,18 @@ export const InfoEntrepriseUpdate = (props: IInfoEntrepriseUpdateProps) => {
                 </Label>
                 <AvField id="info-entreprise-email" type="text" name="email" />
               </AvGroup>
+              <AvGroup>
+                <Label id="codeUrssafLabel" for="info-entreprise-codeUrssaf">
+                  <Translate contentKey="emnaBackEndApp.infoEntreprise.codeUrssaf">Code Urssaf</Translate>
+                </Label>
+                <AvField id="info-entreprise-codeUrssaf" type="text" name="codeUrssaf" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="serviceSanteTravailLabel" for="info-entreprise-serviceSanteTravail">
+                  <Translate contentKey="emnaBackEndApp.infoEntreprise.serviceSanteTravail">Service Sante Travail</Translate>
+                </Label>
+                <AvField id="info-entreprise-serviceSanteTravail" type="text" name="serviceSanteTravail" />
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/info-entreprise" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

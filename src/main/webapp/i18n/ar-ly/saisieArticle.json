@@ -17,9 +17,9 @@
         "title": "Saisie Article"
       },
       "libelle": "Libelle",
-      "listeAvenant": "Liste Avenant",
       "article": "Article",
-      "contrat": "Contrat"
+      "contrat": "Contrat",
+      "avenant": "Avenant"
     }
   }
 }

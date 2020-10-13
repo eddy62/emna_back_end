@@ -40,6 +40,14 @@
     {
       "fieldName": "email",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "codeUrssaf",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "serviceSanteTravail",
+      "fieldType": "String"
     }
   ],
   "relationships": [],

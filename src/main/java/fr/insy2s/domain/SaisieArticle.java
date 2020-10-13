@@ -8,8 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A SaisieArticle.
@@ -30,10 +28,6 @@ public class SaisieArticle implements Serializable {
     @Column(name = "libelle", nullable = false)
     private String libelle;
 
-    @OneToMany(mappedBy = "saisieArticle")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Avenant> listeAvenants = new HashSet<>();
-
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "saisieArticles", allowSetters = true)
@@ -43,6 +37,10 @@ public class SaisieArticle implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "saisieArticles", allowSetters = true)
     private Contrat contrat;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeSaisieArticles", allowSetters = true)
+    private Avenant avenant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -64,31 +62,6 @@ public class SaisieArticle implements Serializable {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
-    }
-
-    public Set<Avenant> getListeAvenants() {
-        return listeAvenants;
-    }
-
-    public SaisieArticle listeAvenants(Set<Avenant> avenants) {
-        this.listeAvenants = avenants;
-        return this;
-    }
-
-    public SaisieArticle addListeAvenant(Avenant avenant) {
-        this.listeAvenants.add(avenant);
-        avenant.setSaisieArticle(this);
-        return this;
-    }
-
-    public SaisieArticle removeListeAvenant(Avenant avenant) {
-        this.listeAvenants.remove(avenant);
-        avenant.setSaisieArticle(null);
-        return this;
-    }
-
-    public void setListeAvenants(Set<Avenant> avenants) {
-        this.listeAvenants = avenants;
     }
 
     public Article getArticle() {
@@ -115,6 +88,19 @@ public class SaisieArticle implements Serializable {
 
     public void setContrat(Contrat contrat) {
         this.contrat = contrat;
+    }
+
+    public Avenant getAvenant() {
+        return avenant;
+    }
+
+    public SaisieArticle avenant(Avenant avenant) {
+        this.avenant = avenant;
+        return this;
+    }
+
+    public void setAvenant(Avenant avenant) {
+        this.avenant = avenant;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

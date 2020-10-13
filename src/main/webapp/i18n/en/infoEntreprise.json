@@ -25,7 +25,9 @@
       "siret": "Siret",
       "domaineDactivite": "Domaine Dactivite",
       "description": "Description",
-      "email": "Email"
+      "email": "Email",
+      "codeUrssaf": "Code Urssaf",
+      "serviceSanteTravail": "Service Sante Travail"
     }
   }
 }

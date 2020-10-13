@@ -9,12 +9,6 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "avenant",
-      "otherEntityRelationshipName": "saisieArticle",
-      "relationshipName": "listeAvenant"
-    },
-    {
       "relationshipType": "many-to-one",
       "otherEntityName": "article",
       "otherEntityRelationshipName": "saisieArticle",
@@ -28,6 +22,13 @@
       "otherEntityRelationshipName": "saisieArticle",
       "relationshipValidateRules": "required",
       "relationshipName": "contrat",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avenant",
+      "otherEntityRelationshipName": "listeSaisieArticle",
+      "relationshipName": "avenant",
       "otherEntityField": "id"
     }
   ],

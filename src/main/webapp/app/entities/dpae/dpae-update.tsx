@@ -1,13 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './dpae.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { IEmploye } from 'app/shared/model/employe.model';
+import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './dpae.reducer';
+import { IDpae } from 'app/shared/model/dpae.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDpaeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -101,6 +106,24 @@ export const DpaeUpdate = (props: IDpaeUpdateProps) => {
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
+              </AvGroup>
+              <AvGroup>
+                <Label id="heureEmbaucheLabel" for="dpae-heureEmbauche">
+                  <Translate contentKey="emnaBackEndApp.dpae.heureEmbauche">Heure Embauche</Translate>
+                </Label>
+                <AvField id="dpae-heureEmbauche" type="text" name="heureEmbauche" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="commentaireLabel" for="dpae-commentaire">
+                  <Translate contentKey="emnaBackEndApp.dpae.commentaire">Commentaire</Translate>
+                </Label>
+                <AvField id="dpae-commentaire" type="text" name="commentaire" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="retourApiUrssafLabel" for="dpae-retourApiUrssaf">
+                  <Translate contentKey="emnaBackEndApp.dpae.retourApiUrssaf">Retour Api Urssaf</Translate>
+                </Label>
+                <AvField id="dpae-retourApiUrssaf" type="text" name="retourApiUrssaf" />
               </AvGroup>
               <AvGroup>
                 <Label for="dpae-employe">
