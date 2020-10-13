@@ -18,6 +18,9 @@
       },
       "lieu": "Lieu",
       "date": "Date",
+      "heureEmbauche": "Heure Embauche",
+      "commentaire": "Commentaire",
+      "retourApiUrssaf": "Retour Api Urssaf",
       "listeDocuments": "Liste Documents",
       "employe": "Employe"
     }

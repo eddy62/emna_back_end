@@ -17,6 +17,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,6 +39,12 @@ public class AvenantResourceIT {
 
     private static final Boolean DEFAULT_SIGNE = false;
     private static final Boolean UPDATED_SIGNE = true;
+
+    private static final LocalDate DEFAULT_DATE_DE_CREATION = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_DE_CREATION = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_DATE_DE_SIGNATURE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_DE_SIGNATURE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private AvenantRepository avenantRepository;
@@ -64,7 +72,9 @@ public class AvenantResourceIT {
     public static Avenant createEntity(EntityManager em) {
         Avenant avenant = new Avenant()
             .reference(DEFAULT_REFERENCE)
-            .signe(DEFAULT_SIGNE);
+            .signe(DEFAULT_SIGNE)
+            .dateDeCreation(DEFAULT_DATE_DE_CREATION)
+            .dateDeSignature(DEFAULT_DATE_DE_SIGNATURE);
         return avenant;
     }
     /**
@@ -76,7 +86,9 @@ public class AvenantResourceIT {
     public static Avenant createUpdatedEntity(EntityManager em) {
         Avenant avenant = new Avenant()
             .reference(UPDATED_REFERENCE)
-            .signe(UPDATED_SIGNE);
+            .signe(UPDATED_SIGNE)
+            .dateDeCreation(UPDATED_DATE_DE_CREATION)
+            .dateDeSignature(UPDATED_DATE_DE_SIGNATURE);
         return avenant;
     }
 
@@ -102,6 +114,8 @@ public class AvenantResourceIT {
         Avenant testAvenant = avenantList.get(avenantList.size() - 1);
         assertThat(testAvenant.getReference()).isEqualTo(DEFAULT_REFERENCE);
         assertThat(testAvenant.isSigne()).isEqualTo(DEFAULT_SIGNE);
+        assertThat(testAvenant.getDateDeCreation()).isEqualTo(DEFAULT_DATE_DE_CREATION);
+        assertThat(testAvenant.getDateDeSignature()).isEqualTo(DEFAULT_DATE_DE_SIGNATURE);
     }
 
     @Test
@@ -167,6 +181,26 @@ public class AvenantResourceIT {
 
     @Test
     @Transactional
+    public void checkDateDeCreationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = avenantRepository.findAll().size();
+        // set the field null
+        avenant.setDateDeCreation(null);
+
+        // Create the Avenant, which fails.
+        AvenantDTO avenantDTO = avenantMapper.toDto(avenant);
+
+
+        restAvenantMockMvc.perform(post("/api/avenants")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(avenantDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Avenant> avenantList = avenantRepository.findAll();
+        assertThat(avenantList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAvenants() throws Exception {
         // Initialize the database
         avenantRepository.saveAndFlush(avenant);
@@ -177,7 +211,9 @@ public class AvenantResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(avenant.getId().intValue())))
             .andExpect(jsonPath("$.[*].reference").value(hasItem(DEFAULT_REFERENCE)))
-            .andExpect(jsonPath("$.[*].signe").value(hasItem(DEFAULT_SIGNE.booleanValue())));
+            .andExpect(jsonPath("$.[*].signe").value(hasItem(DEFAULT_SIGNE.booleanValue())))
+            .andExpect(jsonPath("$.[*].dateDeCreation").value(hasItem(DEFAULT_DATE_DE_CREATION.toString())))
+            .andExpect(jsonPath("$.[*].dateDeSignature").value(hasItem(DEFAULT_DATE_DE_SIGNATURE.toString())));
     }
     
     @Test
@@ -192,7 +228,9 @@ public class AvenantResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(avenant.getId().intValue()))
             .andExpect(jsonPath("$.reference").value(DEFAULT_REFERENCE))
-            .andExpect(jsonPath("$.signe").value(DEFAULT_SIGNE.booleanValue()));
+            .andExpect(jsonPath("$.signe").value(DEFAULT_SIGNE.booleanValue()))
+            .andExpect(jsonPath("$.dateDeCreation").value(DEFAULT_DATE_DE_CREATION.toString()))
+            .andExpect(jsonPath("$.dateDeSignature").value(DEFAULT_DATE_DE_SIGNATURE.toString()));
     }
     @Test
     @Transactional
@@ -216,7 +254,9 @@ public class AvenantResourceIT {
         em.detach(updatedAvenant);
         updatedAvenant
             .reference(UPDATED_REFERENCE)
-            .signe(UPDATED_SIGNE);
+            .signe(UPDATED_SIGNE)
+            .dateDeCreation(UPDATED_DATE_DE_CREATION)
+            .dateDeSignature(UPDATED_DATE_DE_SIGNATURE);
         AvenantDTO avenantDTO = avenantMapper.toDto(updatedAvenant);
 
         restAvenantMockMvc.perform(put("/api/avenants")
@@ -230,6 +270,8 @@ public class AvenantResourceIT {
         Avenant testAvenant = avenantList.get(avenantList.size() - 1);
         assertThat(testAvenant.getReference()).isEqualTo(UPDATED_REFERENCE);
         assertThat(testAvenant.isSigne()).isEqualTo(UPDATED_SIGNE);
+        assertThat(testAvenant.getDateDeCreation()).isEqualTo(UPDATED_DATE_DE_CREATION);
+        assertThat(testAvenant.getDateDeSignature()).isEqualTo(UPDATED_DATE_DE_SIGNATURE);
     }
 
     @Test

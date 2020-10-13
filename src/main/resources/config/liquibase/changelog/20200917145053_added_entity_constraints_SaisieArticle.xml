@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="contrat"/>
 
+        <addForeignKeyConstraint baseColumnNames="avenant_id"
+                                 baseTableName="saisie_article"
+                                 constraintName="fk_saisie_article_avenant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="avenant"/>
+
     </changeSet>
 </databaseChangeLog>

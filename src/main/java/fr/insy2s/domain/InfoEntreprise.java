@@ -53,6 +53,12 @@ public class InfoEntreprise implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "code_urssaf")
+    private String codeUrssaf;
+
+    @Column(name = "service_sante_travail")
+    private String serviceSanteTravail;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -191,6 +197,32 @@ public class InfoEntreprise implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getCodeUrssaf() {
+        return codeUrssaf;
+    }
+
+    public InfoEntreprise codeUrssaf(String codeUrssaf) {
+        this.codeUrssaf = codeUrssaf;
+        return this;
+    }
+
+    public void setCodeUrssaf(String codeUrssaf) {
+        this.codeUrssaf = codeUrssaf;
+    }
+
+    public String getServiceSanteTravail() {
+        return serviceSanteTravail;
+    }
+
+    public InfoEntreprise serviceSanteTravail(String serviceSanteTravail) {
+        this.serviceSanteTravail = serviceSanteTravail;
+        return this;
+    }
+
+    public void setServiceSanteTravail(String serviceSanteTravail) {
+        this.serviceSanteTravail = serviceSanteTravail;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -224,6 +256,8 @@ public class InfoEntreprise implements Serializable {
             ", domaineDactivite='" + getDomaineDactivite() + "'" +
             ", description='" + getDescription() + "'" +
             ", email='" + getEmail() + "'" +
+            ", codeUrssaf='" + getCodeUrssaf() + "'" +
+            ", serviceSanteTravail='" + getServiceSanteTravail() + "'" +
             "}";
     }
 }

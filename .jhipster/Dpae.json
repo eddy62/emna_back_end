@@ -10,6 +10,18 @@
       "fieldName": "date",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "heureEmbauche",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "commentaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "retourApiUrssaf",
+      "fieldType": "String"
     }
   ],
   "relationships": [

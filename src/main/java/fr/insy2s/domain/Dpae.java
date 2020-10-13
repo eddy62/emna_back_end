@@ -5,7 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -33,6 +34,15 @@ public class Dpae implements Serializable {
     @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
+
+    @Column(name = "heure_embauche")
+    private String heureEmbauche;
+
+    @Column(name = "commentaire")
+    private String commentaire;
+
+    @Column(name = "retour_api_urssaf")
+    private String retourApiUrssaf;
 
     @OneToMany(mappedBy = "dpae")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -75,6 +85,45 @@ public class Dpae implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getHeureEmbauche() {
+        return heureEmbauche;
+    }
+
+    public Dpae heureEmbauche(String heureEmbauche) {
+        this.heureEmbauche = heureEmbauche;
+        return this;
+    }
+
+    public void setHeureEmbauche(String heureEmbauche) {
+        this.heureEmbauche = heureEmbauche;
+    }
+
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public Dpae commentaire(String commentaire) {
+        this.commentaire = commentaire;
+        return this;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
+    }
+
+    public String getRetourApiUrssaf() {
+        return retourApiUrssaf;
+    }
+
+    public Dpae retourApiUrssaf(String retourApiUrssaf) {
+        this.retourApiUrssaf = retourApiUrssaf;
+        return this;
+    }
+
+    public void setRetourApiUrssaf(String retourApiUrssaf) {
+        this.retourApiUrssaf = retourApiUrssaf;
     }
 
     public Set<Document> getListeDocuments() {
@@ -139,6 +188,9 @@ public class Dpae implements Serializable {
             "id=" + getId() +
             ", lieu='" + getLieu() + "'" +
             ", date='" + getDate() + "'" +
+            ", heureEmbauche='" + getHeureEmbauche() + "'" +
+            ", commentaire='" + getCommentaire() + "'" +
+            ", retourApiUrssaf='" + getRetourApiUrssaf() + "'" +
             "}";
     }
 }

@@ -12,6 +12,8 @@ export interface IInfoEntreprise {
   domaineDactivite?: string;
   description?: string;
   email?: string;
+  codeUrssaf?: string;
+  serviceSanteTravail?: string;
 }
 
 export const defaultValue: Readonly<IInfoEntreprise> = {};
