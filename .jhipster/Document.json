@@ -6,10 +6,6 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "type",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "nom",
       "fieldType": "String"
     }

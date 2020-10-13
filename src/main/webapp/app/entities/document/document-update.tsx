@@ -1,25 +1,42 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getTypeDocuments} from 'app/entities/type-document/type-document.reducer';
-import {getEntities as getFactures} from 'app/entities/facture/facture.reducer';
-import {getEntities as getReleves} from 'app/entities/releve/releve.reducer';
-import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
-import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
-import {getEntities as getDepenses} from 'app/entities/depense/depense.reducer';
-import {getEntities as getAbsences} from 'app/entities/absence/absence.reducer';
-import {getEntities as getNoteDeFrais} from 'app/entities/note-de-frais/note-de-frais.reducer';
-import {getEntities as getAutresVariables} from 'app/entities/autres-variable/autres-variable.reducer';
-import {getEntities as getDevis} from 'app/entities/devis/devis.reducer';
-import {getEntities as getDpaes} from 'app/entities/dpae/dpae.reducer';
-import {getEntities as getFichePaies} from 'app/entities/fiche-paie/fiche-paie.reducer';
-import {getEntities as getAvenants} from 'app/entities/avenant/avenant.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './document.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { ITypeDocument } from 'app/shared/model/type-document.model';
+import { getEntities as getTypeDocuments } from 'app/entities/type-document/type-document.reducer';
+import { IFacture } from 'app/shared/model/facture.model';
+import { getEntities as getFactures } from 'app/entities/facture/facture.reducer';
+import { IReleve } from 'app/shared/model/releve.model';
+import { getEntities as getReleves } from 'app/entities/releve/releve.reducer';
+import { IContrat } from 'app/shared/model/contrat.model';
+import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
+import { IEmploye } from 'app/shared/model/employe.model';
+import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
+import { IDepense } from 'app/shared/model/depense.model';
+import { getEntities as getDepenses } from 'app/entities/depense/depense.reducer';
+import { IAbsence } from 'app/shared/model/absence.model';
+import { getEntities as getAbsences } from 'app/entities/absence/absence.reducer';
+import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
+import { getEntities as getNoteDeFrais } from 'app/entities/note-de-frais/note-de-frais.reducer';
+import { IAutresVariable } from 'app/shared/model/autres-variable.model';
+import { getEntities as getAutresVariables } from 'app/entities/autres-variable/autres-variable.reducer';
+import { IDevis } from 'app/shared/model/devis.model';
+import { getEntities as getDevis } from 'app/entities/devis/devis.reducer';
+import { IDpae } from 'app/shared/model/dpae.model';
+import { getEntities as getDpaes } from 'app/entities/dpae/dpae.reducer';
+import { IFichePaie } from 'app/shared/model/fiche-paie.model';
+import { getEntities as getFichePaies } from 'app/entities/fiche-paie/fiche-paie.reducer';
+import { IAvenant } from 'app/shared/model/avenant.model';
+import { getEntities as getAvenants } from 'app/entities/avenant/avenant.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './document.reducer';
+import { IDocument } from 'app/shared/model/document.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDocumentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -133,12 +150,6 @@ export const DocumentUpdate = (props: IDocumentUpdateProps) => {
                   <Translate contentKey="emnaBackEndApp.document.cheminFichier">Chemin Fichier</Translate>
                 </Label>
                 <AvField id="document-cheminFichier" type="text" name="cheminFichier" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="typeLabel" for="document-type">
-                  <Translate contentKey="emnaBackEndApp.document.type">Type</Translate>
-                </Label>
-                <AvField id="document-type" type="text" name="type" />
               </AvGroup>
               <AvGroup>
                 <Label id="nomLabel" for="document-nom">

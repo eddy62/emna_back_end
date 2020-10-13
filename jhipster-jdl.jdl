@@ -216,7 +216,6 @@ entity InfoEntreprise{
 
 entity Document{
 	cheminFichier String
-	type String
 	nom String
 }
 
@@ -281,7 +280,7 @@ relationship OneToMany{
     //Societe{listeClauses} to Clause{societe}
     //Societe{listeArticles}  to Article{societe}
     Societe{listeEmployes}  to  Employe{societe}
-    Contrat{listeAvenants} to Avenant{contrat}
+    //Contrat{listeAvenants} to Avenant{contrat}
 
     Comptable{listeSocietes} to Societe{comptable}
 
@@ -293,7 +292,7 @@ relationship OneToMany{
     Employe{listeAvanceRappelSalaire} to AvanceRappelSalaire{employe}
     Employe{listeAutresVariables} to AutresVariable{employe}
     //Article{listeClauses} to Clause{article}
-
+    SaisieArticle{listeAvenant} to Avenant{saisieArticle}
 	Facture{listeDocuments} to Document{facture}
 	Releve{listeDocuments} to Document{releve}
 	Contrat{listeDocuments} to Document{contrat}
@@ -341,6 +340,7 @@ relationship ManyToOne{
     SaisieArticle{contrat required} to Contrat
     Document{typeDocument required} to TypeDocument
     Contrat{typeContrat required} to TypeContrat
+    
     
     LigneProduit{produit required} to Produit
 	Produit{societe required} to Societe

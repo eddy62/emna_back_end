@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.SaisieArticle;
+import fr.insy2s.domain.*;
 import fr.insy2s.service.dto.SaisieArticleDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity {@link SaisieArticle} and its DTO {@link SaisieArticleDTO}.
@@ -16,6 +16,8 @@ public interface SaisieArticleMapper extends EntityMapper<SaisieArticleDTO, Sais
     @Mapping(source = "contrat.id", target = "contratId")
     SaisieArticleDTO toDto(SaisieArticle saisieArticle);
 
+    @Mapping(target = "listeAvenants", ignore = true)
+    @Mapping(target = "removeListeAvenant", ignore = true)
     @Mapping(source = "articleId", target = "article")
     @Mapping(source = "contratId", target = "contrat")
     SaisieArticle toEntity(SaisieArticleDTO saisieArticleDTO);

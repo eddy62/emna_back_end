@@ -1,21 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './avenant.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { ISaisieArticle } from 'app/shared/model/saisie-article.model';
+import { getEntities as getSaisieArticles } from 'app/entities/saisie-article/saisie-article.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './avenant.reducer';
+import { IAvenant } from 'app/shared/model/avenant.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAvenantUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AvenantUpdate = (props: IAvenantUpdateProps) => {
-  const [contratId, setContratId] = useState('0');
+  const [saisieArticleId, setSaisieArticleId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { avenantEntity, contrats, loading, updating } = props;
+  const { avenantEntity, saisieArticles, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/avenant');
@@ -28,7 +33,7 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getContrats();
+    props.getSaisieArticles();
   }, []);
 
   useEffect(() => {
@@ -95,13 +100,13 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
                 </Label>
               </AvGroup>
               <AvGroup>
-                <Label for="avenant-contrat">
-                  <Translate contentKey="emnaBackEndApp.avenant.contrat">Contrat</Translate>
+                <Label for="avenant-saisieArticle">
+                  <Translate contentKey="emnaBackEndApp.avenant.saisieArticle">Saisie Article</Translate>
                 </Label>
-                <AvInput id="avenant-contrat" type="select" className="form-control" name="contratId">
+                <AvInput id="avenant-saisieArticle" type="select" className="form-control" name="saisieArticleId">
                   <option value="" key="0" />
-                  {contrats
-                    ? contrats.map(otherEntity => (
+                  {saisieArticles
+                    ? saisieArticles.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -131,7 +136,7 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  contrats: storeState.contrat.entities,
+  saisieArticles: storeState.saisieArticle.entities,
   avenantEntity: storeState.avenant.entity,
   loading: storeState.avenant.loading,
   updating: storeState.avenant.updating,
@@ -139,7 +144,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getContrats,
+  getSaisieArticles,
   getEntity,
   updateEntity,
   createEntity,

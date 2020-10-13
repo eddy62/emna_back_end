@@ -1,6 +1,7 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.DevisService;
+import fr.insy2s.utils.wrapper.WrapperQuote;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.DevisDTO;
 
@@ -115,14 +116,26 @@ public class DevisResource {
     }
 
     /**
-     * {@code GET /devis/societe/:id} : get all the quotes by society id.
+     * {@code GET /devis/liste/societe/:id} : get all the Quotes Wrapper by society id.
      *
-     * @param idSociete the id of the society
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of quotes in body.
+     * @param id the id of the society
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of WrapperQuotes in body.
      */
-    @GetMapping("/devis/societe/{idSociete}")
-    public List<DevisDTO> getAllQuotesBySocietyId(@PathVariable Long idSociete) {
-        log.debug("REST request to get all quotes of a society");
-        return devisService.findAllQuotesBySocietyId(idSociete);
+    @GetMapping("/devis/liste/societe/{id}")
+    public List<WrapperQuote> getQuotesBySociety(@PathVariable Long id) {
+        log.debug("Request to get all the WrapperQuotes by society id: {}", id);
+        return devisService.findAllWrapperQuotes(id);
+    }
+
+    /**
+     * {@code GET  /devis/detail/:id} : get the "id" quote.
+     *
+     * @param id the id of the wrapperQuote to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperQuote, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("devis/detail/{id}")
+    public WrapperQuote getQuote(@PathVariable Long id) {
+        log.debug("REST request to get Quote : {}", id);
+        return devisService.findQuote(id);
     }
 }

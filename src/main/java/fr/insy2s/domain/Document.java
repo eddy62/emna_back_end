@@ -5,7 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 
 /**
@@ -25,9 +26,6 @@ public class Document implements Serializable {
 
     @Column(name = "chemin_fichier")
     private String cheminFichier;
-
-    @Column(name = "type")
-    private String type;
 
     @Column(name = "nom")
     private String nom;
@@ -105,19 +103,6 @@ public class Document implements Serializable {
 
     public void setCheminFichier(String cheminFichier) {
         this.cheminFichier = cheminFichier;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Document type(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getNom() {
@@ -325,7 +310,6 @@ public class Document implements Serializable {
         return "Document{" +
             "id=" + getId() +
             ", cheminFichier='" + getCheminFichier() + "'" +
-            ", type='" + getType() + "'" +
             ", nom='" + getNom() + "'" +
             "}";
     }

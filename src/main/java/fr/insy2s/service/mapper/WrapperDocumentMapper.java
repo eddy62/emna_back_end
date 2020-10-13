@@ -37,7 +37,6 @@ public class WrapperDocumentMapper {
         // Document
         wrapperDocument.setId(documentDTO.getId());
         wrapperDocument.setCheminFichier(documentDTO.getCheminFichier());
-        wrapperDocument.setType(documentDTO.getType());
         wrapperDocument.setNom(documentDTO.getNom());
         wrapperDocument.setTypeDocumentId(documentDTO.getTypeDocumentId());
         wrapperDocument.setFactureId(documentDTO.getFactureId());
@@ -72,7 +71,6 @@ public class WrapperDocumentMapper {
 
         documentDTO.setId(wrapperDocument.getId());
         documentDTO.setCheminFichier(wrapperDocument.getCheminFichier());
-        documentDTO.setType(wrapperDocument.getType());
         documentDTO.setNom(wrapperDocument.getNom());
         documentDTO.setTypeDocumentId(wrapperDocument.getTypeDocumentId());
         documentDTO.setFactureId(wrapperDocument.getFactureId());
@@ -113,6 +111,7 @@ public class WrapperDocumentMapper {
      *
      * @param documentList the documentList to map to WrapperDocumentList
      * @return wrapperDocumentList a list of wrapperDocument
+     * @author Erik DUNAIS
      */
     public List<WrapperDocument> documentListToWrapperDocumentList(List<Document> documentList){
         List<WrapperDocument> wrapperDocumentList = new ArrayList<>();

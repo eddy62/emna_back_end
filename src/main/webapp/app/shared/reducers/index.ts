@@ -27,10 +27,6 @@ import etatReleve, {EtatReleveState} from 'app/entities/etat-releve/etat-releve.
 // prettier-ignore
 import devis, {DevisState} from 'app/entities/devis/devis.reducer';
 // prettier-ignore
-import contrat, {ContratState} from 'app/entities/contrat/contrat.reducer';
-// prettier-ignore
-import avenant, {AvenantState} from 'app/entities/avenant/avenant.reducer';
-// prettier-ignore
 import clause, {ClauseState} from 'app/entities/clause/clause.reducer';
 // prettier-ignore
 import article, {ArticleState} from 'app/entities/article/article.reducer';
@@ -67,8 +63,6 @@ import infoEntreprise, {InfoEntrepriseState} from 'app/entities/info-entreprise/
 // prettier-ignore
 import statutEmploye, {StatutEmployeState} from 'app/entities/statut-employe/statut-employe.reducer';
 // prettier-ignore
-import document, {DocumentState} from 'app/entities/document/document.reducer';
-// prettier-ignore
 import ligneProduit, {LigneProduitState} from 'app/entities/ligne-produit/ligne-produit.reducer';
 // prettier-ignore
 import typeContrat, {TypeContratState} from 'app/entities/type-contrat/type-contrat.reducer';
@@ -83,10 +77,24 @@ import depense, {DepenseState} from 'app/entities/depense/depense.reducer';
 // prettier-ignore
 import etatDepense, {EtatDepenseState} from 'app/entities/etat-depense/etat-depense.reducer';
 // prettier-ignore
-import saisieArticle, {SaisieArticleState} from 'app/entities/saisie-article/saisie-article.reducer';
-// prettier-ignore
 import typeDocument, {TypeDocumentState} from 'app/entities/type-document/type-document.reducer';
 
+// prettier-ignore
+import contrat, {
+  ContratState
+} from 'app/entities/contrat/contrat.reducer';
+// prettier-ignore
+import avenant, {
+  AvenantState
+} from 'app/entities/avenant/avenant.reducer';
+// prettier-ignore
+import document, {
+  DocumentState
+} from 'app/entities/document/document.reducer';
+// prettier-ignore
+import saisieArticle, {
+  SaisieArticleState
+} from 'app/entities/saisie-article/saisie-article.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

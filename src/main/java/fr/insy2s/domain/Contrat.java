@@ -5,7 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -40,10 +41,6 @@ public class Contrat implements Serializable {
 
     @Column(name = "archive")
     private Boolean archive;
-
-    @OneToMany(mappedBy = "contrat")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Avenant> listeAvenants = new HashSet<>();
 
     @OneToMany(mappedBy = "contrat")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -117,31 +114,6 @@ public class Contrat implements Serializable {
 
     public void setArchive(Boolean archive) {
         this.archive = archive;
-    }
-
-    public Set<Avenant> getListeAvenants() {
-        return listeAvenants;
-    }
-
-    public Contrat listeAvenants(Set<Avenant> avenants) {
-        this.listeAvenants = avenants;
-        return this;
-    }
-
-    public Contrat addListeAvenants(Avenant avenant) {
-        this.listeAvenants.add(avenant);
-        avenant.setContrat(this);
-        return this;
-    }
-
-    public Contrat removeListeAvenants(Avenant avenant) {
-        this.listeAvenants.remove(avenant);
-        avenant.setContrat(null);
-        return this;
-    }
-
-    public void setListeAvenants(Set<Avenant> avenants) {
-        this.listeAvenants = avenants;
     }
 
     public Set<Document> getListeDocuments() {

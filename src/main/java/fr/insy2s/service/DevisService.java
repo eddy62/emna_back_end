@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.DevisDTO;
+import fr.insy2s.utils.wrapper.WrapperQuote;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,10 +43,18 @@ public interface DevisService {
     void delete(Long id);
 
     /**
-     * Get all quotes by society id.
+     * Get all the WrapperQuotes by society id.
      *
-     * @param idSociete the id of the society.
-     * @return the list of entities
+     * @param id the id of the society.
+     * @return the list of entities Wrapper
      */
-    List<DevisDTO> findAllQuotesBySocietyId(Long idSociete);
+    List<WrapperQuote> findAllWrapperQuotes(Long id);
+
+    /**
+     * Get the "id" quote.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    WrapperQuote findQuote(Long id);
 }

@@ -47,6 +47,7 @@ public class WrapperDocument {
      *
      * @param documentDTO the documentDTO to construct the wrapperDocument
      * @param typeDocumentDTO the documentDTO to construct the wrapperDocument
+     * @author Erik DUNAIS
      */
     public WrapperDocument(DocumentDTO documentDTO, TypeDocumentDTO typeDocumentDTO){
 
@@ -54,7 +55,6 @@ public class WrapperDocument {
         // Document
         this.id = documentDTO.getId();
         this.cheminFichier = documentDTO.getCheminFichier();
-        this.type = documentDTO.getType();
         this.nom = documentDTO.getNom();
         this.typeDocumentId = documentDTO.getTypeDocumentId();
         this.factureId = documentDTO.getFactureId();

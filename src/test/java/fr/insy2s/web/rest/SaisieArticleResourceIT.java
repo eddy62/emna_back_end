@@ -2,6 +2,8 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
 import fr.insy2s.domain.SaisieArticle;
+import fr.insy2s.domain.Article;
+import fr.insy2s.domain.Contrat;
 import fr.insy2s.repository.SaisieArticleRepository;
 import fr.insy2s.service.SaisieArticleService;
 import fr.insy2s.service.dto.SaisieArticleDTO;
@@ -61,6 +63,26 @@ public class SaisieArticleResourceIT {
     public static SaisieArticle createEntity(EntityManager em) {
         SaisieArticle saisieArticle = new SaisieArticle()
             .libelle(DEFAULT_LIBELLE);
+        // Add required entity
+        Article article;
+        if (TestUtil.findAll(em, Article.class).isEmpty()) {
+            article = ArticleResourceIT.createEntity(em);
+            em.persist(article);
+            em.flush();
+        } else {
+            article = TestUtil.findAll(em, Article.class).get(0);
+        }
+        saisieArticle.setArticle(article);
+        // Add required entity
+        Contrat contrat;
+        if (TestUtil.findAll(em, Contrat.class).isEmpty()) {
+            contrat = ContratResourceIT.createEntity(em);
+            em.persist(contrat);
+            em.flush();
+        } else {
+            contrat = TestUtil.findAll(em, Contrat.class).get(0);
+        }
+        saisieArticle.setContrat(contrat);
         return saisieArticle;
     }
     /**
@@ -72,6 +94,26 @@ public class SaisieArticleResourceIT {
     public static SaisieArticle createUpdatedEntity(EntityManager em) {
         SaisieArticle saisieArticle = new SaisieArticle()
             .libelle(UPDATED_LIBELLE);
+        // Add required entity
+        Article article;
+        if (TestUtil.findAll(em, Article.class).isEmpty()) {
+            article = ArticleResourceIT.createUpdatedEntity(em);
+            em.persist(article);
+            em.flush();
+        } else {
+            article = TestUtil.findAll(em, Article.class).get(0);
+        }
+        saisieArticle.setArticle(article);
+        // Add required entity
+        Contrat contrat;
+        if (TestUtil.findAll(em, Contrat.class).isEmpty()) {
+            contrat = ContratResourceIT.createUpdatedEntity(em);
+            em.persist(contrat);
+            em.flush();
+        } else {
+            contrat = TestUtil.findAll(em, Contrat.class).get(0);
+        }
+        saisieArticle.setContrat(contrat);
         return saisieArticle;
     }
 

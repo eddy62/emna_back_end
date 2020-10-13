@@ -65,4 +65,12 @@ public class AvenantServiceImpl implements AvenantService {
         log.debug("Request to delete Avenant : {}", id);
         avenantRepository.deleteById(id);
     }
+
+    @Override
+    public List<AvenantDTO> getAllAmendmentByContractId(long idContract) {
+        log.debug("Request to ge all Avenants by contrat id");
+        return avenantRepository.getAllAmendmentByIdContract(idContract)
+            .stream().map(avenantMapper::toDto)
+            .collect(Collectors.toList());
+    }
 }

@@ -24,12 +24,6 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "avenant",
-      "otherEntityRelationshipName": "contrat",
-      "relationshipName": "listeAvenants"
-    },
-    {
-      "relationshipType": "one-to-many",
       "otherEntityName": "document",
       "otherEntityRelationshipName": "contrat",
       "relationshipName": "listeDocuments"

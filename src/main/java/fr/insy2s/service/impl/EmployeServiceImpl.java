@@ -2,14 +2,12 @@ package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.*;
 import fr.insy2s.repository.EmployeRepository;
-import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.*;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.ContratMapper;
 import fr.insy2s.service.mapper.EmployeMapper;
 import fr.insy2s.service.mapper.TypeContratMapper;
 import fr.insy2s.service.mapper.WrapperEmployeMapper;
-import fr.insy2s.utils.wrapper.WrapperContrat;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,7 +172,7 @@ public class EmployeServiceImpl implements EmployeService {
         final TypeContratDTO typeContratDTO = contrat != null ? typeContratMapper.toDto(contrat.getTypeContrat()) : new TypeContratDTO();
 
         final Optional<WrapperEmploye> wrapperEmploye = Optional
-            .of(new WrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, new WrapperContrat(contratDTO, typeContratDTO)));
+            .of(new WrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, contratDTO, typeContratDTO));
         return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
 
     }
@@ -188,9 +186,6 @@ public class EmployeServiceImpl implements EmployeService {
         final EmployeDTO employeDTO = wrapperEmployeMapper.toEmployeDto(wrapperEmploye);
         employeDTO.setAdresseId(newAdresseDTO.getId());
         employeDTO.setStatutEmployeId(statutEmployeDTO.getId());
-        if (employeDTO.getDateSortie() == null) {
-            employeDTO.setDateSortie(LocalDate.of(2100, 12, 31));
-        }
         if (isEmployeMatriculeExist(employeDTO.getMatricule(), employeDTO.getSocieteId())) {
             return Optional.empty();
         }

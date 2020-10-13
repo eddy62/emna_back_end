@@ -40,4 +40,11 @@ public interface AvenantService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Rècupère la liste des avenants avec l'id contrat
+     * @param idContract id du contrat
+     * @return une liste d'avenant
+     */
+    List<AvenantDTO> getAllAmendmentByContractId(long idContract);
 }

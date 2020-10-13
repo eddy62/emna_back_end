@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Table} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Col, Row, Table } from 'reactstrap';
+import { Translate, ICrudGetAllAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntities} from './avenant.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntities } from './avenant.reducer';
+import { IAvenant } from 'app/shared/model/avenant.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IAvenantProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -41,7 +43,7 @@ export const Avenant = (props: IAvenantProps) => {
                   <Translate contentKey="emnaBackEndApp.avenant.signe">Signe</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.avenant.contrat">Contrat</Translate>
+                  <Translate contentKey="emnaBackEndApp.avenant.saisieArticle">Saisie Article</Translate>
                 </th>
                 <th />
               </tr>
@@ -56,7 +58,9 @@ export const Avenant = (props: IAvenantProps) => {
                   </td>
                   <td>{avenant.reference}</td>
                   <td>{avenant.signe ? 'true' : 'false'}</td>
-                  <td>{avenant.contratId ? <Link to={`contrat/${avenant.contratId}`}>{avenant.contratId}</Link> : ''}</td>
+                  <td>
+                    {avenant.saisieArticleId ? <Link to={`saisie-article/${avenant.saisieArticleId}`}>{avenant.saisieArticleId}</Link> : ''}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${avenant.id}`} color="info" size="sm">

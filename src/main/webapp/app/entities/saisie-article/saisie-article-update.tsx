@@ -1,14 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getArticles} from 'app/entities/article/article.reducer';
-import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './saisie-article.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { IArticle } from 'app/shared/model/article.model';
+import { getEntities as getArticles } from 'app/entities/article/article.reducer';
+import { IContrat } from 'app/shared/model/contrat.model';
+import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './saisie-article.reducer';
+import { ISaisieArticle } from 'app/shared/model/saisie-article.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ISaisieArticleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

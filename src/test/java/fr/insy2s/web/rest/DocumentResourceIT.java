@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
 import fr.insy2s.domain.Document;
+import fr.insy2s.domain.TypeDocument;
 import fr.insy2s.repository.DocumentRepository;
 import fr.insy2s.service.DocumentService;
 import fr.insy2s.service.dto.DocumentDTO;
@@ -35,9 +36,6 @@ public class DocumentResourceIT {
     private static final String DEFAULT_CHEMIN_FICHIER = "AAAAAAAAAA";
     private static final String UPDATED_CHEMIN_FICHIER = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
-
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
 
@@ -67,8 +65,17 @@ public class DocumentResourceIT {
     public static Document createEntity(EntityManager em) {
         Document document = new Document()
             .cheminFichier(DEFAULT_CHEMIN_FICHIER)
-            .type(DEFAULT_TYPE)
             .nom(DEFAULT_NOM);
+        // Add required entity
+        TypeDocument typeDocument;
+        if (TestUtil.findAll(em, TypeDocument.class).isEmpty()) {
+            typeDocument = TypeDocumentResourceIT.createEntity(em);
+            em.persist(typeDocument);
+            em.flush();
+        } else {
+            typeDocument = TestUtil.findAll(em, TypeDocument.class).get(0);
+        }
+        document.setTypeDocument(typeDocument);
         return document;
     }
     /**
@@ -80,8 +87,17 @@ public class DocumentResourceIT {
     public static Document createUpdatedEntity(EntityManager em) {
         Document document = new Document()
             .cheminFichier(UPDATED_CHEMIN_FICHIER)
-            .type(UPDATED_TYPE)
             .nom(UPDATED_NOM);
+        // Add required entity
+        TypeDocument typeDocument;
+        if (TestUtil.findAll(em, TypeDocument.class).isEmpty()) {
+            typeDocument = TypeDocumentResourceIT.createUpdatedEntity(em);
+            em.persist(typeDocument);
+            em.flush();
+        } else {
+            typeDocument = TestUtil.findAll(em, TypeDocument.class).get(0);
+        }
+        document.setTypeDocument(typeDocument);
         return document;
     }
 
@@ -106,7 +122,6 @@ public class DocumentResourceIT {
         assertThat(documentList).hasSize(databaseSizeBeforeCreate + 1);
         Document testDocument = documentList.get(documentList.size() - 1);
         assertThat(testDocument.getCheminFichier()).isEqualTo(DEFAULT_CHEMIN_FICHIER);
-        assertThat(testDocument.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testDocument.getNom()).isEqualTo(DEFAULT_NOM);
     }
 
@@ -143,7 +158,6 @@ public class DocumentResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(document.getId().intValue())))
             .andExpect(jsonPath("$.[*].cheminFichier").value(hasItem(DEFAULT_CHEMIN_FICHIER)))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)));
     }
     
@@ -159,7 +173,6 @@ public class DocumentResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(document.getId().intValue()))
             .andExpect(jsonPath("$.cheminFichier").value(DEFAULT_CHEMIN_FICHIER))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM));
     }
     @Test
@@ -184,7 +197,6 @@ public class DocumentResourceIT {
         em.detach(updatedDocument);
         updatedDocument
             .cheminFichier(UPDATED_CHEMIN_FICHIER)
-            .type(UPDATED_TYPE)
             .nom(UPDATED_NOM);
         DocumentDTO documentDTO = documentMapper.toDto(updatedDocument);
 
@@ -198,7 +210,6 @@ public class DocumentResourceIT {
         assertThat(documentList).hasSize(databaseSizeBeforeUpdate);
         Document testDocument = documentList.get(documentList.size() - 1);
         assertThat(testDocument.getCheminFichier()).isEqualTo(UPDATED_CHEMIN_FICHIER);
-        assertThat(testDocument.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testDocument.getNom()).isEqualTo(UPDATED_NOM);
     }
 

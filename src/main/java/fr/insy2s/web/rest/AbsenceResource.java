@@ -9,12 +9,15 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +46,7 @@ public class AbsenceResource {
      *
      * @param absenceDTO the absenceDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new absenceDTO, or with status {@code 400 (Bad Request)} if the absence has already an ID.
+     * or with status {@code 208 (Already Reported)} if an absenceDTO already has an equivalent date, and with body the first existing absenceDTO.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/absences")
@@ -51,10 +55,22 @@ public class AbsenceResource {
         if (absenceDTO.getId() != null) {
             throw new BadRequestAlertException("A new absence cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        AbsenceDTO result = absenceService.save(absenceDTO);
-        return ResponseEntity.created(new URI("/api/absences/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        Long idEmploye = absenceDTO.getEmployeId();
+        LocalDate debutAbsence = absenceDTO.getDebutAbsence();
+        LocalDate finAbsence = absenceDTO.getFinAbsence();
+        Optional<AbsenceDTO> absenceOverlapping = absenceService.findAllOverlappingAbsencesByIdEmploye(idEmploye, debutAbsence, finAbsence);
+        if(!absenceOverlapping.isPresent()) {
+            AbsenceDTO result = absenceService.save(absenceDTO);
+            return ResponseEntity.status(201)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else{
+            AbsenceDTO absenceDoublon = absenceOverlapping.get();
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, absenceDoublon.getId().toString()))
+                .body(absenceDoublon);
+        }
     }
 
     /**
@@ -72,10 +88,26 @@ public class AbsenceResource {
         if (absenceDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        AbsenceDTO result = absenceService.save(absenceDTO);
+        /*AbsenceDTO result = absenceService.save(absenceDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, absenceDTO.getId().toString()))
-            .body(result);
+            .body(result);*/
+        Long idEmploye = absenceDTO.getEmployeId();
+        LocalDate debutAbsence = absenceDTO.getDebutAbsence();
+        LocalDate finAbsence = absenceDTO.getFinAbsence();
+        Optional<AbsenceDTO> absenceOverlapping = absenceService.findAllOverlappingAbsencesByIdEmploye(idEmploye, debutAbsence, finAbsence);
+        if(!absenceOverlapping.isPresent()) {
+            AbsenceDTO result = absenceService.save(absenceDTO);
+            return ResponseEntity.status(201)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else{
+            AbsenceDTO absenceDoublon = absenceOverlapping.get();
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, absenceDoublon.getId().toString()))
+                .body(absenceDoublon);
+        }
     }
 
     /**

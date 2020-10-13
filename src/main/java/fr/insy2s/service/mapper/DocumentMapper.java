@@ -1,10 +1,10 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.Document;
+import fr.insy2s.domain.*;
 import fr.insy2s.service.dto.DocumentDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity {@link Document} and its DTO {@link DocumentDTO}.
