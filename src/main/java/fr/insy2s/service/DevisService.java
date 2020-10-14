@@ -57,4 +57,12 @@ public interface DevisService {
      * @return the entity.
      */
     WrapperQuote findQuote(Long id);
+
+    /**
+     * Save a quote.
+     *
+     * @param wrapperQuote the entity to save.
+     * @return the persisted entity.
+     */
+    DevisDTO saveQuote(WrapperQuote wrapperQuote);
 }
