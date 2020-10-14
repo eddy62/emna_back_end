@@ -1,20 +1,27 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DpaeService;
+import fr.insy2s.utils.files.PdfUtil;
+import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
+import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.DpaeDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,5 +120,31 @@ public class DpaeResource {
         log.debug("REST request to delete Dpae : {}", id);
         dpaeService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * {@code GET  /dpae/pdf/:id} : get the pdf from a dpae.
+     *
+     * @param id the id of the dpae to process.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pdf, or with status {@code 404 (Not Found)}.
+     */
+    @Secured({
+        AuthoritiesConstants.SOCIETY,
+        AuthoritiesConstants.ADMIN,
+        AuthoritiesConstants.ACCOUNTANT
+    })
+    @GetMapping("/dpae/pdf/{id}")
+    public ResponseEntity<byte[]> generateDpaeAsBytes(@PathVariable Long id) throws JRException {
+        log.debug("REST request to get dpae pdf: {}", id);
+        WrapperPdfDpae wrapperPdfDpae = dpaeService.getWrapperPdfDpae(id);
+        byte[] bytes    = PdfUtil.generateDpaeAsBytes(wrapperPdfDpae);
+        String pdfName  = new Date().getTime()
+            + "_DPAE_"
+            + wrapperPdfDpae.getSurname() + "_"
+            + wrapperPdfDpae.getId();
+        return ResponseEntity.ok()
+            .header("Content-Type", "application/pdf; charset=UTF-8")
+            .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"")
+            .body(bytes);
     }
 }

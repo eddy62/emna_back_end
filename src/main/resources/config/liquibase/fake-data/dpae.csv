@@ -1,11 +1,4 @@
-id;lieu;date
-1;productize;2020-08-24
-2;Realigned Creative;2020-08-25
-3;whiteboard Land Wooden;2020-08-25
-4;Corporate;2020-08-25
-5;back-end;2020-08-25
-6;Bedfordshire Incredible Personal Loan Account;2020-08-24
-7;one-to-one;2020-08-25
-8;Movies EXE;2020-08-25
-9;deploy user-facing Consultant;2020-08-24
-10;content-based customer loyalty;2020-08-25
+id;lieu;date;heure_embauche;commentaire;retour_api_urssaf;employe_id
+1;Lille;2020-09-01;09:00;1ère embauche;AR;1
+
+
