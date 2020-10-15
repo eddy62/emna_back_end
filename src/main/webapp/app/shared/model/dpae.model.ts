@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import { IDocument } from 'app/shared/model/document.model';
 
 export interface IDpae {
@@ -8,8 +7,8 @@ export interface IDpae {
   heureEmbauche?: string;
   commentaire?: string;
   retourApiUrssaf?: string;
+  contratId?: number;
   listeDocuments?: IDocument[];
-  employeId?: number;
 }
 
 export const defaultValue: Readonly<IDpae> = {};

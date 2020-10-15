@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRootState } from 'app/shared/reducers';
-
-import { IEmploye } from 'app/shared/model/employe.model';
-import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './dpae.reducer';
-import { IDpae } from 'app/shared/model/dpae.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Label, Row} from 'reactstrap';
+import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
+import {Translate, translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
+import {createEntity, getEntity, reset, updateEntity} from './dpae.reducer';
 
 export interface IDpaeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const DpaeUpdate = (props: IDpaeUpdateProps) => {
-  const [employeId, setEmployeId] = useState('0');
+  const [contratId, setContratId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { dpaeEntity, employes, loading, updating } = props;
+  const { dpaeEntity, contrats, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/dpae');
@@ -33,7 +28,7 @@ export const DpaeUpdate = (props: IDpaeUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getEmployes();
+    props.getContrats();
   }, []);
 
   useEffect(() => {
@@ -111,7 +106,14 @@ export const DpaeUpdate = (props: IDpaeUpdateProps) => {
                 <Label id="heureEmbaucheLabel" for="dpae-heureEmbauche">
                   <Translate contentKey="emnaBackEndApp.dpae.heureEmbauche">Heure Embauche</Translate>
                 </Label>
-                <AvField id="dpae-heureEmbauche" type="text" name="heureEmbauche" />
+                <AvField
+                  id="dpae-heureEmbauche"
+                  type="text"
+                  name="heureEmbauche"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label id="commentaireLabel" for="dpae-commentaire">
@@ -126,13 +128,13 @@ export const DpaeUpdate = (props: IDpaeUpdateProps) => {
                 <AvField id="dpae-retourApiUrssaf" type="text" name="retourApiUrssaf" />
               </AvGroup>
               <AvGroup>
-                <Label for="dpae-employe">
-                  <Translate contentKey="emnaBackEndApp.dpae.employe">Employe</Translate>
+                <Label for="dpae-contrat">
+                  <Translate contentKey="emnaBackEndApp.dpae.contrat">Contrat</Translate>
                 </Label>
-                <AvInput id="dpae-employe" type="select" className="form-control" name="employeId">
+                <AvInput id="dpae-contrat" type="select" className="form-control" name="contratId">
                   <option value="" key="0" />
-                  {employes
-                    ? employes.map(otherEntity => (
+                  {contrats
+                    ? contrats.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.id}
                         </option>
@@ -162,7 +164,7 @@ export const DpaeUpdate = (props: IDpaeUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  employes: storeState.employe.entities,
+  contrats: storeState.contrat.entities,
   dpaeEntity: storeState.dpae.entity,
   loading: storeState.dpae.loading,
   updating: storeState.dpae.updating,
@@ -170,7 +172,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getEmployes,
+  getContrats,
   getEntity,
   updateEntity,
   createEntity,

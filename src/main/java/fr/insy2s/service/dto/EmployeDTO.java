@@ -36,14 +36,14 @@ public class EmployeDTO implements Serializable {
     private String departementNaissance;
 
     @NotNull
-    private String paysNaisance;
+    private String paysNaissance;
 
     @NotNull
     private String numeroSecuriteSociale;
 
     private String email;
 
-    private String telephoneFix;
+    private String telephoneFixe;
 
     @NotNull
     private String telephonePortable;
@@ -54,10 +54,10 @@ public class EmployeDTO implements Serializable {
     private BigDecimal salaireHoraire;
 
     @NotNull
-    private BigDecimal salaireBrutMensuelle;
+    private BigDecimal salaireBrutMensuel;
 
     @NotNull
-    private BigDecimal heuresMensuelle;
+    private BigDecimal nbHeureMensuelle;
 
     @NotNull
     private String categorie;
@@ -71,13 +71,12 @@ public class EmployeDTO implements Serializable {
     private LocalDate dateSortie;
 
     @NotNull
-    private Double periodeEssai;
+    private Integer periodeEssai;
 
     @NotNull
     private String situationFamiliale;
 
-    @NotNull
-    private Integer enfantsACharge;
+    private Integer nbEnfantACharge;
 
 
     private Long statutEmployeId;
@@ -158,12 +157,12 @@ public class EmployeDTO implements Serializable {
         this.departementNaissance = departementNaissance;
     }
 
-    public String getPaysNaisance() {
-        return paysNaisance;
+    public String getPaysNaissance() {
+        return paysNaissance;
     }
 
-    public void setPaysNaisance(String paysNaisance) {
-        this.paysNaisance = paysNaisance;
+    public void setPaysNaissance(String paysNaissance) {
+        this.paysNaissance = paysNaissance;
     }
 
     public String getNumeroSecuriteSociale() {
@@ -182,12 +181,12 @@ public class EmployeDTO implements Serializable {
         this.email = email;
     }
 
-    public String getTelephoneFix() {
-        return telephoneFix;
+    public String getTelephoneFixe() {
+        return telephoneFixe;
     }
 
-    public void setTelephoneFix(String telephoneFix) {
-        this.telephoneFix = telephoneFix;
+    public void setTelephoneFixe(String telephoneFixe) {
+        this.telephoneFixe = telephoneFixe;
     }
 
     public String getTelephonePortable() {
@@ -214,20 +213,20 @@ public class EmployeDTO implements Serializable {
         this.salaireHoraire = salaireHoraire;
     }
 
-    public BigDecimal getSalaireBrutMensuelle() {
-        return salaireBrutMensuelle;
+    public BigDecimal getSalaireBrutMensuel() {
+        return salaireBrutMensuel;
     }
 
-    public void setSalaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
-        this.salaireBrutMensuelle = salaireBrutMensuelle;
+    public void setSalaireBrutMensuel(BigDecimal salaireBrutMensuel) {
+        this.salaireBrutMensuel = salaireBrutMensuel;
     }
 
-    public BigDecimal getHeuresMensuelle() {
-        return heuresMensuelle;
+    public BigDecimal getNbHeureMensuelle() {
+        return nbHeureMensuelle;
     }
 
-    public void setHeuresMensuelle(BigDecimal heuresMensuelle) {
-        this.heuresMensuelle = heuresMensuelle;
+    public void setNbHeureMensuelle(BigDecimal nbHeureMensuelle) {
+        this.nbHeureMensuelle = nbHeureMensuelle;
     }
 
     public String getCategorie() {
@@ -262,11 +261,11 @@ public class EmployeDTO implements Serializable {
         this.dateSortie = dateSortie;
     }
 
-    public Double getPeriodeEssai() {
+    public Integer getPeriodeEssai() {
         return periodeEssai;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
+    public void setPeriodeEssai(Integer periodeEssai) {
         this.periodeEssai = periodeEssai;
     }
 
@@ -278,12 +277,12 @@ public class EmployeDTO implements Serializable {
         this.situationFamiliale = situationFamiliale;
     }
 
-    public Integer getEnfantsACharge() {
-        return enfantsACharge;
+    public Integer getNbEnfantACharge() {
+        return nbEnfantACharge;
     }
 
-    public void setEnfantsACharge(Integer enfantsACharge) {
-        this.enfantsACharge = enfantsACharge;
+    public void setNbEnfantACharge(Integer nbEnfantACharge) {
+        this.nbEnfantACharge = nbEnfantACharge;
     }
 
     public Long getStatutEmployeId() {
@@ -340,22 +339,22 @@ public class EmployeDTO implements Serializable {
             ", dateNaissance='" + getDateNaissance() + "'" +
             ", villeNaissance='" + getVilleNaissance() + "'" +
             ", departementNaissance='" + getDepartementNaissance() + "'" +
-            ", paysNaisance='" + getPaysNaisance() + "'" +
+            ", paysNaissance='" + getPaysNaissance() + "'" +
             ", numeroSecuriteSociale='" + getNumeroSecuriteSociale() + "'" +
             ", email='" + getEmail() + "'" +
-            ", telephoneFix='" + getTelephoneFix() + "'" +
+            ", telephoneFixe='" + getTelephoneFixe() + "'" +
             ", telephonePortable='" + getTelephonePortable() + "'" +
             ", fax='" + getFax() + "'" +
             ", salaireHoraire=" + getSalaireHoraire() +
-            ", salaireBrutMensuelle=" + getSalaireBrutMensuelle() +
-            ", heuresMensuelle=" + getHeuresMensuelle() +
+            ", salaireBrutMensuel=" + getSalaireBrutMensuel() +
+            ", nbHeureMensuelle=" + getNbHeureMensuelle() +
             ", categorie='" + getCategorie() + "'" +
             ", poste='" + getPoste() + "'" +
             ", dateEmbauche='" + getDateEmbauche() + "'" +
             ", dateSortie='" + getDateSortie() + "'" +
             ", periodeEssai=" + getPeriodeEssai() +
             ", situationFamiliale='" + getSituationFamiliale() + "'" +
-            ", enfantsACharge=" + getEnfantsACharge() +
+            ", nbEnfantACharge=" + getNbEnfantACharge() +
             ", statutEmployeId=" + getStatutEmployeId() +
             ", adresseId=" + getAdresseId() +
             ", societeId=" + getSocieteId() +

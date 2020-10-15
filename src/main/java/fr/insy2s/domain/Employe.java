@@ -59,8 +59,8 @@ public class Employe implements Serializable {
     private String departementNaissance;
 
     @NotNull
-    @Column(name = "pays_naisance", nullable = false)
-    private String paysNaisance;
+    @Column(name = "pays_naissance", nullable = false)
+    private String paysNaissance;
 
     @NotNull
     @Column(name = "numero_securite_sociale", nullable = false)
@@ -69,8 +69,8 @@ public class Employe implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "telephone_fix")
-    private String telephoneFix;
+    @Column(name = "telephone_fixe")
+    private String telephoneFixe;
 
     @NotNull
     @Column(name = "telephone_portable", nullable = false)
@@ -84,12 +84,12 @@ public class Employe implements Serializable {
     private BigDecimal salaireHoraire;
 
     @NotNull
-    @Column(name = "salaire_brut_mensuelle", precision = 21, scale = 2, nullable = false)
-    private BigDecimal salaireBrutMensuelle;
+    @Column(name = "salaire_brut_mensuel", precision = 21, scale = 2, nullable = false)
+    private BigDecimal salaireBrutMensuel;
 
     @NotNull
-    @Column(name = "heures_mensuelle", precision = 21, scale = 2, nullable = false)
-    private BigDecimal heuresMensuelle;
+    @Column(name = "nb_heure_mensuelle", precision = 21, scale = 2, nullable = false)
+    private BigDecimal nbHeureMensuelle;
 
     @NotNull
     @Column(name = "categorie", nullable = false)
@@ -108,15 +108,14 @@ public class Employe implements Serializable {
 
     @NotNull
     @Column(name = "periode_essai", nullable = false)
-    private Double periodeEssai;
+    private Integer periodeEssai;
 
     @NotNull
     @Column(name = "situation_familiale", nullable = false)
     private String situationFamiliale;
 
-    @NotNull
-    @Column(name = "enfants_a_charge", nullable = false)
-    private Integer enfantsACharge;
+    @Column(name = "nb_enfant_a_charge")
+    private Integer nbEnfantACharge;
 
     @OneToMany(mappedBy = "employe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -153,10 +152,6 @@ public class Employe implements Serializable {
     @OneToMany(mappedBy = "employe")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
-
-    @OneToMany(mappedBy = "employe")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Dpae> listeDpaes = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -285,17 +280,17 @@ public class Employe implements Serializable {
         this.departementNaissance = departementNaissance;
     }
 
-    public String getPaysNaisance() {
-        return paysNaisance;
+    public String getPaysNaissance() {
+        return paysNaissance;
     }
 
-    public Employe paysNaisance(String paysNaisance) {
-        this.paysNaisance = paysNaisance;
+    public Employe paysNaissance(String paysNaissance) {
+        this.paysNaissance = paysNaissance;
         return this;
     }
 
-    public void setPaysNaisance(String paysNaisance) {
-        this.paysNaisance = paysNaisance;
+    public void setPaysNaissance(String paysNaissance) {
+        this.paysNaissance = paysNaissance;
     }
 
     public String getNumeroSecuriteSociale() {
@@ -324,17 +319,17 @@ public class Employe implements Serializable {
         this.email = email;
     }
 
-    public String getTelephoneFix() {
-        return telephoneFix;
+    public String getTelephoneFixe() {
+        return telephoneFixe;
     }
 
-    public Employe telephoneFix(String telephoneFix) {
-        this.telephoneFix = telephoneFix;
+    public Employe telephoneFixe(String telephoneFixe) {
+        this.telephoneFixe = telephoneFixe;
         return this;
     }
 
-    public void setTelephoneFix(String telephoneFix) {
-        this.telephoneFix = telephoneFix;
+    public void setTelephoneFixe(String telephoneFixe) {
+        this.telephoneFixe = telephoneFixe;
     }
 
     public String getTelephonePortable() {
@@ -376,30 +371,30 @@ public class Employe implements Serializable {
         this.salaireHoraire = salaireHoraire;
     }
 
-    public BigDecimal getSalaireBrutMensuelle() {
-        return salaireBrutMensuelle;
+    public BigDecimal getSalaireBrutMensuel() {
+        return salaireBrutMensuel;
     }
 
-    public Employe salaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
-        this.salaireBrutMensuelle = salaireBrutMensuelle;
+    public Employe salaireBrutMensuel(BigDecimal salaireBrutMensuel) {
+        this.salaireBrutMensuel = salaireBrutMensuel;
         return this;
     }
 
-    public void setSalaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
-        this.salaireBrutMensuelle = salaireBrutMensuelle;
+    public void setSalaireBrutMensuel(BigDecimal salaireBrutMensuel) {
+        this.salaireBrutMensuel = salaireBrutMensuel;
     }
 
-    public BigDecimal getHeuresMensuelle() {
-        return heuresMensuelle;
+    public BigDecimal getNbHeureMensuelle() {
+        return nbHeureMensuelle;
     }
 
-    public Employe heuresMensuelle(BigDecimal heuresMensuelle) {
-        this.heuresMensuelle = heuresMensuelle;
+    public Employe nbHeureMensuelle(BigDecimal nbHeureMensuelle) {
+        this.nbHeureMensuelle = nbHeureMensuelle;
         return this;
     }
 
-    public void setHeuresMensuelle(BigDecimal heuresMensuelle) {
-        this.heuresMensuelle = heuresMensuelle;
+    public void setNbHeureMensuelle(BigDecimal nbHeureMensuelle) {
+        this.nbHeureMensuelle = nbHeureMensuelle;
     }
 
     public String getCategorie() {
@@ -454,16 +449,16 @@ public class Employe implements Serializable {
         this.dateSortie = dateSortie;
     }
 
-    public Double getPeriodeEssai() {
+    public Integer getPeriodeEssai() {
         return periodeEssai;
     }
 
-    public Employe periodeEssai(Double periodeEssai) {
+    public Employe periodeEssai(Integer periodeEssai) {
         this.periodeEssai = periodeEssai;
         return this;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
+    public void setPeriodeEssai(Integer periodeEssai) {
         this.periodeEssai = periodeEssai;
     }
 
@@ -480,17 +475,17 @@ public class Employe implements Serializable {
         this.situationFamiliale = situationFamiliale;
     }
 
-    public Integer getEnfantsACharge() {
-        return enfantsACharge;
+    public Integer getNbEnfantACharge() {
+        return nbEnfantACharge;
     }
 
-    public Employe enfantsACharge(Integer enfantsACharge) {
-        this.enfantsACharge = enfantsACharge;
+    public Employe nbEnfantACharge(Integer nbEnfantACharge) {
+        this.nbEnfantACharge = nbEnfantACharge;
         return this;
     }
 
-    public void setEnfantsACharge(Integer enfantsACharge) {
-        this.enfantsACharge = enfantsACharge;
+    public void setNbEnfantACharge(Integer nbEnfantACharge) {
+        this.nbEnfantACharge = nbEnfantACharge;
     }
 
     public Set<Contrat> getListeContrats() {
@@ -718,31 +713,6 @@ public class Employe implements Serializable {
         this.listeDocuments = documents;
     }
 
-    public Set<Dpae> getListeDpaes() {
-        return listeDpaes;
-    }
-
-    public Employe listeDpaes(Set<Dpae> dpaes) {
-        this.listeDpaes = dpaes;
-        return this;
-    }
-
-    public Employe addListeDpae(Dpae dpae) {
-        this.listeDpaes.add(dpae);
-        dpae.setEmploye(this);
-        return this;
-    }
-
-    public Employe removeListeDpae(Dpae dpae) {
-        this.listeDpaes.remove(dpae);
-        dpae.setEmploye(null);
-        return this;
-    }
-
-    public void setListeDpaes(Set<Dpae> dpaes) {
-        this.listeDpaes = dpaes;
-    }
-
     public StatutEmploye getStatutEmploye() {
         return statutEmploye;
     }
@@ -812,22 +782,22 @@ public class Employe implements Serializable {
             ", dateNaissance='" + getDateNaissance() + "'" +
             ", villeNaissance='" + getVilleNaissance() + "'" +
             ", departementNaissance='" + getDepartementNaissance() + "'" +
-            ", paysNaisance='" + getPaysNaisance() + "'" +
+            ", paysNaissance='" + getPaysNaissance() + "'" +
             ", numeroSecuriteSociale='" + getNumeroSecuriteSociale() + "'" +
             ", email='" + getEmail() + "'" +
-            ", telephoneFix='" + getTelephoneFix() + "'" +
+            ", telephoneFixe='" + getTelephoneFixe() + "'" +
             ", telephonePortable='" + getTelephonePortable() + "'" +
             ", fax='" + getFax() + "'" +
             ", salaireHoraire=" + getSalaireHoraire() +
-            ", salaireBrutMensuelle=" + getSalaireBrutMensuelle() +
-            ", heuresMensuelle=" + getHeuresMensuelle() +
+            ", salaireBrutMensuel=" + getSalaireBrutMensuel() +
+            ", nbHeureMensuelle=" + getNbHeureMensuelle() +
             ", categorie='" + getCategorie() + "'" +
             ", poste='" + getPoste() + "'" +
             ", dateEmbauche='" + getDateEmbauche() + "'" +
             ", dateSortie='" + getDateSortie() + "'" +
             ", periodeEssai=" + getPeriodeEssai() +
             ", situationFamiliale='" + getSituationFamiliale() + "'" +
-            ", enfantsACharge=" + getEnfantsACharge() +
+            ", nbEnfantACharge=" + getNbEnfantACharge() +
             "}";
     }
 }

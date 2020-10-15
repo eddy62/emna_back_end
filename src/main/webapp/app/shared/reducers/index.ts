@@ -33,8 +33,6 @@ import article, {ArticleState} from 'app/entities/article/article.reducer';
 // prettier-ignore
 import adresse, {AdresseState} from 'app/entities/adresse/adresse.reducer';
 // prettier-ignore
-import employe, {EmployeState} from 'app/entities/employe/employe.reducer';
-// prettier-ignore
 import typeAbsence, {TypeAbsenceState} from 'app/entities/type-absence/type-absence.reducer';
 // prettier-ignore
 import absence, {AbsenceState} from 'app/entities/absence/absence.reducer';
@@ -71,30 +69,24 @@ import etatVariablePaie, {EtatVariablePaieState} from 'app/entities/etat-variabl
 // prettier-ignore
 import avanceRappelSalaire, {AvanceRappelSalaireState} from 'app/entities/avance-rappel-salaire/avance-rappel-salaire.reducer';
 // prettier-ignore
-import dpae, {DpaeState} from 'app/entities/dpae/dpae.reducer';
-// prettier-ignore
 import depense, {DepenseState} from 'app/entities/depense/depense.reducer';
 // prettier-ignore
 import etatDepense, {EtatDepenseState} from 'app/entities/etat-depense/etat-depense.reducer';
 // prettier-ignore
 import typeDocument, {TypeDocumentState} from 'app/entities/type-document/type-document.reducer';
+// prettier-ignore
+import contrat, {ContratState} from 'app/entities/contrat/contrat.reducer';
+// prettier-ignore
+import avenant, {AvenantState} from 'app/entities/avenant/avenant.reducer';
+// prettier-ignore
+import document, {DocumentState} from 'app/entities/document/document.reducer';
+// prettier-ignore
+import saisieArticle, {SaisieArticleState} from 'app/entities/saisie-article/saisie-article.reducer';
+// prettier-ignore
+import employe, {EmployeState} from 'app/entities/employe/employe.reducer';
+// prettier-ignore
+import dpae, {DpaeState} from 'app/entities/dpae/dpae.reducer';
 
-// prettier-ignore
-import contrat, {
-  ContratState
-} from 'app/entities/contrat/contrat.reducer';
-// prettier-ignore
-import avenant, {
-  AvenantState
-} from 'app/entities/avenant/avenant.reducer';
-// prettier-ignore
-import document, {
-  DocumentState
-} from 'app/entities/document/document.reducer';
-// prettier-ignore
-import saisieArticle, {
-  SaisieArticleState
-} from 'app/entities/saisie-article/saisie-article.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

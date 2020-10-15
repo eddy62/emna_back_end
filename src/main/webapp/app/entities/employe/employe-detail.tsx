@@ -77,11 +77,11 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
           </dt>
           <dd>{employeEntity.departementNaissance}</dd>
           <dt>
-            <span id="paysNaisance">
-              <Translate contentKey="emnaBackEndApp.employe.paysNaisance">Pays Naisance</Translate>
+            <span id="paysNaissance">
+              <Translate contentKey="emnaBackEndApp.employe.paysNaissance">Pays Naissance</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.paysNaisance}</dd>
+          <dd>{employeEntity.paysNaissance}</dd>
           <dt>
             <span id="numeroSecuriteSociale">
               <Translate contentKey="emnaBackEndApp.employe.numeroSecuriteSociale">Numero Securite Sociale</Translate>
@@ -95,11 +95,11 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
           </dt>
           <dd>{employeEntity.email}</dd>
           <dt>
-            <span id="telephoneFix">
-              <Translate contentKey="emnaBackEndApp.employe.telephoneFix">Telephone Fix</Translate>
+            <span id="telephoneFixe">
+              <Translate contentKey="emnaBackEndApp.employe.telephoneFixe">Telephone Fixe</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.telephoneFix}</dd>
+          <dd>{employeEntity.telephoneFixe}</dd>
           <dt>
             <span id="telephonePortable">
               <Translate contentKey="emnaBackEndApp.employe.telephonePortable">Telephone Portable</Translate>
@@ -119,17 +119,17 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
           </dt>
           <dd>{employeEntity.salaireHoraire}</dd>
           <dt>
-            <span id="salaireBrutMensuelle">
-              <Translate contentKey="emnaBackEndApp.employe.salaireBrutMensuelle">Salaire Brut Mensuelle</Translate>
+            <span id="salaireBrutMensuel">
+              <Translate contentKey="emnaBackEndApp.employe.salaireBrutMensuel">Salaire Brut Mensuel</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.salaireBrutMensuelle}</dd>
+          <dd>{employeEntity.salaireBrutMensuel}</dd>
           <dt>
-            <span id="heuresMensuelle">
-              <Translate contentKey="emnaBackEndApp.employe.heuresMensuelle">Heures Mensuelle</Translate>
+            <span id="nbHeureMensuelle">
+              <Translate contentKey="emnaBackEndApp.employe.nbHeureMensuelle">Nb Heure Mensuelle</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.heuresMensuelle}</dd>
+          <dd>{employeEntity.nbHeureMensuelle}</dd>
           <dt>
             <span id="categorie">
               <Translate contentKey="emnaBackEndApp.employe.categorie">Categorie</Translate>
@@ -173,11 +173,11 @@ export const EmployeDetail = (props: IEmployeDetailProps) => {
           </dt>
           <dd>{employeEntity.situationFamiliale}</dd>
           <dt>
-            <span id="enfantsACharge">
-              <Translate contentKey="emnaBackEndApp.employe.enfantsACharge">Enfants A Charge</Translate>
+            <span id="nbEnfantACharge">
+              <Translate contentKey="emnaBackEndApp.employe.nbEnfantACharge">Nb Enfant A Charge</Translate>
             </span>
           </dt>
-          <dd>{employeEntity.enfantsACharge}</dd>
+          <dd>{employeEntity.nbEnfantACharge}</dd>
           <dt>
             <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
           </dt>

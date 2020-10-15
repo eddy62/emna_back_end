@@ -41,7 +41,7 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "paysNaisance",
+      "fieldName": "paysNaissance",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
@@ -55,7 +55,7 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "telephoneFix",
+      "fieldName": "telephoneFixe",
       "fieldType": "String"
     },
     {
@@ -73,12 +73,12 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "salaireBrutMensuelle",
+      "fieldName": "salaireBrutMensuel",
       "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "heuresMensuelle",
+      "fieldName": "nbHeureMensuelle",
       "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
@@ -103,7 +103,7 @@
     },
     {
       "fieldName": "periodeEssai",
-      "fieldType": "Double",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
@@ -112,9 +112,8 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "enfantsACharge",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldName": "nbEnfantACharge",
+      "fieldType": "Integer"
     }
   ],
   "relationships": [
@@ -171,12 +170,6 @@
       "otherEntityName": "document",
       "otherEntityRelationshipName": "employe",
       "relationshipName": "listeDocuments"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "dpae",
-      "otherEntityRelationshipName": "employe",
-      "relationshipName": "listeDpae"
     },
     {
       "relationshipType": "many-to-one",

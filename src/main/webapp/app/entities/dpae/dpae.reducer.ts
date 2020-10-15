@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
 
-import { IDpae, defaultValue } from 'app/shared/model/dpae.model';
+import { defaultValue, IDpae } from 'app/shared/model/dpae.model';
 
 export const ACTION_TYPES = {
   FETCH_DPAE_LIST: 'dpae/FETCH_DPAE_LIST',

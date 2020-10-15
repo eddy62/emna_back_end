@@ -37,7 +37,7 @@
             <column name="departement_naissance" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="pays_naisance" type="varchar(255)">
+            <column name="pays_naissance" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="numero_securite_sociale" type="varchar(255)">
@@ -46,7 +46,7 @@
             <column name="email" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="telephone_fix" type="varchar(255)">
+            <column name="telephone_fixe" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="telephone_portable" type="varchar(255)">
@@ -58,10 +58,10 @@
             <column name="salaire_horaire" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
-            <column name="salaire_brut_mensuelle" type="decimal(21,2)">
+            <column name="salaire_brut_mensuel" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
-            <column name="heures_mensuelle" type="decimal(21,2)">
+            <column name="nb_heure_mensuelle" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
             <column name="categorie" type="varchar(255)">
@@ -76,14 +76,14 @@
             <column name="date_sortie" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="periode_essai" type="double">
+            <column name="periode_essai" type="integer">
                 <constraints nullable="false" />
             </column>
             <column name="situation_familiale" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="enfants_a_charge" type="integer">
-                <constraints nullable="false" />
+            <column name="nb_enfant_a_charge" type="integer">
+                <constraints nullable="true" />
             </column>
             <column name="statut_employe_id" type="bigint">
                 <constraints nullable="false" />
@@ -125,22 +125,22 @@
             <column name="date_naissance" type="date"/>
             <column name="ville_naissance" type="string"/>
             <column name="departement_naissance" type="string"/>
-            <column name="pays_naisance" type="string"/>
+            <column name="pays_naissance" type="string"/>
             <column name="numero_securite_sociale" type="string"/>
             <column name="email" type="string"/>
-            <column name="telephone_fix" type="string"/>
+            <column name="telephone_fixe" type="string"/>
             <column name="telephone_portable" type="string"/>
             <column name="fax" type="string"/>
             <column name="salaire_horaire" type="numeric"/>
-            <column name="salaire_brut_mensuelle" type="numeric"/>
-            <column name="heures_mensuelle" type="numeric"/>
+            <column name="salaire_brut_mensuel" type="numeric"/>
+            <column name="nb_heure_mensuelle" type="numeric"/>
             <column name="categorie" type="string"/>
             <column name="poste" type="string"/>
             <column name="date_embauche" type="date"/>
             <column name="date_sortie" type="date"/>
             <column name="periode_essai" type="numeric"/>
             <column name="situation_familiale" type="string"/>
-            <column name="enfants_a_charge" type="numeric"/>
+            <column name="nb_enfant_a_charge" type="numeric"/>
             <column name="statut_employe_id" type="numeric"/>
             <column name="adresse_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

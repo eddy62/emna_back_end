@@ -1,9 +1,10 @@
 id;code_ref;intitule
-1;CDD;CDD Tps Plein
+1;CDD;Contrat à Durée Déterminée
 2;CDDTP;CDD Tps Partiel
-3;CDI;CDI Tps Plein
+3;CDI;Contrat à Durée Indéterminée
 4;CDITP;CDI Tps Partiel
 5;ALTER;Contrat Pro/Alternance
 6;STAGE;Stage
 7;JOBETE;Job d'été
+8;CTT;Contrat de Travail Temporaire
 
