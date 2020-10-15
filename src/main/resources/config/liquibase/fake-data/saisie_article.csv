@@ -10,3 +10,7 @@ id;libelle;article_id;contrat_id;avenant_id
 9;orange Games;1;1;
 10;Synergistic communities;1;1;
 11;5 rue de paris 59200 Tourcoing;1;12;
+12;5 rue de lille 59200 Paris;1;12;1
+13;Chef d'equipe;4;12;1
+14;5 rue de luxembourg Roubaix;1;12;2
+15;Chef de projet;4;12;2
