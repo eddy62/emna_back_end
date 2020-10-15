@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class WrapperPdfDpae {
+
+    public WrapperPdfDpae() {
+
+    }
+
     private Long id;
     // employeur
     private String designation; // Dénomination
@@ -18,7 +23,7 @@ public class WrapperPdfDpae {
     // salarie
     private String surname; // Nom
     private String christianName; // Prénoms
-    private Integer sex; // Sexe
+    private String sex; // Sexe
     private String nir; // n° Sécurité sociale
     private String nirKey; //
     private LocalDate birthDate; // Date de naissance
@@ -28,10 +33,10 @@ public class WrapperPdfDpae {
 
     // contrat
     private LocalDate startContractDate; // Date d'embauche
-    private LocalTime startContractTime; // Heure d'embauche
-    private Integer nature; // Type de contrat
+    private String startContractTime; // Heure d'embauche
+    private String nature; // Type de contrat
     private LocalDate endContractDate; // Fin du contrat
-    private Integer trialTime; // Durée de la période d'essai
+    private Double trialTime; // Durée de la période d'essai
     private String healthService; // Service de santé au travail
     private String comment; // Commentaire
 
@@ -125,13 +130,9 @@ public class WrapperPdfDpae {
         this.christianName = christianName;
     }
 
-    public Integer getSex() {
-        return sex;
-    }
+    public String getSex() { return sex; }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+    public void setSex(String sex) { this.sex = sex; }
 
     public String getNir() {
         return nir;
@@ -189,21 +190,13 @@ public class WrapperPdfDpae {
         this.startContractDate = startContractDate;
     }
 
-    public LocalTime getStartContractTime() {
-        return startContractTime;
-    }
+    public String getStartContractTime() { return startContractTime; }
 
-    public void setStartContractTime(LocalTime startContractTime) {
-        this.startContractTime = startContractTime;
-    }
+    public void setStartContractTime(String startContractTime) { this.startContractTime = startContractTime; }
 
-    public Integer getNature() {
-        return nature;
-    }
+    public String getNature() { return nature; }
 
-    public void setNature(Integer nature) {
-        this.nature = nature;
-    }
+    public void setNature(String nature) { this.nature = nature; }
 
     public LocalDate getEndContractDate() {
         return endContractDate;
@@ -213,13 +206,9 @@ public class WrapperPdfDpae {
         this.endContractDate = endContractDate;
     }
 
-    public Integer getTrialTime() {
-        return trialTime;
-    }
+    public Double getTrialTime() { return trialTime; }
 
-    public void setTrialTime(Integer trialTime) {
-        this.trialTime = trialTime;
-    }
+    public void setTrialTime(Double trialTime) { this.trialTime = trialTime; }
 
     public String getHealthService() {
         return healthService;

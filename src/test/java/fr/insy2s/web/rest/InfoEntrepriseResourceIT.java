@@ -64,6 +64,12 @@ public class InfoEntrepriseResourceIT {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
+    private static final String DEFAULT_CODE_URSSAF = "AAAAAAAAAA";
+    private static final String UPDATED_CODE_URSSAF = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SERVICE_SANTE_TRAVAIL = "AAAAAAAAAA";
+    private static final String UPDATED_SERVICE_SANTE_TRAVAIL = "BBBBBBBBBB";
+
     @Autowired
     private InfoEntrepriseRepository infoEntrepriseRepository;
 
@@ -98,7 +104,9 @@ public class InfoEntrepriseResourceIT {
             .siret(DEFAULT_SIRET)
             .domaineDactivite(DEFAULT_DOMAINE_DACTIVITE)
             .description(DEFAULT_DESCRIPTION)
-            .email(DEFAULT_EMAIL);
+            .email(DEFAULT_EMAIL)
+            .codeUrssaf(DEFAULT_CODE_URSSAF)
+            .serviceSanteTravail(DEFAULT_SERVICE_SANTE_TRAVAIL);
         return infoEntreprise;
     }
     /**
@@ -118,7 +126,9 @@ public class InfoEntrepriseResourceIT {
             .siret(UPDATED_SIRET)
             .domaineDactivite(UPDATED_DOMAINE_DACTIVITE)
             .description(UPDATED_DESCRIPTION)
-            .email(UPDATED_EMAIL);
+            .email(UPDATED_EMAIL)
+            .codeUrssaf(UPDATED_CODE_URSSAF)
+            .serviceSanteTravail(UPDATED_SERVICE_SANTE_TRAVAIL);
         return infoEntreprise;
     }
 
@@ -152,6 +162,8 @@ public class InfoEntrepriseResourceIT {
         assertThat(testInfoEntreprise.getDomaineDactivite()).isEqualTo(DEFAULT_DOMAINE_DACTIVITE);
         assertThat(testInfoEntreprise.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testInfoEntreprise.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testInfoEntreprise.getCodeUrssaf()).isEqualTo(DEFAULT_CODE_URSSAF);
+        assertThat(testInfoEntreprise.getServiceSanteTravail()).isEqualTo(DEFAULT_SERVICE_SANTE_TRAVAIL);
     }
 
     @Test
@@ -195,7 +207,9 @@ public class InfoEntrepriseResourceIT {
             .andExpect(jsonPath("$.[*].siret").value(hasItem(DEFAULT_SIRET)))
             .andExpect(jsonPath("$.[*].domaineDactivite").value(hasItem(DEFAULT_DOMAINE_DACTIVITE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].codeUrssaf").value(hasItem(DEFAULT_CODE_URSSAF)))
+            .andExpect(jsonPath("$.[*].serviceSanteTravail").value(hasItem(DEFAULT_SERVICE_SANTE_TRAVAIL)));
     }
     
     @Test
@@ -218,7 +232,9 @@ public class InfoEntrepriseResourceIT {
             .andExpect(jsonPath("$.siret").value(DEFAULT_SIRET))
             .andExpect(jsonPath("$.domaineDactivite").value(DEFAULT_DOMAINE_DACTIVITE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.codeUrssaf").value(DEFAULT_CODE_URSSAF))
+            .andExpect(jsonPath("$.serviceSanteTravail").value(DEFAULT_SERVICE_SANTE_TRAVAIL));
     }
     @Test
     @Transactional
@@ -250,7 +266,9 @@ public class InfoEntrepriseResourceIT {
             .siret(UPDATED_SIRET)
             .domaineDactivite(UPDATED_DOMAINE_DACTIVITE)
             .description(UPDATED_DESCRIPTION)
-            .email(UPDATED_EMAIL);
+            .email(UPDATED_EMAIL)
+            .codeUrssaf(UPDATED_CODE_URSSAF)
+            .serviceSanteTravail(UPDATED_SERVICE_SANTE_TRAVAIL);
         InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseMapper.toDto(updatedInfoEntreprise);
 
         restInfoEntrepriseMockMvc.perform(put("/api/info-entreprises")
@@ -272,6 +290,8 @@ public class InfoEntrepriseResourceIT {
         assertThat(testInfoEntreprise.getDomaineDactivite()).isEqualTo(UPDATED_DOMAINE_DACTIVITE);
         assertThat(testInfoEntreprise.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testInfoEntreprise.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testInfoEntreprise.getCodeUrssaf()).isEqualTo(UPDATED_CODE_URSSAF);
+        assertThat(testInfoEntreprise.getServiceSanteTravail()).isEqualTo(UPDATED_SERVICE_SANTE_TRAVAIL);
     }
 
     @Test

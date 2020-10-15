@@ -9,15 +9,14 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Avenant} and its DTO {@link AvenantDTO}.
  */
-@Mapper(componentModel = "spring", uses = {SaisieArticleMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface AvenantMapper extends EntityMapper<AvenantDTO, Avenant> {
 
-    @Mapping(source = "saisieArticle.id", target = "saisieArticleId")
-    AvenantDTO toDto(Avenant avenant);
 
+    @Mapping(target = "listeSaisieArticles", ignore = true)
+    @Mapping(target = "removeListeSaisieArticle", ignore = true)
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
-    @Mapping(source = "saisieArticleId", target = "saisieArticle")
     Avenant toEntity(AvenantDTO avenantDTO);
 
     default Avenant fromId(Long id) {

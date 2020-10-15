@@ -7,8 +7,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ISaisieArticle } from 'app/shared/model/saisie-article.model';
-import { getEntities as getSaisieArticles } from 'app/entities/saisie-article/saisie-article.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './avenant.reducer';
 import { IAvenant } from 'app/shared/model/avenant.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -17,10 +15,9 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IAvenantUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AvenantUpdate = (props: IAvenantUpdateProps) => {
-  const [saisieArticleId, setSaisieArticleId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { avenantEntity, saisieArticles, loading, updating } = props;
+  const { avenantEntity, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/avenant');
@@ -32,8 +29,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
-
-    props.getSaisieArticles();
   }, []);
 
   useEffect(() => {
@@ -100,19 +95,24 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
                 </Label>
               </AvGroup>
               <AvGroup>
-                <Label for="avenant-saisieArticle">
-                  <Translate contentKey="emnaBackEndApp.avenant.saisieArticle">Saisie Article</Translate>
+                <Label id="dateDeCreationLabel" for="avenant-dateDeCreation">
+                  <Translate contentKey="emnaBackEndApp.avenant.dateDeCreation">Date De Creation</Translate>
                 </Label>
-                <AvInput id="avenant-saisieArticle" type="select" className="form-control" name="saisieArticleId">
-                  <option value="" key="0" />
-                  {saisieArticles
-                    ? saisieArticles.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
+                <AvField
+                  id="avenant-dateDeCreation"
+                  type="date"
+                  className="form-control"
+                  name="dateDeCreation"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="dateDeSignatureLabel" for="avenant-dateDeSignature">
+                  <Translate contentKey="emnaBackEndApp.avenant.dateDeSignature">Date De Signature</Translate>
+                </Label>
+                <AvField id="avenant-dateDeSignature" type="date" className="form-control" name="dateDeSignature" />
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/avenant" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -136,7 +136,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  saisieArticles: storeState.saisieArticle.entities,
   avenantEntity: storeState.avenant.entity,
   loading: storeState.avenant.loading,
   updating: storeState.avenant.updating,
@@ -144,7 +143,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getSaisieArticles,
   getEntity,
   updateEntity,
   createEntity,

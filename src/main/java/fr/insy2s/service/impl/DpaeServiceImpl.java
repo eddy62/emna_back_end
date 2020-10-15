@@ -3,11 +3,19 @@ package fr.insy2s.service.impl;
 import fr.insy2s.service.DpaeService;
 import fr.insy2s.domain.Dpae;
 import fr.insy2s.repository.DpaeRepository;
+import fr.insy2s.service.EmployeService;
+import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.dto.DpaeDTO;
 import fr.insy2s.service.mapper.DpaeMapper;
+import fr.insy2s.service.mapper.WrapperPdfDpaeMapper;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
+import fr.insy2s.utils.wrapper.WrapperPdfDpae;
+import fr.insy2s.utils.wrapper.WrapperSociete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,9 +37,22 @@ public class DpaeServiceImpl implements DpaeService {
 
     private final DpaeMapper dpaeMapper;
 
-    public DpaeServiceImpl(DpaeRepository dpaeRepository, DpaeMapper dpaeMapper) {
+    private final SocieteService societeService;
+
+    private final WrapperPdfDpaeMapper wrapperPdfDpaeMapper;
+
+    private final EmployeService employeService;
+
+    public DpaeServiceImpl(DpaeRepository dpaeRepository,
+                           DpaeMapper dpaeMapper,
+                           SocieteService societeService,
+                           WrapperPdfDpaeMapper wrapperPdfDpaeMapper,
+                           @Lazy EmployeService employeService) {
         this.dpaeRepository = dpaeRepository;
         this.dpaeMapper = dpaeMapper;
+        this.societeService = societeService;
+        this.wrapperPdfDpaeMapper = wrapperPdfDpaeMapper;
+        this.employeService = employeService;
     }
 
     @Override
@@ -51,7 +72,6 @@ public class DpaeServiceImpl implements DpaeService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public Optional<DpaeDTO> findOne(Long id) {
@@ -64,5 +84,18 @@ public class DpaeServiceImpl implements DpaeService {
     public void delete(Long id) {
         log.debug("Request to delete Dpae : {}", id);
         dpaeRepository.deleteById(id);
+    }
+
+    public WrapperPdfDpae getWrapperPdfDpae(Long id) {
+        WrapperPdfDpae wrapperPdfDpae = new WrapperPdfDpae();
+        DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
+        if (dpaeDTO != null) {
+            WrapperEmploye wrapperEmploye = employeService.findById(dpaeDTO.getEmployeId()).orElse(null);
+            if (wrapperEmploye != null) {
+                WrapperSociete wrapperSociete = societeService.findById(wrapperEmploye.getSocieteId()).orElse(null);
+                wrapperPdfDpae = wrapperPdfDpaeMapper.builderWrapperPdfDpae(dpaeDTO, wrapperEmploye, wrapperSociete);
+            }
+        }
+        return wrapperPdfDpae;
     }
 }

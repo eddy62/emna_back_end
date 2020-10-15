@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     
     <!--
@@ -18,6 +20,15 @@
             </column>
             <column name="date" type="date">
                 <constraints nullable="false" />
+            </column>
+            <column name="heure_embauche" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="commentaire" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="retour_api_urssaf" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <column name="employe_id" type="bigint">
                 <constraints nullable="true" />
@@ -47,6 +58,9 @@
             <column name="id" type="numeric"/>
             <column name="lieu" type="string"/>
             <column name="date" type="date"/>
+            <column name="heure_embauche" type="string"/>
+            <column name="commentaire" type="string"/>
+            <column name="retour_api_urssaf" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

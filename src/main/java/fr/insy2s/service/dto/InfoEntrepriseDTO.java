@@ -30,6 +30,10 @@ public class InfoEntrepriseDTO implements Serializable {
 
     private String email;
 
+    private String codeUrssaf;
+
+    private String serviceSanteTravail;
+
     
     public Long getId() {
         return id;
@@ -119,6 +123,22 @@ public class InfoEntrepriseDTO implements Serializable {
         this.email = email;
     }
 
+    public String getCodeUrssaf() {
+        return codeUrssaf;
+    }
+
+    public void setCodeUrssaf(String codeUrssaf) {
+        this.codeUrssaf = codeUrssaf;
+    }
+
+    public String getServiceSanteTravail() {
+        return serviceSanteTravail;
+    }
+
+    public void setServiceSanteTravail(String serviceSanteTravail) {
+        this.serviceSanteTravail = serviceSanteTravail;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -151,6 +171,8 @@ public class InfoEntrepriseDTO implements Serializable {
             ", domaineDactivite='" + getDomaineDactivite() + "'" +
             ", description='" + getDescription() + "'" +
             ", email='" + getEmail() + "'" +
+            ", codeUrssaf='" + getCodeUrssaf() + "'" +
+            ", serviceSanteTravail='" + getServiceSanteTravail() + "'" +
             "}";
     }
 }

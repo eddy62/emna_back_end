@@ -16,8 +16,6 @@ public interface SaisieArticleMapper extends EntityMapper<SaisieArticleDTO, Sais
     @Mapping(source = "contrat.id", target = "contratId")
     SaisieArticleDTO toDto(SaisieArticle saisieArticle);
 
-    @Mapping(target = "listeAvenants", ignore = true)
-    @Mapping(target = "removeListeAvenant", ignore = true)
     @Mapping(source = "articleId", target = "article")
     @Mapping(source = "contratId", target = "contrat")
     SaisieArticle toEntity(SaisieArticleDTO saisieArticleDTO);

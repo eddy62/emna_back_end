@@ -39,6 +39,10 @@ export const SaisieArticleDetail = (props: ISaisieArticleDetailProps) => {
             <Translate contentKey="emnaBackEndApp.saisieArticle.contrat">Contrat</Translate>
           </dt>
           <dd>{saisieArticleEntity.contratId ? saisieArticleEntity.contratId : ''}</dd>
+          <dt>
+            <Translate contentKey="emnaBackEndApp.saisieArticle.avenant">Avenant</Translate>
+          </dt>
+          <dd>{saisieArticleEntity.avenantId ? saisieArticleEntity.avenantId : ''}</dd>
         </dl>
         <Button tag={Link} to="/saisie-article" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

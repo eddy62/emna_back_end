@@ -1,3 +1,3 @@
-id;reference;signe;saisie_article_id
-1;10 rue des fleurs 59650 Villeneuve-d'Ascq;true;11
-2;25 rue de strasbourg 59000 Lille;true;11
+id;reference;signe;date_de_creation;date_de_signature
+1;10 rue des fleurs 59650 Villeneuve-d'Ascq;true;2020-09-01;2020-09-05
+2;25 rue de strasbourg 59000 Lille;true;2020-09-01;

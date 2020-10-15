@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.DpaeDTO;
+import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +41,6 @@ public interface DpaeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    WrapperPdfDpae getWrapperPdfDpae(Long id);
 }

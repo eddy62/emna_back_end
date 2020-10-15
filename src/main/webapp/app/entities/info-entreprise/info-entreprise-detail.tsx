@@ -89,6 +89,18 @@ export const InfoEntrepriseDetail = (props: IInfoEntrepriseDetailProps) => {
             </span>
           </dt>
           <dd>{infoEntrepriseEntity.email}</dd>
+          <dt>
+            <span id="codeUrssaf">
+              <Translate contentKey="emnaBackEndApp.infoEntreprise.codeUrssaf">Code Urssaf</Translate>
+            </span>
+          </dt>
+          <dd>{infoEntrepriseEntity.codeUrssaf}</dd>
+          <dt>
+            <span id="serviceSanteTravail">
+              <Translate contentKey="emnaBackEndApp.infoEntreprise.serviceSanteTravail">Service Sante Travail</Translate>
+            </span>
+          </dt>
+          <dd>{infoEntrepriseEntity.serviceSanteTravail}</dd>
         </dl>
         <Button tag={Link} to="/info-entreprise" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

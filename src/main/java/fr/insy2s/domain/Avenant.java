@@ -1,6 +1,5 @@
 package fr.insy2s.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,13 +34,20 @@ public class Avenant implements Serializable {
     @Column(name = "signe", nullable = false)
     private Boolean signe;
 
+    @NotNull
+    @Column(name = "date_de_creation", nullable = false)
+    private LocalDate dateDeCreation;
+
+    @Column(name = "date_de_signature")
+    private LocalDate dateDeSignature;
+
+    @OneToMany(mappedBy = "avenant")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<SaisieArticle> listeSaisieArticles = new HashSet<>();
+
     @OneToMany(mappedBy = "avenant")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeAvenants", allowSetters = true)
-    private SaisieArticle saisieArticle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -77,6 +84,57 @@ public class Avenant implements Serializable {
         this.signe = signe;
     }
 
+    public LocalDate getDateDeCreation() {
+        return dateDeCreation;
+    }
+
+    public Avenant dateDeCreation(LocalDate dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+        return this;
+    }
+
+    public void setDateDeCreation(LocalDate dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+    }
+
+    public LocalDate getDateDeSignature() {
+        return dateDeSignature;
+    }
+
+    public Avenant dateDeSignature(LocalDate dateDeSignature) {
+        this.dateDeSignature = dateDeSignature;
+        return this;
+    }
+
+    public void setDateDeSignature(LocalDate dateDeSignature) {
+        this.dateDeSignature = dateDeSignature;
+    }
+
+    public Set<SaisieArticle> getListeSaisieArticles() {
+        return listeSaisieArticles;
+    }
+
+    public Avenant listeSaisieArticles(Set<SaisieArticle> saisieArticles) {
+        this.listeSaisieArticles = saisieArticles;
+        return this;
+    }
+
+    public Avenant addListeSaisieArticle(SaisieArticle saisieArticle) {
+        this.listeSaisieArticles.add(saisieArticle);
+        saisieArticle.setAvenant(this);
+        return this;
+    }
+
+    public Avenant removeListeSaisieArticle(SaisieArticle saisieArticle) {
+        this.listeSaisieArticles.remove(saisieArticle);
+        saisieArticle.setAvenant(null);
+        return this;
+    }
+
+    public void setListeSaisieArticles(Set<SaisieArticle> saisieArticles) {
+        this.listeSaisieArticles = saisieArticles;
+    }
+
     public Set<Document> getListeDocuments() {
         return listeDocuments;
     }
@@ -100,19 +158,6 @@ public class Avenant implements Serializable {
 
     public void setListeDocuments(Set<Document> documents) {
         this.listeDocuments = documents;
-    }
-
-    public SaisieArticle getSaisieArticle() {
-        return saisieArticle;
-    }
-
-    public Avenant saisieArticle(SaisieArticle saisieArticle) {
-        this.saisieArticle = saisieArticle;
-        return this;
-    }
-
-    public void setSaisieArticle(SaisieArticle saisieArticle) {
-        this.saisieArticle = saisieArticle;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -139,6 +184,8 @@ public class Avenant implements Serializable {
             "id=" + getId() +
             ", reference='" + getReference() + "'" +
             ", signe='" + isSigne() + "'" +
+            ", dateDeCreation='" + getDateDeCreation() + "'" +
+            ", dateDeSignature='" + getDateDeSignature() + "'" +
             "}";
     }
 }

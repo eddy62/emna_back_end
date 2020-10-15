@@ -66,6 +66,12 @@ export const InfoEntreprise = (props: IInfoEntrepriseProps) => {
                 <th>
                   <Translate contentKey="emnaBackEndApp.infoEntreprise.email">Email</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.infoEntreprise.codeUrssaf">Code Urssaf</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.infoEntreprise.serviceSanteTravail">Service Sante Travail</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -91,6 +97,8 @@ export const InfoEntreprise = (props: IInfoEntrepriseProps) => {
                   <td>{infoEntreprise.domaineDactivite}</td>
                   <td>{infoEntreprise.description}</td>
                   <td>{infoEntreprise.email}</td>
+                  <td>{infoEntreprise.codeUrssaf}</td>
+                  <td>{infoEntreprise.serviceSanteTravail}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${infoEntreprise.id}`} color="info" size="sm">
