@@ -66,4 +66,6 @@ public interface ContratService {
      * @return the created WrapperContrat
      */
     Optional<WrapperContrat> createWrapperContrat(@Valid WrapperContrat wrapperContrat);
+
+    boolean signeContract(Long id);
 }
