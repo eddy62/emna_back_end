@@ -115,4 +115,30 @@ public class AbsenceServiceImpl implements AbsenceService {
             return absenceDTO;
         }
     }
+
+    @Override
+    public Optional<AbsenceDTO> findAllOverlappingAbsenceByIdEmployeForUpdate(Long idAbsence, Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence) {
+        List<Absence> absenceList = absenceRepository.findAllOverlappingAbsenceByIdEmployeForUpdate(idAbsence, idEmploye, debutAbsence, finAbsence);
+        Optional<AbsenceDTO> absenceDTO = Optional.empty();
+        if(!absenceList.isEmpty()) {
+            absenceDTO = Optional.ofNullable(absenceMapper.toDto(absenceList.get(0)));
+            return absenceDTO;
+        }
+        else {
+            return absenceDTO;
+        }
+    }
+
+    @Override
+    public Optional<AbsenceDTO> findAbsenceExistByDate(Long idEmploye, LocalDate dateToCheck) {
+        Absence absence = absenceRepository.findAbsenceExistByDate(idEmploye, dateToCheck);
+        Optional<AbsenceDTO> absenceDTO = Optional.empty();
+        if(absence != null) {
+            absenceDTO = Optional.ofNullable(absenceMapper.toDto(absence));
+            return absenceDTO;
+        }
+        else {
+            return absenceDTO;
+        }
+    }
 }

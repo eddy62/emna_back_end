@@ -1,6 +1,9 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.domain.NoteDeFrais;
+import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.NoteDeFraisService;
+import fr.insy2s.service.dto.AbsenceDTO;
 import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +38,11 @@ public class NoteDeFraisResource {
 
     private final NoteDeFraisService noteDeFraisService;
 
-    public NoteDeFraisResource(NoteDeFraisService noteDeFraisService) {
+    private final AbsenceService absenceService;
+
+    public NoteDeFraisResource(NoteDeFraisService noteDeFraisService, AbsenceService absenceService) {
         this.noteDeFraisService = noteDeFraisService;
+        this.absenceService = absenceService;
     }
 
     /**
@@ -50,10 +58,21 @@ public class NoteDeFraisResource {
         if (noteDeFraisDTO.getId() != null) {
             throw new BadRequestAlertException("A new noteDeFrais cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
-        return ResponseEntity.created(new URI("/api/note-de-frais/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        Long idEmploye = noteDeFraisDTO.getEmployeId();
+        LocalDate dateToCheck = noteDeFraisDTO.getDate();
+        Optional<AbsenceDTO> dateExist = absenceService.findAbsenceExistByDate(idEmploye, dateToCheck);
+        if(!dateExist.isPresent()) {
+            NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
+            return ResponseEntity.status(201)/*.created(new URI("/api/note-de-frais/" + result.getId()))*/
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else {
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, "Absence détectée à cette date"))
+                .body(noteDeFraisDTO);
+        }
+
     }
 
     /**

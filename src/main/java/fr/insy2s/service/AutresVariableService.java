@@ -1,7 +1,9 @@
 package fr.insy2s.service;
 
+import fr.insy2s.service.dto.AbsenceDTO;
 import fr.insy2s.service.dto.AutresVariableDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +42,6 @@ public interface AutresVariableService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Optional<AutresVariableDTO> findAutresVaribaleExistByDate(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence);
 }

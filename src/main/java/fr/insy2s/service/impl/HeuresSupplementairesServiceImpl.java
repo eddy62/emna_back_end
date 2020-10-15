@@ -1,8 +1,10 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.AutresVariable;
 import fr.insy2s.service.HeuresSupplementairesService;
 import fr.insy2s.domain.HeuresSupplementaires;
 import fr.insy2s.repository.HeuresSupplementairesRepository;
+import fr.insy2s.service.dto.AutresVariableDTO;
 import fr.insy2s.service.dto.HeuresSupplementairesDTO;
 import fr.insy2s.service.mapper.HeuresSupplementairesMapper;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -64,5 +67,18 @@ public class HeuresSupplementairesServiceImpl implements HeuresSupplementairesSe
     public void delete(Long id) {
         log.debug("Request to delete HeuresSupplementaires : {}", id);
         heuresSupplementairesRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<HeuresSupplementairesDTO> findHeuresSupplementairesExistByDate(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence) {
+        List<HeuresSupplementaires> heuresSupplementairesList = heuresSupplementairesRepository.findHeuresSupplementairesExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<HeuresSupplementairesDTO> heuresSupplementairesDTO = Optional.empty();
+        if(!heuresSupplementairesList.isEmpty()) {
+            heuresSupplementairesDTO =  Optional.ofNullable(heuresSupplementairesMapper.toDto(heuresSupplementairesList.get(0)));
+            return heuresSupplementairesDTO;
+        }
+        else {
+            return heuresSupplementairesDTO;
+        }
     }
 }

@@ -1,6 +1,9 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.AutresVariableService;
+import fr.insy2s.service.dto.AbsenceDTO;
+import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.AutresVariableDTO;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +38,11 @@ public class AutresVariableResource {
 
     private final AutresVariableService autresVariableService;
 
-    public AutresVariableResource(AutresVariableService autresVariableService) {
+    private final AbsenceService absenceService;
+
+    public AutresVariableResource(AutresVariableService autresVariableService, AbsenceService absenceService) {
         this.autresVariableService = autresVariableService;
+        this.absenceService = absenceService;
     }
 
     /**
@@ -51,10 +58,20 @@ public class AutresVariableResource {
         if (autresVariableDTO.getId() != null) {
             throw new BadRequestAlertException("A new autresVariable cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        AutresVariableDTO result = autresVariableService.save(autresVariableDTO);
-        return ResponseEntity.created(new URI("/api/autres-variables/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        Long idEmploye = autresVariableDTO.getEmployeId();
+        LocalDate dateToCheck = autresVariableDTO.getDate();
+        Optional<AbsenceDTO> dateExist = absenceService.findAbsenceExistByDate(idEmploye, dateToCheck);
+        if(!dateExist.isPresent()) {
+            AutresVariableDTO result = autresVariableService.save(autresVariableDTO);
+            return ResponseEntity.status(201)/*.created(new URI("/api/autres-variables/" + result.getId()))*/
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else {
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, "Absence détectée à cette date"))
+                .body(autresVariableDTO);
+        }
     }
 
     /**

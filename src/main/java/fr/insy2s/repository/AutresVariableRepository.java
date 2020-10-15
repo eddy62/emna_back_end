@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -23,4 +24,6 @@ public interface AutresVariableRepository extends JpaRepository<AutresVariable, 
             "WHERE av.employe.id=:idEmploye AND av.annee=:annee AND av.mois=:mois")
     List<WrapperAutresVariable> findAllWrapperAutresVariablesByIdEmployeAndAnneeAndMois(@Param("idEmploye") Long idEmploye, @Param("annee") Integer annee, @Param("mois") Integer mois);
 
+    @Query("SELECT av FROM AutresVariable av WHERE av.employe.id=:idEmploye AND av.date BETWEEN  :debutAbsence AND :finAbsence")
+    List<AutresVariable> findAutresVaribaleExistByDate(@Param("idEmploye") Long idEmploye, @Param("debutAbsence") LocalDate debutAbsence, @Param("finAbsence") LocalDate finAbsence);
 }

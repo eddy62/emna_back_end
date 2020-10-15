@@ -4,6 +4,7 @@ import fr.insy2s.service.AutresVariableService;
 import fr.insy2s.domain.AutresVariable;
 import fr.insy2s.repository.AutresVariableRepository;
 import fr.insy2s.service.dto.AutresVariableDTO;
+import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.service.mapper.AutresVariableMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -64,5 +66,18 @@ public class AutresVariableServiceImpl implements AutresVariableService {
     public void delete(Long id) {
         log.debug("Request to delete AutresVariable : {}", id);
         autresVariableRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<AutresVariableDTO> findAutresVaribaleExistByDate(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence) {
+        List<AutresVariable> autresVariableList = autresVariableRepository.findAutresVaribaleExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<AutresVariableDTO> autresVariableDTO = Optional.empty();
+        if(!autresVariableList.isEmpty()) {
+            autresVariableDTO =  Optional.ofNullable(autresVariableMapper.toDto(autresVariableList.get(0)));
+            return autresVariableDTO;
+        }
+        else {
+            return autresVariableDTO;
+        }
     }
 }

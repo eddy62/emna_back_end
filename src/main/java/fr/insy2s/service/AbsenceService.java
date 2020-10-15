@@ -66,4 +66,8 @@ public interface AbsenceService {
 */
 
     Optional<AbsenceDTO> findAllOverlappingAbsencesByIdEmploye(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence);
+
+    Optional<AbsenceDTO> findAllOverlappingAbsenceByIdEmployeForUpdate(Long idAbsence, Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence);
+
+    Optional<AbsenceDTO> findAbsenceExistByDate(Long idEmploye, LocalDate dateToCheck);
 }

@@ -1,24 +1,27 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.service.AbsenceService;
+import fr.insy2s.service.AutresVariableService;
+import fr.insy2s.service.HeuresSupplementairesService;
+import fr.insy2s.service.NoteDeFraisService;
 import fr.insy2s.service.dto.AbsenceDTO;
+import fr.insy2s.service.dto.AutresVariableDTO;
+import fr.insy2s.service.dto.HeuresSupplementairesDTO;
+import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.utils.wrapper.WrapperAbsence;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ErrorMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +41,17 @@ public class AbsenceResource {
 
     private final AbsenceService absenceService;
 
-    public AbsenceResource(AbsenceService absenceService) {
+    private final AutresVariableService autresVariableService;
+
+    private final NoteDeFraisService noteDeFraisService;
+
+    private final HeuresSupplementairesService heuresSupplementairesService;
+
+    public AbsenceResource(AbsenceService absenceService, AutresVariableService autresVariableService, NoteDeFraisService noteDeFraisService, HeuresSupplementairesService heuresSupplementairesService) {
         this.absenceService = absenceService;
+        this.autresVariableService = autresVariableService;
+        this.noteDeFraisService = noteDeFraisService;
+        this.heuresSupplementairesService = heuresSupplementairesService;
     }
 
     /**
@@ -59,12 +71,41 @@ public class AbsenceResource {
         Long idEmploye = absenceDTO.getEmployeId();
         LocalDate debutAbsence = absenceDTO.getDebutAbsence();
         LocalDate finAbsence = absenceDTO.getFinAbsence();
+        String debutAbsenceSendFront = debutAbsence.toString();
+        String finAbsenceSendFront = finAbsence.toString();
+        String message = debutAbsenceSendFront + "/" + finAbsenceSendFront;
         Optional<AbsenceDTO> absenceOverlapping = absenceService.findAllOverlappingAbsencesByIdEmploye(idEmploye, debutAbsence, finAbsence);
-        if(!absenceOverlapping.isPresent()) {
+        Optional<NoteDeFraisDTO> noteDeFraisOverlapping = noteDeFraisService.findNoteDeFraisExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<HeuresSupplementairesDTO> heuresSupplementairesOverlapping = heuresSupplementairesService.findHeuresSupplementairesExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<AutresVariableDTO> autresVariableOverlapping = autresVariableService.findAutresVaribaleExistByDate(idEmploye, debutAbsence, finAbsence);
+        ArrayList<Optional<?>> overlapArray = new ArrayList<>();
+        overlapArray.add(noteDeFraisOverlapping);
+        overlapArray.add(heuresSupplementairesOverlapping);
+        overlapArray.add(autresVariableOverlapping);
+        Integer sizeArrayDtoOverlap = 0;
+        for(int i = 0; i<overlapArray.size(); i++)
+        {
+            if(overlapArray.get(i).isPresent()) {
+                sizeArrayDtoOverlap ++;
+            }
+        }
+        if(!absenceOverlapping.isPresent() && !autresVariableOverlapping.isPresent() && !noteDeFraisOverlapping.isPresent() && !heuresSupplementairesOverlapping.isPresent()) {
             AbsenceDTO result = absenceService.save(absenceDTO);
             return ResponseEntity.status(201)
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
                 .body(result);
+        }
+        else if(sizeArrayDtoOverlap >= 2) {
+            throw new BadRequestAlertException("Several payroll variable exists for the desired absence dates", message, "Plusieurs");
+        }
+        else if(noteDeFraisOverlapping.isPresent()) {
+            throw new BadRequestAlertException("An expense report exists for the desired absence dates", message, "Note de Frais");
+        }
+        else if(heuresSupplementairesOverlapping.isPresent()) {
+            throw new BadRequestAlertException("An overtime exists for the desired absence dates", message, "Heure Supplementaire");
+        }
+        else if(autresVariableOverlapping.isPresent()) {
+            throw new BadRequestAlertException("An other payroll variable exists for the desired absence dates", message, "Autre Variable");
         }
         else{
             AbsenceDTO absenceDoublon = absenceOverlapping.get();
@@ -93,10 +134,11 @@ public class AbsenceResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, absenceDTO.getId().toString()))
             .body(result);*/
+        Long idAbsence = absenceDTO.getId();
         Long idEmploye = absenceDTO.getEmployeId();
         LocalDate debutAbsence = absenceDTO.getDebutAbsence();
         LocalDate finAbsence = absenceDTO.getFinAbsence();
-        Optional<AbsenceDTO> absenceOverlapping = absenceService.findAllOverlappingAbsencesByIdEmploye(idEmploye, debutAbsence, finAbsence);
+        Optional<AbsenceDTO> absenceOverlapping = absenceService.findAllOverlappingAbsenceByIdEmployeForUpdate(idAbsence, idEmploye, debutAbsence, finAbsence);
         if(!absenceOverlapping.isPresent()) {
             AbsenceDTO result = absenceService.save(absenceDTO);
             return ResponseEntity.status(201)
