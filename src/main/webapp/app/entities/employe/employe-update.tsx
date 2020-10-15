@@ -180,13 +180,13 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="paysNaisanceLabel" for="employe-paysNaisance">
-                  <Translate contentKey="emnaBackEndApp.employe.paysNaisance">Pays Naisance</Translate>
+                <Label id="paysNaissanceLabel" for="employe-paysNaissance">
+                  <Translate contentKey="emnaBackEndApp.employe.paysNaissance">Pays Naissance</Translate>
                 </Label>
                 <AvField
-                  id="employe-paysNaisance"
+                  id="employe-paysNaissance"
                   type="text"
-                  name="paysNaisance"
+                  name="paysNaissance"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
@@ -212,10 +212,10 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 <AvField id="employe-email" type="text" name="email" />
               </AvGroup>
               <AvGroup>
-                <Label id="telephoneFixLabel" for="employe-telephoneFix">
-                  <Translate contentKey="emnaBackEndApp.employe.telephoneFix">Telephone Fix</Translate>
+                <Label id="telephoneFixeLabel" for="employe-telephoneFixe">
+                  <Translate contentKey="emnaBackEndApp.employe.telephoneFixe">Telephone Fixe</Translate>
                 </Label>
-                <AvField id="employe-telephoneFix" type="text" name="telephoneFix" />
+                <AvField id="employe-telephoneFixe" type="text" name="telephoneFixe" />
               </AvGroup>
               <AvGroup>
                 <Label id="telephonePortableLabel" for="employe-telephonePortable">
@@ -251,13 +251,13 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="salaireBrutMensuelleLabel" for="employe-salaireBrutMensuelle">
-                  <Translate contentKey="emnaBackEndApp.employe.salaireBrutMensuelle">Salaire Brut Mensuelle</Translate>
+                <Label id="salaireBrutMensuelLabel" for="employe-salaireBrutMensuel">
+                  <Translate contentKey="emnaBackEndApp.employe.salaireBrutMensuel">Salaire Brut Mensuel</Translate>
                 </Label>
                 <AvField
-                  id="employe-salaireBrutMensuelle"
+                  id="employe-salaireBrutMensuel"
                   type="text"
-                  name="salaireBrutMensuelle"
+                  name="salaireBrutMensuel"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                     number: { value: true, errorMessage: translate('entity.validation.number') },
@@ -265,13 +265,13 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="heuresMensuelleLabel" for="employe-heuresMensuelle">
-                  <Translate contentKey="emnaBackEndApp.employe.heuresMensuelle">Heures Mensuelle</Translate>
+                <Label id="nbHeureMensuelleLabel" for="employe-nbHeureMensuelle">
+                  <Translate contentKey="emnaBackEndApp.employe.nbHeureMensuelle">Nb Heure Mensuelle</Translate>
                 </Label>
                 <AvField
-                  id="employe-heuresMensuelle"
+                  id="employe-nbHeureMensuelle"
                   type="text"
-                  name="heuresMensuelle"
+                  name="nbHeureMensuelle"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                     number: { value: true, errorMessage: translate('entity.validation.number') },
@@ -353,19 +353,10 @@ export const EmployeUpdate = (props: IEmployeUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="enfantsAChargeLabel" for="employe-enfantsACharge">
-                  <Translate contentKey="emnaBackEndApp.employe.enfantsACharge">Enfants A Charge</Translate>
+                <Label id="nbEnfantAChargeLabel" for="employe-nbEnfantACharge">
+                  <Translate contentKey="emnaBackEndApp.employe.nbEnfantACharge">Nb Enfant A Charge</Translate>
                 </Label>
-                <AvField
-                  id="employe-enfantsACharge"
-                  type="string"
-                  className="form-control"
-                  name="enfantsACharge"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                    number: { value: true, errorMessage: translate('entity.validation.number') },
-                  }}
-                />
+                <AvField id="employe-nbEnfantACharge" type="string" className="form-control" name="nbEnfantACharge" />
               </AvGroup>
               <AvGroup>
                 <Label for="employe-statutEmploye">

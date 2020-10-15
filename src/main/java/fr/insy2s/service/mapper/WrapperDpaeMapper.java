@@ -1,7 +1,5 @@
 package fr.insy2s.service.mapper;
 
-import fr.insy2s.domain.Employe;
-import fr.insy2s.domain.InfoEntreprise;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.utils.wrapper.WrapperDpae;
 import org.springframework.stereotype.Service;
@@ -33,7 +31,7 @@ public class WrapperDpaeMapper {
         wrapperDpae.setId(dpaeDTO.getId());
         wrapperDpae.setLieu(dpaeDTO.getLieu());
         wrapperDpae.setDate(dpaeDTO.getDate());
-        wrapperDpae.setEmployeId(dpaeDTO.getEmployeId());
+        //wrapperDpae.setEmployeId(dpaeDTO.getEmployeId());
         wrapperDpae.setHeureEmbauche(dpaeDTO.getHeureEmbauche());
         wrapperDpae.setCommentaire(dpaeDTO.getCommentaire());
         wrapperDpae.setRetourApiUrssaf(dpaeDTO.getRetourApiUrssaf());
@@ -63,7 +61,7 @@ public class WrapperDpaeMapper {
         wrapperDpae.setDateNaissance(employeDTO.getDateNaissance());
         wrapperDpae.setVilleNaissance(employeDTO.getVilleNaissance());
         wrapperDpae.setDepartementNaissance(employeDTO.getDepartementNaissance());
-        wrapperDpae.setPaysNaisance(employeDTO.getPaysNaisance());
+        wrapperDpae.setPaysNaissance(employeDTO.getPaysNaissance());
         wrapperDpae.setNumeroSecuriteSociale(employeDTO.getNumeroSecuriteSociale());
         wrapperDpae.setDateEmbauche(employeDTO.getDateEmbauche());
         wrapperDpae.setDateSortie(employeDTO.getDateSortie());
@@ -89,7 +87,7 @@ public class WrapperDpaeMapper {
         dpaeDTO.setId(wrapperDpae.getId());
         dpaeDTO.setLieu(wrapperDpae.getLieu());
         dpaeDTO.setDate(wrapperDpae.getDate());
-        dpaeDTO.setEmployeId(wrapperDpae.getEmployeId());
+        //dpaeDTO.setEmployeId(wrapperDpae.getEmployeId());
         dpaeDTO.setHeureEmbauche(wrapperDpae.getHeureEmbauche());
         dpaeDTO.setCommentaire(wrapperDpae.getCommentaire());
         dpaeDTO.setRetourApiUrssaf(wrapperDpae.getRetourApiUrssaf());
@@ -155,7 +153,7 @@ public class WrapperDpaeMapper {
         employeDTO.setDateNaissance(wrapperDpae.getDateNaissance());
         employeDTO.setVilleNaissance(wrapperDpae.getVilleNaissance());
         employeDTO.setDepartementNaissance(wrapperDpae.getDepartementNaissance());
-        employeDTO.setPaysNaisance(wrapperDpae.getPaysNaisance());
+        employeDTO.setPaysNaissance(wrapperDpae.getPaysNaissance());
         employeDTO.setNumeroSecuriteSociale(wrapperDpae.getNumeroSecuriteSociale());
         employeDTO.setDateEmbauche(wrapperDpae.getDateEmbauche());
         employeDTO.setDateSortie(wrapperDpae.getDateSortie());

@@ -60,7 +60,7 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.departementNaissance">Departement Naissance</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.paysNaisance">Pays Naisance</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.paysNaissance">Pays Naissance</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.employe.numeroSecuriteSociale">Numero Securite Sociale</Translate>
@@ -69,7 +69,7 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.email">Email</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.telephoneFix">Telephone Fix</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.telephoneFixe">Telephone Fixe</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.employe.telephonePortable">Telephone Portable</Translate>
@@ -81,10 +81,10 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.salaireHoraire">Salaire Horaire</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.salaireBrutMensuelle">Salaire Brut Mensuelle</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.salaireBrutMensuel">Salaire Brut Mensuel</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.heuresMensuelle">Heures Mensuelle</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.nbHeureMensuelle">Nb Heure Mensuelle</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.employe.categorie">Categorie</Translate>
@@ -105,7 +105,7 @@ export const Employe = (props: IEmployeProps) => {
                   <Translate contentKey="emnaBackEndApp.employe.situationFamiliale">Situation Familiale</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.employe.enfantsACharge">Enfants A Charge</Translate>
+                  <Translate contentKey="emnaBackEndApp.employe.nbEnfantACharge">Nb Enfant A Charge</Translate>
                 </th>
                 <th>
                   <Translate contentKey="emnaBackEndApp.employe.statutEmploye">Statut Employe</Translate>
@@ -137,15 +137,15 @@ export const Employe = (props: IEmployeProps) => {
                   </td>
                   <td>{employe.villeNaissance}</td>
                   <td>{employe.departementNaissance}</td>
-                  <td>{employe.paysNaisance}</td>
+                  <td>{employe.paysNaissance}</td>
                   <td>{employe.numeroSecuriteSociale}</td>
                   <td>{employe.email}</td>
-                  <td>{employe.telephoneFix}</td>
+                  <td>{employe.telephoneFixe}</td>
                   <td>{employe.telephonePortable}</td>
                   <td>{employe.fax}</td>
                   <td>{employe.salaireHoraire}</td>
-                  <td>{employe.salaireBrutMensuelle}</td>
-                  <td>{employe.heuresMensuelle}</td>
+                  <td>{employe.salaireBrutMensuel}</td>
+                  <td>{employe.nbHeureMensuelle}</td>
                   <td>{employe.categorie}</td>
                   <td>{employe.poste}</td>
                   <td>
@@ -156,7 +156,7 @@ export const Employe = (props: IEmployeProps) => {
                   </td>
                   <td>{employe.periodeEssai}</td>
                   <td>{employe.situationFamiliale}</td>
-                  <td>{employe.enfantsACharge}</td>
+                  <td>{employe.nbEnfantACharge}</td>
                   <td>
                     {employe.statutEmployeId ? <Link to={`statut-employe/${employe.statutEmployeId}`}>{employe.statutEmployeId}</Link> : ''}
                   </td>

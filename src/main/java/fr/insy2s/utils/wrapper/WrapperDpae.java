@@ -4,7 +4,6 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class WrapperDpae {
 
@@ -44,11 +43,11 @@ public class WrapperDpae {
     private LocalDate dateNaissance;
     private String villeNaissance;
     private String departementNaissance;
-    private String paysNaisance;
+    private String paysNaissance;
     private String numeroSecuriteSociale;
     private LocalDate dateEmbauche;
     private LocalDate dateSortie;
-    private Double periodeEssai;
+    private Integer periodeEssai;
 
     //Type contrat
     private String codeRef;
@@ -66,7 +65,7 @@ public class WrapperDpae {
         this.id = dpaeDTO.getId();
         this.lieu = dpaeDTO.getLieu();
         this.date = dpaeDTO.getDate();
-        this.employeId = dpaeDTO.getEmployeId();
+        //this.employeId = dpaeDTO.getEmployeId();
         this.heureEmbauche = dpaeDTO.getHeureEmbauche();
         this.commentaire = dpaeDTO.getCommentaire();
         this.retourApiUrssaf = dpaeDTO.getRetourApiUrssaf();
@@ -96,7 +95,7 @@ public class WrapperDpae {
         this.dateNaissance =employeDTO.getDateNaissance();
         this.villeNaissance = employeDTO.getVilleNaissance();
         this.departementNaissance = employeDTO.getDepartementNaissance();
-        this.paysNaisance = employeDTO.getPaysNaisance();
+        this.paysNaissance = employeDTO.getPaysNaissance();
         this.numeroSecuriteSociale = employeDTO.getNumeroSecuriteSociale();
         this.dateEmbauche = employeDTO.getDateEmbauche();
         this.dateSortie = employeDTO.getDateSortie();
@@ -307,12 +306,12 @@ public class WrapperDpae {
         this.departementNaissance = departementNaissance;
     }
 
-    public String getPaysNaisance() {
-        return paysNaisance;
+    public String getPaysNaissance() {
+        return paysNaissance;
     }
 
-    public void setPaysNaisance(String paysNaisance) {
-        this.paysNaisance = paysNaisance;
+    public void setPaysNaissance(String paysNaissance) {
+        this.paysNaissance = paysNaissance;
     }
 
     public String getNumeroSecuriteSociale() {
@@ -339,11 +338,11 @@ public class WrapperDpae {
         this.dateSortie = dateSortie;
     }
 
-    public Double getPeriodeEssai() {
+    public Integer getPeriodeEssai() {
         return periodeEssai;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
+    public void setPeriodeEssai(Integer periodeEssai) {
         this.periodeEssai = periodeEssai;
     }
 
