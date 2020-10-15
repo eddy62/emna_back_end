@@ -1,5 +1,6 @@
 package fr.insy2s.service.dto;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -10,8 +11,6 @@ public class DocumentDTO implements Serializable {
     private Long id;
 
     private String cheminFichier;
-
-    private String type;
 
     private String nom;
 
@@ -56,14 +55,6 @@ public class DocumentDTO implements Serializable {
 
     public void setCheminFichier(String cheminFichier) {
         this.cheminFichier = cheminFichier;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getNom() {
@@ -201,7 +192,6 @@ public class DocumentDTO implements Serializable {
         return "DocumentDTO{" +
             "id=" + getId() +
             ", cheminFichier='" + getCheminFichier() + "'" +
-            ", type='" + getType() + "'" +
             ", nom='" + getNom() + "'" +
             ", typeDocumentId=" + getTypeDocumentId() +
             ", factureId=" + getFactureId() +

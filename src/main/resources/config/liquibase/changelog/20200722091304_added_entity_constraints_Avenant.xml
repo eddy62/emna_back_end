@@ -7,12 +7,12 @@
         Added the constraints for entity Avenant.
     -->
     <changeSet id="20200722091304-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="contrat_id"
-                                 baseTableName="avenant"
-                                 constraintName="fk_avenant_contrat_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="contrat"/>
 
-    </changeSet>
-</databaseChangeLog>
+        <!--    <addForeignKeyConstraint baseColumnNames="saisie_article_id"
+                                     baseTableName="avenant"
+                                     constraintName="fk_avenant_saisie_article_id"
+                                     referencedColumnNames="id"
+                                     referencedTableName="saisie_article"/>
+    -->
+        </changeSet>
+    </databaseChangeLog>

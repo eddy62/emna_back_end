@@ -1,14 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getTypeContrats} from 'app/entities/type-contrat/type-contrat.reducer';
-import {getEntities as getEmployes} from 'app/entities/employe/employe.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './contrat.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { ITypeContrat } from 'app/shared/model/type-contrat.model';
+import { getEntities as getTypeContrats } from 'app/entities/type-contrat/type-contrat.reducer';
+import { IEmploye } from 'app/shared/model/employe.model';
+import { getEntities as getEmployes } from 'app/entities/employe/employe.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './contrat.reducer';
+import { IContrat } from 'app/shared/model/contrat.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IContratUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

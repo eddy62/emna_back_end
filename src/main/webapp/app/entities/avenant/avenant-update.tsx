@@ -1,21 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './avenant.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { getEntity, updateEntity, createEntity, reset } from './avenant.reducer';
+import { IAvenant } from 'app/shared/model/avenant.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAvenantUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AvenantUpdate = (props: IAvenantUpdateProps) => {
-  const [contratId, setContratId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { avenantEntity, contrats, loading, updating } = props;
+  const { avenantEntity, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/avenant');
@@ -27,8 +29,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
-
-    props.getContrats();
   }, []);
 
   useEffect(() => {
@@ -95,19 +95,24 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
                 </Label>
               </AvGroup>
               <AvGroup>
-                <Label for="avenant-contrat">
-                  <Translate contentKey="emnaBackEndApp.avenant.contrat">Contrat</Translate>
+                <Label id="dateDeCreationLabel" for="avenant-dateDeCreation">
+                  <Translate contentKey="emnaBackEndApp.avenant.dateDeCreation">Date De Creation</Translate>
                 </Label>
-                <AvInput id="avenant-contrat" type="select" className="form-control" name="contratId">
-                  <option value="" key="0" />
-                  {contrats
-                    ? contrats.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
+                <AvField
+                  id="avenant-dateDeCreation"
+                  type="date"
+                  className="form-control"
+                  name="dateDeCreation"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="dateDeSignatureLabel" for="avenant-dateDeSignature">
+                  <Translate contentKey="emnaBackEndApp.avenant.dateDeSignature">Date De Signature</Translate>
+                </Label>
+                <AvField id="avenant-dateDeSignature" type="date" className="form-control" name="dateDeSignature" />
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/avenant" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -131,7 +136,6 @@ export const AvenantUpdate = (props: IAvenantUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  contrats: storeState.contrat.entities,
   avenantEntity: storeState.avenant.entity,
   loading: storeState.avenant.loading,
   updating: storeState.avenant.updating,
@@ -139,7 +143,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getContrats,
   getEntity,
   updateEntity,
   createEntity,

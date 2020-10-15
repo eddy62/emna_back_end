@@ -5,7 +5,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 
 /**
@@ -36,6 +37,10 @@ public class SaisieArticle implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "saisieArticles", allowSetters = true)
     private Contrat contrat;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "listeSaisieArticles", allowSetters = true)
+    private Avenant avenant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -83,6 +88,19 @@ public class SaisieArticle implements Serializable {
 
     public void setContrat(Contrat contrat) {
         this.contrat = contrat;
+    }
+
+    public Avenant getAvenant() {
+        return avenant;
+    }
+
+    public SaisieArticle avenant(Avenant avenant) {
+        this.avenant = avenant;
+        return this;
+    }
+
+    public void setAvenant(Avenant avenant) {
+        this.avenant = avenant;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

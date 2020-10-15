@@ -3,6 +3,7 @@ export interface ISaisieArticle {
   libelle?: string;
   articleId?: number;
   contratId?: number;
+  avenantId?: number;
 }
 
 export const defaultValue: Readonly<ISaisieArticle> = {};

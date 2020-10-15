@@ -134,7 +134,6 @@ public class DocumentServiceImpl implements DocumentService {
             // conversion document vers documentDTO
             documentDTO.setId(document.getId());
             documentDTO.setCheminFichier(document.getCheminFichier());
-            documentDTO.setType(document.getType());
             documentDTO.setNom(document.getNom());
 
             documentDTO.setTypeDocumentId(document.getTypeDocument().getId());

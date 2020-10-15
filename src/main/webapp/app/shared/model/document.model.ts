@@ -1,7 +1,6 @@
 export interface IDocument {
   id?: number;
   cheminFichier?: string;
-  type?: string;
   nom?: string;
   typeDocumentId?: number;
   factureId?: number;

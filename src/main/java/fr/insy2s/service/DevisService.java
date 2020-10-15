@@ -43,18 +43,18 @@ public interface DevisService {
     void delete(Long id);
 
     /**
-     * Get all quotes by society id.
-     *
-     * @param idSociete the id of the society.
-     * @return the list of entities
-     */
-    List<DevisDTO> findAllQuotesBySocietyId(Long idSociete);
-
-    /**
      * Get all the WrapperQuotes by society id.
      *
      * @param id the id of the society.
      * @return the list of entities Wrapper
      */
     List<WrapperQuote> findAllWrapperQuotes(Long id);
+
+    /**
+     * Get the "id" quote.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    WrapperQuote findQuote(Long id);
 }

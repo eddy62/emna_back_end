@@ -13,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PdfUtil {
 
@@ -100,11 +97,12 @@ public class PdfUtil {
     public static byte[] generateDpaeAsBytes(WrapperPdfDpae wrapper) throws JRException {
         String userLogin = SecurityUtils.getCurrentUserLogin().get();
         Map<String, Object> params = new HashMap<>();
+        params.put("user", userLogin);
 
         return PdfUtil.generatePdfReportAsBytes(
                 URL_TEMPLATE_DPAE,
                 params,
-                Collections.singletonList(wrapper)
+                Arrays.asList(wrapper)
         );
     }
     /**

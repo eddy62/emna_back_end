@@ -18,8 +18,10 @@
       },
       "reference": "Reference",
       "signe": "Signe",
-      "listeDocuments": "Liste Documents",
-      "contrat": "Contrat"
+      "dateDeCreation": "Date De Creation",
+      "dateDeSignature": "Date De Signature",
+      "listeSaisieArticle": "Liste Saisie Article",
+      "listeDocuments": "Liste Documents"
     }
   }
 }

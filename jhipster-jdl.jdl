@@ -76,6 +76,8 @@ entity Contrat {
 entity Avenant {
     reference String required
     signe Boolean required
+	dateDeCreation LocalDate required
+	dateDeSignature LocalDate
 }
 
 entity Article {
@@ -212,11 +214,12 @@ entity InfoEntreprise{
     domaineDactivite String
     description String
     email String
+	codeUrssaf String
+	serviceSanteTravail String
 }
 
 entity Document{
 	cheminFichier String
-	type String
 	nom String
 }
 
@@ -242,6 +245,9 @@ entity AvanceRappelSalaire{
 entity Dpae {
 	lieu String required
     date LocalDate required
+	heureEmbauche String
+	commentaire String
+	retourApiUrssaf String
 }
 
 entity Depense{
@@ -281,7 +287,7 @@ relationship OneToMany{
     //Societe{listeClauses} to Clause{societe}
     //Societe{listeArticles}  to Article{societe}
     Societe{listeEmployes}  to  Employe{societe}
-    Contrat{listeAvenants} to Avenant{contrat}
+    //Contrat{listeAvenants} to Avenant{contrat}
 
     Comptable{listeSocietes} to Societe{comptable}
 
@@ -293,7 +299,7 @@ relationship OneToMany{
     Employe{listeAvanceRappelSalaire} to AvanceRappelSalaire{employe}
     Employe{listeAutresVariables} to AutresVariable{employe}
     //Article{listeClauses} to Clause{article}
-
+	Avenant{listeSaisieArticle} to SaisieArticle{avenant}
 	Facture{listeDocuments} to Document{facture}
 	Releve{listeDocuments} to Document{releve}
 	Contrat{listeDocuments} to Document{contrat}
@@ -341,6 +347,7 @@ relationship ManyToOne{
     SaisieArticle{contrat required} to Contrat
     Document{typeDocument required} to TypeDocument
     Contrat{typeContrat required} to TypeContrat
+    
     
     LigneProduit{produit required} to Produit
 	Produit{societe required} to Societe

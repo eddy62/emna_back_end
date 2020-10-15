@@ -10,21 +10,29 @@
       "fieldName": "signe",
       "fieldType": "Boolean",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDeCreation",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateDeSignature",
+      "fieldType": "LocalDate"
     }
   ],
   "relationships": [
     {
       "relationshipType": "one-to-many",
+      "otherEntityName": "saisieArticle",
+      "otherEntityRelationshipName": "avenant",
+      "relationshipName": "listeSaisieArticle"
+    },
+    {
+      "relationshipType": "one-to-many",
       "otherEntityName": "document",
       "otherEntityRelationshipName": "avenant",
       "relationshipName": "listeDocuments"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "contrat",
-      "otherEntityRelationshipName": "listeAvenants",
-      "relationshipName": "contrat",
-      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20200722091304",

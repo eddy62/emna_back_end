@@ -1,8 +1,8 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Dpae} entity.
@@ -16,6 +16,12 @@ public class DpaeDTO implements Serializable {
 
     @NotNull
     private LocalDate date;
+
+    private String heureEmbauche;
+
+    private String commentaire;
+
+    private String retourApiUrssaf;
 
 
     private Long employeId;
@@ -42,6 +48,30 @@ public class DpaeDTO implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getHeureEmbauche() {
+        return heureEmbauche;
+    }
+
+    public void setHeureEmbauche(String heureEmbauche) {
+        this.heureEmbauche = heureEmbauche;
+    }
+
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
+    }
+
+    public String getRetourApiUrssaf() {
+        return retourApiUrssaf;
+    }
+
+    public void setRetourApiUrssaf(String retourApiUrssaf) {
+        this.retourApiUrssaf = retourApiUrssaf;
     }
 
     public Long getEmployeId() {
@@ -76,6 +106,9 @@ public class DpaeDTO implements Serializable {
             "id=" + getId() +
             ", lieu='" + getLieu() + "'" +
             ", date='" + getDate() + "'" +
+            ", heureEmbauche='" + getHeureEmbauche() + "'" +
+            ", commentaire='" + getCommentaire() + "'" +
+            ", retourApiUrssaf='" + getRetourApiUrssaf() + "'" +
             ", employeId=" + getEmployeId() +
             "}";
     }

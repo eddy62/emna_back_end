@@ -114,4 +114,15 @@ public class AvenantResource {
         avenantService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /avenants/:idContrat} : Récupère tout les avenants du contrat passer en id
+     * @param idContract id du contrat pour récupèré tout les avenants de celui-ci
+     * @return {@link ResponseEntity} avec le status {@code 200 (OK)} et la liste des avenants.
+     */
+    @GetMapping("avenants/contrats/{idContract}")
+    public List<AvenantDTO> getAllAmendmentByContractId(@PathVariable long idContract){
+        log.debug("REST request to get all Amendement by contract id ", idContract);
+        return avenantService.getAllAmendmentByContractId(idContract);
+    }
 }

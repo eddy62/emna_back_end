@@ -1,6 +1,7 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -16,8 +17,11 @@ public class AvenantDTO implements Serializable {
     @NotNull
     private Boolean signe;
 
+    @NotNull
+    private LocalDate dateDeCreation;
 
-    private Long contratId;
+    private LocalDate dateDeSignature;
+
     
     public Long getId() {
         return id;
@@ -43,12 +47,20 @@ public class AvenantDTO implements Serializable {
         this.signe = signe;
     }
 
-    public Long getContratId() {
-        return contratId;
+    public LocalDate getDateDeCreation() {
+        return dateDeCreation;
     }
 
-    public void setContratId(Long contratId) {
-        this.contratId = contratId;
+    public void setDateDeCreation(LocalDate dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+    }
+
+    public LocalDate getDateDeSignature() {
+        return dateDeSignature;
+    }
+
+    public void setDateDeSignature(LocalDate dateDeSignature) {
+        this.dateDeSignature = dateDeSignature;
     }
 
     @Override
@@ -75,7 +87,8 @@ public class AvenantDTO implements Serializable {
             "id=" + getId() +
             ", reference='" + getReference() + "'" +
             ", signe='" + isSigne() + "'" +
-            ", contratId=" + getContratId() +
+            ", dateDeCreation='" + getDateDeCreation() + "'" +
+            ", dateDeSignature='" + getDateDeSignature() + "'" +
             "}";
     }
 }

@@ -1,6 +1,6 @@
 id;code_ref;libelle
-1;EMPNEMB;Non EmbauchÃ©
-2;EMPEMB;EmbauchÃ©
-3;EMPEND;Sortis/Archive
+1;EMPNEMB;Pré-embauché
+2;EMPEMB;Embauché
+3;EMPEND;Archivé
 4;EMPOTHER;Autre
 

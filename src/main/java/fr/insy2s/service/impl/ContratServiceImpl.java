@@ -5,13 +5,23 @@ import fr.insy2s.repository.ContratRepository;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
 import fr.insy2s.service.ContratService;
+import fr.insy2s.service.SaisieArticleService;
+import fr.insy2s.service.TypeContratService;
 import fr.insy2s.service.dto.ContratDTO;
+import fr.insy2s.service.dto.SaisieArticleDTO;
+import fr.insy2s.service.dto.TypeContratDTO;
 import fr.insy2s.service.mapper.ContratMapper;
+import fr.insy2s.service.mapper.WrapperSaisieArticleMapper;
+import fr.insy2s.service.mapper.WrapperContratMapper;
+import fr.insy2s.utils.wrapper.WrapperSaisieArticle;
+import fr.insy2s.utils.wrapper.WrapperContrat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +40,23 @@ public class ContratServiceImpl implements ContratService {
 
     private final ContratMapper contratMapper;
 
-    public ContratServiceImpl(ContratRepository contratRepository, ContratMapper contratMapper) {
+    private final TypeContratService typeContratService;
+    private final SaisieArticleService saisieArticleService;
+    private final WrapperContratMapper wrapperContratMapper;
+    private final WrapperSaisieArticleMapper wrapperSaisieArticleMapper;
+
+    public ContratServiceImpl(ContratRepository contratRepository,
+                              ContratMapper contratMapper,
+                              TypeContratService typeContratService,
+                              WrapperContratMapper wrapperContratMapper,
+                              SaisieArticleService saisieArticleService,
+                              WrapperSaisieArticleMapper wrapperSaisieArticleMapper) {
         this.contratRepository = contratRepository;
         this.contratMapper = contratMapper;
+        this.typeContratService = typeContratService;
+        this.wrapperContratMapper = wrapperContratMapper;
+        this.saisieArticleService = saisieArticleService;
+        this.wrapperSaisieArticleMapper = wrapperSaisieArticleMapper;
     }
 
     @Override
@@ -81,5 +105,21 @@ public class ContratServiceImpl implements ContratService {
     @Override
     public Contrat getActiveContratEmployee(Long id) {
         return contratRepository.getActiveContratEmployee(id);
+    }
+
+    @Override
+    public Optional<WrapperContrat> createWrapperContrat(@Valid WrapperContrat wrapperContrat) {
+        final TypeContratDTO typeContratDTO = typeContratService.findOne(wrapperContrat.getIdTypeContrat()).get();
+        final ContratDTO contratDTO = wrapperContratMapper.toContratDto(wrapperContrat);
+        final ContratDTO newContratDTO = save(contratDTO);
+        List<WrapperSaisieArticle> newWrapperSaisieArticle = new ArrayList<WrapperSaisieArticle>();
+        for (int i = 0; i < wrapperContrat.getWrapperSaisieArticles().size(); i++) {
+            final SaisieArticleDTO saisieArticleDTO = wrapperSaisieArticleMapper.toSaisieArticleDTO(wrapperContrat.getWrapperSaisieArticles().get(i));
+            saisieArticleDTO.setContratId(newContratDTO.getId());
+            final SaisieArticleDTO newSaisieArticleDTO = saisieArticleService.save(saisieArticleDTO);
+            newWrapperSaisieArticle.add(wrapperSaisieArticleMapper.toWrapperArticle(newSaisieArticleDTO));
+        }
+        WrapperContrat newWrapperContrat = new WrapperContrat(newContratDTO, typeContratDTO, newWrapperSaisieArticle);
+        return Optional.of(newWrapperContrat);
     }
 }

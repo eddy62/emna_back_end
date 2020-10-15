@@ -1,0 +1,366 @@
+entity Facture{
+    numfact Long
+    nom String
+    type String
+    message String
+    date LocalDate
+    dateEcheance LocalDate
+    //prixHT Integer
+    //prixTTC Integer
+    //tva Float
+    moyenDePaiement String
+}
+
+entity ClientFournisseur {
+	nom String required
+	siret String
+    telephone String
+	email String
+}
+
+entity LigneProduit{
+	quantite Integer required
+	//nom String
+	commentaire String
+	//tva Float
+	//prix Float required
+    remise BigDecimal
+}
+
+entity Produit {
+    nom String
+    reference String
+    tva BigDecimal
+    prix BigDecimal
+    unite String
+    description String
+}
+
+entity Operation{
+    date LocalDate
+    description String
+    type String
+    rapproche Boolean
+    solde BigDecimal
+}
+
+entity Releve {
+    dateDebut LocalDate
+    dateFin LocalDate
+    banque String
+}
+
+entity EtatReleve{
+    libelle String
+    codeRef String
+}
+
+entity Devis{
+    numDevis Long
+    nom String
+    message String
+    dateCreation LocalDate
+    dateLimite LocalDate
+    //prixHT Double
+    //prixTTC Double
+    //tva Float
+}
+
+entity Contrat {
+    titre String required
+    dateCreation LocalDate required
+    signe Boolean required
+    archive Boolean
+}
+
+entity Avenant {
+    reference String required
+    signe Boolean required
+}
+
+entity Article {
+    titre String required
+    intitule String required
+    description String required
+}
+
+entity Adresse{
+    numeroRue String
+    boitePostale String
+    nomRue String required
+    codePostal String required
+    ville String required
+	pays String required
+}
+
+entity Employe{
+    matricule String required
+    civilite String required
+    nomNaissance String required
+    nomUsage String
+    prenom String required
+    dateNaissance LocalDate required
+    villeNaissance String required
+    departementNaissance String required
+    paysNaisance String required
+    numeroSecuriteSociale String required
+    email String
+    telephoneFix String
+    telephonePortable String required
+    fax String
+    salaireHoraire BigDecimal required
+    salaireBrutMensuelle BigDecimal required
+    heuresMensuelle BigDecimal required
+    categorie String required
+    poste String required
+    dateEmbauche LocalDate required
+    dateSortie LocalDate
+    periodeEssai Double required
+    situationFamiliale String required
+    enfantsACharge Integer required
+}
+
+entity StatutEmploye{
+	codeRef String required unique,
+	libelle String required unique,
+}
+
+entity TypeAbsence{
+    codeRef String required unique,
+    intitule String required unique,
+}
+
+entity Absence{
+    debutAbsence LocalDate required,
+    finAbsence LocalDate required,
+    mois Integer required,
+    annee Integer required,
+}
+
+entity TypePrime{
+    codeRef String required unique,
+    intitule String required unique,
+}
+
+entity Prime{
+    montant BigDecimal required,
+    mois Integer required,
+    annee Integer required,
+}
+
+entity  FichePaie{
+    debutPeriode LocalDate required,
+    finPeriode LocalDate required,
+    mois Integer required,
+    annee Integer required,
+}
+
+//heure en minute
+entity HeuresSupplementaires{
+    date LocalDate required,
+    nombreHeure Integer required,
+    mois Integer required,
+    annee Integer required,
+}
+
+entity NoteDeFrais{
+    designation String required,
+    date LocalDate required,
+    montant BigDecimal required,
+    mois Integer required,
+    annee Integer required,
+}
+
+entity AutresVariable{
+    description String,
+    date LocalDate,
+    montant BigDecimal,
+    mois Integer required,
+    annee Integer required,
+}
+
+entity EtatFacture {
+    libelle String required unique,
+    codeRef String required unique,
+}
+
+entity EtatDevis {
+    libelle String required unique,
+    codeRef String required unique,
+}
+
+entity EtatDepense {
+	libelle String,
+	codeRef String
+}
+entity Comptable{
+    civilite String
+}
+
+entity Societe {
+    civilite String
+}
+
+entity InfoEntreprise{
+    raisonSociale String
+    telephone String
+    fax String
+    formeJuridique String
+    dateDeCreation LocalDate
+    siren String
+    siret String
+    domaineDactivite String
+    description String
+    email String
+}
+
+entity Document{
+	cheminFichier String
+	type String
+	nom String
+}
+
+entity TypeContrat {
+	codeRef String required unique
+    intitule String required unique
+}
+
+entity EtatVariablePaie {
+	codeRef String required unique
+    intitule String required unique
+}
+
+entity AvanceRappelSalaire{
+	type String required,
+	debutPeriode LocalDate required,
+    finPeriode LocalDate required,
+    montant BigDecimal required,
+    mois Integer required,
+    annee Integer required,
+}
+
+entity Dpae {
+	lieu String required
+    date LocalDate required
+}
+
+entity Depense{
+	numero Long required
+	date LocalDate
+	prix BigDecimal
+	moyenDePaiement String
+	raison String
+}
+
+entity SaisieArticle{
+    libelle String required
+}
+
+entity TypeDocument {
+codeRef String required unique,
+intitule String required unique,
+}
+
+relationship OneToMany{
+    Societe{listeFactures} to Facture{societe}
+    Operation{listeFactures} to Facture{operation}
+    ClientFournisseur{listeFactures} to Facture{clientFournisseur}
+
+    //Societe{listeDevis} to Devis{societe}
+    ClientFournisseur{listeDevis} to Devis{clientFournisseur}
+
+    Releve{listeOperations} to Operation{releve}
+    Societe{listeReleves} to Releve{societe}
+
+    //Societe{listeProduits} to Produit{societe}
+
+    Employe{listeContrats} to Contrat{employe}
+    //Societe{listeContrats} to Contrat{societe}
+    Societe{listeClientsFournisseurs} to ClientFournisseur{societe}
+
+    //Societe{listeClauses} to Clause{societe}
+    //Societe{listeArticles}  to Article{societe}
+    Societe{listeEmployes}  to  Employe{societe}
+    Contrat{listeAvenants} to Avenant{contrat}
+
+    Comptable{listeSocietes} to Societe{comptable}
+
+    Employe{listeAbsences} to  Absence{employe}
+    Employe{listePrimes} to Prime{employe}
+    Employe{listeFichePaies} to FichePaie{employe}
+   	Employe{listeHeureSupplementaires}  to HeuresSupplementaires{employe}
+    Employe{listeNoteDeFrais}  to NoteDeFrais{employe}
+    Employe{listeAvanceRappelSalaire} to AvanceRappelSalaire{employe}
+    Employe{listeAutresVariables} to AutresVariable{employe}
+    //Article{listeClauses} to Clause{article}
+
+	Facture{listeDocuments} to Document{facture}
+	Releve{listeDocuments} to Document{releve}
+	Contrat{listeDocuments} to Document{contrat}
+	Employe{listeDocuments} to Document{employe}
+    Employe{listeDpae} to Dpae{employe}
+    //Societe{listeDpae} to Dpae{societe}
+    Facture{listeLigneProduit} to LigneProduit{facture}
+    Devis{listeLigneProduit} to LigneProduit{devis}
+
+	Depense{listeDocuments} to Document{depense}
+    
+    Absence{listeDocuments} to Document{absence}
+	NoteDeFrais{listeDocuments} to Document{noteDeFrais}
+	AutresVariable{listeDocuments} to Document{autresVariable}
+	Devis{listeDocuments} to Document{devis}
+	Dpae{listeDocuments} to Document{dpae}
+	FichePaie{listeDocuments} to Document{fichePaie}
+    Avenant{listeDocuments} to Document{avenant}
+}
+
+relationship ManyToOne{
+    Depense{societe} to Societe
+    Depense{operation} to Operation
+    Depense{clientFournisseur} to ClientFournisseur
+    Absence{typeAbsence required} to TypeAbsence
+    Prime{typePrime required} to TypePrime
+    Employe{statutEmploye required} to StatutEmploye
+	Depense{etatDepense} to EtatDepense
+    Releve{etatReleve} to EtatReleve
+    Facture{etatFacture} to EtatFacture
+    Devis{etatDevis} to EtatDevis
+    Employe{adresse required} to Adresse
+    Societe{adresse} to Adresse
+    Facture{adresse} to Adresse
+    Comptable{adresse required} to Adresse
+    ClientFournisseur{adresse} to Adresse
+    //Employe{typeContrat required} to TypeContrat
+    Absence{etatVariablePaie required} to EtatVariablePaie
+    Prime{etatVariablePaie required} to EtatVariablePaie
+    NoteDeFrais{etatVariablePaie required} to EtatVariablePaie
+    AvanceRappelSalaire{etatVariablePaie required} to EtatVariablePaie
+    HeuresSupplementaires{etatVariablePaie required} to EtatVariablePaie
+    AutresVariable{etatVariablePaie required} to EtatVariablePaie
+    SaisieArticle{article required} to Article
+    SaisieArticle{contrat required} to Contrat
+    Document{typeDocument required} to TypeDocument
+    Contrat{typeContrat required} to TypeContrat
+    
+    LigneProduit{produit required} to Produit
+	Produit{societe required} to Societe
+}
+
+//relationship ManyToMany{
+    //Article{listeAvenants} to Avenant{listeArticles}
+    //Article{listeContrats} to Contrat{listeArticles}
+    //Clause{listeContrats} to Contrat{listeClauses}
+    //Clause{listeAvenants} to Avenant{listeClauses}
+//}
+
+relationship OneToOne{
+    Societe{infoEntreprise}  to InfoEntreprise
+    Comptable{infoEntreprise}  to InfoEntreprise
+    Comptable{user} to User
+    Societe{user} to User
+    Facture{devis} to Devis
+}
+//Use Data Transfert Objects (DTO)
+dto * with mapstruct
+// Set service options to all except few
+service all with serviceImpl

@@ -133,6 +133,8 @@ public class CacheConfiguration {
             createCache(cm, fr.insy2s.domain.AutresVariable.class.getName() + ".listeDocuments");
             createCache(cm, fr.insy2s.domain.Dpae.class.getName() + ".listeDocuments");
             createCache(cm, fr.insy2s.domain.TypeDocument.class.getName());
+            createCache(cm, fr.insy2s.domain.SaisieArticle.class.getName() + ".listeAvenants");
+            createCache(cm, fr.insy2s.domain.Avenant.class.getName() + ".listeSaisieArticles");
             // jhipster-needle-ehcache-add-entry
         };
     }

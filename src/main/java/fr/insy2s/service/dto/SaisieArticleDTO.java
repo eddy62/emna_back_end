@@ -1,6 +1,6 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +17,8 @@ public class SaisieArticleDTO implements Serializable {
     private Long articleId;
 
     private Long contratId;
+
+    private Long avenantId;
     
     public Long getId() {
         return id;
@@ -50,6 +52,14 @@ public class SaisieArticleDTO implements Serializable {
         this.contratId = contratId;
     }
 
+    public Long getAvenantId() {
+        return avenantId;
+    }
+
+    public void setAvenantId(Long avenantId) {
+        this.avenantId = avenantId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -75,6 +85,7 @@ public class SaisieArticleDTO implements Serializable {
             ", libelle='" + getLibelle() + "'" +
             ", articleId=" + getArticleId() +
             ", contratId=" + getContratId() +
+            ", avenantId=" + getAvenantId() +
             "}";
     }
 }

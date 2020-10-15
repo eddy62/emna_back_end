@@ -18,7 +18,8 @@
       },
       "libelle": "Libelle",
       "article": "Article",
-      "contrat": "Contrat"
+      "contrat": "Contrat",
+      "avenant": "Avenant"
     }
   }
 }

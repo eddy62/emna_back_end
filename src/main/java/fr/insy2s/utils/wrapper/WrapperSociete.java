@@ -34,6 +34,8 @@ public class WrapperSociete {
     private String      domaineDactivite;
     private String      description;
     private String      emailPro;
+    private String      codeUrssaf;
+    private String      serviceSanteTravail;
 
     //User
     private Long        idUser;
@@ -81,6 +83,8 @@ public class WrapperSociete {
         this.domaineDactivite = infoEntrepriseDTO.getDomaineDactivite();
         this.description = infoEntrepriseDTO.getDescription();
         this.emailPro = infoEntrepriseDTO.getEmail();
+        this.codeUrssaf = infoEntrepriseDTO.getCodeUrssaf();
+        this.serviceSanteTravail = infoEntrepriseDTO.getServiceSanteTravail();
 
         //user
         this.idUser = userDTO.getId();
@@ -363,4 +367,11 @@ public class WrapperSociete {
         this.authorities = authorities;
     }
 
+    public String getCodeUrssaf() { return codeUrssaf; }
+
+    public void setCodeUrssaf(String codeUrssaf) { this.codeUrssaf = codeUrssaf; }
+
+    public String getServiceSanteTravail() { return serviceSanteTravail; }
+
+    public void setServiceSanteTravail(String serviceSanteTravail) { this.serviceSanteTravail = serviceSanteTravail; }
 }

@@ -4,11 +4,12 @@ import fr.insy2s.service.dto.ContratDTO;
 import fr.insy2s.service.dto.TypeContratDTO;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * WrapperContrat
  *
- * @author De Cédric Belot
+ * @author Created by Cédric Belot, Modified by Jérémy Schrotzenberger
  */
 public class WrapperContrat {
 
@@ -19,10 +20,16 @@ public class WrapperContrat {
     private Boolean signe;
     private Boolean archive;
 
+    //employe
+    private Long idEmploye;
+
     //typeContrat
     private Long idTypeContrat;
     private String codeRef;
     private String intitule;
+
+    //Liste de wrappers de saisies d'article
+    List<WrapperSaisieArticle> wrapperSaisieArticles;
 
     /**
      * Empty constructor
@@ -34,10 +41,11 @@ public class WrapperContrat {
     /**
      * Parameterized constructor
      *
-     * @param contratDTO     the DTO containing contrat attributes
-     * @param typeContratDTO the DTO containing typeContrat attributes
+     * @param contratDTO           the DTO containing contrat attributes
+     * @param typeContratDTO       the DTO containing typeContrat attributes
+     * @param wrapperSaisieArticles      the list of wrapperArticles
      */
-    public WrapperContrat(ContratDTO contratDTO, TypeContratDTO typeContratDTO) {
+    public WrapperContrat(ContratDTO contratDTO, TypeContratDTO typeContratDTO, List<WrapperSaisieArticle> wrapperSaisieArticles) {
         super();
         //contrat
         this.id = contratDTO.getId();
@@ -45,10 +53,15 @@ public class WrapperContrat {
         this.dateCreation = contratDTO.getDateCreation();
         this.signe = contratDTO.isSigne();
         this.archive = contratDTO.isArchive();
+        this.idEmploye = contratDTO.getEmployeId();
+
         //typeContrat
         this.idTypeContrat = typeContratDTO.getId();
         this.codeRef = typeContratDTO.getCodeRef();
         this.intitule = typeContratDTO.getIntitule();
+
+        //Liste de wrappers de saisies d'articles
+        this.wrapperSaisieArticles = wrapperSaisieArticles;
     }
 
     // getters setters
@@ -116,4 +129,19 @@ public class WrapperContrat {
         this.intitule = intitule;
     }
 
+    public Long getIdEmploye() {
+        return idEmploye;
+    }
+
+    public void setIdEmploye(Long idEmploye) {
+        this.idEmploye = idEmploye;
+    }
+
+    public List<WrapperSaisieArticle> getWrapperSaisieArticles() {
+        return wrapperSaisieArticles;
+    }
+
+    public void setWrapperSaisieArticles(List<WrapperSaisieArticle> wrapperSaisieArticles) {
+        this.wrapperSaisieArticles = wrapperSaisieArticles;
+    }
 }

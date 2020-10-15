@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Row} from 'reactstrap';
-import {Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col } from 'reactstrap';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntity} from './avenant.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { getEntity } from './avenant.reducer';
+import { IAvenant } from 'app/shared/model/avenant.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IAvenantDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -36,9 +38,25 @@ export const AvenantDetail = (props: IAvenantDetailProps) => {
           </dt>
           <dd>{avenantEntity.signe ? 'true' : 'false'}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.avenant.contrat">Contrat</Translate>
+            <span id="dateDeCreation">
+              <Translate contentKey="emnaBackEndApp.avenant.dateDeCreation">Date De Creation</Translate>
+            </span>
           </dt>
-          <dd>{avenantEntity.contratId ? avenantEntity.contratId : ''}</dd>
+          <dd>
+            {avenantEntity.dateDeCreation ? (
+              <TextFormat value={avenantEntity.dateDeCreation} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
+          </dd>
+          <dt>
+            <span id="dateDeSignature">
+              <Translate contentKey="emnaBackEndApp.avenant.dateDeSignature">Date De Signature</Translate>
+            </span>
+          </dt>
+          <dd>
+            {avenantEntity.dateDeSignature ? (
+              <TextFormat value={avenantEntity.dateDeSignature} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/avenant" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

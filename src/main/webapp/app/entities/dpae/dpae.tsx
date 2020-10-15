@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Table} from 'reactstrap';
-import {TextFormat, Translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Col, Row, Table } from 'reactstrap';
+import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {IRootState} from 'app/shared/reducers';
-import {getEntities} from './dpae.reducer';
-import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
+import { IRootState } from 'app/shared/reducers';
+import { getEntities } from './dpae.reducer';
+import { IDpae } from 'app/shared/model/dpae.model';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IDpaeProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -42,6 +43,15 @@ export const Dpae = (props: IDpaeProps) => {
                   <Translate contentKey="emnaBackEndApp.dpae.date">Date</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="emnaBackEndApp.dpae.heureEmbauche">Heure Embauche</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.dpae.commentaire">Commentaire</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="emnaBackEndApp.dpae.retourApiUrssaf">Retour Api Urssaf</Translate>
+                </th>
+                <th>
                   <Translate contentKey="emnaBackEndApp.dpae.employe">Employe</Translate>
                 </th>
                 <th />
@@ -57,6 +67,9 @@ export const Dpae = (props: IDpaeProps) => {
                   </td>
                   <td>{dpae.lieu}</td>
                   <td>{dpae.date ? <TextFormat type="date" value={dpae.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
+                  <td>{dpae.heureEmbauche}</td>
+                  <td>{dpae.commentaire}</td>
+                  <td>{dpae.retourApiUrssaf}</td>
                   <td>{dpae.employeId ? <Link to={`employe/${dpae.employeId}`}>{dpae.employeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

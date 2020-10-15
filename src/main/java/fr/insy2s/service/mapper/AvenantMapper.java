@@ -1,23 +1,22 @@
 package fr.insy2s.service.mapper;
 
 
-import fr.insy2s.domain.Avenant;
+import fr.insy2s.domain.*;
 import fr.insy2s.service.dto.AvenantDTO;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity {@link Avenant} and its DTO {@link AvenantDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ContratMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface AvenantMapper extends EntityMapper<AvenantDTO, Avenant> {
 
-    @Mapping(source = "contrat.id", target = "contratId")
-    AvenantDTO toDto(Avenant avenant);
 
+    @Mapping(target = "listeSaisieArticles", ignore = true)
+    @Mapping(target = "removeListeSaisieArticle", ignore = true)
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
-    @Mapping(source = "contratId", target = "contrat")
     Avenant toEntity(AvenantDTO avenantDTO);
 
     default Avenant fromId(Long id) {

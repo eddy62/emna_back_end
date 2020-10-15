@@ -23,6 +23,13 @@
       "relationshipValidateRules": "required",
       "relationshipName": "contrat",
       "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "avenant",
+      "otherEntityRelationshipName": "listeSaisieArticle",
+      "relationshipName": "avenant",
+      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20200917145053",

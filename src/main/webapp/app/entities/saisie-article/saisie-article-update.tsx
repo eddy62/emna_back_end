@@ -1,23 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
-import {Link, RouteComponentProps} from 'react-router-dom';
-import {Button, Col, Label, Row} from 'reactstrap';
-import {AvFeedback, AvField, AvForm, AvGroup, AvInput} from 'availity-reactstrap-validation';
-import {Translate, translate} from 'react-jhipster';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IRootState} from 'app/shared/reducers';
-import {getEntities as getArticles} from 'app/entities/article/article.reducer';
-import {getEntities as getContrats} from 'app/entities/contrat/contrat.reducer';
-import {createEntity, getEntity, reset, updateEntity} from './saisie-article.reducer';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Button, Row, Col, Label } from 'reactstrap';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IRootState } from 'app/shared/reducers';
+
+import { IArticle } from 'app/shared/model/article.model';
+import { getEntities as getArticles } from 'app/entities/article/article.reducer';
+import { IContrat } from 'app/shared/model/contrat.model';
+import { getEntities as getContrats } from 'app/entities/contrat/contrat.reducer';
+import { IAvenant } from 'app/shared/model/avenant.model';
+import { getEntities as getAvenants } from 'app/entities/avenant/avenant.reducer';
+import { getEntity, updateEntity, createEntity, reset } from './saisie-article.reducer';
+import { ISaisieArticle } from 'app/shared/model/saisie-article.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ISaisieArticleUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
   const [articleId, setArticleId] = useState('0');
   const [contratId, setContratId] = useState('0');
+  const [avenantId, setAvenantId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { saisieArticleEntity, articles, contrats, loading, updating } = props;
+  const { saisieArticleEntity, articles, contrats, avenants, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/saisie-article');
@@ -32,6 +41,7 @@ export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
 
     props.getArticles();
     props.getContrats();
+    props.getAvenants();
   }, []);
 
   useEffect(() => {
@@ -125,6 +135,21 @@ export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
               </AvGroup>
+              <AvGroup>
+                <Label for="saisie-article-avenant">
+                  <Translate contentKey="emnaBackEndApp.saisieArticle.avenant">Avenant</Translate>
+                </Label>
+                <AvInput id="saisie-article-avenant" type="select" className="form-control" name="avenantId">
+                  <option value="" key="0" />
+                  {avenants
+                    ? avenants.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/saisie-article" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -149,6 +174,7 @@ export const SaisieArticleUpdate = (props: ISaisieArticleUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   articles: storeState.article.entities,
   contrats: storeState.contrat.entities,
+  avenants: storeState.avenant.entities,
   saisieArticleEntity: storeState.saisieArticle.entity,
   loading: storeState.saisieArticle.loading,
   updating: storeState.saisieArticle.updating,
@@ -158,6 +184,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getArticles,
   getContrats,
+  getAvenants,
   getEntity,
   updateEntity,
   createEntity,

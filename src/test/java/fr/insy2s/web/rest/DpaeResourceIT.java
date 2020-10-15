@@ -40,8 +40,14 @@ public class DpaeResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final String DEFAULT_LIEN_DOCUMENT = "AAAAAAAAAA";
-    private static final String UPDATED_LIEN_DOCUMENT = "BBBBBBBBBB";
+    private static final String DEFAULT_HEURE_EMBAUCHE = "AAAAAAAAAA";
+    private static final String UPDATED_HEURE_EMBAUCHE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COMMENTAIRE = "AAAAAAAAAA";
+    private static final String UPDATED_COMMENTAIRE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_RETOUR_API_URSSAF = "AAAAAAAAAA";
+    private static final String UPDATED_RETOUR_API_URSSAF = "BBBBBBBBBB";
 
     @Autowired
     private DpaeRepository dpaeRepository;
@@ -69,8 +75,10 @@ public class DpaeResourceIT {
     public static Dpae createEntity(EntityManager em) {
         Dpae dpae = new Dpae()
             .lieu(DEFAULT_LIEU)
-            .date(DEFAULT_DATE);
-            //.lienDocument(DEFAULT_LIEN_DOCUMENT);
+            .date(DEFAULT_DATE)
+            .heureEmbauche(DEFAULT_HEURE_EMBAUCHE)
+            .commentaire(DEFAULT_COMMENTAIRE)
+            .retourApiUrssaf(DEFAULT_RETOUR_API_URSSAF);
         return dpae;
     }
     /**
@@ -82,8 +90,10 @@ public class DpaeResourceIT {
     public static Dpae createUpdatedEntity(EntityManager em) {
         Dpae dpae = new Dpae()
             .lieu(UPDATED_LIEU)
-            .date(UPDATED_DATE);
-            //.lienDocument(UPDATED_LIEN_DOCUMENT);
+            .date(UPDATED_DATE)
+            .heureEmbauche(UPDATED_HEURE_EMBAUCHE)
+            .commentaire(UPDATED_COMMENTAIRE)
+            .retourApiUrssaf(UPDATED_RETOUR_API_URSSAF);
         return dpae;
     }
 
@@ -109,7 +119,9 @@ public class DpaeResourceIT {
         Dpae testDpae = dpaeList.get(dpaeList.size() - 1);
         assertThat(testDpae.getLieu()).isEqualTo(DEFAULT_LIEU);
         assertThat(testDpae.getDate()).isEqualTo(DEFAULT_DATE);
-
+        assertThat(testDpae.getHeureEmbauche()).isEqualTo(DEFAULT_HEURE_EMBAUCHE);
+        assertThat(testDpae.getCommentaire()).isEqualTo(DEFAULT_COMMENTAIRE);
+        assertThat(testDpae.getRetourApiUrssaf()).isEqualTo(DEFAULT_RETOUR_API_URSSAF);
     }
 
     @Test
@@ -175,25 +187,6 @@ public class DpaeResourceIT {
 
     @Test
     @Transactional
-    public void checkLienDocumentIsRequired() throws Exception {
-        int databaseSizeBeforeTest = dpaeRepository.findAll().size();
-        // set the field null
-
-        // Create the Dpae, which fails.
-        DpaeDTO dpaeDTO = dpaeMapper.toDto(dpae);
-
-
-        restDpaeMockMvc.perform(post("/api/dpaes")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(dpaeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Dpae> dpaeList = dpaeRepository.findAll();
-        assertThat(dpaeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllDpaes() throws Exception {
         // Initialize the database
         dpaeRepository.saveAndFlush(dpae);
@@ -205,9 +198,11 @@ public class DpaeResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(dpae.getId().intValue())))
             .andExpect(jsonPath("$.[*].lieu").value(hasItem(DEFAULT_LIEU)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].lienDocument").value(hasItem(DEFAULT_LIEN_DOCUMENT)));
+            .andExpect(jsonPath("$.[*].heureEmbauche").value(hasItem(DEFAULT_HEURE_EMBAUCHE)))
+            .andExpect(jsonPath("$.[*].commentaire").value(hasItem(DEFAULT_COMMENTAIRE)))
+            .andExpect(jsonPath("$.[*].retourApiUrssaf").value(hasItem(DEFAULT_RETOUR_API_URSSAF)));
     }
-
+    
     @Test
     @Transactional
     public void getDpae() throws Exception {
@@ -221,7 +216,9 @@ public class DpaeResourceIT {
             .andExpect(jsonPath("$.id").value(dpae.getId().intValue()))
             .andExpect(jsonPath("$.lieu").value(DEFAULT_LIEU))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.lienDocument").value(DEFAULT_LIEN_DOCUMENT));
+            .andExpect(jsonPath("$.heureEmbauche").value(DEFAULT_HEURE_EMBAUCHE))
+            .andExpect(jsonPath("$.commentaire").value(DEFAULT_COMMENTAIRE))
+            .andExpect(jsonPath("$.retourApiUrssaf").value(DEFAULT_RETOUR_API_URSSAF));
     }
     @Test
     @Transactional
@@ -245,7 +242,10 @@ public class DpaeResourceIT {
         em.detach(updatedDpae);
         updatedDpae
             .lieu(UPDATED_LIEU)
-            .date(UPDATED_DATE);
+            .date(UPDATED_DATE)
+            .heureEmbauche(UPDATED_HEURE_EMBAUCHE)
+            .commentaire(UPDATED_COMMENTAIRE)
+            .retourApiUrssaf(UPDATED_RETOUR_API_URSSAF);
         DpaeDTO dpaeDTO = dpaeMapper.toDto(updatedDpae);
 
         restDpaeMockMvc.perform(put("/api/dpaes")
@@ -259,6 +259,9 @@ public class DpaeResourceIT {
         Dpae testDpae = dpaeList.get(dpaeList.size() - 1);
         assertThat(testDpae.getLieu()).isEqualTo(UPDATED_LIEU);
         assertThat(testDpae.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testDpae.getHeureEmbauche()).isEqualTo(UPDATED_HEURE_EMBAUCHE);
+        assertThat(testDpae.getCommentaire()).isEqualTo(UPDATED_COMMENTAIRE);
+        assertThat(testDpae.getRetourApiUrssaf()).isEqualTo(UPDATED_RETOUR_API_URSSAF);
     }
 
     @Test

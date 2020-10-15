@@ -55,7 +55,6 @@ public class WrapperDocument {
         // Document
         this.id = documentDTO.getId();
         this.cheminFichier = documentDTO.getCheminFichier();
-        this.type = documentDTO.getType();
         this.nom = documentDTO.getNom();
         this.typeDocumentId = documentDTO.getTypeDocumentId();
         this.factureId = documentDTO.getFactureId();
