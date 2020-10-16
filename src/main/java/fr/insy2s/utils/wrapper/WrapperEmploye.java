@@ -22,22 +22,22 @@ public class WrapperEmploye {
     private LocalDate dateNaissance;
     private String villeNaissance;
     private String departementNaissance;
-    private String paysNaisance;
+    private String paysNaissance;
     private String numeroSecuriteSociale;
     private String email;
-    private String telephoneFix;
+    private String telephoneFixe;
     private String telephonePortable;
     private String fax;
     private BigDecimal salaireHoraire;
-    private BigDecimal salaireBrutMensuelle;
-    private BigDecimal heuresMensuelle;
+    private BigDecimal salaireBrutMensuel;
+    private BigDecimal nbHeureMensuelle;
     private String categorie;
     private String poste;
     private LocalDate dateEmbauche;
     private LocalDate dateSortie;
     private String situationFamiliale;
-    private Integer enfantsACharge;
-    private Double periodeEssai;
+    private Integer nbEnfantACharge;
+    private Integer periodeEssai;
 
     //adresse
     private Long adresseId;
@@ -103,21 +103,21 @@ public class WrapperEmploye {
         this.dateNaissance = employeDTO.getDateNaissance();
         this.villeNaissance = employeDTO.getVilleNaissance();
         this.departementNaissance = employeDTO.getDepartementNaissance();
-        this.paysNaisance = employeDTO.getPaysNaisance();
+        this.paysNaissance = employeDTO.getPaysNaissance();
         this.numeroSecuriteSociale = employeDTO.getNumeroSecuriteSociale();
         this.email = employeDTO.getEmail();
-        this.telephoneFix = employeDTO.getTelephoneFix();
+        this.telephoneFixe = employeDTO.getTelephoneFixe();
         this.telephonePortable = employeDTO.getTelephonePortable();
         this.fax = employeDTO.getFax();
         this.salaireHoraire = employeDTO.getSalaireHoraire();
-        this.salaireBrutMensuelle = employeDTO.getSalaireBrutMensuelle();
-        this.heuresMensuelle = employeDTO.getHeuresMensuelle();
+        this.salaireBrutMensuel = employeDTO.getSalaireBrutMensuel();
+        this.nbHeureMensuelle = employeDTO.getNbHeureMensuelle();
         this.categorie = employeDTO.getCategorie();
         this.poste = employeDTO.getPoste();
         this.dateEmbauche = employeDTO.getDateEmbauche();
         this.dateSortie = employeDTO.getDateSortie();
         this.situationFamiliale = employeDTO.getSituationFamiliale();
-        this.enfantsACharge = employeDTO.getEnfantsACharge();
+        this.nbEnfantACharge = employeDTO.getNbEnfantACharge();
         this.periodeEssai = employeDTO.getPeriodeEssai();
         //adresse
         this.adresseId = employeDTO.getAdresseId();
@@ -221,12 +221,12 @@ public class WrapperEmploye {
         this.departementNaissance = departementNaissance;
     }
 
-    public String getPaysNaisance() {
-        return paysNaisance;
+    public String getPaysNaissance() {
+        return paysNaissance;
     }
 
-    public void setPaysNaisance(String paysNaisance) {
-        this.paysNaisance = paysNaisance;
+    public void setPaysNaissance(String paysNaissance) {
+        this.paysNaissance = paysNaissance;
     }
 
     public String getNumeroSecuriteSociale() {
@@ -245,12 +245,12 @@ public class WrapperEmploye {
         this.email = email;
     }
 
-    public String getTelephoneFix() {
-        return telephoneFix;
+    public String getTelephoneFixe() {
+        return telephoneFixe;
     }
 
-    public void setTelephoneFix(String telephoneFix) {
-        this.telephoneFix = telephoneFix;
+    public void setTelephoneFixe(String telephoneFixe) {
+        this.telephoneFixe = telephoneFixe;
     }
 
     public String getTelephonePortable() {
@@ -277,20 +277,20 @@ public class WrapperEmploye {
         this.salaireHoraire = salaireHoraire;
     }
 
-    public BigDecimal getSalaireBrutMensuelle() {
-        return salaireBrutMensuelle;
+    public BigDecimal getSalaireBrutMensuel() {
+        return salaireBrutMensuel;
     }
 
-    public void setSalaireBrutMensuelle(BigDecimal salaireBrutMensuelle) {
-        this.salaireBrutMensuelle = salaireBrutMensuelle;
+    public void setSalaireBrutMensuel(BigDecimal salaireBrutMensuel) {
+        this.salaireBrutMensuel = salaireBrutMensuel;
     }
 
-    public BigDecimal getHeuresMensuelle() {
-        return heuresMensuelle;
+    public BigDecimal getNbHeureMensuelle() {
+        return nbHeureMensuelle;
     }
 
-    public void setHeuresMensuelle(BigDecimal heuresMensuelle) {
-        this.heuresMensuelle = heuresMensuelle;
+    public void setNbHeureMensuelle(BigDecimal nbHeureMensuelle) {
+        this.nbHeureMensuelle = nbHeureMensuelle;
     }
 
     public String getCategorie() {
@@ -333,19 +333,19 @@ public class WrapperEmploye {
         this.situationFamiliale = situationFamiliale;
     }
 
-    public Integer getEnfantsACharge() {
-        return enfantsACharge;
+    public Integer getNbEnfantACharge() {
+        return nbEnfantACharge;
     }
 
-    public void setEnfantsACharge(Integer enfantsACharge) {
-        this.enfantsACharge = enfantsACharge;
+    public void setNbEnfantACharge(Integer nbEnfantACharge) {
+        this.nbEnfantACharge = nbEnfantACharge;
     }
 
-    public Double getPeriodeEssai() {
+    public Integer getPeriodeEssai() {
         return periodeEssai;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
+    public void setPeriodeEssai(Integer periodeEssai) {
         this.periodeEssai = periodeEssai;
     }
 

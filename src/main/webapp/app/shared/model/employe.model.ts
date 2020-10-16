@@ -7,7 +7,6 @@ import { INoteDeFrais } from 'app/shared/model/note-de-frais.model';
 import { IAvanceRappelSalaire } from 'app/shared/model/avance-rappel-salaire.model';
 import { IAutresVariable } from 'app/shared/model/autres-variable.model';
 import { IDocument } from 'app/shared/model/document.model';
-import { IDpae } from 'app/shared/model/dpae.model';
 
 export interface IEmploye {
   id?: number;
@@ -19,22 +18,22 @@ export interface IEmploye {
   dateNaissance?: string;
   villeNaissance?: string;
   departementNaissance?: string;
-  paysNaisance?: string;
+  paysNaissance?: string;
   numeroSecuriteSociale?: string;
   email?: string;
-  telephoneFix?: string;
+  telephoneFixe?: string;
   telephonePortable?: string;
   fax?: string;
   salaireHoraire?: number;
-  salaireBrutMensuelle?: number;
-  heuresMensuelle?: number;
+  salaireBrutMensuel?: number;
+  nbHeureMensuelle?: number;
   categorie?: string;
   poste?: string;
   dateEmbauche?: string;
   dateSortie?: string;
   periodeEssai?: number;
   situationFamiliale?: string;
-  enfantsACharge?: number;
+  nbEnfantACharge?: number;
   listeContrats?: IContrat[];
   listeAbsences?: IAbsence[];
   listePrimes?: IPrime[];
@@ -44,7 +43,6 @@ export interface IEmploye {
   listeAvanceRappelSalaires?: IAvanceRappelSalaire[];
   listeAutresVariables?: IAutresVariable[];
   listeDocuments?: IDocument[];
-  listeDpaes?: IDpae[];
   statutEmployeId?: number;
   adresseId?: number;
   societeId?: number;

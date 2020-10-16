@@ -138,4 +138,24 @@ public class DevisResource {
         log.debug("REST request to get Quote : {}", id);
         return devisService.findQuote(id);
     }
+
+    /**
+     * {@code POST  /devis/nouveau} : Create a new quote.
+     *
+     * @param quote the wrapperQuote to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new wrapperQuote, or with status {@code 400 (Bad Request)} if the wrapperQuote has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/devis/nouveau")
+    public ResponseEntity<DevisDTO> createQuote(@RequestBody WrapperQuote quote) throws URISyntaxException {
+        log.debug("REST request to save Quote : {}", quote);
+        if (quote.getId() != null) {
+            throw new BadRequestAlertException("A new quote cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        DevisDTO result = devisService.saveQuote(quote);
+        return ResponseEntity.created(new URI("/api/devis/nouveau" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
 }

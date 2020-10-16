@@ -4,6 +4,7 @@ import fr.insy2s.domain.Contrat;
 import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -48,4 +49,13 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
     @Query("from Contrat c where c.employe.id=:idEmployee and c.archive=false")
     Contrat getActiveContratEmployee(@Param("idEmployee")Long id);
 
+    @Modifying
+    @Query("Update Contrat c set c.signe =:signe where c.id=:id")
+    Integer signeContract(@Param("id") Long id, @Param("signe") Boolean state);
+
+    @Modifying
+    @Query("update Contrat c " +
+            "set c.archive =:boolean " +
+            "where c.id =:idContrat")
+    Integer archiveContrat(@Param("idContrat") Long idContrat, @Param("boolean") Boolean archive);
 }

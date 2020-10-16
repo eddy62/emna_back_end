@@ -1,16 +1,13 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
+import fr.insy2s.domain.Adresse;
 import fr.insy2s.domain.Employe;
 import fr.insy2s.domain.StatutEmploye;
-import fr.insy2s.domain.Adresse;
-import fr.insy2s.domain.TypeContrat;
 import fr.insy2s.repository.EmployeRepository;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.mapper.EmployeMapper;
-
-import liquibase.pro.packaged.B;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -63,8 +61,8 @@ public class EmployeResourceIT {
     private static final String DEFAULT_DEPARTEMENT_NAISSANCE = "AAAAAAAAAA";
     private static final String UPDATED_DEPARTEMENT_NAISSANCE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PAYS_NAISANCE = "AAAAAAAAAA";
-    private static final String UPDATED_PAYS_NAISANCE = "BBBBBBBBBB";
+    private static final String DEFAULT_PAYS_NAISSANCE = "AAAAAAAAAA";
+    private static final String UPDATED_PAYS_NAISSANCE = "BBBBBBBBBB";
 
     private static final String DEFAULT_NUMERO_SECURITE_SOCIALE = "AAAAAAAAAA";
     private static final String UPDATED_NUMERO_SECURITE_SOCIALE = "BBBBBBBBBB";
@@ -72,8 +70,8 @@ public class EmployeResourceIT {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TELEPHONE_FIX = "AAAAAAAAAA";
-    private static final String UPDATED_TELEPHONE_FIX = "BBBBBBBBBB";
+    private static final String DEFAULT_TELEPHONE_FIXE = "AAAAAAAAAA";
+    private static final String UPDATED_TELEPHONE_FIXE = "BBBBBBBBBB";
 
     private static final String DEFAULT_TELEPHONE_PORTABLE = "AAAAAAAAAA";
     private static final String UPDATED_TELEPHONE_PORTABLE = "BBBBBBBBBB";
@@ -81,14 +79,14 @@ public class EmployeResourceIT {
     private static final String DEFAULT_FAX = "AAAAAAAAAA";
     private static final String UPDATED_FAX = "BBBBBBBBBB";
 
-    private static final BigDecimal DEFAULT_SALAIRE_HORAIRE = BigDecimal.valueOf(1D);
-    private static final BigDecimal UPDATED_SALAIRE_HORAIRE = BigDecimal.valueOf(2D);
+    private static final BigDecimal DEFAULT_SALAIRE_HORAIRE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_SALAIRE_HORAIRE = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_SALAIRE_BRUT_MENSUELLE = BigDecimal.valueOf(1D);
-    private static final BigDecimal UPDATED_SALAIRE_BRUT_MENSUELLE = BigDecimal.valueOf(2D);
+    private static final BigDecimal DEFAULT_SALAIRE_BRUT_MENSUEL = new BigDecimal(1);
+    private static final BigDecimal UPDATED_SALAIRE_BRUT_MENSUEL = new BigDecimal(2);
 
-    private static final BigDecimal DEFAULT_HEURES_MENSUELLE = BigDecimal.valueOf(1D);
-    private static final BigDecimal UPDATED_HEURES_MENSUELLE = BigDecimal.valueOf(2D);
+    private static final BigDecimal DEFAULT_NB_HEURE_MENSUELLE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_NB_HEURE_MENSUELLE = new BigDecimal(2);
 
     private static final String DEFAULT_CATEGORIE = "AAAAAAAAAA";
     private static final String UPDATED_CATEGORIE = "BBBBBBBBBB";
@@ -102,14 +100,14 @@ public class EmployeResourceIT {
     private static final LocalDate DEFAULT_DATE_SORTIE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_SORTIE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Double DEFAULT_PERIODE_ESSAI = 1D;
-    private static final Double UPDATED_PERIODE_ESSAI = 2D;
+    private static final Integer DEFAULT_PERIODE_ESSAI = 1;
+    private static final Integer UPDATED_PERIODE_ESSAI = 2;
 
     private static final String DEFAULT_SITUATION_FAMILIALE = "AAAAAAAAAA";
     private static final String UPDATED_SITUATION_FAMILIALE = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_ENFANTS_A_CHARGE = 1;
-    private static final Integer UPDATED_ENFANTS_A_CHARGE = 2;
+    private static final Integer DEFAULT_NB_ENFANT_A_CHARGE = 1;
+    private static final Integer UPDATED_NB_ENFANT_A_CHARGE = 2;
 
     @Autowired
     private EmployeRepository employeRepository;
@@ -144,22 +142,22 @@ public class EmployeResourceIT {
             .dateNaissance(DEFAULT_DATE_NAISSANCE)
             .villeNaissance(DEFAULT_VILLE_NAISSANCE)
             .departementNaissance(DEFAULT_DEPARTEMENT_NAISSANCE)
-            .paysNaisance(DEFAULT_PAYS_NAISANCE)
+            .paysNaissance(DEFAULT_PAYS_NAISSANCE)
             .numeroSecuriteSociale(DEFAULT_NUMERO_SECURITE_SOCIALE)
             .email(DEFAULT_EMAIL)
-            .telephoneFix(DEFAULT_TELEPHONE_FIX)
+            .telephoneFixe(DEFAULT_TELEPHONE_FIXE)
             .telephonePortable(DEFAULT_TELEPHONE_PORTABLE)
             .fax(DEFAULT_FAX)
             .salaireHoraire(DEFAULT_SALAIRE_HORAIRE)
-            .salaireBrutMensuelle(DEFAULT_SALAIRE_BRUT_MENSUELLE)
-            .heuresMensuelle(DEFAULT_HEURES_MENSUELLE)
+            .salaireBrutMensuel(DEFAULT_SALAIRE_BRUT_MENSUEL)
+            .nbHeureMensuelle(DEFAULT_NB_HEURE_MENSUELLE)
             .categorie(DEFAULT_CATEGORIE)
             .poste(DEFAULT_POSTE)
             .dateEmbauche(DEFAULT_DATE_EMBAUCHE)
             .dateSortie(DEFAULT_DATE_SORTIE)
             .periodeEssai(DEFAULT_PERIODE_ESSAI)
             .situationFamiliale(DEFAULT_SITUATION_FAMILIALE)
-            .enfantsACharge(DEFAULT_ENFANTS_A_CHARGE);
+            .nbEnfantACharge(DEFAULT_NB_ENFANT_A_CHARGE);
         // Add required entity
         StatutEmploye statutEmploye;
         if (TestUtil.findAll(em, StatutEmploye.class).isEmpty()) {
@@ -180,16 +178,6 @@ public class EmployeResourceIT {
             adresse = TestUtil.findAll(em, Adresse.class).get(0);
         }
         employe.setAdresse(adresse);
-        // Add required entity
-        TypeContrat typeContrat;
-        if (TestUtil.findAll(em, TypeContrat.class).isEmpty()) {
-            typeContrat = TypeContratResourceIT.createEntity(em);
-            em.persist(typeContrat);
-            em.flush();
-        } else {
-            typeContrat = TestUtil.findAll(em, TypeContrat.class).get(0);
-        }
-        //employe.setTypeContrat(typeContrat);
         return employe;
     }
     /**
@@ -208,22 +196,22 @@ public class EmployeResourceIT {
             .dateNaissance(UPDATED_DATE_NAISSANCE)
             .villeNaissance(UPDATED_VILLE_NAISSANCE)
             .departementNaissance(UPDATED_DEPARTEMENT_NAISSANCE)
-            .paysNaisance(UPDATED_PAYS_NAISANCE)
+            .paysNaissance(UPDATED_PAYS_NAISSANCE)
             .numeroSecuriteSociale(UPDATED_NUMERO_SECURITE_SOCIALE)
             .email(UPDATED_EMAIL)
-            .telephoneFix(UPDATED_TELEPHONE_FIX)
+            .telephoneFixe(UPDATED_TELEPHONE_FIXE)
             .telephonePortable(UPDATED_TELEPHONE_PORTABLE)
             .fax(UPDATED_FAX)
             .salaireHoraire(UPDATED_SALAIRE_HORAIRE)
-            .salaireBrutMensuelle(UPDATED_SALAIRE_BRUT_MENSUELLE)
-            .heuresMensuelle(UPDATED_HEURES_MENSUELLE)
+            .salaireBrutMensuel(UPDATED_SALAIRE_BRUT_MENSUEL)
+            .nbHeureMensuelle(UPDATED_NB_HEURE_MENSUELLE)
             .categorie(UPDATED_CATEGORIE)
             .poste(UPDATED_POSTE)
             .dateEmbauche(UPDATED_DATE_EMBAUCHE)
             .dateSortie(UPDATED_DATE_SORTIE)
             .periodeEssai(UPDATED_PERIODE_ESSAI)
             .situationFamiliale(UPDATED_SITUATION_FAMILIALE)
-            .enfantsACharge(UPDATED_ENFANTS_A_CHARGE);
+            .nbEnfantACharge(UPDATED_NB_ENFANT_A_CHARGE);
         // Add required entity
         StatutEmploye statutEmploye;
         if (TestUtil.findAll(em, StatutEmploye.class).isEmpty()) {
@@ -244,16 +232,6 @@ public class EmployeResourceIT {
             adresse = TestUtil.findAll(em, Adresse.class).get(0);
         }
         employe.setAdresse(adresse);
-        // Add required entity
-        TypeContrat typeContrat;
-        if (TestUtil.findAll(em, TypeContrat.class).isEmpty()) {
-            typeContrat = TypeContratResourceIT.createUpdatedEntity(em);
-            em.persist(typeContrat);
-            em.flush();
-        } else {
-            typeContrat = TestUtil.findAll(em, TypeContrat.class).get(0);
-        }
-        //employe.setTypeContrat(typeContrat);
         return employe;
     }
 
@@ -285,22 +263,22 @@ public class EmployeResourceIT {
         assertThat(testEmploye.getDateNaissance()).isEqualTo(DEFAULT_DATE_NAISSANCE);
         assertThat(testEmploye.getVilleNaissance()).isEqualTo(DEFAULT_VILLE_NAISSANCE);
         assertThat(testEmploye.getDepartementNaissance()).isEqualTo(DEFAULT_DEPARTEMENT_NAISSANCE);
-        assertThat(testEmploye.getPaysNaisance()).isEqualTo(DEFAULT_PAYS_NAISANCE);
+        assertThat(testEmploye.getPaysNaissance()).isEqualTo(DEFAULT_PAYS_NAISSANCE);
         assertThat(testEmploye.getNumeroSecuriteSociale()).isEqualTo(DEFAULT_NUMERO_SECURITE_SOCIALE);
         assertThat(testEmploye.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testEmploye.getTelephoneFix()).isEqualTo(DEFAULT_TELEPHONE_FIX);
+        assertThat(testEmploye.getTelephoneFixe()).isEqualTo(DEFAULT_TELEPHONE_FIXE);
         assertThat(testEmploye.getTelephonePortable()).isEqualTo(DEFAULT_TELEPHONE_PORTABLE);
         assertThat(testEmploye.getFax()).isEqualTo(DEFAULT_FAX);
         assertThat(testEmploye.getSalaireHoraire()).isEqualTo(DEFAULT_SALAIRE_HORAIRE);
-        assertThat(testEmploye.getSalaireBrutMensuelle()).isEqualTo(DEFAULT_SALAIRE_BRUT_MENSUELLE);
-        assertThat(testEmploye.getHeuresMensuelle()).isEqualTo(DEFAULT_HEURES_MENSUELLE);
+        assertThat(testEmploye.getSalaireBrutMensuel()).isEqualTo(DEFAULT_SALAIRE_BRUT_MENSUEL);
+        assertThat(testEmploye.getNbHeureMensuelle()).isEqualTo(DEFAULT_NB_HEURE_MENSUELLE);
         assertThat(testEmploye.getCategorie()).isEqualTo(DEFAULT_CATEGORIE);
         assertThat(testEmploye.getPoste()).isEqualTo(DEFAULT_POSTE);
         assertThat(testEmploye.getDateEmbauche()).isEqualTo(DEFAULT_DATE_EMBAUCHE);
         assertThat(testEmploye.getDateSortie()).isEqualTo(DEFAULT_DATE_SORTIE);
         assertThat(testEmploye.getPeriodeEssai()).isEqualTo(DEFAULT_PERIODE_ESSAI);
         assertThat(testEmploye.getSituationFamiliale()).isEqualTo(DEFAULT_SITUATION_FAMILIALE);
-        assertThat(testEmploye.getEnfantsACharge()).isEqualTo(DEFAULT_ENFANTS_A_CHARGE);
+        assertThat(testEmploye.getNbEnfantACharge()).isEqualTo(DEFAULT_NB_ENFANT_A_CHARGE);
     }
 
     @Test
@@ -366,10 +344,10 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkNomUsageIsRequired() throws Exception {
+    public void checkNomNaissanceIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeRepository.findAll().size();
         // set the field null
-        employe.setNomUsage(null);
+        employe.setNomNaissance(null);
 
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
@@ -446,10 +424,30 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkPaysNaisanceIsRequired() throws Exception {
+    public void checkDepartementNaissanceIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeRepository.findAll().size();
         // set the field null
-        employe.setPaysNaisance(null);
+        employe.setDepartementNaissance(null);
+
+        // Create the Employe, which fails.
+        EmployeDTO employeDTO = employeMapper.toDto(employe);
+
+
+        restEmployeMockMvc.perform(post("/api/employes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employe> employeList = employeRepository.findAll();
+        assertThat(employeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPaysNaissanceIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeRepository.findAll().size();
+        // set the field null
+        employe.setPaysNaissance(null);
 
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
@@ -486,50 +484,10 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkEmailIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeRepository.findAll().size();
-        // set the field null
-        employe.setEmail(null);
-
-        // Create the Employe, which fails.
-        EmployeDTO employeDTO = employeMapper.toDto(employe);
-
-
-        restEmployeMockMvc.perform(post("/api/employes")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employe> employeList = employeRepository.findAll();
-        assertThat(employeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkTelephonePortableIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeRepository.findAll().size();
         // set the field null
         employe.setTelephonePortable(null);
-
-        // Create the Employe, which fails.
-        EmployeDTO employeDTO = employeMapper.toDto(employe);
-
-
-        restEmployeMockMvc.perform(post("/api/employes")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employe> employeList = employeRepository.findAll();
-        assertThat(employeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkFaxIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeRepository.findAll().size();
-        // set the field null
-        employe.setFax(null);
 
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
@@ -566,10 +524,10 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkSalaireBrutMensuelleIsRequired() throws Exception {
+    public void checkSalaireBrutMensuelIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeRepository.findAll().size();
         // set the field null
-        employe.setSalaireBrutMensuelle(null);
+        employe.setSalaireBrutMensuel(null);
 
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
@@ -586,10 +544,10 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkHeuresMensuelleIsRequired() throws Exception {
+    public void checkNbHeureMensuelleIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeRepository.findAll().size();
         // set the field null
-        employe.setHeuresMensuelle(null);
+        employe.setNbHeureMensuelle(null);
 
         // Create the Employe, which fails.
         EmployeDTO employeDTO = employeMapper.toDto(employe);
@@ -666,26 +624,6 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkDateSortieIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeRepository.findAll().size();
-        // set the field null
-        employe.setDateSortie(null);
-
-        // Create the Employe, which fails.
-        EmployeDTO employeDTO = employeMapper.toDto(employe);
-
-
-        restEmployeMockMvc.perform(post("/api/employes")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employe> employeList = employeRepository.findAll();
-        assertThat(employeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkPeriodeEssaiIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeRepository.findAll().size();
         // set the field null
@@ -726,26 +664,6 @@ public class EmployeResourceIT {
 
     @Test
     @Transactional
-    public void checkEnfantsAChargeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeRepository.findAll().size();
-        // set the field null
-        employe.setEnfantsACharge(null);
-
-        // Create the Employe, which fails.
-        EmployeDTO employeDTO = employeMapper.toDto(employe);
-
-
-        restEmployeMockMvc.perform(post("/api/employes")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employe> employeList = employeRepository.findAll();
-        assertThat(employeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllEmployes() throws Exception {
         // Initialize the database
         employeRepository.saveAndFlush(employe);
@@ -763,22 +681,22 @@ public class EmployeResourceIT {
             .andExpect(jsonPath("$.[*].dateNaissance").value(hasItem(DEFAULT_DATE_NAISSANCE.toString())))
             .andExpect(jsonPath("$.[*].villeNaissance").value(hasItem(DEFAULT_VILLE_NAISSANCE)))
             .andExpect(jsonPath("$.[*].departementNaissance").value(hasItem(DEFAULT_DEPARTEMENT_NAISSANCE)))
-            .andExpect(jsonPath("$.[*].paysNaisance").value(hasItem(DEFAULT_PAYS_NAISANCE)))
+            .andExpect(jsonPath("$.[*].paysNaissance").value(hasItem(DEFAULT_PAYS_NAISSANCE)))
             .andExpect(jsonPath("$.[*].numeroSecuriteSociale").value(hasItem(DEFAULT_NUMERO_SECURITE_SOCIALE)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].telephoneFix").value(hasItem(DEFAULT_TELEPHONE_FIX)))
+            .andExpect(jsonPath("$.[*].telephoneFixe").value(hasItem(DEFAULT_TELEPHONE_FIXE)))
             .andExpect(jsonPath("$.[*].telephonePortable").value(hasItem(DEFAULT_TELEPHONE_PORTABLE)))
             .andExpect(jsonPath("$.[*].fax").value(hasItem(DEFAULT_FAX)))
-            .andExpect(jsonPath("$.[*].salaireHoraire").value(hasItem(DEFAULT_SALAIRE_HORAIRE.doubleValue())))
-            .andExpect(jsonPath("$.[*].salaireBrutMensuelle").value(hasItem(DEFAULT_SALAIRE_BRUT_MENSUELLE.doubleValue())))
-            .andExpect(jsonPath("$.[*].heuresMensuelle").value(hasItem(DEFAULT_HEURES_MENSUELLE.doubleValue())))
+            .andExpect(jsonPath("$.[*].salaireHoraire").value(hasItem(DEFAULT_SALAIRE_HORAIRE.intValue())))
+            .andExpect(jsonPath("$.[*].salaireBrutMensuel").value(hasItem(DEFAULT_SALAIRE_BRUT_MENSUEL.intValue())))
+            .andExpect(jsonPath("$.[*].nbHeureMensuelle").value(hasItem(DEFAULT_NB_HEURE_MENSUELLE.intValue())))
             .andExpect(jsonPath("$.[*].categorie").value(hasItem(DEFAULT_CATEGORIE)))
             .andExpect(jsonPath("$.[*].poste").value(hasItem(DEFAULT_POSTE)))
             .andExpect(jsonPath("$.[*].dateEmbauche").value(hasItem(DEFAULT_DATE_EMBAUCHE.toString())))
             .andExpect(jsonPath("$.[*].dateSortie").value(hasItem(DEFAULT_DATE_SORTIE.toString())))
-            .andExpect(jsonPath("$.[*].periodeEssai").value(hasItem(DEFAULT_PERIODE_ESSAI.doubleValue())))
+            .andExpect(jsonPath("$.[*].periodeEssai").value(hasItem(DEFAULT_PERIODE_ESSAI)))
             .andExpect(jsonPath("$.[*].situationFamiliale").value(hasItem(DEFAULT_SITUATION_FAMILIALE)))
-            .andExpect(jsonPath("$.[*].enfantsACharge").value(hasItem(DEFAULT_ENFANTS_A_CHARGE)));
+            .andExpect(jsonPath("$.[*].nbEnfantACharge").value(hasItem(DEFAULT_NB_ENFANT_A_CHARGE)));
     }
 
     @Test
@@ -800,22 +718,22 @@ public class EmployeResourceIT {
             .andExpect(jsonPath("$.dateNaissance").value(DEFAULT_DATE_NAISSANCE.toString()))
             .andExpect(jsonPath("$.villeNaissance").value(DEFAULT_VILLE_NAISSANCE))
             .andExpect(jsonPath("$.departementNaissance").value(DEFAULT_DEPARTEMENT_NAISSANCE))
-            .andExpect(jsonPath("$.paysNaisance").value(DEFAULT_PAYS_NAISANCE))
+            .andExpect(jsonPath("$.paysNaissance").value(DEFAULT_PAYS_NAISSANCE))
             .andExpect(jsonPath("$.numeroSecuriteSociale").value(DEFAULT_NUMERO_SECURITE_SOCIALE))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.telephoneFix").value(DEFAULT_TELEPHONE_FIX))
+            .andExpect(jsonPath("$.telephoneFixe").value(DEFAULT_TELEPHONE_FIXE))
             .andExpect(jsonPath("$.telephonePortable").value(DEFAULT_TELEPHONE_PORTABLE))
             .andExpect(jsonPath("$.fax").value(DEFAULT_FAX))
-            .andExpect(jsonPath("$.salaireHoraire").value(DEFAULT_SALAIRE_HORAIRE.doubleValue()))
-            .andExpect(jsonPath("$.salaireBrutMensuelle").value(DEFAULT_SALAIRE_BRUT_MENSUELLE.doubleValue()))
-            .andExpect(jsonPath("$.heuresMensuelle").value(DEFAULT_HEURES_MENSUELLE.doubleValue()))
+            .andExpect(jsonPath("$.salaireHoraire").value(DEFAULT_SALAIRE_HORAIRE.intValue()))
+            .andExpect(jsonPath("$.salaireBrutMensuel").value(DEFAULT_SALAIRE_BRUT_MENSUEL.intValue()))
+            .andExpect(jsonPath("$.nbHeureMensuelle").value(DEFAULT_NB_HEURE_MENSUELLE.intValue()))
             .andExpect(jsonPath("$.categorie").value(DEFAULT_CATEGORIE))
             .andExpect(jsonPath("$.poste").value(DEFAULT_POSTE))
             .andExpect(jsonPath("$.dateEmbauche").value(DEFAULT_DATE_EMBAUCHE.toString()))
             .andExpect(jsonPath("$.dateSortie").value(DEFAULT_DATE_SORTIE.toString()))
-            .andExpect(jsonPath("$.periodeEssai").value(DEFAULT_PERIODE_ESSAI.doubleValue()))
+            .andExpect(jsonPath("$.periodeEssai").value(DEFAULT_PERIODE_ESSAI))
             .andExpect(jsonPath("$.situationFamiliale").value(DEFAULT_SITUATION_FAMILIALE))
-            .andExpect(jsonPath("$.enfantsACharge").value(DEFAULT_ENFANTS_A_CHARGE));
+            .andExpect(jsonPath("$.nbEnfantACharge").value(DEFAULT_NB_ENFANT_A_CHARGE));
     }
     @Test
     @Transactional
@@ -846,22 +764,22 @@ public class EmployeResourceIT {
             .dateNaissance(UPDATED_DATE_NAISSANCE)
             .villeNaissance(UPDATED_VILLE_NAISSANCE)
             .departementNaissance(UPDATED_DEPARTEMENT_NAISSANCE)
-            .paysNaisance(UPDATED_PAYS_NAISANCE)
+            .paysNaissance(UPDATED_PAYS_NAISSANCE)
             .numeroSecuriteSociale(UPDATED_NUMERO_SECURITE_SOCIALE)
             .email(UPDATED_EMAIL)
-            .telephoneFix(UPDATED_TELEPHONE_FIX)
+            .telephoneFixe(UPDATED_TELEPHONE_FIXE)
             .telephonePortable(UPDATED_TELEPHONE_PORTABLE)
             .fax(UPDATED_FAX)
             .salaireHoraire(UPDATED_SALAIRE_HORAIRE)
-            .salaireBrutMensuelle(UPDATED_SALAIRE_BRUT_MENSUELLE)
-            .heuresMensuelle(UPDATED_HEURES_MENSUELLE)
+            .salaireBrutMensuel(UPDATED_SALAIRE_BRUT_MENSUEL)
+            .nbHeureMensuelle(UPDATED_NB_HEURE_MENSUELLE)
             .categorie(UPDATED_CATEGORIE)
             .poste(UPDATED_POSTE)
             .dateEmbauche(UPDATED_DATE_EMBAUCHE)
             .dateSortie(UPDATED_DATE_SORTIE)
             .periodeEssai(UPDATED_PERIODE_ESSAI)
             .situationFamiliale(UPDATED_SITUATION_FAMILIALE)
-            .enfantsACharge(UPDATED_ENFANTS_A_CHARGE);
+            .nbEnfantACharge(UPDATED_NB_ENFANT_A_CHARGE);
         EmployeDTO employeDTO = employeMapper.toDto(updatedEmploye);
 
         restEmployeMockMvc.perform(put("/api/employes")
@@ -881,22 +799,22 @@ public class EmployeResourceIT {
         assertThat(testEmploye.getDateNaissance()).isEqualTo(UPDATED_DATE_NAISSANCE);
         assertThat(testEmploye.getVilleNaissance()).isEqualTo(UPDATED_VILLE_NAISSANCE);
         assertThat(testEmploye.getDepartementNaissance()).isEqualTo(UPDATED_DEPARTEMENT_NAISSANCE);
-        assertThat(testEmploye.getPaysNaisance()).isEqualTo(UPDATED_PAYS_NAISANCE);
+        assertThat(testEmploye.getPaysNaissance()).isEqualTo(UPDATED_PAYS_NAISSANCE);
         assertThat(testEmploye.getNumeroSecuriteSociale()).isEqualTo(UPDATED_NUMERO_SECURITE_SOCIALE);
         assertThat(testEmploye.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testEmploye.getTelephoneFix()).isEqualTo(UPDATED_TELEPHONE_FIX);
+        assertThat(testEmploye.getTelephoneFixe()).isEqualTo(UPDATED_TELEPHONE_FIXE);
         assertThat(testEmploye.getTelephonePortable()).isEqualTo(UPDATED_TELEPHONE_PORTABLE);
         assertThat(testEmploye.getFax()).isEqualTo(UPDATED_FAX);
         assertThat(testEmploye.getSalaireHoraire()).isEqualTo(UPDATED_SALAIRE_HORAIRE);
-        assertThat(testEmploye.getSalaireBrutMensuelle()).isEqualTo(UPDATED_SALAIRE_BRUT_MENSUELLE);
-        assertThat(testEmploye.getHeuresMensuelle()).isEqualTo(UPDATED_HEURES_MENSUELLE);
+        assertThat(testEmploye.getSalaireBrutMensuel()).isEqualTo(UPDATED_SALAIRE_BRUT_MENSUEL);
+        assertThat(testEmploye.getNbHeureMensuelle()).isEqualTo(UPDATED_NB_HEURE_MENSUELLE);
         assertThat(testEmploye.getCategorie()).isEqualTo(UPDATED_CATEGORIE);
         assertThat(testEmploye.getPoste()).isEqualTo(UPDATED_POSTE);
         assertThat(testEmploye.getDateEmbauche()).isEqualTo(UPDATED_DATE_EMBAUCHE);
         assertThat(testEmploye.getDateSortie()).isEqualTo(UPDATED_DATE_SORTIE);
         assertThat(testEmploye.getPeriodeEssai()).isEqualTo(UPDATED_PERIODE_ESSAI);
         assertThat(testEmploye.getSituationFamiliale()).isEqualTo(UPDATED_SITUATION_FAMILIALE);
-        assertThat(testEmploye.getEnfantsACharge()).isEqualTo(UPDATED_ENFANTS_A_CHARGE);
+        assertThat(testEmploye.getNbEnfantACharge()).isEqualTo(UPDATED_NB_ENFANT_A_CHARGE);
     }
 
     @Test

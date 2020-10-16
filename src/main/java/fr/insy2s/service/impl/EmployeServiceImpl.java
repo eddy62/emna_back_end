@@ -276,12 +276,6 @@ public class EmployeServiceImpl implements EmployeService {
                     avanceRappelSalaireService.delete(avanceRappelSalaire.getId());
                 }
             }
-            //listeDpaes
-            if (!employe.getListeDpaes().isEmpty()) {
-                for (Dpae dpae : employe.getListeDpaes()) {
-                    dpaeService.delete(dpae.getId());
-                }
-            }
 
             employeRepository.deleteById(id);
             return true;

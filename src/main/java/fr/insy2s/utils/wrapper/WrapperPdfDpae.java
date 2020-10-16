@@ -1,7 +1,6 @@
 package fr.insy2s.utils.wrapper;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class WrapperPdfDpae {
 
@@ -36,7 +35,7 @@ public class WrapperPdfDpae {
     private String startContractTime; // Heure d'embauche
     private String nature; // Type de contrat
     private LocalDate endContractDate; // Fin du contrat
-    private Double trialTime; // Durée de la période d'essai
+    private Integer trialTime; // Durée de la période d'essai
     private String healthService; // Service de santé au travail
     private String comment; // Commentaire
 
@@ -206,9 +205,9 @@ public class WrapperPdfDpae {
         this.endContractDate = endContractDate;
     }
 
-    public Double getTrialTime() { return trialTime; }
+    public Integer getTrialTime() { return trialTime; }
 
-    public void setTrialTime(Double trialTime) { this.trialTime = trialTime; }
+    public void setTrialTime(Integer trialTime) { this.trialTime = trialTime; }
 
     public String getHealthService() {
         return healthService;

@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DepenseService;
 import fr.insy2s.service.dto.DepenseDTO;
 import fr.insy2s.service.dto.DepenseTemp;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,6 +63,26 @@ public class DepenseResource {
     }
 
     /**
+     * {@code POST  /wrapperdepense} : Create a new depense.
+     *
+     * @param wrapperdepense the depenseDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new depenseDTO, or with status {@code 400 (Bad Request)} if the depense has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.SOCIETY})
+    @PostMapping("/wrapperdepense")
+    public ResponseEntity<DepenseDTO> createDepense(@Valid @RequestBody WrapperDepense wrapperdepense) throws URISyntaxException {
+        log.debug("REST request to save Depense from wrapper : {}", wrapperdepense);
+        if (wrapperdepense.getId() != null) {
+            throw new BadRequestAlertException("A new depense cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        DepenseDTO result = depenseService.createFromWrapperDepense(wrapperdepense);
+        return ResponseEntity.created(new URI("/api/depenses/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
      * {@code PUT  /depenses} : Updates an existing depense.
      *
      * @param depenseDTO the depenseDTO to update.
@@ -78,6 +100,28 @@ public class DepenseResource {
         DepenseDTO result = depenseService.save(depenseDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, depenseDTO.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * {@code PUT  /depenses} : Updates an existing depense.
+     *
+     * @param wrapperDepense the depenseDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated depenseDTO,
+     * or with status {@code 400 (Bad Request)} if the depenseDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the depenseDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.SOCIETY})
+    @PutMapping("/wrapperdepenses")
+    public ResponseEntity<DepenseDTO> updateDepenseFromWrapper(@Valid @RequestBody WrapperDepense wrapperDepense) throws URISyntaxException {
+        log.debug("REST request to update Depense from wrapper: {}", wrapperDepense);
+        if (wrapperDepense.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        DepenseDTO result = depenseService.save(WrapperDepense.toDTO(wrapperDepense));
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, wrapperDepense.getId().toString()))
             .body(result);
     }
 

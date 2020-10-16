@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './dpae.reducer';
-import { IDpae } from 'app/shared/model/dpae.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntity} from './dpae.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IDpaeDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -56,9 +55,9 @@ export const DpaeDetail = (props: IDpaeDetailProps) => {
           </dt>
           <dd>{dpaeEntity.retourApiUrssaf}</dd>
           <dt>
-            <Translate contentKey="emnaBackEndApp.dpae.employe">Employe</Translate>
+            <Translate contentKey="emnaBackEndApp.dpae.contrat">Contrat</Translate>
           </dt>
-          <dd>{dpaeEntity.employeId ? dpaeEntity.employeId : ''}</dd>
+          <dd>{dpaeEntity.contratId ? dpaeEntity.contratId : ''}</dd>
         </dl>
         <Button tag={Link} to="/dpae" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

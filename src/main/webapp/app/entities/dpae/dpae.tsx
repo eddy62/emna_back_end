@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {Link, RouteComponentProps} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './dpae.reducer';
-import { IDpae } from 'app/shared/model/dpae.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {IRootState} from 'app/shared/reducers';
+import {getEntities} from './dpae.reducer';
+import {APP_LOCAL_DATE_FORMAT} from 'app/config/constants';
 
 export interface IDpaeProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -52,7 +51,7 @@ export const Dpae = (props: IDpaeProps) => {
                   <Translate contentKey="emnaBackEndApp.dpae.retourApiUrssaf">Retour Api Urssaf</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="emnaBackEndApp.dpae.employe">Employe</Translate>
+                  <Translate contentKey="emnaBackEndApp.dpae.contrat">Contrat</Translate>
                 </th>
                 <th />
               </tr>
@@ -70,7 +69,7 @@ export const Dpae = (props: IDpaeProps) => {
                   <td>{dpae.heureEmbauche}</td>
                   <td>{dpae.commentaire}</td>
                   <td>{dpae.retourApiUrssaf}</td>
-                  <td>{dpae.employeId ? <Link to={`employe/${dpae.employeId}`}>{dpae.employeId}</Link> : ''}</td>
+                  <td>{dpae.contratId ? <Link to={`contrat/${dpae.contratId}`}>{dpae.contratId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${dpae.id}`} color="info" size="sm">

@@ -121,6 +121,12 @@ public class ContratResource {
             .body(result);
     }
 
+    @PutMapping("/archiveContrat/{idContrat}")
+    public void archiveContrat(@PathVariable Long idContrat, Boolean isArchive){
+        log.debug("REST request to archive a contract");
+        contratService.archiveContrat(idContrat, isArchive);
+    }
+
     /**
      * {@code GET  /contrats} : get all the contrats.
      *
@@ -185,4 +191,6 @@ public class ContratResource {
 
         return ResponseUtil.wrapOrNotFound(result);
     }
+
+
 }

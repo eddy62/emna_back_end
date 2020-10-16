@@ -1,13 +1,8 @@
 package fr.insy2s.service.mapper;
 
 import fr.insy2s.service.dto.*;
-import fr.insy2s.utils.wrapper.WrapperContrat;
-import liquibase.pro.packaged.C;
-import org.springframework.stereotype.Service;
-
 import fr.insy2s.utils.wrapper.WrapperEmploye;
-
-import java.math.BigDecimal;
+import org.springframework.stereotype.Service;
 
 /**
  * Mapper for the entity Employe, Adresse, StatutEmploye, Societe, InfoEntreprise and the DTO WrapperEmploye.
@@ -42,21 +37,21 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setDateNaissance(employe.getDateNaissance());
         wrapperEmploye.setVilleNaissance(employe.getVilleNaissance());
         wrapperEmploye.setDepartementNaissance(employe.getDepartementNaissance());
-        wrapperEmploye.setPaysNaisance(employe.getPaysNaisance());
+        wrapperEmploye.setPaysNaissance(employe.getPaysNaissance());
         wrapperEmploye.setNumeroSecuriteSociale(employe.getNumeroSecuriteSociale());
         wrapperEmploye.setEmail(employe.getEmail());
-        wrapperEmploye.setTelephoneFix(employe.getTelephoneFix());
+        wrapperEmploye.setTelephoneFixe(employe.getTelephoneFixe());
         wrapperEmploye.setTelephonePortable(employe.getTelephonePortable());
         wrapperEmploye.setFax(employe.getFax());
         wrapperEmploye.setSalaireHoraire(employe.getSalaireHoraire());
-        wrapperEmploye.setSalaireBrutMensuelle(employe.getSalaireBrutMensuelle());
-        wrapperEmploye.setHeuresMensuelle(employe.getHeuresMensuelle());
+        wrapperEmploye.setSalaireBrutMensuel(employe.getSalaireBrutMensuel());
+        wrapperEmploye.setNbHeureMensuelle(employe.getNbHeureMensuelle());
         wrapperEmploye.setCategorie(employe.getCategorie());
         wrapperEmploye.setPoste(employe.getPoste());
         wrapperEmploye.setDateEmbauche(employe.getDateEmbauche());
         wrapperEmploye.setDateSortie(employe.getDateSortie());
         wrapperEmploye.setSituationFamiliale(employe.getSituationFamiliale());
-        wrapperEmploye.setEnfantsACharge(employe.getEnfantsACharge());
+        wrapperEmploye.setNbEnfantACharge(employe.getNbEnfantACharge());
         wrapperEmploye.setPeriodeEssai(employe.getPeriodeEssai());
 
         //adresse
@@ -120,21 +115,21 @@ public class WrapperEmployeMapper {
         wrapperEmploye.setDateNaissance(employe.getDateNaissance());
         wrapperEmploye.setVilleNaissance(employe.getVilleNaissance());
         wrapperEmploye.setDepartementNaissance(employe.getDepartementNaissance());
-        wrapperEmploye.setPaysNaisance(employe.getPaysNaisance());
+        wrapperEmploye.setPaysNaissance(employe.getPaysNaissance());
         wrapperEmploye.setNumeroSecuriteSociale(employe.getNumeroSecuriteSociale());
         wrapperEmploye.setEmail(employe.getEmail());
-        wrapperEmploye.setTelephoneFix(employe.getTelephoneFix());
+        wrapperEmploye.setTelephoneFixe(employe.getTelephoneFixe());
         wrapperEmploye.setTelephonePortable(employe.getTelephonePortable());
         wrapperEmploye.setFax(employe.getFax());
         wrapperEmploye.setSalaireHoraire(employe.getSalaireHoraire());
-        wrapperEmploye.setSalaireBrutMensuelle(employe.getSalaireBrutMensuelle());
-        wrapperEmploye.setHeuresMensuelle(employe.getHeuresMensuelle());
+        wrapperEmploye.setSalaireBrutMensuel(employe.getSalaireBrutMensuel());
+        wrapperEmploye.setNbHeureMensuelle(employe.getNbHeureMensuelle());
         wrapperEmploye.setCategorie(employe.getCategorie());
         wrapperEmploye.setPoste(employe.getPoste());
         wrapperEmploye.setDateEmbauche(employe.getDateEmbauche());
         wrapperEmploye.setDateSortie(employe.getDateSortie());
         wrapperEmploye.setSituationFamiliale(employe.getSituationFamiliale());
-        wrapperEmploye.setEnfantsACharge(employe.getEnfantsACharge());
+        wrapperEmploye.setNbEnfantACharge(employe.getNbEnfantACharge());
         wrapperEmploye.setPeriodeEssai(employe.getPeriodeEssai());
 
         //adresse
@@ -180,21 +175,21 @@ public class WrapperEmployeMapper {
         employeDTO.setDateNaissance(wrapperEmploye.getDateNaissance());
         employeDTO.setVilleNaissance(wrapperEmploye.getVilleNaissance());
         employeDTO.setDepartementNaissance(wrapperEmploye.getDepartementNaissance());
-        employeDTO.setPaysNaisance(wrapperEmploye.getPaysNaisance());
+        employeDTO.setPaysNaissance(wrapperEmploye.getPaysNaissance());
         employeDTO.setNumeroSecuriteSociale(wrapperEmploye.getNumeroSecuriteSociale());
         employeDTO.setEmail(wrapperEmploye.getEmail());
-        employeDTO.setTelephoneFix(wrapperEmploye.getTelephoneFix());
+        employeDTO.setTelephoneFixe(wrapperEmploye.getTelephoneFixe());
         employeDTO.setTelephonePortable(wrapperEmploye.getTelephonePortable());
         employeDTO.setFax(wrapperEmploye.getFax());
         employeDTO.setSalaireHoraire(wrapperEmploye.getSalaireHoraire());
-        employeDTO.setSalaireBrutMensuelle(wrapperEmploye.getSalaireBrutMensuelle());
-        employeDTO.setHeuresMensuelle(wrapperEmploye.getHeuresMensuelle());
+        employeDTO.setSalaireBrutMensuel(wrapperEmploye.getSalaireBrutMensuel());
+        employeDTO.setNbHeureMensuelle(wrapperEmploye.getNbHeureMensuelle());
         employeDTO.setCategorie(wrapperEmploye.getCategorie());
         employeDTO.setPoste(wrapperEmploye.getPoste());
         employeDTO.setDateEmbauche(wrapperEmploye.getDateEmbauche());
         employeDTO.setDateSortie(wrapperEmploye.getDateSortie());
         employeDTO.setSituationFamiliale(wrapperEmploye.getSituationFamiliale());
-        employeDTO.setEnfantsACharge(wrapperEmploye.getEnfantsACharge());
+        employeDTO.setNbEnfantACharge(wrapperEmploye.getNbEnfantACharge());
         employeDTO.setPeriodeEssai(wrapperEmploye.getPeriodeEssai());
 
         employeDTO.setAdresseId(wrapperEmploye.getAdresseId());

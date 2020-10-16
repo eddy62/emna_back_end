@@ -15,7 +15,9 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface AvenantRepository extends JpaRepository<Avenant, Long> {
-    @Query("from Avenant")
+    @Query("select distinct a from Avenant a " +
+        "join SaisieArticle sa on sa.avenant.id=a.id " +
+        "where sa.contrat.id=:idContract")
     List<Avenant> getAllAmendmentByIdContract(@Param("idContract") long idContract);
 
 

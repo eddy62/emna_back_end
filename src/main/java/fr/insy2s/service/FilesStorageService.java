@@ -24,6 +24,15 @@ public interface FilesStorageService {
     public void save(MultipartFile file, String type, String id, String fileNumber, String timestamp);
 
     /**
+     * Save a file.
+     *
+     * @param file the file to save.
+     * @param type the type of the file.
+     * @param societyName the society who wants to save .
+     */
+    Path saveFile(MultipartFile file, String type, String societyName);
+
+    /**
      * Get the "name" file.
      *
      * @param filename the name of the file.
@@ -46,5 +55,5 @@ public interface FilesStorageService {
     /**
      * Get the files root.
      */
-    public Path getRoot();
+    public Path getROOT();
 }

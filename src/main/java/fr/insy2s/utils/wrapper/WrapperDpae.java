@@ -4,7 +4,6 @@ package fr.insy2s.utils.wrapper;
 import fr.insy2s.service.dto.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class WrapperDpae {
 
@@ -17,8 +16,13 @@ public class WrapperDpae {
     private String commentaire;
     private String retourApiUrssaf;
 
+    //societe
+    private Long societeId;
+    private String civiliteSociete;
 
-    // entreprise
+
+    // infoentreprise
+    private Long infoEntrepriseId;
     private String raisonSociale; // Dénomination
     private String telephone; // n° de téléphone
     private String fax;
@@ -29,6 +33,7 @@ public class WrapperDpae {
 
 
     //adresse
+    private Long idAdresse;
     private String numeroRue;
     private String nomRue; // Adresse de l'établissement
     private String codePostal; // Code postal
@@ -37,6 +42,7 @@ public class WrapperDpae {
 
 
     // employe
+    private Long idEmploye;
     private String civilite;
     private String nomNaissance;
     private String nomUsage;
@@ -44,14 +50,23 @@ public class WrapperDpae {
     private LocalDate dateNaissance;
     private String villeNaissance;
     private String departementNaissance;
-    private String paysNaisance;
+    private String paysNaissance;
     private String numeroSecuriteSociale;
     private LocalDate dateEmbauche;
     private LocalDate dateSortie;
-    private Double periodeEssai;
+    private Integer periodeEssai;
+
+    //contrat
+    private Long idContrat;
+    private String titre;
+    private LocalDate dateCreation;
+    private Boolean signe;
+    private Boolean archive;
 
     //Type contrat
+    private Long idTypeContrat;
     private String codeRef;
+    private String intitule;
 
 
 
@@ -59,20 +74,24 @@ public class WrapperDpae {
 
     };
 
-    public WrapperDpae (DpaeDTO dpaeDTO, InfoEntrepriseDTO infoEntrepriseDTO, EmployeDTO employeDTO, AdresseDTO adresseDTO, TypeContratDTO typeContratDTO) {
+    public WrapperDpae (DpaeDTO dpaeDTO, SocieteDTO societeDTO, InfoEntrepriseDTO infoEntrepriseDTO, EmployeDTO employeDTO, AdresseDTO adresseDTO, ContratDTO contratDTO, TypeContratDTO typeContratDTO) {
 
 
         //info dpae
         this.id = dpaeDTO.getId();
         this.lieu = dpaeDTO.getLieu();
         this.date = dpaeDTO.getDate();
-        this.employeId = dpaeDTO.getEmployeId();
         this.heureEmbauche = dpaeDTO.getHeureEmbauche();
         this.commentaire = dpaeDTO.getCommentaire();
         this.retourApiUrssaf = dpaeDTO.getRetourApiUrssaf();
 
+        //info societe
+        this.societeId = societeDTO.getId();
+        this.civiliteSociete = societeDTO.getCivilite();
+
 
         //info entreprise
+        this.infoEntrepriseId = infoEntrepriseDTO.getId();
         this.raisonSociale = infoEntrepriseDTO.getRaisonSociale();
         this.telephone = infoEntrepriseDTO.getTelephone();
         this.fax = infoEntrepriseDTO.getFax();
@@ -82,6 +101,7 @@ public class WrapperDpae {
         this.serviceSanteTravail = infoEntrepriseDTO.getServiceSanteTravail();
 
         //adresse
+        this.idAdresse = adresseDTO.getId();
         this.numeroRue = adresseDTO.getNumeroRue();
         this.nomRue = adresseDTO.getNomRue();
         this.codePostal = adresseDTO.getCodePostal();
@@ -89,6 +109,7 @@ public class WrapperDpae {
 
 
         // info salarie
+        this.idEmploye = employeDTO.getId();
         this.civilite = employeDTO.getCivilite();
         this.nomNaissance = employeDTO.getNomNaissance();
         this.nomUsage = employeDTO.getNomUsage();
@@ -96,15 +117,23 @@ public class WrapperDpae {
         this.dateNaissance =employeDTO.getDateNaissance();
         this.villeNaissance = employeDTO.getVilleNaissance();
         this.departementNaissance = employeDTO.getDepartementNaissance();
-        this.paysNaisance = employeDTO.getPaysNaisance();
+        this.paysNaissance = employeDTO.getPaysNaissance();
         this.numeroSecuriteSociale = employeDTO.getNumeroSecuriteSociale();
         this.dateEmbauche = employeDTO.getDateEmbauche();
         this.dateSortie = employeDTO.getDateSortie();
         this.periodeEssai = employeDTO.getPeriodeEssai();
 
-        // info contrat
-        this.codeRef = typeContratDTO.getCodeRef();
+        //contrat
+        this.idContrat = contratDTO.getId();
+        this.titre = contratDTO.getTitre();
+        this.dateCreation = contratDTO.getDateCreation();
+        this.signe = contratDTO.isSigne();
+        this.archive = contratDTO.isArchive();
 
+        // info contrat
+        this.idTypeContrat = typeContratDTO.getId();
+        this.codeRef = typeContratDTO.getCodeRef();
+        this.intitule = typeContratDTO.getIntitule();
     }
 
     public Long getId() {
@@ -163,6 +192,30 @@ public class WrapperDpae {
         this.retourApiUrssaf = retourApiUrssaf;
     }
 
+    public Long getSocieteId() {
+        return societeId;
+    }
+
+    public void setSocieteId(Long societeId) {
+        this.societeId = societeId;
+    }
+
+    public String getCiviliteSociete() {
+        return civiliteSociete;
+    }
+
+    public void setCiviliteSociete(String civiliteSociete) {
+        this.civiliteSociete = civiliteSociete;
+    }
+
+    public Long getInfoEntrepriseId() {
+        return infoEntrepriseId;
+    }
+
+    public void setInfoEntrepriseId(Long infoEntrepriseId) {
+        this.infoEntrepriseId = infoEntrepriseId;
+    }
+
     public String getRaisonSociale() {
         return raisonSociale;
     }
@@ -219,6 +272,14 @@ public class WrapperDpae {
         this.serviceSanteTravail = serviceSanteTravail;
     }
 
+    public Long getIdAdresse() {
+        return idAdresse;
+    }
+
+    public void setIdAdresse(Long idAdresse) {
+        this.idAdresse = idAdresse;
+    }
+
     public String getNumeroRue() {
         return numeroRue;
     }
@@ -249,6 +310,14 @@ public class WrapperDpae {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public Long getIdEmploye() {
+        return idEmploye;
+    }
+
+    public void setIdEmploye(Long idEmploye) {
+        this.idEmploye = idEmploye;
     }
 
     public String getCivilite() {
@@ -307,12 +376,12 @@ public class WrapperDpae {
         this.departementNaissance = departementNaissance;
     }
 
-    public String getPaysNaisance() {
-        return paysNaisance;
+    public String getPaysNaissance() {
+        return paysNaissance;
     }
 
-    public void setPaysNaisance(String paysNaisance) {
-        this.paysNaisance = paysNaisance;
+    public void setPaysNaissance(String paysNaissance) {
+        this.paysNaissance = paysNaissance;
     }
 
     public String getNumeroSecuriteSociale() {
@@ -339,12 +408,60 @@ public class WrapperDpae {
         this.dateSortie = dateSortie;
     }
 
-    public Double getPeriodeEssai() {
+    public Integer getPeriodeEssai() {
         return periodeEssai;
     }
 
-    public void setPeriodeEssai(Double periodeEssai) {
+    public void setPeriodeEssai(Integer periodeEssai) {
         this.periodeEssai = periodeEssai;
+    }
+
+    public Long getIdContrat() {
+        return idContrat;
+    }
+
+    public void setIdContrat(Long idContrat) {
+        this.idContrat = idContrat;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public Boolean getSigne() {
+        return signe;
+    }
+
+    public void setSigne(Boolean signe) {
+        this.signe = signe;
+    }
+
+    public Boolean getArchive() {
+        return archive;
+    }
+
+    public void setArchive(Boolean archive) {
+        this.archive = archive;
+    }
+
+    public Long getIdTypeContrat() {
+        return idTypeContrat;
+    }
+
+    public void setIdTypeContrat(Long idTypeContrat) {
+        this.idTypeContrat = idTypeContrat;
     }
 
     public String getCodeRef() {
@@ -353,5 +470,13 @@ public class WrapperDpae {
 
     public void setCodeRef(String codeRef) {
         this.codeRef = codeRef;
+    }
+
+    public String getIntitule() {
+        return intitule;
+    }
+
+    public void setIntitule(String intitule) {
+        this.intitule = intitule;
     }
 }
