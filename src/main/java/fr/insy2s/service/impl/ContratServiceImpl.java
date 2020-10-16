@@ -122,4 +122,9 @@ public class ContratServiceImpl implements ContratService {
         WrapperContrat newWrapperContrat = new WrapperContrat(newContratDTO, typeContratDTO, newWrapperSaisieArticle);
         return Optional.of(newWrapperContrat);
     }
+
+    @Override
+    public Boolean archiveContrat(Long idContrat, Boolean isArchive) {
+        return contratRepository.archiveContrat(idContrat, isArchive) > 0;
+    }
 }

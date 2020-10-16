@@ -5,6 +5,7 @@ import fr.insy2s.repository.projection.IContratAllInfoProjection;
 import fr.insy2s.repository.projection.IContratEmployerProjection;
 import fr.insy2s.service.dto.ContratDTO;
 import fr.insy2s.utils.wrapper.WrapperContrat;
+import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -66,4 +67,7 @@ public interface ContratService {
      * @return the created WrapperContrat
      */
     Optional<WrapperContrat> createWrapperContrat(@Valid WrapperContrat wrapperContrat);
+
+
+    Boolean archiveContrat(Long idContrat, Boolean isArchive);
 }
