@@ -102,8 +102,8 @@ public class DpaeServiceImpl implements DpaeService {
     }
 
     @Override
-    public WrapperDpae findWrapperDpaeById(Long id) {
-        WrapperDpae wrapperDpae;
+    public Optional<WrapperDpae> findWrapperDpaeById(Long id) {
+        Optional<WrapperDpae> wrapperDpae;
         final DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
         if (dpaeDTO != null) {
             final ContratDTO contratDTO = contratService.findOne(dpaeDTO.getContratId()).get();
@@ -112,9 +112,9 @@ public class DpaeServiceImpl implements DpaeService {
             final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
             final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
             final AdresseDTO adresseDTO = adresseService.findOne(societeDTO.getAdresseId()).get();
-            wrapperDpae = new WrapperDpae(dpaeDTO, societeDTO,infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO);
+            wrapperDpae = Optional.of(new WrapperDpae(dpaeDTO, societeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO));
         }else{
-            wrapperDpae = new WrapperDpae();
+            wrapperDpae = Optional.empty();
         }
         return wrapperDpae;
     }
