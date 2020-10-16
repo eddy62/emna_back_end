@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.DpaeDTO;
+import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 
 import java.util.List;
@@ -43,4 +44,6 @@ public interface DpaeService {
     void delete(Long id);
 
     WrapperPdfDpae getWrapperPdfDpae(Long id);
+
+    WrapperDpae findWrapperDpaeById(Long id);
 }
