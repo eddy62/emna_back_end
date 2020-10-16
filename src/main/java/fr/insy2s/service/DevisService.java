@@ -65,4 +65,12 @@ public interface DevisService {
      * @return the persisted entity.
      */
     DevisDTO saveQuote(WrapperQuote wrapperQuote);
+
+    /**
+     * Get the "id" devis for get the number of the new quote
+     *
+     * @param id the id of the entity.
+     * @return the number of the new quote.
+     */
+    Long findQuoteNumber(Long id);
 }

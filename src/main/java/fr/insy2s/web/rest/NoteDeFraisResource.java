@@ -90,10 +90,20 @@ public class NoteDeFraisResource {
         if (noteDeFraisDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, noteDeFraisDTO.getId().toString()))
-            .body(result);
+        Long idEmploye = noteDeFraisDTO.getEmployeId();
+        LocalDate dateToCheck = noteDeFraisDTO.getDate();
+        Optional<AbsenceDTO> dateExist = absenceService.findAbsenceExistByDate(idEmploye, dateToCheck);
+        if(!dateExist.isPresent()) {
+            NoteDeFraisDTO result = noteDeFraisService.save(noteDeFraisDTO);
+            return ResponseEntity.status(201)/*.created(new URI("/api/note-de-frais/" + result.getId()))*/
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else {
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, "Absence détectée à cette date"))
+                .body(noteDeFraisDTO);
+        }
     }
 
     /**

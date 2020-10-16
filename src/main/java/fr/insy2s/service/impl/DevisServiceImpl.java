@@ -205,4 +205,23 @@ public class DevisServiceImpl implements DevisService {
         Devis newQuote = devisRepository.save(quote);
         return devisMapper.toDto(newQuote);
     }
+
+    /**
+     * Get the "id" devis for get the number of the new quote.
+     *
+     * @param id the id of the entity.
+     * @return the number of the new quote.
+     */
+    @Override
+    public Long findQuoteNumber(Long id) {
+        List<Devis> quoteList = devisRepository.findQuotesBySocietyId(id);
+        Long quoteNumber = 0L;
+
+        for (Devis quote : quoteList) {
+            if (quote.getNumDevis() != null && quote.getNumDevis() > quoteNumber) {
+                quoteNumber = quote.getNumDevis()+1;
+            }
+        }
+        return quoteNumber;
+    }
 }

@@ -127,4 +127,9 @@ public class ContratServiceImpl implements ContratService {
     public boolean signeContract(Long id) {
         return contratRepository.signeContract(id, true) != 0;
     }
+
+    @Override
+    public Boolean archiveContrat(Long idContrat, Boolean isArchive) {
+        return contratRepository.archiveContrat(idContrat, isArchive) > 0;
+    }
 }

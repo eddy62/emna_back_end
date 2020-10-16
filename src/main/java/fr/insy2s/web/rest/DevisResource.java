@@ -158,4 +158,15 @@ public class DevisResource {
             .body(result);
     }
 
+    /**
+     * {@code GET  /devis/nouveau/numero/:id} : get the "id" devis for get the number of the new quote .
+     *
+     * @param id the id of the devisDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the devisDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/devis/nouveau/numero/{id}")
+    public Long getNewQuoteNumber(@PathVariable Long id) {
+        log.debug("REST request to get the number of the new quote : {}", id);
+        return devisService.findQuoteNumber(id);
+    }
 }

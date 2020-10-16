@@ -16,8 +16,6 @@ import java.util.List;
  */
 @Repository
 public interface ContratRepository extends JpaRepository<Contrat, Long> {
-
-
     @Query(nativeQuery = true,
         value = "SELECT DISTINCT c.ID AS contratId, c.TITRE AS contratTitre, c.DATE_CREATION AS contratDateCreation, " +
             "c.SIGNE AS contratSigner, c.ARCHIVE AS contratArchiver, " +
@@ -55,4 +53,9 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
     @Query("Update Contrat c set c.signe =:signe where c.id=:id")
     Integer signeContract(@Param("id") Long id, @Param("signe") Boolean state);
 
+    @Modifying
+    @Query("update Contrat c " +
+            "set c.archive =:boolean " +
+            "where c.id =:idContrat")
+    Integer archiveContrat(@Param("idContrat") Long idContrat, @Param("boolean") Boolean archive);
 }
