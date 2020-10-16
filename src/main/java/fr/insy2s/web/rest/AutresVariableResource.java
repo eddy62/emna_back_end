@@ -89,10 +89,20 @@ public class AutresVariableResource {
         if (autresVariableDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        AutresVariableDTO result = autresVariableService.save(autresVariableDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, autresVariableDTO.getId().toString()))
-            .body(result);
+        Long idEmploye = autresVariableDTO.getEmployeId();
+        LocalDate dateToCheck = autresVariableDTO.getDate();
+        Optional<AbsenceDTO> dateExist = absenceService.findAbsenceExistByDate(idEmploye, dateToCheck);
+        if(!dateExist.isPresent()) {
+            AutresVariableDTO result = autresVariableService.save(autresVariableDTO);
+            return ResponseEntity.status(201)/*.created(new URI("/api/autres-variables/" + result.getId()))*/
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else {
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, "Absence détectée à cette date"))
+                .body(autresVariableDTO);
+        }
     }
 
     /**

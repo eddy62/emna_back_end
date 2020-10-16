@@ -130,20 +130,45 @@ public class AbsenceResource {
         if (absenceDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        /*AbsenceDTO result = absenceService.save(absenceDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, absenceDTO.getId().toString()))
-            .body(result);*/
         Long idAbsence = absenceDTO.getId();
         Long idEmploye = absenceDTO.getEmployeId();
         LocalDate debutAbsence = absenceDTO.getDebutAbsence();
         LocalDate finAbsence = absenceDTO.getFinAbsence();
+        String debutAbsenceSendFront = debutAbsence.toString();
+        String finAbsenceSendFront = finAbsence.toString();
+        String message = debutAbsenceSendFront + "/" + finAbsenceSendFront;
         Optional<AbsenceDTO> absenceOverlapping = absenceService.findAllOverlappingAbsenceByIdEmployeForUpdate(idAbsence, idEmploye, debutAbsence, finAbsence);
-        if(!absenceOverlapping.isPresent()) {
+        Optional<NoteDeFraisDTO> noteDeFraisOverlapping = noteDeFraisService.findNoteDeFraisExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<HeuresSupplementairesDTO> heuresSupplementairesOverlapping = heuresSupplementairesService.findHeuresSupplementairesExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<AutresVariableDTO> autresVariableOverlapping = autresVariableService.findAutresVaribaleExistByDate(idEmploye, debutAbsence, finAbsence);
+        ArrayList<Optional<?>> overlapArray = new ArrayList<>();
+        overlapArray.add(noteDeFraisOverlapping);
+        overlapArray.add(heuresSupplementairesOverlapping);
+        overlapArray.add(autresVariableOverlapping);
+        Integer sizeArrayDtoOverlap = 0;
+        for(int i = 0; i<overlapArray.size(); i++)
+        {
+            if(overlapArray.get(i).isPresent()) {
+                sizeArrayDtoOverlap ++;
+            }
+        }
+        if(!absenceOverlapping.isPresent() && !autresVariableOverlapping.isPresent() && !noteDeFraisOverlapping.isPresent() && !heuresSupplementairesOverlapping.isPresent()) {
             AbsenceDTO result = absenceService.save(absenceDTO);
             return ResponseEntity.status(201)
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
                 .body(result);
+        }
+        else if(sizeArrayDtoOverlap >= 2) {
+            throw new BadRequestAlertException("Several payroll variable exists for the desired absence dates", message, "Plusieurs");
+        }
+        else if(noteDeFraisOverlapping.isPresent()) {
+            throw new BadRequestAlertException("An expense report exists for the desired absence dates", message, "Note de Frais");
+        }
+        else if(heuresSupplementairesOverlapping.isPresent()) {
+            throw new BadRequestAlertException("An overtime exists for the desired absence dates", message, "Heure Supplementaire");
+        }
+        else if(autresVariableOverlapping.isPresent()) {
+            throw new BadRequestAlertException("An other payroll variable exists for the desired absence dates", message, "Autre Variable");
         }
         else{
             AbsenceDTO absenceDoublon = absenceOverlapping.get();

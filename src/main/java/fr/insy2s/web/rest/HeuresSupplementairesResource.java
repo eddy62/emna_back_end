@@ -89,10 +89,20 @@ public class HeuresSupplementairesResource {
         if (heuresSupplementairesDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, heuresSupplementairesDTO.getId().toString()))
-            .body(result);
+        Long idEmploye = heuresSupplementairesDTO.getEmployeId();
+        LocalDate dateToCheck = heuresSupplementairesDTO.getDate();
+        Optional<AbsenceDTO> dateExist = absenceService.findAbsenceExistByDate(idEmploye, dateToCheck);
+        if(!dateExist.isPresent()) {
+            HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
+            return ResponseEntity.status(201)/*.created(new URI("/api/heures-supplementaires/" + result.getId()))*/
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else {
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, "Absence détectée à cette date"))
+                .body(heuresSupplementairesDTO);
+        }
     }
 
     /**
