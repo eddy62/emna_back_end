@@ -3,7 +3,6 @@ package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.service.dto.*;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class WrapperDpae {
