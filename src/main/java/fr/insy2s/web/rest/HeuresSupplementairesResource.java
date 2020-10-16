@@ -1,6 +1,9 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.service.AbsenceService;
 import fr.insy2s.service.HeuresSupplementairesService;
+import fr.insy2s.service.dto.AbsenceDTO;
+import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.HeuresSupplementairesDTO;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +38,11 @@ public class HeuresSupplementairesResource {
 
     private final HeuresSupplementairesService heuresSupplementairesService;
 
-    public HeuresSupplementairesResource(HeuresSupplementairesService heuresSupplementairesService) {
+    private final AbsenceService absenceService;
+
+    public HeuresSupplementairesResource(HeuresSupplementairesService heuresSupplementairesService, AbsenceService absenceService) {
         this.heuresSupplementairesService = heuresSupplementairesService;
+        this.absenceService = absenceService;
     }
 
     /**
@@ -51,10 +58,20 @@ public class HeuresSupplementairesResource {
         if (heuresSupplementairesDTO.getId() != null) {
             throw new BadRequestAlertException("A new heuresSupplementaires cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
-        return ResponseEntity.created(new URI("/api/heures-supplementaires/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        Long idEmploye = heuresSupplementairesDTO.getEmployeId();
+        LocalDate dateToCheck = heuresSupplementairesDTO.getDate();
+        Optional<AbsenceDTO> dateExist = absenceService.findAbsenceExistByDate(idEmploye, dateToCheck);
+        if(!dateExist.isPresent()) {
+            HeuresSupplementairesDTO result = heuresSupplementairesService.save(heuresSupplementairesDTO);
+            return ResponseEntity.status(201)/*.created(new URI("/api/heures-supplementaires/" + result.getId()))*/
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        }
+        else {
+            return ResponseEntity.status(208)
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, "Absence détectée à cette date"))
+                .body(heuresSupplementairesDTO);
+        }
     }
 
     /**

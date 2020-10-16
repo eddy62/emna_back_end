@@ -13,7 +13,8 @@
     },
     {
       "fieldName": "heureEmbauche",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "commentaire",
@@ -26,17 +27,19 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "contrat",
+      "otherEntityRelationshipName": "dpae",
+      "relationshipValidateRules": "required",
+      "relationshipName": "contrat",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
       "relationshipType": "one-to-many",
       "otherEntityName": "document",
       "otherEntityRelationshipName": "dpae",
       "relationshipName": "listeDocuments"
-    },
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "employe",
-      "otherEntityRelationshipName": "listeDpae",
-      "relationshipName": "employe",
-      "otherEntityField": "id"
     }
   ],
   "changelogDate": "20200825151204",

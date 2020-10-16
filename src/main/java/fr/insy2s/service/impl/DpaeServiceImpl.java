@@ -1,20 +1,16 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.DpaeService;
 import fr.insy2s.domain.Dpae;
 import fr.insy2s.repository.DpaeRepository;
+import fr.insy2s.service.DpaeService;
 import fr.insy2s.service.EmployeService;
 import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.dto.DpaeDTO;
 import fr.insy2s.service.mapper.DpaeMapper;
 import fr.insy2s.service.mapper.WrapperPdfDpaeMapper;
-import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
-import fr.insy2s.utils.wrapper.WrapperSociete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,14 +84,14 @@ public class DpaeServiceImpl implements DpaeService {
 
     public WrapperPdfDpae getWrapperPdfDpae(Long id) {
         WrapperPdfDpae wrapperPdfDpae = new WrapperPdfDpae();
-        DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
-        if (dpaeDTO != null) {
-            WrapperEmploye wrapperEmploye = employeService.findById(dpaeDTO.getEmployeId()).orElse(null);
-            if (wrapperEmploye != null) {
-                WrapperSociete wrapperSociete = societeService.findById(wrapperEmploye.getSocieteId()).orElse(null);
-                wrapperPdfDpae = wrapperPdfDpaeMapper.builderWrapperPdfDpae(dpaeDTO, wrapperEmploye, wrapperSociete);
-            }
-        }
+//        DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
+//        if (dpaeDTO != null) {
+//            WrapperEmploye wrapperEmploye = employeService.findById(dpaeDTO.getEmployeId()).orElse(null);
+//            if (wrapperEmploye != null) {
+//                WrapperSociete wrapperSociete = societeService.findById(wrapperEmploye.getSocieteId()).orElse(null);
+//                wrapperPdfDpae = wrapperPdfDpaeMapper.builderWrapperPdfDpae(dpaeDTO, wrapperEmploye, wrapperSociete);
+//            }
+//        }
         return wrapperPdfDpae;
     }
 }

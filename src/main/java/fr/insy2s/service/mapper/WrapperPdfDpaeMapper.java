@@ -42,7 +42,7 @@ public class WrapperPdfDpaeMapper {
         wrapperPdfDpae.setBirthDate(wrapperEmploye.getDateNaissance());
         wrapperPdfDpae.setBirthTown(wrapperEmploye.getVilleNaissance());
         wrapperPdfDpae.setDepartmentBirth(wrapperEmploye.getDepartementNaissance());
-        wrapperPdfDpae.setCountryBirth(wrapperEmploye.getPaysNaisance());
+        wrapperPdfDpae.setCountryBirth(wrapperEmploye.getPaysNaissance());
         //contrat
         wrapperPdfDpae.setStartContractDate(wrapperEmploye.getDateEmbauche());
         wrapperPdfDpae.setStartContractTime(dpaeDTO.getHeureEmbauche());

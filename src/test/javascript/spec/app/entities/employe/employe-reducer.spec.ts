@@ -11,11 +11,11 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
-  reset
+  reset,
+  updateEntity
 } from 'app/entities/employe/employe.reducer';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IEmploye, defaultValue } from 'app/shared/model/employe.model';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
+import { defaultValue, IEmploye } from 'app/shared/model/employe.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {

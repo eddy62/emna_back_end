@@ -1,12 +1,12 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.EmnaBackEndApp;
+import fr.insy2s.domain.Contrat;
 import fr.insy2s.domain.Dpae;
 import fr.insy2s.repository.DpaeRepository;
 import fr.insy2s.service.DpaeService;
 import fr.insy2s.service.dto.DpaeDTO;
 import fr.insy2s.service.mapper.DpaeMapper;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -79,6 +80,16 @@ public class DpaeResourceIT {
             .heureEmbauche(DEFAULT_HEURE_EMBAUCHE)
             .commentaire(DEFAULT_COMMENTAIRE)
             .retourApiUrssaf(DEFAULT_RETOUR_API_URSSAF);
+        // Add required entity
+        Contrat contrat;
+        if (TestUtil.findAll(em, Contrat.class).isEmpty()) {
+            contrat = ContratResourceIT.createEntity(em);
+            em.persist(contrat);
+            em.flush();
+        } else {
+            contrat = TestUtil.findAll(em, Contrat.class).get(0);
+        }
+        dpae.setContrat(contrat);
         return dpae;
     }
     /**
@@ -94,6 +105,16 @@ public class DpaeResourceIT {
             .heureEmbauche(UPDATED_HEURE_EMBAUCHE)
             .commentaire(UPDATED_COMMENTAIRE)
             .retourApiUrssaf(UPDATED_RETOUR_API_URSSAF);
+        // Add required entity
+        Contrat contrat;
+        if (TestUtil.findAll(em, Contrat.class).isEmpty()) {
+            contrat = ContratResourceIT.createUpdatedEntity(em);
+            em.persist(contrat);
+            em.flush();
+        } else {
+            contrat = TestUtil.findAll(em, Contrat.class).get(0);
+        }
+        dpae.setContrat(contrat);
         return dpae;
     }
 
@@ -171,6 +192,26 @@ public class DpaeResourceIT {
         int databaseSizeBeforeTest = dpaeRepository.findAll().size();
         // set the field null
         dpae.setDate(null);
+
+        // Create the Dpae, which fails.
+        DpaeDTO dpaeDTO = dpaeMapper.toDto(dpae);
+
+
+        restDpaeMockMvc.perform(post("/api/dpaes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(dpaeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Dpae> dpaeList = dpaeRepository.findAll();
+        assertThat(dpaeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkHeureEmbaucheIsRequired() throws Exception {
+        int databaseSizeBeforeTest = dpaeRepository.findAll().size();
+        // set the field null
+        dpae.setHeureEmbauche(null);
 
         // Create the Dpae, which fails.
         DpaeDTO dpaeDTO = dpaeMapper.toDto(dpae);

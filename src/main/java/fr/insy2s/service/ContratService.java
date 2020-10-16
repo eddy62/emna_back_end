@@ -70,4 +70,6 @@ public interface ContratService {
 
 
     Boolean archiveContrat(Long idContrat, Boolean isArchive);
+
+    boolean signeContract(Long id);
 }

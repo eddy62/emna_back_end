@@ -2,6 +2,7 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.NoteDeFraisDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,4 +51,6 @@ public interface NoteDeFraisService {
      * @return a list of NoteDeFraisDTO
      */
     List<NoteDeFraisDTO> findAllNoteDeFraisByIdEmployeAndAnneeAndMois(Long idEmploye, Integer annee, Integer mois);
+
+    Optional<NoteDeFraisDTO> findNoteDeFraisExistByDate(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence);
 }

@@ -50,6 +50,10 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
     Contrat getActiveContratEmployee(@Param("idEmployee")Long id);
 
     @Modifying
+    @Query("Update Contrat c set c.signe =:signe where c.id=:id")
+    Integer signeContract(@Param("id") Long id, @Param("signe") Boolean state);
+
+    @Modifying
     @Query("update Contrat c " +
             "set c.archive =:boolean " +
             "where c.id =:idContrat")

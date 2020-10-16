@@ -9,15 +9,15 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity {@link Dpae} and its DTO {@link DpaeDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EmployeMapper.class})
+@Mapper(componentModel = "spring", uses = {ContratMapper.class})
 public interface DpaeMapper extends EntityMapper<DpaeDTO, Dpae> {
 
-    @Mapping(source = "employe.id", target = "employeId")
+    @Mapping(source = "contrat.id", target = "contratId")
     DpaeDTO toDto(Dpae dpae);
 
+    @Mapping(source = "contratId", target = "contrat")
     @Mapping(target = "listeDocuments", ignore = true)
     @Mapping(target = "removeListeDocuments", ignore = true)
-    @Mapping(source = "employeId", target = "employe")
     Dpae toEntity(DpaeDTO dpaeDTO);
 
     default Dpae fromId(Long id) {

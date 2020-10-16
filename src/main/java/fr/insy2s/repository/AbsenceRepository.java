@@ -20,9 +20,19 @@ public interface AbsenceRepository extends JpaRepository<Absence, Long> {
     List<Absence> findAllAbsenceByIdEmployeAndAnneeAndMois(@Param("idEmploye") Long idEmploye, @Param("annee") Integer annee, @Param("mois") Integer mois);
 
     @Query("SELECT a FROM Absence a WHERE a.employe.id=:idEmploye AND " +
-            "(a.debutAbsence >= :debutAbsence AND a.finAbsence <= :finAbsence) OR " +
+            "((a.debutAbsence >= :debutAbsence AND a.finAbsence <= :finAbsence) OR " +
             "(a.finAbsence >= :debutAbsence AND a.finAbsence <= : finAbsence) OR " +
             "(a.debutAbsence >= :debutAbsence AND a.debutAbsence <= :finAbsence) OR " +
-            "(a.debutAbsence <= :debutAbsence AND a.finAbsence >= :finAbsence)")
+            "(a.debutAbsence <= :debutAbsence AND a.finAbsence >= :finAbsence))")
     List<Absence> findAllOverlappingAbsencesByIdEmploye(@Param("idEmploye") Long idEmploye, @Param("debutAbsence") LocalDate debutAbsence, @Param("finAbsence") LocalDate finAbsence);
+
+    @Query("SELECT a FROM Absence a WHERE a.id <>:idAbsence AND a.employe.id=:idEmploye AND " +
+        "((a.debutAbsence >= :debutAbsence AND a.finAbsence <= :finAbsence) OR " +
+        "(a.finAbsence >= :debutAbsence AND a.finAbsence <= : finAbsence) OR " +
+        "(a.debutAbsence >= :debutAbsence AND a.debutAbsence <= :finAbsence) OR " +
+        "(a.debutAbsence <= :debutAbsence AND a.finAbsence >= :finAbsence))")
+    List<Absence> findAllOverlappingAbsenceByIdEmployeForUpdate(@Param("idAbsence") Long idAbsence, @Param("idEmploye") Long idEmploye, @Param("debutAbsence") LocalDate debutAbsence, @Param("finAbsence") LocalDate finAbsence);
+
+    @Query("SELECT a FROM Absence a WHERE a.employe.id=:idEmploye AND :dateToCheck BETWEEN a.debutAbsence AND a.finAbsence")
+    Absence findAbsenceExistByDate(@Param("idEmploye") Long idEmploye, @Param("dateToCheck") LocalDate dateToCheck);
 }

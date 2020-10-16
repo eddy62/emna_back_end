@@ -11,11 +11,11 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
-  reset
+  reset,
+  updateEntity
 } from 'app/entities/dpae/dpae.reducer';
-import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { IDpae, defaultValue } from 'app/shared/model/dpae.model';
+import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
+import { defaultValue, IDpae } from 'app/shared/model/dpae.model';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {

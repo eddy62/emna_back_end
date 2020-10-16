@@ -1,12 +1,10 @@
 package fr.insy2s.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -35,7 +33,8 @@ public class Dpae implements Serializable {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "heure_embauche")
+    @NotNull
+    @Column(name = "heure_embauche", nullable = false)
     private String heureEmbauche;
 
     @Column(name = "commentaire")
@@ -44,13 +43,14 @@ public class Dpae implements Serializable {
     @Column(name = "retour_api_urssaf")
     private String retourApiUrssaf;
 
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(unique = true)
+    private Contrat contrat;
+
     @OneToMany(mappedBy = "dpae")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Document> listeDocuments = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = "listeDpaes", allowSetters = true)
-    private Employe employe;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -126,6 +126,19 @@ public class Dpae implements Serializable {
         this.retourApiUrssaf = retourApiUrssaf;
     }
 
+    public Contrat getContrat() {
+        return contrat;
+    }
+
+    public Dpae contrat(Contrat contrat) {
+        this.contrat = contrat;
+        return this;
+    }
+
+    public void setContrat(Contrat contrat) {
+        this.contrat = contrat;
+    }
+
     public Set<Document> getListeDocuments() {
         return listeDocuments;
     }
@@ -149,19 +162,6 @@ public class Dpae implements Serializable {
 
     public void setListeDocuments(Set<Document> documents) {
         this.listeDocuments = documents;
-    }
-
-    public Employe getEmploye() {
-        return employe;
-    }
-
-    public Dpae employe(Employe employe) {
-        this.employe = employe;
-        return this;
-    }
-
-    public void setEmploye(Employe employe) {
-        this.employe = employe;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

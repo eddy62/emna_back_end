@@ -1,8 +1,10 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.AutresVariable;
 import fr.insy2s.domain.NoteDeFrais;
 import fr.insy2s.repository.NoteDeFraisRepository;
 import fr.insy2s.service.NoteDeFraisService;
+import fr.insy2s.service.dto.AutresVariableDTO;
 import fr.insy2s.service.dto.NoteDeFraisDTO;
 import fr.insy2s.service.mapper.NoteDeFraisMapper;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +74,18 @@ public class NoteDeFraisServiceImpl implements NoteDeFraisService {
         return noteDeFraisRepository.findAllNoteDeFraisByIdEmployeAndAnneeAndMois(idEmploye, annee, mois).stream()
                 .map(noteDeFraisMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public Optional<NoteDeFraisDTO> findNoteDeFraisExistByDate(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence) {
+        List<NoteDeFrais> noteDeFraisList = noteDeFraisRepository.findNoteDeFraisExistByDate(idEmploye, debutAbsence, finAbsence);
+        Optional<NoteDeFraisDTO> noteDeFraisDTO = Optional.empty();
+        if(!noteDeFraisList.isEmpty()) {
+            noteDeFraisDTO =  Optional.ofNullable(noteDeFraisMapper.toDto(noteDeFraisList.get(0)));
+            return noteDeFraisDTO;
+        }
+        else {
+            return noteDeFraisDTO;
+        }
     }
 }

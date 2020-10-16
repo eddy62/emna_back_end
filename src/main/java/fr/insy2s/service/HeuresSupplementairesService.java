@@ -2,6 +2,7 @@ package fr.insy2s.service;
 
 import fr.insy2s.service.dto.HeuresSupplementairesDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +41,6 @@ public interface HeuresSupplementairesService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Optional<HeuresSupplementairesDTO> findHeuresSupplementairesExistByDate(Long idEmploye, LocalDate debutAbsence, LocalDate finAbsence);
 }

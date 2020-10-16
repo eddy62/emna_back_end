@@ -1,4 +1,2 @@
-id;lieu;date;heure_embauche;commentaire;retour_api_urssaf;employe_id
+id;lieu;date;heure_embauche;commentaire;retour_api_urssaf;contrat_id
 1;Lille;2020-09-01;09:00;1ère embauche;AR;1
-
-

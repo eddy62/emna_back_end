@@ -104,22 +104,22 @@ entity Employe{
     dateNaissance LocalDate required
     villeNaissance String required
     departementNaissance String required
-    paysNaisance String required
+    paysNaissance String required //2020-10-15
     numeroSecuriteSociale String required
     email String
-    telephoneFix String
+    telephoneFixe String //2020-10-15
     telephonePortable String required
     fax String
     salaireHoraire BigDecimal required
-    salaireBrutMensuelle BigDecimal required
-    heuresMensuelle BigDecimal required
+    salaireBrutMensuel BigDecimal required //2020-10-15
+    nbHeureMensuelle BigDecimal required //2020-10-15
     categorie String required
     poste String required
     dateEmbauche LocalDate required
     dateSortie LocalDate
-    periodeEssai Double required
+    periodeEssai Integer required //2020-10-15
     situationFamiliale String required
-    enfantsACharge Integer required
+    nbEnfantACharge Integer  //2020-10-15
 }
 
 entity StatutEmploye{
@@ -245,7 +245,7 @@ entity AvanceRappelSalaire{
 entity Dpae {
 	lieu String required
     date LocalDate required
-	heureEmbauche String
+	heureEmbauche String required //2020-10-15
 	commentaire String
 	retourApiUrssaf String
 }
@@ -304,7 +304,7 @@ relationship OneToMany{
 	Releve{listeDocuments} to Document{releve}
 	Contrat{listeDocuments} to Document{contrat}
 	Employe{listeDocuments} to Document{employe}
-    Employe{listeDpae} to Dpae{employe}
+    //Employe{listeDpae} to Dpae{employe} //2020-10-15
     //Societe{listeDpae} to Dpae{societe}
     Facture{listeLigneProduit} to LigneProduit{facture}
     Devis{listeLigneProduit} to LigneProduit{devis}
@@ -366,6 +366,8 @@ relationship OneToOne{
     Comptable{user} to User
     Societe{user} to User
     Facture{devis} to Devis
+    //2020-10-15
+    Dpae{contrat required} to Contrat
 }
 //Use Data Transfert Objects (DTO)
 dto * with mapstruct
