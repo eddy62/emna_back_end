@@ -150,12 +150,12 @@ public class DpaeResource {
     /**
      * {@code GET /dpae/detail/{id}} : get one wrapperDpae by id of one dpae.
      *
-     * @param id the id of the dpae to process
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the wrapperDpae in body
+     * @param id the id of the wrapperDpae to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperDpae, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/dpae/detail/{id}")
-    public WrapperDpae getWrapperDpaeById(@PathVariable Long id) {
+    public ResponseEntity<WrapperDpae> getWrapperDpaeById(@PathVariable Long id) {
         log.debug("REST request to get one WrapperDpae by id:{}", id);
-        return dpaeService.findWrapperDpaeById(id);
+        return ResponseUtil.wrapOrNotFound(dpaeService.findWrapperDpaeById(id));
     }
 }

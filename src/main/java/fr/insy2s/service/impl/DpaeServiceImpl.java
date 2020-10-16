@@ -3,7 +3,7 @@ package fr.insy2s.service.impl;
 import fr.insy2s.domain.Dpae;
 import fr.insy2s.repository.DpaeRepository;
 import fr.insy2s.service.*;
-import fr.insy2s.service.dto.DpaeDTO;
+import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.DpaeMapper;
 import fr.insy2s.service.mapper.WrapperPdfDpaeMapper;
 import fr.insy2s.utils.wrapper.WrapperDpae;
@@ -34,15 +34,17 @@ public class DpaeServiceImpl implements DpaeService {
     private final SocieteService societeService;
     private final InfoEntrepriseService infoEntrepriseService;
     private final AdresseService adresseService;
+    private final ContratService contratService;
     private final TypeContratService typeContratService;
 
     public DpaeServiceImpl(DpaeRepository dpaeRepository,
                            DpaeMapper dpaeMapper,
-                           SocieteService societeService,
                            WrapperPdfDpaeMapper wrapperPdfDpaeMapper,
                            EmployeService employeService,
+                           SocieteService societeService,
                            InfoEntrepriseService infoEntrepriseService,
                            AdresseService adresseService,
+                           ContratService contratService,
                            TypeContratService typeContratService) {
         this.dpaeRepository = dpaeRepository;
         this.dpaeMapper = dpaeMapper;
@@ -51,6 +53,7 @@ public class DpaeServiceImpl implements DpaeService {
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
         this.adresseService = adresseService;
+        this.contratService = contratService;
         this.typeContratService = typeContratService;
     }
 
@@ -99,28 +102,20 @@ public class DpaeServiceImpl implements DpaeService {
     }
 
     @Override
-    public WrapperDpae findWrapperDpaeById(Long id) {
-        //public WrapperDpae (DpaeDTO dpaeDTO, InfoEntrepriseDTO infoEntrepriseDTO, EmployeDTO employeDTO, AdresseDTO adresseDTO, TypeContratDTO typeContratDTO)
-        WrapperDpae wrapperDpae = null;
-/*        DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
+    public Optional<WrapperDpae> findWrapperDpaeById(Long id) {
+        Optional<WrapperDpae> wrapperDpae;
+        final DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
         if (dpaeDTO != null) {
-            EmployeDTO employeDTO = employeService.findOne(dpaeDTO.getEmployeId()).orElse(null);
-            if (employeDTO != null) {
-//                Contrat contrat = contratService.getActiveContratEmployee(id);
-//                final EmployeDTO employeDTO = findOne(id).get();
-                final AdresseDTO adresseDTO = adresseService.findOne(employeDTO.getAdresseId()).get();
-//                final StatutEmployeDTO statutEmployeDTO = statutEmployeService.findOne(employeDTO.getStatutEmployeId()).get();
-                final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
-                final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
-//                final ContratDTO contratDTO = contrat != null ? contratMapper.toDto(contrat) : new ContratDTO();
-//                final TypeContratDTO typeContratDTO = contrat != null ? typeContratMapper.toDto(contrat.getTypeContrat()) : new TypeContratDTO();
-                final TypeContratDTO typeContratDTO = typeContratService.findOne((long)1).get();
-//                final Optional<WrapperEmploye> wrapperEmploye = Optional
-//                        .of(new WrapperEmploye(employeDTO, adresseDTO, statutEmployeDTO, societeDTO, infoEntrepriseDTO, contratDTO, typeContratDTO));
-//                return wrapperEmploye.isPresent() ? Optional.of(wrapperEmploye.get()) : Optional.empty();
-                wrapperDpae = new WrapperDpae(dpaeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, typeContratDTO);
-            }
-        }*/
+            final ContratDTO contratDTO = contratService.findOne(dpaeDTO.getContratId()).get();
+            final TypeContratDTO typeContratDTO =typeContratService.findOne(contratDTO.getTypeContratId()).get();
+            final EmployeDTO employeDTO = employeService.findOne(contratDTO.getEmployeId()).get();
+            final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
+            final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+            final AdresseDTO adresseDTO = adresseService.findOne(societeDTO.getAdresseId()).get();
+            wrapperDpae = Optional.of(new WrapperDpae(dpaeDTO, societeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO));
+        }else{
+            wrapperDpae = Optional.empty();
+        }
         return wrapperDpae;
     }
 }

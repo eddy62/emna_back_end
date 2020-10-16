@@ -45,5 +45,11 @@ public interface DpaeService {
 
     WrapperPdfDpae getWrapperPdfDpae(Long id);
 
-    WrapperDpae findWrapperDpaeById(Long id);
+    /**
+     * Get the "id" wrapperDpae.
+     *
+     * @param id the id of the wrapperDpae to retrieve.
+     * @return the optionnal wrapperDpae.
+     */
+    Optional<WrapperDpae> findWrapperDpaeById(Long id);
 }

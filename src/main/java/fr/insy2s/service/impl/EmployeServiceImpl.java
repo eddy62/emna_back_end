@@ -41,10 +41,10 @@ public class EmployeServiceImpl implements EmployeService {
     private final StatutEmployeService statutEmployeService;
     private final SocieteService societeService;
     private final InfoEntrepriseService infoEntrepriseService;
-    private final TypeContratService typeContratService;
+    //private final TypeContratService typeContratService;
     private final FichePaieService fichePaieService;
     private final DocumentService documentService;
-    private final DpaeService dpaeService;
+    //private final DpaeService dpaeService;
     private final ContratService contratService;
 
     private final ContratMapper contratMapper;
@@ -65,10 +65,10 @@ public class EmployeServiceImpl implements EmployeService {
                               StatutEmployeService statutEmployeService,
                               SocieteService societeService,
                               InfoEntrepriseService infoEntrepriseService,
-                              TypeContratService typeContratService,
+                              //TypeContratService typeContratService,
                               FichePaieService fichePaieService,
                               DocumentService documentService,
-                              DpaeService dpaeService,
+                              //DpaeService dpaeService,
                               ContratService contratService,
                               AbsenceService absenceService,
                               AutresVariableService autresVariableService,
@@ -84,10 +84,10 @@ public class EmployeServiceImpl implements EmployeService {
         this.statutEmployeService = statutEmployeService;
         this.societeService = societeService;
         this.infoEntrepriseService = infoEntrepriseService;
-        this.typeContratService = typeContratService;
+        //this.typeContratService = typeContratService;
         this.fichePaieService = fichePaieService;
         this.documentService = documentService;
-        this.dpaeService = dpaeService;
+        //this.dpaeService = dpaeService;
         this.contratService = contratService;
         this.absenceService = absenceService;
 
