@@ -90,14 +90,18 @@ public class DpaeServiceImpl implements DpaeService {
 
     public WrapperPdfDpae getWrapperPdfDpae(Long id) {
         WrapperPdfDpae wrapperPdfDpae = new WrapperPdfDpae();
-//        DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
-//        if (dpaeDTO != null) {
-//            WrapperEmploye wrapperEmploye = employeService.findById(dpaeDTO.getEmployeId()).orElse(null);
-//            if (wrapperEmploye != null) {
-//                WrapperSociete wrapperSociete = societeService.findById(wrapperEmploye.getSocieteId()).orElse(null);
-//                wrapperPdfDpae = wrapperPdfDpaeMapper.builderWrapperPdfDpae(dpaeDTO, wrapperEmploye, wrapperSociete);
-//            }
-//        }
+        final DpaeDTO dpaeDTO = this.findOne(id).orElse(null);
+        if (dpaeDTO != null) {
+            final ContratDTO contratDTO = contratService.findOne(dpaeDTO.getContratId()).get();
+            final TypeContratDTO typeContratDTO =typeContratService.findOne(contratDTO.getTypeContratId()).get();
+            final EmployeDTO employeDTO = employeService.findOne(contratDTO.getEmployeId()).get();
+            final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
+            final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
+            final AdresseDTO adresseDTO = adresseService.findOne(societeDTO.getAdresseId()).get();
+
+            wrapperPdfDpae = wrapperPdfDpaeMapper.builderWrapperPdfDpae(dpaeDTO, typeContratDTO,
+                employeDTO, societeDTO, infoEntrepriseDTO, adresseDTO);
+        }
         return wrapperPdfDpae;
     }
 
