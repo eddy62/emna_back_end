@@ -47,4 +47,17 @@ public interface AvenantService {
      * @return une liste d'avenant
      */
     List<AvenantDTO> getAllAmendmentByContractId(long idContract);
+
+    /**
+     * get pdf for WrapperAmendment
+     * @param idAmendment id of Amendment
+     * @return
+     */
+    byte[] getPDFAmendement(Long idAmendment);
+
+    /**
+     *
+     * @return String for the name pdf
+     */
+    String getNamePdf(Long idAmendment);
 }

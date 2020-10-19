@@ -73,4 +73,14 @@ public class AvenantServiceImpl implements AvenantService {
             .stream().map(avenantMapper::toDto)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public byte[] getPDFAmendement(Long idAmendment) {
+        return new byte[0];
+    }
+
+    @Override
+    public String getNamePdf(Long idAmendment) {
+        return null;
+    }
 }

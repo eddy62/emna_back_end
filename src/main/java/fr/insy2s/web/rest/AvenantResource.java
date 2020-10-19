@@ -1,15 +1,17 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.AvenantService;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.AvenantDTO;
-
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -124,5 +126,25 @@ public class AvenantResource {
     public List<AvenantDTO> getAllAmendmentByContractId(@PathVariable long idContract){
         log.debug("REST request to get all Amendement by contract id ", idContract);
         return avenantService.getAllAmendmentByContractId(idContract);
+    }
+
+    /**
+     * {@code GET  /contrat/avenant/pdf/:idAmendment} : get the pdf from a releve.
+     *
+     * @param idAmendment the id of the contract to process.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pdf, or with status {@code 404 (Not Found)}.
+     */
+    @Secured({
+        AuthoritiesConstants.SOCIETY,
+        AuthoritiesConstants.ADMIN,
+        AuthoritiesConstants.ACCOUNTANT
+    })
+    public ResponseEntity<byte[]> getPDFAmendement(@PathVariable Long idAmendment) throws JRException{
+        log.debug("REST request to get avenant by the id ",idAmendment);
+        byte[] bytes = avenantService.getPDFAmendement(idAmendment);
+        return ResponseEntity.ok()
+            .header("Content-Type", "application/pdf; charset=UTF-8")
+            .header("Content-Disposition","attachment; filename=\"" + avenantService.getNamePdf(idAmendment) + ".pdf\"")
+            .body(bytes);
     }
 }

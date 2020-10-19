@@ -2,13 +2,13 @@ package fr.insy2s.utils.wrapper;
 
 import fr.insy2s.domain.SaisieArticle;
 
-public class WrapperSingleAmendement {
+public class WrapperSingleAmendment {
     private final String titleArticle;
     private final String entitleArticle;
     private final String description;
     private final String inputArticle;
 
-    public WrapperSingleAmendement(SaisieArticle saisierticle) {
+    public WrapperSingleAmendment(SaisieArticle saisierticle) {
         this.titleArticle = saisierticle.getArticle().getTitre();
         this.entitleArticle = saisierticle.getArticle().getIntitule();
         this.description = saisierticle.getArticle().getDescription();
@@ -33,7 +33,7 @@ public class WrapperSingleAmendement {
 
     @Override
     public String toString() {
-        return "WrapperSingleAmendement{" +
+        return "WrapperSingleAmendment{" +
             "titleArticle='" + titleArticle + '\'' +
             ", entitleArticle='" + entitleArticle + '\'' +
             ", description='" + description + '\'' +
