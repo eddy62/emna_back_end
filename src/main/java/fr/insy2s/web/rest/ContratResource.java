@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -122,9 +121,15 @@ public class ContratResource {
     }
 
     @PutMapping("/archiveContrat/{idContrat}")
-    public void archiveContrat(@PathVariable Long idContrat, Boolean isArchive){
+    public ResponseEntity<Boolean> archiveContrat(@PathVariable Long idContrat) throws InternalError  {
         log.debug("REST request to archive a contract");
-        contratService.archiveContrat(idContrat, isArchive);
+        boolean result = contratService.archiveContrat(idContrat);
+        if (!result) {
+            throw new InternalError("NOT MODIFIED");
+        }
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, idContrat + ""))
+                .body(result);
     }
 
     /**
