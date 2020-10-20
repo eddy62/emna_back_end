@@ -3,6 +3,7 @@ package fr.insy2s.web.rest;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DpaeService;
 import fr.insy2s.service.dto.DpaeDTO;
+import fr.insy2s.utils.files.HtmlUtil;
 import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
@@ -157,5 +158,30 @@ public class DpaeResource {
     public ResponseEntity<WrapperDpae> getWrapperDpaeById(@PathVariable Long id) {
         log.debug("REST request to get one WrapperDpae by id:{}", id);
         return ResponseUtil.wrapOrNotFound(dpaeService.findWrapperDpaeById(id));
+    }
+
+    /**
+     * {@code GET  /dpae/pdf/:id} : get the pdf from a dpae.
+     *
+     * @param id the id of the dpae to process.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pdf, or with status {@code 404 (Not Found)}.
+     */
+    @Secured({
+            AuthoritiesConstants.SOCIETY,
+            AuthoritiesConstants.ADMIN,
+            AuthoritiesConstants.ACCOUNTANT
+    })
+    @GetMapping("/dpae/html/{id}")
+    public ResponseEntity<String> generateDpaeAsHtml(@PathVariable Long id) throws JRException {
+        log.debug("REST request to get dpae html: {}", id);
+        WrapperPdfDpae wrapperPdfDpae = dpaeService.getWrapperPdfDpae(id);
+        //byte[] bytes    = PdfUtil.generateDpaeAsBytes(wrapperPdfDpae);
+        String htmlCode = HtmlUtil.generateDpaeAsStringHtml(wrapperPdfDpae);
+//        String pdfName  = new Date().getTime()
+//                + "_DPAE_"
+//                + wrapperPdfDpae.getSurname() + "_"
+//                + wrapperPdfDpae.getId();
+        return ResponseEntity.ok()
+                .body(htmlCode);
     }
 }
