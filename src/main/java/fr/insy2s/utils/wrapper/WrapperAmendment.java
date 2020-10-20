@@ -7,7 +7,6 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import java.util.List;
 
 public class WrapperAmendment {
-    private List<WrapperSingleAmendment> amendements;
     private String titleContract;
     private String nameSociety;
     private String adressSociety;
@@ -17,8 +16,7 @@ public class WrapperAmendment {
     private String placeBirth;
     private JRBeanCollectionDataSource inputArticleDataSource;
 
-    public WrapperAmendment(Contrat contrat, Societe societe, List<WrapperSingleAmendment> amendements) {
-        this.amendements = amendements;
+    public WrapperAmendment(Contrat contrat, Societe societe, List<WrapperSingleInputAmendment> amendements) {
         this.titleContract = contrat.getTitre();
         this.nameSociety = societe.getCivilite();
         this.adressSociety = societe.getAdresse().getNumeroRue() +" "+societe.getAdresse().getNomRue()+ " "+
@@ -27,11 +25,7 @@ public class WrapperAmendment {
         this.nameEmployee = contrat.getEmploye().getNomNaissance()+" "+contrat.getEmploye().getPrenom();
         this.dateBirth = contrat.getEmploye().getDateNaissance().toString();
         this.placeBirth = contrat.getEmploye().getVilleNaissance();
-        this.inputArticleDataSource = new JRBeanCollectionDataSource(amendements);
-    }
-
-    public List<WrapperSingleAmendment> getAmendements() {
-        return amendements;
+        this.inputArticleDataSource = new JRBeanCollectionDataSource(amendements,false);
     }
 
     public String getTitleContract() {
@@ -62,10 +56,13 @@ public class WrapperAmendment {
         return placeBirth;
     }
 
+    public JRBeanCollectionDataSource getInputArticleDataSource() {
+        return inputArticleDataSource;
+    }
+
     @Override
     public String toString() {
         return "WrapperAmendment{" +
-            "amendements=" + amendements +
             ", titleContract='" + titleContract + '\'' +
             ", nameSociety='" + nameSociety + '\'' +
             ", adressSociety='" + adressSociety + '\'' +

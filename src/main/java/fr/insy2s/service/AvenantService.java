@@ -1,6 +1,7 @@
 package fr.insy2s.service;
 
 import fr.insy2s.service.dto.AvenantDTO;
+import net.sf.jasperreports.engine.JRException;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,11 +54,5 @@ public interface AvenantService {
      * @param idAmendment id of Amendment
      * @return
      */
-    byte[] getPDFAmendement(Long idAmendment);
-
-    /**
-     *
-     * @return String for the name pdf
-     */
-    String getNamePdf(Long idAmendment);
+    byte[] getPDFAmendement(Long idAmendment) throws JRException;
 }

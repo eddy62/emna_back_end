@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -129,7 +130,7 @@ public class AvenantResource {
     }
 
     /**
-     * {@code GET  /contrat/avenant/pdf/:idAmendment} : get the pdf from a releve.
+     * {@code GET  /avenant/pdf/:idAmendment} : get the pdf from a releve.
      *
      * @param idAmendment the id of the contract to process.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pdf, or with status {@code 404 (Not Found)}.
@@ -139,12 +140,13 @@ public class AvenantResource {
         AuthoritiesConstants.ADMIN,
         AuthoritiesConstants.ACCOUNTANT
     })
-    public ResponseEntity<byte[]> getPDFAmendement(@PathVariable Long idAmendment) throws JRException{
+    @GetMapping("/avenant/pdf/{idAmendment}")
+    public ResponseEntity<String> getPDFAmendement(@PathVariable Long idAmendment) throws JRException{
         log.debug("REST request to get avenant by the id ",idAmendment);
         byte[] bytes = avenantService.getPDFAmendement(idAmendment);
+        String s = new String(bytes, StandardCharsets.UTF_8);
         return ResponseEntity.ok()
             .header("Content-Type", "application/pdf; charset=UTF-8")
-            .header("Content-Disposition","attachment; filename=\"" + avenantService.getNamePdf(idAmendment) + ".pdf\"")
-            .body(bytes);
+            .body(s);
     }
 }
