@@ -1,12 +1,12 @@
 id;raison_sociale;telephone;fax;forme_juridique;date_de_creation;siren;siret;domaine_dactivite;description;email;code_urssaf;service_sante_travail
-1;JAKARTA SARL;0954389765;0954389764;SARL;2020-07-21;111 222 333;111 222 333 00444;900;sociÃ©te de de vente de logiciels Java;jakarta@gmail.com;001;123
-2;JAVA SAS;0954380000;0954380001;SAS;2020-07-21;444 555 777;444 555 777 00888;901;sociÃ©te de de vente de logiciels webservice Java;java@gmail.com;002;456
-3;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;902;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;003;789
-4;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;903;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;004;101
-5;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;904;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;005;102
-6;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;905;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;006;103
-7;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;906;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;007;104
-8;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;907;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;008;105
-9;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;908;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;009;106
-10;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;909;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;010;107
-12;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;333 222 555;333 222 555 00123;910;sociÃ©te de de vente de logiciels webapi Angular;angular@gmail.com;011;108
+1;JAKARTA SARL;0954389765;0954389764;SARL;2020-07-21;111222333;11122233300444;2663;sociéte de vente de logiciels Java;jakarta@gmail.com;001;123
+2;JAVA SAS;0954380000;0954380001;SAS;2020-07-21;144555777;14455577700888;5364;sociéte de vente de logiciels webservice Java;java@gmail.com;002;456
+3;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;9511;sociéte de vente de logiciels webapi Angular;angular@gmail.com;003;789
+4;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;9056;sociéte de vente de logiciels webapi Angular;angular@gmail.com;004;101
+5;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;45365;sociéte de vente de logiciels webapi Angular;angular@gmail.com;005;102
+6;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;8512;sociéte de vente de logiciels webapi Angular;angular@gmail.com;006;103
+7;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;1245;sociéte de vente de logiciels webapi Angular;angular@gmail.com;007;104
+8;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;65412;sociéte de vente de logiciels webapi Angular;angular@gmail.com;008;105
+9;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;2368;sociéte de vente de logiciels webapi Angular;angular@gmail.com;009;106
+10;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;7695;sociéte de vente de logiciels webapi Angular;angular@gmail.com;010;107
+12;ANGULAR SA;0954382223;0954382224;SA;2020-07-21;133222555;13322255500123;88523;sociéte de vente de logiciels webapi Angular;angular@gmail.com;011;108
