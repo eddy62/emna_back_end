@@ -20,10 +20,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -190,16 +188,12 @@ public class DpaeResource {
             AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/dpae/html/{id}")
-    public ResponseEntity<HtmlVM> generateDpaeAsHtml(@PathVariable Long id) throws JRException, UnsupportedEncodingException {
-        log.debug("REST request to get dpae html: {}", id);
+    public ResponseEntity<HtmlVM> generateDpaeAsHtml(@PathVariable Long id) throws JRException {
+        log.debug("REST request to get dpae html code : {}", id);
         WrapperPdfDpae wrapperPdfDpae = dpaeService.getWrapperPdfDpae(id);
         String htmlCode = HtmlUtil.generateDpaeAsStringHtml(wrapperPdfDpae);
-        //ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(htmlCode);
-        ByteBuffer buffer = ByteBuffer.wrap(htmlCode.getBytes("UTF-8"));
-        String htmlCodeConverted = new String(buffer.array(), "UTF-8");
         HtmlVM htmlVM = new HtmlVM();
-        //htmlVM.setHtml(htmlCode);
-        htmlVM.setHtml(htmlCodeConverted);
+        htmlVM.setHtml(htmlCode);
         return ResponseEntity.ok()
                 .body(htmlVM);
     }
