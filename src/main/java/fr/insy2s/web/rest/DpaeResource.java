@@ -3,6 +3,7 @@ package fr.insy2s.web.rest;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DpaeService;
 import fr.insy2s.service.dto.DpaeDTO;
+import fr.insy2s.service.dto.FichePaieDTO;
 import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
@@ -157,5 +158,20 @@ public class DpaeResource {
     public ResponseEntity<WrapperDpae> getWrapperDpaeById(@PathVariable Long id) {
         log.debug("REST request to get one WrapperDpae by id:{}", id);
         return ResponseUtil.wrapOrNotFound(dpaeService.findWrapperDpaeById(id));
+    }
+
+    /**
+     * {@code GET /dpae/employe/:idEmploye/annee/:year/moisDu/:monthStart/moisFin/:monthEnd} : get all the Dpae by one employe, by one year and months.
+     *
+     * @param idEmploye id of the Employe in all Dpae
+     * @param year      year in all Dpae
+     * @param monthStart      min month in all Dpae
+     * @param monthEnd        max month in all Dpae
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the wrapperDpae in body
+     */
+    @GetMapping("/dpae/employe/{idEmploye}/annee/{year}/moisDu/{monthStart}/moisFin/{monthEnd}")
+    public List<DpaeDTO> getAllDpaeByEmployeIdMonthStartMonthEnd(@PathVariable Long idEmploye, @PathVariable Integer year, @PathVariable Integer monthStart , @PathVariable Integer monthEnd) {
+        log.debug("REST request to get all Dpae by employe:{}, annee:{}, moisDu:{}, moisFin:{}", idEmploye, year, monthStart, monthEnd);
+        return dpaeService.findAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd);
     }
 }

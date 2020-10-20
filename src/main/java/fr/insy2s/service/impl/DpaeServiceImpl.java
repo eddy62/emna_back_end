@@ -1,6 +1,7 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.Dpae;
+import fr.insy2s.domain.FichePaie;
 import fr.insy2s.repository.DpaeRepository;
 import fr.insy2s.service.*;
 import fr.insy2s.service.dto.*;
@@ -13,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Service Implementation for managing {@link Dpae}.
  */
+
 @Service
 @Transactional
 public class DpaeServiceImpl implements DpaeService {
@@ -121,5 +125,33 @@ public class DpaeServiceImpl implements DpaeService {
             wrapperDpae = Optional.empty();
         }
         return wrapperDpae;
+    }
+
+    @Override
+    public List<DpaeDTO> findAllDpaeByEmployeIdMonthStartMonthEnd(Long idEmploye, Integer year, Integer monthStart, Integer monthEnd) {
+
+        //création d'une plage de date temporaire
+        LocalDate startDate = LocalDate.of(year, monthStart,1);
+        LocalDate endDate = LocalDate.of(year, monthEnd,1);;
+        endDate = endDate.withDayOfMonth(endDate.lengthOfMonth());
+
+        log.debug("Request to get all Dpae with IdEmploye:{}, startDate:{}, endDate:{}", idEmploye, startDate, endDate );
+        List<Dpae> dpaeList = dpaeRepository.findAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, startDate, endDate );
+        List<DpaeDTO> dpaeDTOList = new ArrayList<>();
+        DpaeDTO dpaeDTOtmp ;
+        if(!dpaeList.isEmpty()) {
+            for (Dpae dpae : dpaeList) {
+                dpaeDTOtmp = new DpaeDTO();
+                dpaeDTOtmp.setId(dpae.getId());
+                dpaeDTOtmp.setLieu(dpae.getLieu());
+                dpaeDTOtmp.setDate(dpae.getDate());
+                dpaeDTOtmp.setHeureEmbauche(dpae.getHeureEmbauche());
+                dpaeDTOtmp.setCommentaire(dpae.getCommentaire());
+                dpaeDTOtmp.setRetourApiUrssaf(dpae.getRetourApiUrssaf());
+                dpaeDTOtmp.setContratId(dpae.getContrat().getId());
+                dpaeDTOList.add(dpaeDTOtmp);
+            }
+        }
+        return dpaeDTOList;
     }
 }
