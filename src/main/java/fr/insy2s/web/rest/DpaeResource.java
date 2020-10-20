@@ -2,12 +2,11 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DpaeService;
+import fr.insy2s.service.dto.DpaeDTO;
 import fr.insy2s.utils.files.PdfUtil;
-import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
+import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
-import fr.insy2s.service.dto.DpaeDTO;
-
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -146,5 +145,17 @@ public class DpaeResource {
             .header("Content-Type", "application/pdf; charset=UTF-8")
             .header("Content-Disposition","attachment; filename=\"" + pdfName + ".pdf\"")
             .body(bytes);
+    }
+
+    /**
+     * {@code GET /dpae/detail/{id}} : get one wrapperDpae by id of one dpae.
+     *
+     * @param id the id of the wrapperDpae to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the wrapperDpae, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/dpae/detail/{id}")
+    public ResponseEntity<WrapperDpae> getWrapperDpaeById(@PathVariable Long id) {
+        log.debug("REST request to get one WrapperDpae by id:{}", id);
+        return ResponseUtil.wrapOrNotFound(dpaeService.findWrapperDpaeById(id));
     }
 }
