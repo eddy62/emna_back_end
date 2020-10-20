@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -141,12 +140,11 @@ public class AvenantResource {
         AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/avenant/pdf/{idAmendment}")
-    public ResponseEntity<String> getPDFAmendement(@PathVariable Long idAmendment) throws JRException{
+    public ResponseEntity<byte[]> getPDFAmendement(@PathVariable Long idAmendment) throws JRException{
         log.debug("REST request to get avenant by the id ",idAmendment);
         byte[] bytes = avenantService.getPDFAmendement(idAmendment);
-        String s = new String(bytes, StandardCharsets.UTF_8);
         return ResponseEntity.ok()
             .header("Content-Type", "application/pdf; charset=UTF-8")
-            .body(s);
+            .body(bytes);
     }
 }

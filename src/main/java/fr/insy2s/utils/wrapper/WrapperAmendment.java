@@ -16,6 +16,9 @@ public class WrapperAmendment {
     private String placeBirth;
     private JRBeanCollectionDataSource inputArticleDataSource;
 
+    public WrapperAmendment() {
+    }
+
     public WrapperAmendment(Contrat contrat, Societe societe, List<WrapperSingleInputAmendment> amendements) {
         this.titleContract = contrat.getTitre();
         this.nameSociety = societe.getCivilite();
