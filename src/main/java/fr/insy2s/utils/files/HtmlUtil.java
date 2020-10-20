@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class HtmlUtil {
      *
      * @param templateUrl : url du template que l'on veut utiliser
      * @param params      : parametres dont le template a besoin, tel que des images/logo
-     * @param objects     : les données que l'on veut afficher dans le pdf (ex: les données de pointage venant de la BDD permettant de générer un pdf cra)
+     * @param objects     : les données que l'on veut afficher dans le html
      *                    Peut être null, si le pdf n'a pas besoin de données venant de la BDD
      * @return le html en String
      * @throws JRException
@@ -75,7 +76,7 @@ public class HtmlUtil {
         JasperExportManager.exportReportToHtmlFile(jasperPrint,codeHtmlReportFile);
         StringBuilder contentBuilder = new StringBuilder();
         try {
-            BufferedReader in = new BufferedReader(new FileReader(codeHtmlReportFile));
+            BufferedReader in = new BufferedReader(new FileReader(codeHtmlReportFile, StandardCharsets.UTF_8));
             String str;
             while ((str = in.readLine()) != null) {
                 contentBuilder.append(str);

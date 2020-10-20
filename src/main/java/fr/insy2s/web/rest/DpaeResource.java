@@ -4,7 +4,6 @@ import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DpaeService;
 import fr.insy2s.service.dto.DpaeDTO;
 import fr.insy2s.utils.files.HtmlUtil;
-import fr.insy2s.service.dto.FichePaieDTO;
 import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
@@ -21,8 +20,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -189,13 +190,16 @@ public class DpaeResource {
             AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/dpae/html/{id}")
-    public ResponseEntity<HtmlVM> generateDpaeAsHtml(@PathVariable Long id) throws JRException {
+    public ResponseEntity<HtmlVM> generateDpaeAsHtml(@PathVariable Long id) throws JRException, UnsupportedEncodingException {
         log.debug("REST request to get dpae html: {}", id);
         WrapperPdfDpae wrapperPdfDpae = dpaeService.getWrapperPdfDpae(id);
         String htmlCode = HtmlUtil.generateDpaeAsStringHtml(wrapperPdfDpae);
         //ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(htmlCode);
+        ByteBuffer buffer = ByteBuffer.wrap(htmlCode.getBytes("UTF-8"));
+        String htmlCodeConverted = new String(buffer.array(), "UTF-8");
         HtmlVM htmlVM = new HtmlVM();
-        htmlVM.setHtml(htmlCode);
+        //htmlVM.setHtml(htmlCode);
+        htmlVM.setHtml(htmlCodeConverted);
         return ResponseEntity.ok()
                 .body(htmlVM);
     }
