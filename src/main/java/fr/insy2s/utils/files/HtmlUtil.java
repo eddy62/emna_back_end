@@ -38,7 +38,7 @@ public class HtmlUtil {
      * Methode permettant de générer un PDF d'une DPAE à partir d'un objet WrapperPdfDpae
      *
      * @param wrapper the WrapperPdfDpae to map in the the template TemplateDpae.jasper
-     * @return one document PDF in byte array based on the template TemplateDpae.jasper
+     * @return a html string based on the template TemplateDpae.jasper
      * @throws JRException the exception throwned
      * @author Erik DUNAIS
      */
@@ -54,15 +54,15 @@ public class HtmlUtil {
         );
     }
     /**
-     * Methode generique permettant de charger un template pdf jaspersoft, et de lui donner les params et données dont il a besoin
+     * Methode generique permettant de charger un template html jaspersoft, et de lui donner les params et données dont il a besoin
      *
      * @param templateUrl : url du template que l'on veut utiliser
      * @param params      : parametres dont le template a besoin, tel que des images/logo
      * @param objects     : les données que l'on veut afficher dans le pdf (ex: les données de pointage venant de la BDD permettant de générer un pdf cra)
      *                    Peut être null, si le pdf n'a pas besoin de données venant de la BDD
-     * @return le pdf en bytes array
+     * @return le html en String
      * @throws JRException
-     * @author Peter Mollet
+     * @author Erik DUNAIS
      */
     private static String generateHtmlReportAsString(String templateUrl, Map<String, Object> params, List<Object> objects) throws JRException {
         InputStream templateStream = HtmlUtil.class.getResourceAsStream(templateUrl);
@@ -72,9 +72,7 @@ public class HtmlUtil {
             jasperPrint = JasperFillManager.fillReport(templateStream, params, new JRBeanCollectionDataSource(objects));
         } else
             jasperPrint = JasperFillManager.fillReport(templateStream, params);
-
         JasperExportManager.exportReportToHtmlFile(jasperPrint,codeHtmlReportFile);
-
         StringBuilder contentBuilder = new StringBuilder();
         try {
             BufferedReader in = new BufferedReader(new FileReader(codeHtmlReportFile));
@@ -86,8 +84,6 @@ public class HtmlUtil {
         } catch (IOException e) {
         }
         String dpaeHtmlCode = contentBuilder.toString();
-
-
         return dpaeHtmlCode;
     }
 }

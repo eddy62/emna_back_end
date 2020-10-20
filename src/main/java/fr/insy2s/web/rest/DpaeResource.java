@@ -8,6 +8,7 @@ import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
+import fr.insy2s.web.rest.vm.HtmlVM;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -161,10 +162,10 @@ public class DpaeResource {
     }
 
     /**
-     * {@code GET  /dpae/pdf/:id} : get the pdf from a dpae.
+     * {@code GET  /dpae/html/:id} : get the html code from a dpae.
      *
      * @param id the id of the dpae to process.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pdf, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the object htmlVM with property string html containing the html code to render, or with status {@code 404 (Not Found)}.
      */
     @Secured({
             AuthoritiesConstants.SOCIETY,
@@ -172,16 +173,14 @@ public class DpaeResource {
             AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/dpae/html/{id}")
-    public ResponseEntity<String> generateDpaeAsHtml(@PathVariable Long id) throws JRException {
+    public ResponseEntity<HtmlVM> generateDpaeAsHtml(@PathVariable Long id) throws JRException {
         log.debug("REST request to get dpae html: {}", id);
         WrapperPdfDpae wrapperPdfDpae = dpaeService.getWrapperPdfDpae(id);
-        //byte[] bytes    = PdfUtil.generateDpaeAsBytes(wrapperPdfDpae);
         String htmlCode = HtmlUtil.generateDpaeAsStringHtml(wrapperPdfDpae);
-//        String pdfName  = new Date().getTime()
-//                + "_DPAE_"
-//                + wrapperPdfDpae.getSurname() + "_"
-//                + wrapperPdfDpae.getId();
+        //ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(htmlCode);
+        HtmlVM htmlVM = new HtmlVM();
+        htmlVM.setHtml(htmlCode);
         return ResponseEntity.ok()
-                .body(htmlCode);
+                .body(htmlVM);
     }
 }
