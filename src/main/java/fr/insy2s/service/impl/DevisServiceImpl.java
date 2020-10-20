@@ -3,6 +3,7 @@ package fr.insy2s.service.impl;
 import fr.insy2s.domain.*;
 import fr.insy2s.repository.AdresseRepository;
 import fr.insy2s.repository.ClientFournisseurRepository;
+import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DevisService;
 import fr.insy2s.repository.DevisRepository;
 import fr.insy2s.service.dto.*;
@@ -37,6 +38,8 @@ public class DevisServiceImpl implements DevisService {
     private final DocumentMapper documentMapper;
     private final ClientFournisseurRepository clientFournisseurRepository;
     private final AdresseRepository adresseRepository;
+    private final ClientFournisseurService clientFournisseurService;
+
 
 
 
@@ -47,7 +50,7 @@ public class DevisServiceImpl implements DevisService {
                             LigneProduitMapper ligneProduitMapper,
                             DocumentMapper documentMapper,
                             ClientFournisseurRepository clientFournisseurRepository,
-                            AdresseRepository adresseRepository) {
+                            AdresseRepository adresseRepository, ClientFournisseurService clientFournisseurService) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -56,6 +59,7 @@ public class DevisServiceImpl implements DevisService {
         this.documentMapper = documentMapper;
         this.clientFournisseurRepository = clientFournisseurRepository;
         this.adresseRepository = adresseRepository;
+        this.clientFournisseurService = clientFournisseurService;
     }
 
     @Override
@@ -181,22 +185,28 @@ public class DevisServiceImpl implements DevisService {
             quote.setDateLimite(wrapperQuote.getDateLimite());
 
             // informations client
-            ClientFournisseur customer = new ClientFournisseur();
-            customer.setNom(wrapperQuote.getClientFournisseurNom());
-            customer.setSiret(wrapperQuote.getClientFournisseurSiret());
-            customer.setTelephone(wrapperQuote.getClientFournisseurTelephone());
-            customer.setEmail(wrapperQuote.getClientFournisseurEmail());
-            quote.setClientFournisseur(clientFournisseurRepository.save(customer));
+            Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findOne(wrapperQuote.getClientFournisseurId());
 
-            // adresse client
-            Adresse adress = new Adresse();
-            adress.setNumeroRue(wrapperQuote.getNumeroRue());
-            adress.setBoitePostale(wrapperQuote.getBoitePostale());
-            adress.setNomRue(wrapperQuote.getBoitePostale());
-            adress.setCodePostal(wrapperQuote.getCodePostal());
-            adress.setVille(wrapperQuote.getVille());
-            adress.setPays(wrapperQuote.getPays());
-            customer.setAdresse(adresseRepository.save(adress));
+            if (clientFournisseurDTO.isPresent()) {
+                quote.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
+            } else {
+                ClientFournisseur customer = new ClientFournisseur();
+                customer.setNom(wrapperQuote.getClientFournisseurNom());
+                customer.setSiret(wrapperQuote.getClientFournisseurSiret());
+                customer.setTelephone(wrapperQuote.getClientFournisseurTelephone());
+                customer.setEmail(wrapperQuote.getClientFournisseurEmail());
+                quote.setClientFournisseur(clientFournisseurRepository.save(customer));
+
+                // adresse client
+                Adresse adress = new Adresse();
+                adress.setNumeroRue(wrapperQuote.getNumeroRue());
+                adress.setBoitePostale(wrapperQuote.getBoitePostale());
+                adress.setNomRue(wrapperQuote.getBoitePostale());
+                adress.setCodePostal(wrapperQuote.getCodePostal());
+                adress.setVille(wrapperQuote.getVille());
+                adress.setPays(wrapperQuote.getPays());
+                customer.setAdresse(adresseRepository.save(adress));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
