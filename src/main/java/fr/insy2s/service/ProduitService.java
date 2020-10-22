@@ -41,8 +41,9 @@ public interface ProduitService {
      * Delete the "id" produit.
      *
      * @param id the id of the entity.
+     * @return
      */
-    void delete(Long id);
+    boolean delete(Long id);
 
     /**
      * Get all the produits.
