@@ -1,8 +1,6 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.*;
-import fr.insy2s.repository.AdresseRepository;
-import fr.insy2s.repository.ClientFournisseurRepository;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DevisService;
 import fr.insy2s.repository.DevisRepository;
@@ -36,8 +34,6 @@ public class DevisServiceImpl implements DevisService {
     private final AdresseMapper adresseMapper;
     private final LigneProduitMapper ligneProduitMapper;
     private final DocumentMapper documentMapper;
-    private final ClientFournisseurRepository clientFournisseurRepository;
-    private final AdresseRepository adresseRepository;
     private final ClientFournisseurService clientFournisseurService;
 
 
@@ -49,16 +45,13 @@ public class DevisServiceImpl implements DevisService {
                             AdresseMapper adresseMapper,
                             LigneProduitMapper ligneProduitMapper,
                             DocumentMapper documentMapper,
-                            ClientFournisseurRepository clientFournisseurRepository,
-                            AdresseRepository adresseRepository, ClientFournisseurService clientFournisseurService) {
+                            ClientFournisseurService clientFournisseurService) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.adresseMapper = adresseMapper;
         this.ligneProduitMapper = ligneProduitMapper;
         this.documentMapper = documentMapper;
-        this.clientFournisseurRepository = clientFournisseurRepository;
-        this.adresseRepository = adresseRepository;
         this.clientFournisseurService = clientFournisseurService;
     }
 
@@ -186,27 +179,10 @@ public class DevisServiceImpl implements DevisService {
 
             // informations client
             Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findOne(wrapperQuote.getClientFournisseurId());
+            quote.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
 
-            if (clientFournisseurDTO.isPresent()) {
-                quote.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
-            } else {
-                ClientFournisseur customer = new ClientFournisseur();
-                customer.setNom(wrapperQuote.getClientFournisseurNom());
-                customer.setSiret(wrapperQuote.getClientFournisseurSiret());
-                customer.setTelephone(wrapperQuote.getClientFournisseurTelephone());
-                customer.setEmail(wrapperQuote.getClientFournisseurEmail());
-                quote.setClientFournisseur(clientFournisseurRepository.save(customer));
-
-                // adresse client
-                Adresse adress = new Adresse();
-                adress.setNumeroRue(wrapperQuote.getNumeroRue());
-                adress.setBoitePostale(wrapperQuote.getBoitePostale());
-                adress.setNomRue(wrapperQuote.getBoitePostale());
-                adress.setCodePostal(wrapperQuote.getCodePostal());
-                adress.setVille(wrapperQuote.getVille());
-                adress.setPays(wrapperQuote.getPays());
-                customer.setAdresse(adresseRepository.save(adress));
-            }
+            // lignes de produits
+            
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,7 +205,7 @@ public class DevisServiceImpl implements DevisService {
 
         for (Devis quote : quoteList) {
             if (quote.getNumDevis() != null && quote.getNumDevis() > quoteNumber) {
-                quoteNumber = quote.getNumDevis()+1;
+                quoteNumber = quote.getNumDevis();
             }
         }
         return quoteNumber;
