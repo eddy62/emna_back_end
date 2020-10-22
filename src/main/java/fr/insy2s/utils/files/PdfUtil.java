@@ -76,7 +76,6 @@ public class PdfUtil {
      */
 
     public static byte[] generateArchivedStatementAsBytes(WrapperArchivedStatement wrapper) throws JRException {
-        String userLogin = SecurityUtils.getCurrentUserLogin().get();
         Map<String, Object> params = new HashMap<>();
 
         return PdfUtil.generatePdfReportAsBytes(
