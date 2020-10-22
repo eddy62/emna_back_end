@@ -3,9 +3,9 @@ package fr.insy2s.service.impl;
 import fr.insy2s.domain.Devis;
 import fr.insy2s.domain.Document;
 import fr.insy2s.domain.LigneProduit;
-import fr.insy2s.repository.DevisRepository;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DevisService;
+import fr.insy2s.repository.DevisRepository;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.DevisDTO;
 import fr.insy2s.service.dto.DocumentDTO;
@@ -174,7 +174,6 @@ public class DevisServiceImpl implements DevisService {
 
             // lignes de produits
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -196,7 +195,7 @@ public class DevisServiceImpl implements DevisService {
 
         for (Devis quote : quoteList) {
             if (quote.getNumDevis() != null && quote.getNumDevis() > quoteNumber) {
-                quoteNumber = quote.getNumDevis()+1;
+                quoteNumber = quote.getNumDevis();
             }
         }
         return quoteNumber;
