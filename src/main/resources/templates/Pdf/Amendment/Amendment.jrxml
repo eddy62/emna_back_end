@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Amendement" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1c5e5386-1bd2-4725-947b-1bd4aabfadb1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
@@ -88,7 +88,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="199" y="20" width="160" height="30" uuid="776119dc-455d-4aba-8d46-a58399e2148e"/>
-				<textElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="24"/>
 				</textElement>
 				<textFieldExpression><![CDATA[IF($F{titleContract}!=null,$F{titleContract},"")]]></textFieldExpression>
@@ -183,11 +183,11 @@
 							</jr:columnHeader>
 							<jr:detailCell style="Table 1_TD" height="30">
 								<textField>
-									<reportElement positionType="Float" x="0" y="0" width="282" height="30" uuid="31e86eda-08e9-4532-891d-be97a07f3706"/>
+									<reportElement x="0" y="0" width="282" height="30" uuid="31e86eda-08e9-4532-891d-be97a07f3706"/>
 									<textElement textAlignment="Left" verticalAlignment="Middle">
 										<font size="12"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{inputArticle}+" :"]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{titleArticle}+" :"]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -200,7 +200,7 @@
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font size="12" isBold="true"/>
 									</textElement>
-									<text><![CDATA[titleArticle]]></text>
+									<text><![CDATA[Saisie]]></text>
 								</staticText>
 							</jr:columnHeader>
 							<jr:detailCell style="Table 1_TD" height="30">
@@ -209,7 +209,7 @@
 									<textElement textAlignment="Left" verticalAlignment="Middle">
 										<font size="12"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{titleArticle}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{inputArticle}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>

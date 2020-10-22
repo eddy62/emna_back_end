@@ -140,9 +140,9 @@ public class AvenantResource {
         AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/avenant/pdf/{idAmendment}")
-    public ResponseEntity<byte[]> getPDFAmendement(@PathVariable Long idAmendment) throws JRException{
+    public ResponseEntity<byte[]> getPDFAmendment(@PathVariable Long idAmendment) throws JRException{
         log.debug("REST request to get avenant by the id ",idAmendment);
-        byte[] bytes = avenantService.getPDFAmendement(idAmendment);
+        byte[] bytes = avenantService.getPDFAmendment(idAmendment);
         return ResponseEntity.ok()
             .header("Content-Type", "application/pdf; charset=UTF-8")
             .body(bytes);

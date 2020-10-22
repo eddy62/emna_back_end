@@ -54,5 +54,5 @@ public interface AvenantService {
      * @param idAmendment id of Amendment
      * @return
      */
-    byte[] getPDFAmendement(Long idAmendment) throws JRException;
+    byte[] getPDFAmendment(Long idAmendment) throws JRException;
 }

@@ -82,7 +82,7 @@ public class AvenantServiceImpl implements AvenantService {
     }
 
     @Override
-    public byte[] getPDFAmendement(Long idAmendment) throws JRException {
+    public byte[] getPDFAmendment(Long idAmendment) throws JRException {
         log.debug("Request to get wrapperAmendment id: " + idAmendment);
         Avenant amendment = avenantRepository.getAmendmentById(idAmendment);
         SaisieArticle sA = new ArrayList<>(amendment.getListeSaisieArticles()).get(0);
