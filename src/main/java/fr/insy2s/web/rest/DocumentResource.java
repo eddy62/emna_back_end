@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -151,7 +154,11 @@ public class DocumentResource {
 
     @GetMapping("/getPdfFile/{path}")
     public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
-        Path completePath = Paths.get("./fichiers/social/variablesdepaie/" + path);
+        log.debug("path avant : {}", path);
+        path = path.replaceAll("¤¤¤", "/");
+
+        Path completePath = Paths.get(path);
+        log.debug("path completePath : {}", completePath);
         byte[] pdfContents = null;
         try {
             pdfContents = Files.readAllBytes(completePath);
@@ -159,10 +166,8 @@ public class DocumentResource {
             e.printStackTrace();
         }
         HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.add("content-disposition", "attachment; filename=" + path);
-        /*headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");*/
+
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
             pdfContents, headers, HttpStatus.OK);
         return response;
