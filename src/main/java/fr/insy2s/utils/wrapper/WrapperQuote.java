@@ -1,5 +1,7 @@
 package fr.insy2s.utils.wrapper;
 
+import fr.insy2s.domain.ClientFournisseur;
+import fr.insy2s.domain.Devis;
 import fr.insy2s.service.dto.*;
 
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ public class WrapperQuote {
     private String message;
     private LocalDate dateCreation;
     private LocalDate dateLimite;
+    private Long etatDevis;
 
     // informations client
     private Long clientFournisseurId;
@@ -42,7 +45,7 @@ public class WrapperQuote {
     private String pays;
 
     // lignes produits
-    private List<LigneProduitDTO> ligneProduitDTOList;
+    private List<WrapperLigneProduit> ligneProduits;
 
     // documents relatifs
     private List<DocumentDTO> documentDTOList;
@@ -50,29 +53,28 @@ public class WrapperQuote {
     // prix TTC
     private BigDecimal prixTTC;
 
-    public WrapperQuote() {
+    public WrapperQuote() {}
 
-    }
-
-    public WrapperQuote(DevisDTO devisDTO, ClientFournisseurDTO clientFournisseurDTO, AdresseDTO adresseDTO, List<LigneProduitDTO> ligneProduitDTOList, List<DocumentDTO> documentDTOList, BigDecimal prixTTC) {
+    public WrapperQuote(Devis devis, AdresseDTO adresseDTO, List<WrapperLigneProduit> ligneProduits,List<DocumentDTO> documentDTOList,  BigDecimal prixTTC) {
 
         // informations devis
-        this.id = devisDTO.getId();
-        this.numDevis = devisDTO.getNumDevis();
-        this.nom = devisDTO.getNom();
-        this.message = devisDTO.getMessage();
-        this.dateCreation = devisDTO.getDateCreation();
-        this.dateLimite = devisDTO.getDateLimite();
+        this.id = devis.getId();
+        this.numDevis = devis.getNumDevis();
+        this.nom = devis.getNom();
+        this.message = devis.getMessage();
+        this.dateCreation = devis.getDateCreation();
+        this.dateLimite = devis.getDateLimite();
 
         // informations client
-        this.clientFournisseurId = devisDTO.getClientFournisseurId();
-        this.clientFournisseurNom = clientFournisseurDTO.getNom();
-        this.clientFournisseurSiret = clientFournisseurDTO.getSiret();
-        this.clientFournisseurTelephone = clientFournisseurDTO.getTelephone();
-        this.clientFournisseurEmail = clientFournisseurDTO.getEmail();
+        ClientFournisseur clientFournisseur = devis.getClientFournisseur();
+        this.clientFournisseurId = clientFournisseur.getId();
+        this.clientFournisseurNom = clientFournisseur.getNom();
+        this.clientFournisseurSiret = clientFournisseur.getSiret();
+        this.clientFournisseurTelephone = clientFournisseur.getTelephone();
+        this.clientFournisseurEmail = clientFournisseur.getEmail();
 
         // adresse client
-        this.adresseId = clientFournisseurDTO.getAdresseId();
+        this.adresseId = adresseDTO.getId();
         this.numeroRue = adresseDTO.getNumeroRue();
         this.boitePostale = adresseDTO.getBoitePostale();
         this.nomRue = adresseDTO.getNomRue();
@@ -81,7 +83,7 @@ public class WrapperQuote {
         this.pays = adresseDTO.getPays();
 
         // lignes produits
-        this.ligneProduitDTOList = ligneProduitDTOList;
+        this.ligneProduits = ligneProduits;
 
         // documents relatifs
         this.documentDTOList = documentDTOList;
@@ -89,7 +91,6 @@ public class WrapperQuote {
         // prix TTC
         this.prixTTC = prixTTC;
     }
-
 
     // getter & setter
 
@@ -237,12 +238,12 @@ public class WrapperQuote {
         this.pays = pays;
     }
 
-    public List<LigneProduitDTO> getLigneProduitDTOList() {
-        return ligneProduitDTOList;
+    public List<WrapperLigneProduit> getLigneProduits() {
+        return ligneProduits;
     }
 
-    public void setLigneProduitDTOList(List<LigneProduitDTO> ligneProduitDTOList) {
-        this.ligneProduitDTOList = ligneProduitDTOList;
+    public void setLigneProduits(List<WrapperLigneProduit> ligneProduits) {
+        this.ligneProduits = ligneProduits;
     }
 
     public List<DocumentDTO> getDocumentDTOList() {
@@ -261,30 +262,11 @@ public class WrapperQuote {
         this.prixTTC = prixTTC;
     }
 
-    @Override
-    public String toString() {
-        return "WrapperQuote{" +
-            "id=" + id +
-            ", numDevis=" + numDevis +
-            ", nom='" + nom + '\'' +
-            ", message='" + message + '\'' +
-            ", dateCreation=" + dateCreation +
-            ", dateLimite=" + dateLimite +
-            ", clientFournisseurId=" + clientFournisseurId +
-            ", clientFournisseurNom='" + clientFournisseurNom + '\'' +
-            ", clientFournisseurSiret='" + clientFournisseurSiret + '\'' +
-            ", clientFournisseurTelephone='" + clientFournisseurTelephone + '\'' +
-            ", clientFournisseurEmail='" + clientFournisseurEmail + '\'' +
-            ", adresseId=" + adresseId +
-            ", numeroRue='" + numeroRue + '\'' +
-            ", boitePostale='" + boitePostale + '\'' +
-            ", nomRue='" + nomRue + '\'' +
-            ", codePostal='" + codePostal + '\'' +
-            ", ville='" + ville + '\'' +
-            ", pays='" + pays + '\'' +
-            ", ligneProduitDTOList=" + ligneProduitDTOList +
-            ", documentDTOList=" + documentDTOList +
-            ", prixTTC=" + prixTTC +
-            '}';
+    public Long getEtatDevis() {
+        return etatDevis;
+    }
+
+    public void setEtatDevis(Long etatDevis) {
+        this.etatDevis = etatDevis;
     }
 }
