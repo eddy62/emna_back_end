@@ -1,20 +1,27 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.service.AvenantService;
 import fr.insy2s.domain.Avenant;
 import fr.insy2s.repository.AvenantRepository;
 import fr.insy2s.service.dto.AvenantDTO;
 import fr.insy2s.service.mapper.AvenantMapper;
+import fr.insy2s.utils.files.PdfUtil;
+import fr.insy2s.utils.wrapper.WrapperAmendment;
+import fr.insy2s.utils.wrapper.WrapperSingleInputAmendment;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Service Implementation for managing {@link Avenant}.
@@ -72,5 +79,17 @@ public class AvenantServiceImpl implements AvenantService {
         return avenantRepository.getAllAmendmentByIdContract(idContract)
             .stream().map(avenantMapper::toDto)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public byte[] getPDFAmendment(Long idAmendment) throws JRException {
+        log.debug("Request to get wrapperAmendment id: " + idAmendment);
+        Avenant amendment = avenantRepository.getAmendmentById(idAmendment);
+        SaisieArticle sA = new ArrayList<>(amendment.getListeSaisieArticles()).get(0);
+        List<SaisieArticle> saisieArticles = new ArrayList<>(amendment.getListeSaisieArticles());
+        Stream<WrapperSingleInputAmendment> stream = saisieArticles.stream().map(s -> new WrapperSingleInputAmendment(s));
+        List<WrapperSingleInputAmendment> w = stream.collect(Collectors.toList());
+        WrapperAmendment wrapperAmendment = new WrapperAmendment(sA.getContrat(), sA.getContrat().getEmploye().getSociete(), w);
+        return PdfUtil.generateAmendmentAsBytes(wrapperAmendment);
     }
 }
