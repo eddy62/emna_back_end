@@ -73,4 +73,13 @@ public interface DevisService {
      * @return the number of the new quote.
      */
     Long findQuoteNumber(Long id);
+    
+    /**
+     * Change the state of the entity
+     * 
+     * @param id the id of the entity
+     * @return the new entity with him state changed
+     */
+    
+    Optional<DevisDTO> changeState(Long id);
 }

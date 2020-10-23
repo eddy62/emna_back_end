@@ -10,6 +10,7 @@ import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.DevisDTO;
 import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.mapper.*;
+import fr.insy2s.utils.QuoteStateConstants;
 import fr.insy2s.utils.TotalUtil;
 import fr.insy2s.utils.wrapper.WrapperLigneProduit;
 import fr.insy2s.utils.wrapper.WrapperQuote;
@@ -44,7 +45,8 @@ public class DevisServiceImpl implements DevisService {
                             ClientFournisseurMapper clientFournisseurMapper,
                             AdresseMapper adresseMapper,
                             DocumentMapper documentMapper,
-                            ClientFournisseurService clientFournisseurService) {
+                            ClientFournisseurService clientFournisseurService
+                            ,EtatDevisMapper etatDevisMapper) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -109,6 +111,7 @@ public class DevisServiceImpl implements DevisService {
             }
 
             WrapperQuote wrapperQuote = new WrapperQuote(
+         
                 devis,
                 adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
                 ligneProduits,
@@ -200,4 +203,24 @@ public class DevisServiceImpl implements DevisService {
         }
         return quoteNumber;
     }
+
+    @Override
+	public Optional<DevisDTO> changeState(Long id) {
+		Optional <DevisDTO> opRes = devisRepository.findById(id).map(devisMapper::toDto);
+		DevisDTO quote = null;
+		if(opRes.isPresent()) {
+			quote = opRes.get();
+			long idStateQuote = quote.getEtatDevisId();
+			if(idStateQuote==QuoteStateConstants.DEVIS_ARCHIVE) {
+				quote.setEtatDevisId(QuoteStateConstants.DEVIS_SIGNE);
+			}else if(idStateQuote==QuoteStateConstants.DEVIS_SIGNE) {
+				quote.setEtatDevisId(QuoteStateConstants.DEVIS_ARCHIVE);
+			}
+			devisRepository.save(devisMapper.toEntity(quote));
+			
+			
+		}
+		Optional<DevisDTO>optional = Optional.of(quote);
+		return optional;
+	}
 }
