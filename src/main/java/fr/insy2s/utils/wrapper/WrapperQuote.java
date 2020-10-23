@@ -24,6 +24,7 @@ public class WrapperQuote {
     private String message;
     private LocalDate dateCreation;
     private LocalDate dateLimite;
+    private String etat;
 
     // informations client
     private Long clientFournisseurId;
@@ -54,7 +55,7 @@ public class WrapperQuote {
 
     }
 
-    public WrapperQuote(DevisDTO devisDTO, ClientFournisseurDTO clientFournisseurDTO, AdresseDTO adresseDTO, List<LigneProduitDTO> ligneProduitDTOList, List<DocumentDTO> documentDTOList, BigDecimal prixTTC) {
+    public WrapperQuote(EtatDevisDTO stateDevis,DevisDTO devisDTO, ClientFournisseurDTO clientFournisseurDTO, AdresseDTO adresseDTO, List<LigneProduitDTO> ligneProduitDTOList, List<DocumentDTO> documentDTOList, BigDecimal prixTTC) {
 
         // informations devis
         this.id = devisDTO.getId();
@@ -63,6 +64,7 @@ public class WrapperQuote {
         this.message = devisDTO.getMessage();
         this.dateCreation = devisDTO.getDateCreation();
         this.dateLimite = devisDTO.getDateLimite();
+        this.etat=stateDevis.getLibelle();
 
         // informations client
         this.clientFournisseurId = devisDTO.getClientFournisseurId();
@@ -260,6 +262,14 @@ public class WrapperQuote {
     public void setPrixTTC(BigDecimal prixTTC) {
         this.prixTTC = prixTTC;
     }
+    
+    public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
 
     @Override
     public String toString() {
@@ -270,6 +280,7 @@ public class WrapperQuote {
             ", message='" + message + '\'' +
             ", dateCreation=" + dateCreation +
             ", dateLimite=" + dateLimite +
+            ", état= "+etat+
             ", clientFournisseurId=" + clientFournisseurId +
             ", clientFournisseurNom='" + clientFournisseurNom + '\'' +
             ", clientFournisseurSiret='" + clientFournisseurSiret + '\'' +
@@ -287,4 +298,6 @@ public class WrapperQuote {
             ", prixTTC=" + prixTTC +
             '}';
     }
+
+	
 }

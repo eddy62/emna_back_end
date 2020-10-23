@@ -7,6 +7,7 @@ import fr.insy2s.service.DevisService;
 import fr.insy2s.repository.DevisRepository;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
+import fr.insy2s.utils.QuoteStateConstants;
 import fr.insy2s.utils.TotalUtil;
 import fr.insy2s.utils.wrapper.WrapperQuote;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ public class DevisServiceImpl implements DevisService {
     private final DocumentMapper documentMapper;
     private final ClientFournisseurRepository clientFournisseurRepository;
     private final AdresseRepository adresseRepository;
+    private final EtatDevisMapper etatDevisMapper;
 
 
 
@@ -47,7 +49,7 @@ public class DevisServiceImpl implements DevisService {
                             LigneProduitMapper ligneProduitMapper,
                             DocumentMapper documentMapper,
                             ClientFournisseurRepository clientFournisseurRepository,
-                            AdresseRepository adresseRepository) {
+                            AdresseRepository adresseRepository,EtatDevisMapper etatDevisMapper) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -56,6 +58,7 @@ public class DevisServiceImpl implements DevisService {
         this.documentMapper = documentMapper;
         this.clientFournisseurRepository = clientFournisseurRepository;
         this.adresseRepository = adresseRepository;
+        this.etatDevisMapper = etatDevisMapper;
     }
 
     @Override
@@ -114,6 +117,7 @@ public class DevisServiceImpl implements DevisService {
             }
 
             WrapperQuote wrapperQuote = new WrapperQuote(
+            	etatDevisMapper.toDto(devis.getEtatDevis()),
                 devisMapper.toDto(devis),
                 clientFournisseurMapper.toDto(devis.getClientFournisseur()),
                 adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
@@ -151,6 +155,7 @@ public class DevisServiceImpl implements DevisService {
             }
 
             WrapperQuote wrapperQuote = new WrapperQuote(
+            	etatDevisMapper.toDto(devis.getEtatDevis()),
                 devisMapper.toDto(devis),
                 clientFournisseurMapper.toDto(devis.getClientFournisseur()),
                 adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
@@ -224,4 +229,24 @@ public class DevisServiceImpl implements DevisService {
         }
         return quoteNumber;
     }
+
+    @Override
+	public Optional<DevisDTO> changeState(Long id) {
+		Optional <DevisDTO> opRes = devisRepository.findById(id).map(devisMapper::toDto);
+		DevisDTO quote = null;
+		if(opRes.isPresent()) {
+			quote = opRes.get();
+			long idStateQuote = quote.getEtatDevisId();
+			if(idStateQuote==QuoteStateConstants.DEVIS_ARCHIVE) {
+				quote.setEtatDevisId(QuoteStateConstants.DEVIS_SIGNE);
+			}else if(idStateQuote==QuoteStateConstants.DEVIS_SIGNE) {
+				quote.setEtatDevisId(QuoteStateConstants.DEVIS_ARCHIVE);
+			}
+			devisRepository.save(devisMapper.toEntity(quote));
+			
+			
+		}
+		Optional<DevisDTO>optional = Optional.of(quote);
+		return optional;
+	}
 }

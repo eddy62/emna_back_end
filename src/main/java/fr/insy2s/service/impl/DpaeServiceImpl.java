@@ -120,6 +120,7 @@ public class DpaeServiceImpl implements DpaeService {
             final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
             final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
             final AdresseDTO adresseDTO = adresseService.findOne(societeDTO.getAdresseId()).get();
+            // tester nullité d'un élément au moins
             wrapperDpae = Optional.of(new WrapperDpae(dpaeDTO, societeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO));
         }else{
             wrapperDpae = Optional.empty();
