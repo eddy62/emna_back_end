@@ -26,7 +26,7 @@ public class WrapperQuote {
     private String message;
     private LocalDate dateCreation;
     private LocalDate dateLimite;
-    private Long etatDevis;
+    private String etat;
 
     // informations client
     private Long clientFournisseurId;
@@ -57,7 +57,10 @@ public class WrapperQuote {
 
     public WrapperQuote(Devis devis, AdresseDTO adresseDTO, List<WrapperLigneProduit> ligneProduits,List<DocumentDTO> documentDTOList,  BigDecimal prixTTC) {
 
+
         // informations devis
+
+        this.etat=devis.getEtatDevis().getLibelle();
         this.id = devis.getId();
         this.numDevis = devis.getNumDevis();
         this.nom = devis.getNom();
@@ -261,12 +264,14 @@ public class WrapperQuote {
     public void setPrixTTC(BigDecimal prixTTC) {
         this.prixTTC = prixTTC;
     }
+    
+    public String getEtat() {
+		return etat;
+	}
 
-    public Long getEtatDevis() {
-        return etatDevis;
-    }
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
 
-    public void setEtatDevis(Long etatDevis) {
-        this.etatDevis = etatDevis;
-    }
+
 }
