@@ -1,30 +1,49 @@
 package fr.insy2s.service.dto;
 
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * A DTO for the {@link fr.insy2s.domain.Produit} entity.
  */
+
 public class ProduitDTO implements Serializable {
-    
+    @NotNull()
+    @Min(1L)
     private Long id;
-
+    @NotNull()
     private String nom;
-
+    @NotNull()
     private String reference;
-
     private BigDecimal tva;
-
+    @NotNull()
+    @Min(0)
     private BigDecimal prix;
-
     private String unite;
-
     private String description;
-
-
+    @NotNull()
+    @Min(1L)
     private Long societeId;
-    
+
+    public ProduitDTO() {
+    }
+
+    public ProduitDTO(Long id, String nom, String reference, BigDecimal tva, @Min(0) BigDecimal prix, String unite,
+                      String description, Long societeId) {
+        this.id = id;
+        this.nom = nom;
+        this.reference = reference;
+        this.tva = tva;
+        this.prix = prix;
+        this.unite = unite;
+        this.description = description;
+        this.societeId = societeId;
+    }
+
     public Long getId() {
         return id;
     }
