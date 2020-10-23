@@ -1,5 +1,6 @@
 package fr.insy2s.web.rest;
 
+import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.DevisService;
 import fr.insy2s.utils.wrapper.WrapperQuote;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
@@ -11,10 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -168,5 +172,18 @@ public class DevisResource {
     public Long getNewQuoteNumber(@PathVariable Long id) {
         log.debug("REST request to get the number of the new quote : {}", id);
         return devisService.findQuoteNumber(id);
+    }
+    /**
+     * {@code PUT /quote/stateChange/{id}} : Change the state of the quote  .
+     * @param id
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the devisDTO, or with status {@code 404 (Not Found)}
+     */
+    
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")"+" || hasAuthority(\"" + AuthoritiesConstants.SOCIETY +"\")")
+    @PutMapping("/quote/stateChange/{id}")
+    public ResponseEntity<DevisDTO> updateStateQuote(@PathVariable Long id, Principal principal){
+   System.out.println(principal.getName());
+    	
+    	return ResponseUtil.wrapOrNotFound(devisService.changeState(id));
     }
 }
