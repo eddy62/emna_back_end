@@ -12,10 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -157,14 +161,21 @@ public class ProduitResource {
      * @param produitId the id of the produitDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.SOCIETY + "\")")
+    @PreAuthorize("hasAuthority('" + AuthoritiesConstants.SOCIETY + "')" +
+        " || hasAuthority('" + AuthoritiesConstants.ADMIN + "')")
     @DeleteMapping("/produits/{produitId}/user/{userId}")
-    public ResponseEntity<Void> delete(@PathVariable Long produitId,@PathVariable Long userId) {
+    public ResponseEntity<Void> delete(@PathVariable Long produitId, @PathVariable Long userId, Authentication authentication) {
         log.debug("REST request to delete Produit : {}", produitId);
-       if(!produitService.connectedUserIsSociete() || !produitService.verfyIdOfUserConnected(userId)){
-           throw new BadRequestAlertException("Vous n'avez pas le droit de supprimer ", ENTITY_NAME, "pas le droit");
-       }
-        produitService.delete(produitId);
+        boolean hasUserRole = authentication.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals(AuthoritiesConstants.ADMIN));
+        if (!hasUserRole) {
+            if (!produitService.connectedUserIsSociete() || !produitService.verfyIdOfUserConnected(userId)) {
+                throw new BadRequestAlertException("Vous n'avez pas le droit de supprimer ", ENTITY_NAME, "pas le droit");
+            }
+        }
+        if(!produitService.delete(produitId)){
+            throw new BadRequestAlertException("Vous ne pouvez pas supprimer un produit déja commandé ", ENTITY_NAME, "pas le droit");
+        }
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, produitId.toString())).build();
     }
 }

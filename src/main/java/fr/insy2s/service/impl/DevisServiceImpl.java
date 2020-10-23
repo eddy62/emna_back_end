@@ -1,18 +1,21 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.domain.*;
-import fr.insy2s.repository.AdresseRepository;
-import fr.insy2s.repository.ClientFournisseurRepository;
+import fr.insy2s.domain.Devis;
+import fr.insy2s.domain.Document;
+import fr.insy2s.domain.LigneProduit;
+import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DevisService;
 import fr.insy2s.repository.DevisRepository;
-import fr.insy2s.service.dto.*;
+import fr.insy2s.service.dto.ClientFournisseurDTO;
+import fr.insy2s.service.dto.DevisDTO;
+import fr.insy2s.service.dto.DocumentDTO;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.QuoteStateConstants;
 import fr.insy2s.utils.TotalUtil;
+import fr.insy2s.utils.wrapper.WrapperLigneProduit;
 import fr.insy2s.utils.wrapper.WrapperQuote;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,31 +37,22 @@ public class DevisServiceImpl implements DevisService {
     private final DevisMapper devisMapper;
     private final ClientFournisseurMapper clientFournisseurMapper;
     private final AdresseMapper adresseMapper;
-    private final LigneProduitMapper ligneProduitMapper;
     private final DocumentMapper documentMapper;
-    private final ClientFournisseurRepository clientFournisseurRepository;
-    private final AdresseRepository adresseRepository;
-    private final EtatDevisMapper etatDevisMapper;
-
-
+    private final ClientFournisseurService clientFournisseurService;
 
     public DevisServiceImpl(DevisRepository devisRepository,
                             DevisMapper devisMapper,
                             ClientFournisseurMapper clientFournisseurMapper,
                             AdresseMapper adresseMapper,
-                            LigneProduitMapper ligneProduitMapper,
                             DocumentMapper documentMapper,
-                            ClientFournisseurRepository clientFournisseurRepository,
-                            AdresseRepository adresseRepository,EtatDevisMapper etatDevisMapper) {
+                            ClientFournisseurService clientFournisseurService
+                            ,EtatDevisMapper etatDevisMapper) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.adresseMapper = adresseMapper;
-        this.ligneProduitMapper = ligneProduitMapper;
         this.documentMapper = documentMapper;
-        this.clientFournisseurRepository = clientFournisseurRepository;
-        this.adresseRepository = adresseRepository;
-        this.etatDevisMapper = etatDevisMapper;
+        this.clientFournisseurService = clientFournisseurService;
     }
 
     @Override
@@ -111,19 +105,19 @@ public class DevisServiceImpl implements DevisService {
                 documentDTOList.add(documentMapper.toDto(document));
             }
 
-            List<LigneProduitDTO> ligneProduitDTOList = new ArrayList<>();
+            List<WrapperLigneProduit> ligneProduits = new ArrayList<>();
             for (LigneProduit ligneProduit : devis.getListeLigneProduits()){
-                ligneProduitDTOList.add(ligneProduitMapper.toDto(ligneProduit));
+                ligneProduits.add(new WrapperLigneProduit(ligneProduit));
             }
 
             WrapperQuote wrapperQuote = new WrapperQuote(
-            	etatDevisMapper.toDto(devis.getEtatDevis()),
-                devisMapper.toDto(devis),
-                clientFournisseurMapper.toDto(devis.getClientFournisseur()),
+         
+                devis,
                 adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
-                ligneProduitDTOList,
+                ligneProduits,
                 documentDTOList,
-                TotalUtil.getTTCDevis(devis));
+                TotalUtil.getTTCDevis(devis)
+            );
 
             wrapperQuoteList.add(wrapperQuote);
         }
@@ -140,32 +134,24 @@ public class DevisServiceImpl implements DevisService {
     public WrapperQuote findQuote(Long id) {
         log.debug("Request to get Quote : {}", id);
 
-        List<Devis> quoteList = devisRepository.findQuoteById(id);
+        Optional<Devis> optionalDevis = devisRepository.findDevisById(id);
+        Devis devis = optionalDevis.get();
 
-        for (Devis devis : quoteList){
+        List<WrapperLigneProduit> ligneProduits = new ArrayList<>();
+        devis.getListeLigneProduits().forEach(ligneProduit -> ligneProduits.add(new WrapperLigneProduit(ligneProduit)));
 
-            List<DocumentDTO> documentDTOList = new ArrayList<>();
-            for (Document document : devis.getListeDocuments()){
-                documentDTOList.add(documentMapper.toDto(document));
-            }
-
-            List<LigneProduitDTO> ligneProduitDTOList = new ArrayList<>();
-            for (LigneProduit ligneProduit : devis.getListeLigneProduits()){
-                ligneProduitDTOList.add(ligneProduitMapper.toDto(ligneProduit));
-            }
-
-            WrapperQuote wrapperQuote = new WrapperQuote(
-            	etatDevisMapper.toDto(devis.getEtatDevis()),
-                devisMapper.toDto(devis),
-                clientFournisseurMapper.toDto(devis.getClientFournisseur()),
-                adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
-                ligneProduitDTOList,
-                documentDTOList,
-                TotalUtil.getTTCDevis(devis));
-
-            return wrapperQuote;
+        List<DocumentDTO> documentDTOList = new ArrayList<>();
+        for (Document document : devis.getListeDocuments()){
+            documentDTOList.add(documentMapper.toDto(document));
         }
-     return null;
+
+        return new WrapperQuote(
+            devis,
+            adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
+            ligneProduits,
+            documentDTOList,
+            TotalUtil.getTTCDevis(devis)
+        );
     }
 
     /**
@@ -186,22 +172,10 @@ public class DevisServiceImpl implements DevisService {
             quote.setDateLimite(wrapperQuote.getDateLimite());
 
             // informations client
-            ClientFournisseur customer = new ClientFournisseur();
-            customer.setNom(wrapperQuote.getClientFournisseurNom());
-            customer.setSiret(wrapperQuote.getClientFournisseurSiret());
-            customer.setTelephone(wrapperQuote.getClientFournisseurTelephone());
-            customer.setEmail(wrapperQuote.getClientFournisseurEmail());
-            quote.setClientFournisseur(clientFournisseurRepository.save(customer));
+            Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findOne(wrapperQuote.getClientFournisseurId());
+            quote.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
 
-            // adresse client
-            Adresse adress = new Adresse();
-            adress.setNumeroRue(wrapperQuote.getNumeroRue());
-            adress.setBoitePostale(wrapperQuote.getBoitePostale());
-            adress.setNomRue(wrapperQuote.getBoitePostale());
-            adress.setCodePostal(wrapperQuote.getCodePostal());
-            adress.setVille(wrapperQuote.getVille());
-            adress.setPays(wrapperQuote.getPays());
-            customer.setAdresse(adresseRepository.save(adress));
+            // lignes de produits
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,7 +198,7 @@ public class DevisServiceImpl implements DevisService {
 
         for (Devis quote : quoteList) {
             if (quote.getNumDevis() != null && quote.getNumDevis() > quoteNumber) {
-                quoteNumber = quote.getNumDevis()+1;
+                quoteNumber = quote.getNumDevis();
             }
         }
         return quoteNumber;

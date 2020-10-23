@@ -145,27 +145,37 @@ public class DocumentResource {
     /**
      * {@code GET  /documentsPdf/:id} : get PDF File by path name.
      *
-     * @param path the path of File.
+     * @param id the path of File.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} PDF File.
      */
 
-    @GetMapping("/getPdfFile/{path}")
-    public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
-        Path completePath = Paths.get("./fichiers/social/variablesdepaie/" + path);
-        byte[] pdfContents = null;
-        try {
-            pdfContents = Files.readAllBytes(completePath);
-        } catch (IOException e) {
-            e.printStackTrace();
+    @GetMapping("/getPdfFile/{id}")
+    public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable Long id) {
+        log.debug("path avant : {}", id);
+        //path = path.replaceAll("¤¤¤", "/");
+        //Optional<ResponseEntity<byte[]>> response = Optional.empty();//new ResponseEntity<byte[]>();
+        Optional <DocumentDTO> documentDTO = documentService.findOne(id);
+        if(documentDTO.isPresent()) {
+            String path = documentDTO.get().getCheminFichier();
+            Path completePath = Paths.get(path);
+            byte[] pdfContents = null;
+            try {
+                pdfContents = Files.readAllBytes(completePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("content-disposition", "attachment; filename=" + path);
+
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+                pdfContents, headers, HttpStatus.OK);
+            return response;
         }
-        HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        headers.add("content-disposition", "attachment; filename=" + path);
-        /*headers.setContentDispositionFormData(filename, filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");*/
-        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
-            pdfContents, headers, HttpStatus.OK);
-        return response;
+        else {
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+                null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
     }
 
 
