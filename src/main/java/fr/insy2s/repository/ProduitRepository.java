@@ -17,12 +17,21 @@ import java.util.Optional;
 @Repository
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
-     /**
+    /**
      * get liste th clientFounisseur by id societe
+     *
      * @param id the societe
      * @return liste the clientFournisseur
      */
     List<Produit> findBySocieteId(@Param(value = "id") Long id);
 
 
+    @Query("" +
+        "select (count(p) > 0) from Produit p " +
+        "left join Societe s on p.societe.id = s.id " +
+        "left join User u on u.id =s.user.id where u.id = :userId " +
+        "and p.id = :productId and s.id = :societyId"
+    )
+    boolean canUserUpdateProduct(@Param("societyId") Long societyId , @Param("userId") Long userId, @Param("productId")
+        Long productId);
 }
