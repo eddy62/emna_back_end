@@ -73,4 +73,5 @@ public interface DevisService {
      * @return the number of the new quote.
      */
     Long findQuoteNumber(Long id);
+
 }

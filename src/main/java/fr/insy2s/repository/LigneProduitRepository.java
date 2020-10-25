@@ -18,4 +18,6 @@ public interface LigneProduitRepository extends JpaRepository<LigneProduit, Long
     @Query("select l from LigneProduit l " +
         "where l.facture.id =: idFacture")
     List<LigneProduit> getLigneProduitByIdFacture(@Param("idFacture") Long idFacture);
+
+    void deleteByDevis_Id(Long id);
 }

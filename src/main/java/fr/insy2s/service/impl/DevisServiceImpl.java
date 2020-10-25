@@ -4,6 +4,7 @@ import fr.insy2s.domain.*;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DevisService;
 import fr.insy2s.repository.DevisRepository;
+import fr.insy2s.service.LigneProduitService;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.TotalUtil;
@@ -35,6 +36,7 @@ public class DevisServiceImpl implements DevisService {
     private final LigneProduitMapper ligneProduitMapper;
     private final DocumentMapper documentMapper;
     private final ClientFournisseurService clientFournisseurService;
+    private final LigneProduitService ligneProduitService;
 
 
 
@@ -45,7 +47,7 @@ public class DevisServiceImpl implements DevisService {
                             AdresseMapper adresseMapper,
                             LigneProduitMapper ligneProduitMapper,
                             DocumentMapper documentMapper,
-                            ClientFournisseurService clientFournisseurService) {
+                            ClientFournisseurService clientFournisseurService, LigneProduitService ligneProduitService) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
@@ -53,6 +55,7 @@ public class DevisServiceImpl implements DevisService {
         this.ligneProduitMapper = ligneProduitMapper;
         this.documentMapper = documentMapper;
         this.clientFournisseurService = clientFournisseurService;
+        this.ligneProduitService = ligneProduitService;
     }
 
     @Override
@@ -83,6 +86,7 @@ public class DevisServiceImpl implements DevisService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Devis : {}", id);
+        ligneProduitService.deleteByDevisId(id);
         devisRepository.deleteById(id);
     }
 
@@ -182,7 +186,7 @@ public class DevisServiceImpl implements DevisService {
             quote.setClientFournisseur(clientFournisseurMapper.toEntity(clientFournisseurDTO.get()));
 
             // lignes de produits
-            
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,4 +214,5 @@ public class DevisServiceImpl implements DevisService {
         }
         return quoteNumber;
     }
+
 }
