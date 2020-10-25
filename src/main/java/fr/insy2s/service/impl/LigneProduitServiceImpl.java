@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
+
 public class LigneProduitServiceImpl implements LigneProduitService {
 
     private final Logger log = LoggerFactory.getLogger(LigneProduitServiceImpl.class);
@@ -64,5 +65,10 @@ public class LigneProduitServiceImpl implements LigneProduitService {
     public void delete(Long id) {
         log.debug("Request to delete LigneProduit : {}", id);
         ligneProduitRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteByDevisId(Long id) {
+        ligneProduitRepository.deleteByDevis_Id(id);
     }
 }

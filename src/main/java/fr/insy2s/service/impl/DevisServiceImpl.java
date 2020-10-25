@@ -9,6 +9,8 @@ import fr.insy2s.repository.DevisRepository;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.DevisDTO;
 import fr.insy2s.service.dto.DocumentDTO;
+import fr.insy2s.service.LigneProduitService;
+import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.QuoteStateConstants;
 import fr.insy2s.utils.TotalUtil;
@@ -39,6 +41,7 @@ public class DevisServiceImpl implements DevisService {
     private final AdresseMapper adresseMapper;
     private final DocumentMapper documentMapper;
     private final ClientFournisseurService clientFournisseurService;
+    private final LigneProduitService ligneProduitService;
 
     public DevisServiceImpl(DevisRepository devisRepository,
                             DevisMapper devisMapper,
@@ -46,13 +49,15 @@ public class DevisServiceImpl implements DevisService {
                             AdresseMapper adresseMapper,
                             DocumentMapper documentMapper,
                             ClientFournisseurService clientFournisseurService
-                            ,EtatDevisMapper etatDevisMapper) {
+                            ,EtatDevisMapper etatDevisMapper,
+                            ClientFournisseurService clientFournisseurService, LigneProduitService ligneProduitService) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.adresseMapper = adresseMapper;
         this.documentMapper = documentMapper;
         this.clientFournisseurService = clientFournisseurService;
+        this.ligneProduitService = ligneProduitService;
     }
 
     @Override
@@ -83,6 +88,7 @@ public class DevisServiceImpl implements DevisService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Devis : {}", id);
+        ligneProduitService.deleteByDevisId(id);
         devisRepository.deleteById(id);
     }
 
@@ -111,7 +117,7 @@ public class DevisServiceImpl implements DevisService {
             }
 
             WrapperQuote wrapperQuote = new WrapperQuote(
-         
+
                 devis,
                 adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
                 ligneProduits,
@@ -217,8 +223,8 @@ public class DevisServiceImpl implements DevisService {
 				quote.setEtatDevisId(QuoteStateConstants.DEVIS_ARCHIVE);
 			}
 			devisRepository.save(devisMapper.toEntity(quote));
-			
-			
+
+
 		}
 		Optional<DevisDTO>optional = Optional.of(quote);
 		return optional;
