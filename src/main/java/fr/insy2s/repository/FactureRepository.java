@@ -25,9 +25,6 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
             "and f.operation is null")
     List<Facture> findAllInvoicesByStatement(@Param("idReleve") Long idReleve);
 
-    @Query("select f from Facture f " +
-        "where f.operation.id =:idOperation")
-    List<Facture> balanceOfInvoicesByTransaction(@Param("idOperation") Long idOperation);
 
     @Query("select l from LigneProduit l " +
     "where l.facture.id =: idFacture")
@@ -39,7 +36,5 @@ public interface FactureRepository extends JpaRepository<Facture, Long> {
             "where f.id=:idFacture")
     Integer mergeOperationByIdFacture(@Param("idFacture") Long idFacture,@Param("idOperation") Long idOperation);
 
-    @Query("select f from Facture f " +
-    "where f.operation.id=:idOperation")
-    List<Facture> findAllInvoicesByOperationId(@Param("idOperation") Long idOperation);
+    List<Facture>findAllByOperation_Id(Long id);
 }
