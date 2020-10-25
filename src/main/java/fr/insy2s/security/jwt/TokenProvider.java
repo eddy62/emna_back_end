@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
+import fr.insy2s.security.model.CustomUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ public class TokenProvider {
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
     private static final String AUTHORITIES_KEY = "auth";
+    private static final String AUTHORITIES_Id = "id";
 
     private Key key;
 
@@ -72,10 +74,12 @@ public class TokenProvider {
         } else {
             validity = new Date(now + this.tokenValidityInMilliseconds);
         }
+        CustomUser u = (CustomUser) authentication.getPrincipal();
 
         return Jwts.builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
+            .claim(AUTHORITIES_Id, u.getUserId())
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
             .compact();
@@ -92,7 +96,8 @@ public class TokenProvider {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        CustomUser principal = new CustomUser(claims.getSubject(), "", authorities,
+            Long.parseLong(claims.get(AUTHORITIES_Id).toString()));
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }

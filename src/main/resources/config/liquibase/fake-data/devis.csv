@@ -1,11 +1,11 @@
-id;num_devis;nom;message;date_creation;date_limite;client_fournisseur_id
-1;41235;deposit;bluetooth Auto Loan Account;2020-07-21;2020-07-22;1
-2;51006;Handcrafted;Persevering Bulgarian Lev;2020-07-22;2020-07-21;2
-3;9875;Health Health;innovative reboot;2020-07-21;2020-07-21;3
-4;2296;Sleek Soft Cheese;Associate;2020-07-21;2020-07-22;4
-5;93273;West Virginia multi-byte Regional;transmit Colorado Specialist;2020-07-21;2020-07-22;5
-6;85368;Identity generating green;Awesome vertical Cotton;2020-07-22;2020-07-21;6
-7;38366;rich;methodologies Self-enabling;2020-07-21;2020-07-21;7
-8;10800;International Shoes Brazilian Real;Car;2020-07-22;2020-07-21;8
-9;98579;programming Pizza;deposit Greens background;2020-07-21;2020-07-22;9
-10;91514;Re-contextualized Norway;web-enabled relationships;2020-07-21;2020-07-21;10
+id;num_devis;nom;message;date_creation;date_limite;etat_devis;client_fournisseur_id
+1;41235;deposit;bluetooth Auto Loan Account;2020-07-21;2020-07-22;1;1
+2;51006;Handcrafted;Persevering Bulgarian Lev;2020-07-22;2020-07-21;2;2
+3;9875;Health Health;innovative reboot;2020-07-21;2020-07-21;3;3
+4;2296;Sleek Soft Cheese;Associate;2020-07-21;2020-07-22;2;4
+5;93273;West Virginia multi-byte Regional;transmit Colorado Specialist;2020-07-21;2020-07-22;1;5
+6;85368;Identity generating green;Awesome vertical Cotton;2020-07-22;2020-07-21;2;6
+7;38366;rich;methodologies Self-enabling;2020-07-21;2020-07-21;3;7
+8;10800;International Shoes Brazilian Real;Car;2020-07-22;2020-07-21;2;8
+9;98579;programming Pizza;deposit Greens background;2020-07-21;2020-07-22;3;9
+10;91514;Re-contextualized Norway;web-enabled relationships;2020-07-21;2020-07-21;3;10

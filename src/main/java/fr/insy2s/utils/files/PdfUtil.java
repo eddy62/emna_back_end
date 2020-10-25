@@ -1,6 +1,7 @@
 package fr.insy2s.utils.files;
 
 import fr.insy2s.security.SecurityUtils;
+import fr.insy2s.utils.wrapper.WrapperAmendment;
 import fr.insy2s.utils.wrapper.WrapperArchivedStatement;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import fr.insy2s.web.rest.vm.ContratPdfVm;
@@ -24,6 +25,8 @@ public class PdfUtil {
     private static final String URL_TEMPLATE_CONTRAT = "/templates/Pdf/Contrat/TemplateContrat.jasper";
     private static final String URL_TEMPLATE_RELEVE_ARCHIVE = "/templates/pdf/statement/archived_statement.jasper";
     private static final String URL_TEMPLATE_DPAE = "/templates/pdf/dpae/TemplateDpae.jasper";
+    private static final String URL_TEMPLATE_AMENDMENT = "/templates/pdf/Amendment/Amendment.jasper";
+
 
 
     static {
@@ -55,6 +58,26 @@ public class PdfUtil {
         return bytes;
     }
 */
+    /**
+     * Methode permettant de générer un PDF d'un relevé archivé à partir d'un objet WrapperReleveArchive
+     *
+     * @param wrapperAmendment
+     * @return PDF en byte array
+     * @throws JRException
+     * @author Brahim
+     */
+
+    public static byte[] generateAmendmentAsBytes(WrapperAmendment wrapperAmendment) throws JRException {
+        String userLogin = SecurityUtils.getCurrentUserLogin().get();
+        Map<String, Object> params = new HashMap<>();
+        params.put("user", userLogin);
+
+        return PdfUtil.generatePdfReportAsBytes(
+            URL_TEMPLATE_AMENDMENT,
+            params,
+            Collections.singletonList(wrapperAmendment)
+        );
+    }
     public static byte[] generatePDFContrat(ContratPdfVm wrapper) throws JRException {
         String userLogin = SecurityUtils.getCurrentUserLogin().get();
         Map<String, Object> params = new HashMap<>();
@@ -76,7 +99,6 @@ public class PdfUtil {
      */
 
     public static byte[] generateArchivedStatementAsBytes(WrapperArchivedStatement wrapper) throws JRException {
-        String userLogin = SecurityUtils.getCurrentUserLogin().get();
         Map<String, Object> params = new HashMap<>();
 
         return PdfUtil.generatePdfReportAsBytes(

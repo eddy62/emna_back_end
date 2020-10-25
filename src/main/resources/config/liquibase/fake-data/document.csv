@@ -8,3 +8,7 @@ id;chemin_fichier;nom;type_document_id;facture_id;releve_id;contrat_id;depense_i
 7;./fichiers/comptabilite/factures/facture_2_1.pdf;facture_2_1.pdf;1;2;2;2;2;2;;;;;;
 8;./fichiers/juridique/contrats/avenant_1_1.pdf;avenant_1_1.pdf;11;;;;;;;;;;;1
 9;./fichiers/juridique/contrats/avenant_1_1.pdf;avenant_2_1.pdf;11;;;;;;;;;;;2
+10;./fichiers/social/fichedepaie/ficheDePaieJanvier.pdf;ficheDePaieJanvier.pdf;10;;;;;;;;;;1;
+11;./fichiers/social/fichedepaie/ficheDePaieJuin.pdf;ficheDePaieJuin.pdf;10;;;;;;;;;;3;
+12;./fichiers/social/fichedepaie/ficheDePaieJuillet.pdf;ficheDePaieJuillet.pdf;10;;;;;;;;;;2;
+

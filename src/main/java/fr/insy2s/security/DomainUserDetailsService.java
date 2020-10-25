@@ -2,6 +2,7 @@ package fr.insy2s.security;
 
 import fr.insy2s.domain.User;
 import fr.insy2s.repository.UserRepository;
+import fr.insy2s.security.model.CustomUser;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,15 +49,15 @@ public class DomainUserDetailsService implements UserDetailsService {
 
     }
 
-    private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
+    private CustomUser createSpringSecurityUser(String lowercaseLogin, User user) {
         if (!user.getActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getName()))
             .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+        return new CustomUser(user.getLogin(),
             user.getPassword(),
-            grantedAuthorities);
+            grantedAuthorities, user.getId());
     }
 }

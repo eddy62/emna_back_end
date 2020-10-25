@@ -1,11 +1,13 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.repository.LigneProduitRepository;
 import fr.insy2s.repository.UserRepository;
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.ProduitService;
 import fr.insy2s.domain.Produit;
 import fr.insy2s.repository.ProduitRepository;
+import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.dto.ProduitDTO;
 import fr.insy2s.service.dto.UserDTO;
 import fr.insy2s.service.mapper.ProduitMapper;
@@ -13,8 +15,6 @@ import fr.insy2s.service.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,15 +36,23 @@ public class ProduitServiceImpl implements ProduitService {
 
     private final ProduitMapper produitMapper;
 
-    private final UserMapper userMapper ;
+    private final UserMapper userMapper;
 
-    private final UserRepository userRepository ;
+    private final UserRepository userRepository;
 
-    public ProduitServiceImpl(ProduitRepository produitRepository, ProduitMapper produitMapper,  UserMapper userMapper , UserRepository userRepository ) {
+
+    private final LigneProduitRepository ligneProduitRepository;
+    private final SocieteService societeService;
+
+
+    public ProduitServiceImpl(ProduitRepository produitRepository, ProduitMapper produitMapper, UserMapper userMapper,
+                              UserRepository userRepository, SocieteService societeService, LigneProduitRepository ligneProduitRepository1) {
         this.produitRepository = produitRepository;
         this.produitMapper = produitMapper;
         this.userMapper = userMapper;
-        this.userRepository =userRepository;
+        this.userRepository = userRepository;
+        this.societeService = societeService;
+        this.ligneProduitRepository = ligneProduitRepository1;
     }
 
     @Override
@@ -65,8 +73,6 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
 
-
-
     @Override
     @Transactional(readOnly = true)
     public Optional<ProduitDTO> findOne(Long id) {
@@ -76,13 +82,17 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         log.debug("Request to delete Produit : {}", id);
-        produitRepository.deleteById(id);
+        if (!ligneProduitRepository.existsByProduit_Id(id)) {
+            produitRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public List<ProduitDTO>findAllBySocieteId(Long id){
+    public List<ProduitDTO> findAllBySocieteId(Long id) {
         log.debug("Request to get all produit");
         List<Produit> listeProduit = produitRepository.findBySocieteId(id);
         return listeProduit.stream()
@@ -101,19 +111,24 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public Boolean connectedUserIsSociete(){
-        UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
-        for(String auth:currentUser.getAuthorities()){
-            if(AuthoritiesConstants.SOCIETY.equals(auth))return true;
+    public Boolean connectedUserIsSociete() {
+        UserDTO currentUser = findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        for (String auth : currentUser.getAuthorities()) {
+            if (AuthoritiesConstants.SOCIETY.equals(auth)) return true;
         }
         return false;
     }
 
+    @Override
+    public boolean userCanUpdateProduct(Long societyId, Long userId, Long productId) {
+        return produitRepository.canUserUpdateProduct(societyId, userId, productId);
+    }
+
 
     @Override
-    public Boolean verfyIdOfUserConnected(Long id){
-        UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
-        if(currentUser.getId()==id)return true;
+    public Boolean verfyIdOfUserConnected(Long id) {
+        UserDTO currentUser = findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
+        if (currentUser.getId() == id) return true;
         else return false;
     }
 }

@@ -1,7 +1,11 @@
 package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
+import fr.insy2s.security.model.CustomUser;
 import fr.insy2s.service.ProduitService;
+import fr.insy2s.service.SocieteService;
+import fr.insy2s.service.dto.SocieteDTO;
+import fr.insy2s.utils.wrapper.WrapperSociete;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ProduitDTO;
 
@@ -12,10 +16,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +44,11 @@ public class ProduitResource {
 
     private final ProduitService produitService;
 
-    public ProduitResource(ProduitService produitService) {
+    private final SocieteService societeService;
+
+    public ProduitResource(ProduitService produitService, SocieteService societeService) {
         this.produitService = produitService;
+        this.societeService = societeService;
     }
 
     /**
@@ -58,26 +70,6 @@ public class ProduitResource {
             .body(result);
     }
 
-    /**
-     * {@code PUT  /produits} : Updates an existing produit.
-     *
-     * @param produitDTO the produitDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated produitDTO,
-     * or with status {@code 400 (Bad Request)} if the produitDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the produitDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/produits")
-    public ResponseEntity<ProduitDTO> updateProduit(@RequestBody ProduitDTO produitDTO) throws URISyntaxException {
-        log.debug("REST request to update Produit : {}", produitDTO);
-        if (produitDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        ProduitDTO result = produitService.save(produitDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produitDTO.getId().toString()))
-            .body(result);
-    }
 
     /**
      * {@code GET  /produits} : get all the produits.
@@ -136,18 +128,24 @@ public class ProduitResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated produitDTO,
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/produits/update")
-    public ResponseEntity<ProduitDTO> update(@RequestBody ProduitDTO produitDTO) throws URISyntaxException {
+    @PreAuthorize("hasAuthority('" + AuthoritiesConstants.SOCIETY + "')" +
+        " || hasAuthority('" + AuthoritiesConstants.ADMIN + "')")
+    @PutMapping("/produits")
+    public ResponseEntity<ProduitDTO> update(@RequestBody @Valid ProduitDTO produitDTO, Authentication authentication) {
         log.debug("REST request to update Produit : {}", produitDTO);
-        if (produitDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals(AuthoritiesConstants.ADMIN));
+        Long userId = ((CustomUser) authentication.getPrincipal()).getUserId();
+        if (!hasAdminRole) {
+            if (!produitService.userCanUpdateProduct(produitDTO.getSocieteId(), userId, produitDTO.getId())) {
+                throw new BadRequestAlertException("Le produit n'existe pas dans votre société", ENTITY_NAME,
+                    "null product");
+            }
         }
-
-        //TODO verification que l'user est a role société et que le societe à le droit de modifier
-        ProduitDTO result = produitService.save(produitDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, produitDTO.getId().toString()))
-            .body(result);
+        Optional<ProduitDTO> result = Optional.ofNullable(produitService.save(produitDTO));
+        return ResponseUtil.wrapOrNotFound(result,
+            HeaderUtil.createAlert(applicationName, "productManagement.updated",
+                produitDTO.getId().toString()));
     }
 
 
@@ -155,16 +153,27 @@ public class ProduitResource {
      * {@code DELETE  /produits/:produitId/user/:userId} : delete the "id" produit.
      *
      * @param produitId the id of the produitDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+     * @return the {@link ResponseEntity} with status {@code @put204 (NO_CONTENT)}.
      */
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.SOCIETY + "\")")
+    @PreAuthorize("hasAuthority('" + AuthoritiesConstants.SOCIETY + "')" +
+        " || hasAuthority('" + AuthoritiesConstants.ADMIN + "')")
     @DeleteMapping("/produits/{produitId}/user/{userId}")
-    public ResponseEntity<Void> delete(@PathVariable Long produitId,@PathVariable Long userId) {
+    public ResponseEntity<Void> delete(@PathVariable Long produitId, @PathVariable Long userId,
+                                       Authentication authentication) {
         log.debug("REST request to delete Produit : {}", produitId);
-       if(!produitService.connectedUserIsSociete() || !produitService.verfyIdOfUserConnected(userId)){
-           throw new BadRequestAlertException("Vous n'avez pas le droit de supprimer ", ENTITY_NAME, "pas le droit");
-       }
-        produitService.delete(produitId);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, produitId.toString())).build();
+        boolean hasAdminRole = authentication.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals(AuthoritiesConstants.ADMIN));
+        if (!hasAdminRole) {
+            if (!produitService.connectedUserIsSociete() || !produitService.verfyIdOfUserConnected(userId)) {
+                throw new BadRequestAlertException("Vous n'avez pas le droit de supprimer ",
+                    ENTITY_NAME, "pas le droit");
+            }
+        }
+        if (!produitService.delete(produitId)) {
+            throw new BadRequestAlertException("Vous ne pouvez pas supprimer un produit déja commandé ",
+                ENTITY_NAME, "pas le droit");
+        }
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(
+            applicationName, true, ENTITY_NAME, produitId.toString())).build();
     }
 }
