@@ -122,6 +122,7 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public boolean userCanUpdateProduct(Long societyId, Long userId, Long productId) {
         return produitRepository.canUserUpdateProduct(societyId, userId, productId);
+    }
     /**
      * find list of products by id of user's society and the product's label or his refeerence
      * @param keyWord

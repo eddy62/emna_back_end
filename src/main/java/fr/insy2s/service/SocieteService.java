@@ -75,7 +75,7 @@ public interface SocieteService {
      * @return the wrapperSociete
      */
     boolean existBySocietyIdAndUserId(Long societyId, Long userId);
-     * Get id of society by the login of current user
+     /* Get id of society by the login of current user
      * @param login
      * @return id of society
      */
