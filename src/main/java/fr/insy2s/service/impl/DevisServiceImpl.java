@@ -3,9 +3,10 @@ package fr.insy2s.service.impl;
 import fr.insy2s.domain.Devis;
 import fr.insy2s.domain.Document;
 import fr.insy2s.domain.LigneProduit;
+import fr.insy2s.repository.DevisRepository;
 import fr.insy2s.service.ClientFournisseurService;
 import fr.insy2s.service.DevisService;
-import fr.insy2s.repository.DevisRepository;
+import fr.insy2s.service.LigneProduitService;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.service.dto.DevisDTO;
 import fr.insy2s.service.dto.DocumentDTO;
@@ -39,20 +40,22 @@ public class DevisServiceImpl implements DevisService {
     private final AdresseMapper adresseMapper;
     private final DocumentMapper documentMapper;
     private final ClientFournisseurService clientFournisseurService;
+    private final LigneProduitService ligneProduitService;
 
     public DevisServiceImpl(DevisRepository devisRepository,
                             DevisMapper devisMapper,
                             ClientFournisseurMapper clientFournisseurMapper,
                             AdresseMapper adresseMapper,
                             DocumentMapper documentMapper,
-                            ClientFournisseurService clientFournisseurService
-                            ,EtatDevisMapper etatDevisMapper) {
+                            EtatDevisMapper etatDevisMapper,
+                            ClientFournisseurService clientFournisseurService, LigneProduitService ligneProduitService) {
         this.devisRepository = devisRepository;
         this.devisMapper = devisMapper;
         this.clientFournisseurMapper = clientFournisseurMapper;
         this.adresseMapper = adresseMapper;
         this.documentMapper = documentMapper;
         this.clientFournisseurService = clientFournisseurService;
+        this.ligneProduitService = ligneProduitService;
     }
 
     @Override
@@ -83,6 +86,7 @@ public class DevisServiceImpl implements DevisService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Devis : {}", id);
+        ligneProduitService.deleteByDevisId(id);
         devisRepository.deleteById(id);
     }
 
@@ -98,20 +102,20 @@ public class DevisServiceImpl implements DevisService {
         List<Devis> quoteList = devisRepository.findQuotesBySocietyId(id);
         List<WrapperQuote> wrapperQuoteList = new ArrayList<>();
 
-        for (Devis devis : quoteList){
+        for (Devis devis : quoteList) {
 
             List<DocumentDTO> documentDTOList = new ArrayList<>();
-            for (Document document : devis.getListeDocuments()){
+            for (Document document : devis.getListeDocuments()) {
                 documentDTOList.add(documentMapper.toDto(document));
             }
 
             List<WrapperLigneProduit> ligneProduits = new ArrayList<>();
-            for (LigneProduit ligneProduit : devis.getListeLigneProduits()){
+            for (LigneProduit ligneProduit : devis.getListeLigneProduits()) {
                 ligneProduits.add(new WrapperLigneProduit(ligneProduit));
             }
 
             WrapperQuote wrapperQuote = new WrapperQuote(
-         
+
                 devis,
                 adresseMapper.toDto(devis.getClientFournisseur().getAdresse()),
                 ligneProduits,
@@ -141,7 +145,7 @@ public class DevisServiceImpl implements DevisService {
         devis.getListeLigneProduits().forEach(ligneProduit -> ligneProduits.add(new WrapperLigneProduit(ligneProduit)));
 
         List<DocumentDTO> documentDTOList = new ArrayList<>();
-        for (Document document : devis.getListeDocuments()){
+        for (Document document : devis.getListeDocuments()) {
             documentDTOList.add(documentMapper.toDto(document));
         }
 
@@ -205,22 +209,22 @@ public class DevisServiceImpl implements DevisService {
     }
 
     @Override
-	public Optional<DevisDTO> changeState(Long id) {
-		Optional <DevisDTO> opRes = devisRepository.findById(id).map(devisMapper::toDto);
-		DevisDTO quote = null;
-		if(opRes.isPresent()) {
-			quote = opRes.get();
-			long idStateQuote = quote.getEtatDevisId();
-			if(idStateQuote==QuoteStateConstants.DEVIS_ARCHIVE) {
-				quote.setEtatDevisId(QuoteStateConstants.DEVIS_SIGNE);
-			}else if(idStateQuote==QuoteStateConstants.DEVIS_SIGNE) {
-				quote.setEtatDevisId(QuoteStateConstants.DEVIS_ARCHIVE);
-			}
-			devisRepository.save(devisMapper.toEntity(quote));
-			
-			
-		}
-		Optional<DevisDTO>optional = Optional.of(quote);
-		return optional;
-	}
+    public Optional<DevisDTO> changeState(Long id) {
+        Optional<DevisDTO> opRes = devisRepository.findById(id).map(devisMapper::toDto);
+        DevisDTO quote = null;
+        if (opRes.isPresent()) {
+            quote = opRes.get();
+            long idStateQuote = quote.getEtatDevisId();
+            if (idStateQuote == QuoteStateConstants.DEVIS_ARCHIVE) {
+                quote.setEtatDevisId(QuoteStateConstants.DEVIS_SIGNE);
+            } else if (idStateQuote == QuoteStateConstants.DEVIS_SIGNE) {
+                quote.setEtatDevisId(QuoteStateConstants.DEVIS_ARCHIVE);
+            }
+            devisRepository.save(devisMapper.toEntity(quote));
+
+
+        }
+        Optional<DevisDTO> optional = Optional.of(quote);
+        return optional;
+    }
 }

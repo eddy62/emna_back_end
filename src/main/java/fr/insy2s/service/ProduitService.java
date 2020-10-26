@@ -50,10 +50,11 @@ public interface ProduitService {
      *
      * @return the list of entities.
      */
-    List<ProduitDTO>findAllBySocieteId(Long id );
+    List<ProduitDTO> findAllBySocieteId(Long id);
 
     /**
      * check id of current user
+     *
      * @param id
      * @return
      */
@@ -61,7 +62,11 @@ public interface ProduitService {
 
     /**
      * check role of current user
+     *
      * @return
      */
     public Boolean connectedUserIsSociete();
+
+    boolean userCanUpdateProduct(Long societyId, Long userId, Long productId);
+
 }

@@ -129,7 +129,8 @@ public class ContratServiceImpl implements ContratService {
     }
 
     @Override
-    public Boolean archiveContrat(Long idContrat, Boolean isArchive) {
-        return contratRepository.archiveContrat(idContrat, isArchive) > 0;
+    public boolean archiveContrat(Long idContrat) {
+        ContratDTO contrat = findOne(idContrat).get();
+        return contratRepository.archiveContrat(idContrat, !contrat.isArchive()) > 0;
     }
 }

@@ -112,6 +112,7 @@ public class DevisResource {
      * @param id the id of the devisDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     @DeleteMapping("/devis/{id}")
     public ResponseEntity<Void> deleteDevis(@PathVariable Long id) {
         log.debug("REST request to delete Devis : {}", id);
@@ -178,12 +179,12 @@ public class DevisResource {
      * @param id
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the devisDTO, or with status {@code 404 (Not Found)}
      */
-    
+
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")"+" || hasAuthority(\"" + AuthoritiesConstants.SOCIETY +"\")")
     @PutMapping("/quote/stateChange/{id}")
     public ResponseEntity<DevisDTO> updateStateQuote(@PathVariable Long id, Principal principal){
    System.out.println(principal.getName());
-    	
+
     	return ResponseUtil.wrapOrNotFound(devisService.changeState(id));
     }
 }

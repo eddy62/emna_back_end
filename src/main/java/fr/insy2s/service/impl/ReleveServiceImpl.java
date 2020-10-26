@@ -139,7 +139,7 @@ public class ReleveServiceImpl implements ReleveService {
             int i = 0;
             do {
                 Long idOperation = operations.get(i).getId();
-                List<Facture> factureListByOperation= factureRepository.balanceOfInvoicesByTransaction(idOperation);
+                List<Facture> factureListByOperation= factureRepository.findAllByOperation_Id(idOperation);
                 BigDecimal sommeFacture=BigDecimal.valueOf(0);
                 if(!factureListByOperation.isEmpty()) {
                     for (Facture facture : factureListByOperation) {
