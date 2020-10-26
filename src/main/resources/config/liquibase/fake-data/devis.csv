@@ -1,4 +1,4 @@
-id;num_devis;nom;message;date_creation;date_limite;etat_devis;client_fournisseur_id
+id;num_devis;nom;message;date_creation;date_limite;etat_devis_id;client_fournisseur_id
 1;41235;deposit;bluetooth Auto Loan Account;2020-07-21;2020-07-22;1;1
 2;51006;Handcrafted;Persevering Bulgarian Lev;2020-07-22;2020-07-21;2;2
 3;9875;Health Health;innovative reboot;2020-07-21;2020-07-21;3;3

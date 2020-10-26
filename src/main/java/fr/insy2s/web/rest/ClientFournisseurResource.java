@@ -13,10 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +70,7 @@ public class ClientFournisseurResource {
      * or with status {@code 500 (Internal Server Error)} if the clientFournisseurDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")"+" || hasAuthority(\"" + AuthoritiesConstants.SOCIETY +"\")")
     @PutMapping("/client-fournisseurs")
     public ResponseEntity<ClientFournisseurDTO> updateClientFournisseur(@RequestBody ClientFournisseurDTO clientFournisseurDTO) throws URISyntaxException {
         log.debug("REST request to update ClientFournisseur : {}", clientFournisseurDTO);
@@ -171,10 +174,10 @@ public class ClientFournisseurResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/client-fournisseurs/wrapper")
-    public ResponseEntity<WrapperClientFournisseur> updateClientFournisseur(@RequestBody WrapperClientFournisseur wrapperClientFournisseur) throws URISyntaxException {
-
+    public ResponseEntity<WrapperClientFournisseur> updateClientFournisseur(@RequestBody WrapperClientFournisseur wrapperClientFournisseur, Principal currentUser) throws URISyntaxException {
+    	Long userId = Long.valueOf((String) ((UsernamePasswordAuthenticationToken) currentUser).getPrincipal());
         log.debug("REST request to update WrapperClientFournisseur : {}", wrapperClientFournisseur);
-        if (wrapperClientFournisseur.getId() == null) {
+        if (wrapperClientFournisseur.getId() == null || !clientFournisseurService.connectedUserIsSociete() || !clientFournisseurService.verfyIdOfUserConnected(userId)) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         verificationsClientFournisseur(wrapperClientFournisseur);
