@@ -180,6 +180,14 @@ public class SocieteServiceImpl implements SocieteService {
     @Override
     public boolean existBySocietyIdAndUserId(Long societyId, Long userId) {
         return societeRepository.existByIdAndUser_Id(societyId, userId);
+    /**
+     * Get id of society by the login of current user
+     * @param login
+     * @return id of society
+     */
+    @Override
+    public Societe findByUserLogin(String login) {
+        return societeRepository.findByUser_Login(login);
     }
 
 }
