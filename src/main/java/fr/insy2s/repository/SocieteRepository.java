@@ -20,4 +20,12 @@ public interface SocieteRepository extends JpaRepository<Societe, Long> {
     List<Societe> findByComptableId(@Param(value = "id") Long id);
 
     Optional<Societe> findByUserId(Long id);
+
+    /**
+     * Get id of society by the login of current user
+     * @param login
+     * @return id of society
+     */
+    Societe findByUser_Login(String login);
+
 }

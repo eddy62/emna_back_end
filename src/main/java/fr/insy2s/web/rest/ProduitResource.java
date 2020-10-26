@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ProduitService;
+import fr.insy2s.service.SocieteService;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ProduitDTO;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,9 +36,11 @@ public class ProduitResource {
     private String applicationName;
 
     private final ProduitService produitService;
+    private final SocieteService societeService;
 
-    public ProduitResource(ProduitService produitService) {
+    public ProduitResource(ProduitService produitService, SocieteService societeService) {
         this.produitService = produitService;
+        this.societeService = societeService;
     }
 
     /**
@@ -102,6 +106,23 @@ public class ProduitResource {
         log.debug("REST request to get Produit : {}", id);
         Optional<ProduitDTO> produitDTO = produitService.findOne(id);
         return ResponseUtil.wrapOrNotFound(produitDTO);
+    }
+
+    /**
+     * {@code GET  /produits/{keyWord} : get the list of products.
+     *
+     * @param keyWord.
+     * @param principal (current user).
+     * @return list of products.
+     */
+    @GetMapping("/products/q/{keyWord}")
+    public  ResponseEntity<List<ProduitDTO>> getProductByNameOrReferenceAndSocietyId(@PathVariable String keyWord, Principal principal) {
+        log.debug("REST request to get Produit : {}", keyWord);
+        String login = principal.getName();
+        Long idSociety = societeService.findByUserLogin(login).getId();
+        List<ProduitDTO> produits = produitService.findProductByNameOrReferenceAndIdSociety(keyWord, idSociety);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(produits));
+
     }
 
     /**

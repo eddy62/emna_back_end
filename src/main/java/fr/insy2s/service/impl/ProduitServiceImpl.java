@@ -13,8 +13,6 @@ import fr.insy2s.service.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,6 +105,23 @@ public class ProduitServiceImpl implements ProduitService {
             if(AuthoritiesConstants.SOCIETY.equals(auth))return true;
         }
         return false;
+    }
+
+    /**
+     * find list of products by id of user's society and the product's label or his refeerence
+     * @param keyWord
+     * @param idSociety
+     * @return list of produitDTO
+     */
+
+    @Override
+    public List<ProduitDTO> findProductByNameOrReferenceAndIdSociety(String keyWord, Long idSociety) {
+        log.debug("Request to get product by name and reference and id of society");
+        List<Produit> listeProduit = produitRepository.getByNomOrReferenceAndSociete_Id(keyWord, idSociety);
+        return listeProduit.stream()
+            .map(produitMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+
     }
 
 
