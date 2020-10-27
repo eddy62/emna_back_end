@@ -5,6 +5,7 @@ import fr.insy2s.service.AvenantService;
 import fr.insy2s.domain.Avenant;
 import fr.insy2s.repository.AvenantRepository;
 import fr.insy2s.service.dto.AvenantDTO;
+import fr.insy2s.service.dto.SaisieArticleDTO;
 import fr.insy2s.service.mapper.AvenantMapper;
 import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperAmendment;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,9 +38,12 @@ public class AvenantServiceImpl implements AvenantService {
 
     private final AvenantMapper avenantMapper;
 
-    public AvenantServiceImpl(AvenantRepository avenantRepository, AvenantMapper avenantMapper) {
+    private final SaisieArticleServiceImpl saisieArticleService;
+
+    public AvenantServiceImpl(AvenantRepository avenantRepository, AvenantMapper avenantMapper, SaisieArticleServiceImpl saisieArticleService) {
         this.avenantRepository = avenantRepository;
         this.avenantMapper = avenantMapper;
+        this.saisieArticleService = saisieArticleService;
     }
 
     @Override
@@ -91,5 +96,30 @@ public class AvenantServiceImpl implements AvenantService {
         List<WrapperSingleInputAmendment> w = stream.collect(Collectors.toList());
         WrapperAmendment wrapperAmendment = new WrapperAmendment(sA.getContrat(), sA.getContrat().getEmploye().getSociete(), w);
         return PdfUtil.generateAmendmentAsBytes(wrapperAmendment);
+    }
+
+    @Override
+    public AvenantDTO saveFromListeSaisieArticle(List<SaisieArticleDTO> listeSaisieArticle) {
+        AvenantDTO avenantDTO = new AvenantDTO();
+        avenantDTO.setDateDeCreation(LocalDate.now());
+        avenantDTO.setReference("AVN");
+        avenantDTO.setSigne(false);
+        try{
+            AvenantDTO avenantSaved = save(avenantDTO);
+            for(int i = 0; i < listeSaisieArticle.size(); i++){
+                SaisieArticleDTO saisieArticleDTO = listeSaisieArticle.get(i);
+                saisieArticleDTO.setAvenantId(avenantSaved.getId());
+                saisieArticleService.save(saisieArticleDTO);
+            }
+//            listeSaisieArticle.forEach(saisieArticleDTO -> {
+//                saisieArticleDTO.setAvenantId(avenantSaved.getId());
+//                SaisieArticleDTO saisieArticleSave = saisieArticleService.save(saisieArticleDTO);
+//                saisieArticleService.saveSaisieArticle(saisieArticleSave);
+//            });
+            return avenantSaved;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

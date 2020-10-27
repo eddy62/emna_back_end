@@ -2,6 +2,8 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.AvenantService;
+import fr.insy2s.service.dto.SaisieArticleDTO;
+import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.AvenantDTO;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
@@ -54,6 +56,18 @@ public class AvenantResource {
             throw new BadRequestAlertException("A new avenant cannot already have an ID", ENTITY_NAME, "idexists");
         }
         AvenantDTO result = avenantService.save(avenantDTO);
+        return ResponseEntity.created(new URI("/api/avenants/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    @PostMapping("/avenants/add/new")
+    public ResponseEntity<AvenantDTO> createAvenant(@Valid @RequestBody List<SaisieArticleDTO> listSaisieArticle) throws URISyntaxException {
+        log.debug("REST request to save Avenant : {}", listSaisieArticle);
+//        if (listSaisieArticle.getId() != null) {
+//            throw new BadRequestAlertException("A new avenant cannot already have an ID", ENTITY_NAME, "idexists");
+//        }
+        AvenantDTO result = avenantService.saveFromListeSaisieArticle(listSaisieArticle);
         return ResponseEntity.created(new URI("/api/avenants/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
