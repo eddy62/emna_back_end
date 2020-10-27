@@ -41,6 +41,9 @@ public class ArticleResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_OPTIONAL = false;
+    private static final Boolean UPDATED_OPTIONAL = true;
+
     @Autowired
     private ArticleRepository articleRepository;
 
@@ -68,7 +71,8 @@ public class ArticleResourceIT {
         Article article = new Article()
             .titre(DEFAULT_TITRE)
             .intitule(DEFAULT_INTITULE)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .optional(DEFAULT_OPTIONAL);
         return article;
     }
     /**
@@ -81,7 +85,8 @@ public class ArticleResourceIT {
         Article article = new Article()
             .titre(UPDATED_TITRE)
             .intitule(UPDATED_INTITULE)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .optional(UPDATED_OPTIONAL);
         return article;
     }
 
@@ -108,6 +113,7 @@ public class ArticleResourceIT {
         assertThat(testArticle.getTitre()).isEqualTo(DEFAULT_TITRE);
         assertThat(testArticle.getIntitule()).isEqualTo(DEFAULT_INTITULE);
         assertThat(testArticle.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testArticle.isOptional()).isEqualTo(DEFAULT_OPTIONAL);
     }
 
     @Test
@@ -204,7 +210,8 @@ public class ArticleResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(article.getId().intValue())))
             .andExpect(jsonPath("$.[*].titre").value(hasItem(DEFAULT_TITRE)))
             .andExpect(jsonPath("$.[*].intitule").value(hasItem(DEFAULT_INTITULE)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].optional").value(hasItem(DEFAULT_OPTIONAL.booleanValue())));
     }
     
     @Test
@@ -220,7 +227,8 @@ public class ArticleResourceIT {
             .andExpect(jsonPath("$.id").value(article.getId().intValue()))
             .andExpect(jsonPath("$.titre").value(DEFAULT_TITRE))
             .andExpect(jsonPath("$.intitule").value(DEFAULT_INTITULE))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.optional").value(DEFAULT_OPTIONAL.booleanValue()));
     }
     @Test
     @Transactional
@@ -245,7 +253,8 @@ public class ArticleResourceIT {
         updatedArticle
             .titre(UPDATED_TITRE)
             .intitule(UPDATED_INTITULE)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .optional(UPDATED_OPTIONAL);
         ArticleDTO articleDTO = articleMapper.toDto(updatedArticle);
 
         restArticleMockMvc.perform(put("/api/articles")
@@ -260,6 +269,7 @@ public class ArticleResourceIT {
         assertThat(testArticle.getTitre()).isEqualTo(UPDATED_TITRE);
         assertThat(testArticle.getIntitule()).isEqualTo(UPDATED_INTITULE);
         assertThat(testArticle.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testArticle.isOptional()).isEqualTo(UPDATED_OPTIONAL);
     }
 
     @Test

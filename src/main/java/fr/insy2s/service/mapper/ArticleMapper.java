@@ -9,10 +9,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Article} and its DTO {@link ArticleDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {AvenantMapper.class, ContratMapper.class, SocieteMapper.class})
 public interface ArticleMapper extends EntityMapper<ArticleDTO, Article> {
 
+    ArticleDTO toDto(Article article);
 
+    Article toEntity(ArticleDTO articleDTO);
 
     default Article fromId(Long id) {
         if (id == null) {
