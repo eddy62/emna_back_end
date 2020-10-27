@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Spring Data repository for the Employe entity.
@@ -25,7 +27,11 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
     @Query("select e from Employe e, Contrat c where e.id=c.employe.id and c.archive=false and c.typeContrat.intitule=:typeContrat")
     List<Employe> findByTypeContrat(@Param(value = "typeContrat") String typeContrat);
 
-    Employe findByMatricule(@Param(value = "matricule")String matricule);
+    Employe findByMatricule(@Param(value = "matricule") String matricule);
 
-
+    @Query("FROM Employe e" +
+        " JOIN Contrat c on (c.employe.id = e.id)" +
+        " LEFT JOIN Dpae d on (d.contrat.id = c.id)" +
+        " WHERE e.societe.id = :societyId AND c.archive = false AND d IS NULL")
+    List<Employe> findAllEmployeesWithDpaeToDoBySociety(@Param(value = "societyId") Long societyId);
 }

@@ -1,13 +1,12 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.SaisieArticleService;
 import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.repository.SaisieArticleRepository;
+import fr.insy2s.service.SaisieArticleService;
 import fr.insy2s.service.dto.SaisieArticleDTO;
 import fr.insy2s.service.mapper.SaisieArticleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +63,19 @@ public class SaisieArticleServiceImpl implements SaisieArticleService {
     public void delete(Long id) {
         log.debug("Request to delete SaisieArticle : {}", id);
         saisieArticleRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SaisieArticleDTO findDateDebutbyContratId(Long id) {
+        log.debug("Request to get SaisieArticle for the Article date de début : {}", id);
+        return saisieArticleMapper.toDto(saisieArticleRepository.findDateDebutbyContratId(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SaisieArticle findActiveStartDateByEmployee(Long employeeId) {
+        log.debug("Request to get date de début active by Employe : {}", employeeId);
+        return saisieArticleRepository.findActiveStartDateByEmployee(employeeId);
     }
 }

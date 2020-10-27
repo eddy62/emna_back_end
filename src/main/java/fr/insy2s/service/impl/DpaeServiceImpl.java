@@ -1,12 +1,12 @@
 package fr.insy2s.service.impl;
 
 import fr.insy2s.domain.Dpae;
-import fr.insy2s.domain.FichePaie;
+import fr.insy2s.domain.Employe;
+import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.repository.DpaeRepository;
 import fr.insy2s.service.*;
 import fr.insy2s.service.dto.*;
-import fr.insy2s.service.mapper.DpaeMapper;
-import fr.insy2s.service.mapper.WrapperPdfDpaeMapper;
+import fr.insy2s.service.mapper.*;
 import fr.insy2s.utils.wrapper.WrapperDpae;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import org.slf4j.Logger;
@@ -33,6 +33,14 @@ public class DpaeServiceImpl implements DpaeService {
 
     private final DpaeRepository dpaeRepository;
     private final DpaeMapper dpaeMapper;
+    private final EmployeMapper employeMapper;
+    private final SocieteMapper societeMapper;
+    private final AdresseMapper adresseMapper;
+    private final InfoEntrepriseMapper infoEntrepriseMapper;
+    private final SaisieArticleMapper saisieArticleMapper;
+    private final ContratMapper contratMapper;
+    private final TypeContratMapper typeContratMapper;
+    private final WrapperDpaeMapper wrapperDpaeMapper;
     private final WrapperPdfDpaeMapper wrapperPdfDpaeMapper;
     private final EmployeService employeService;
     private final SocieteService societeService;
@@ -40,18 +48,32 @@ public class DpaeServiceImpl implements DpaeService {
     private final AdresseService adresseService;
     private final ContratService contratService;
     private final TypeContratService typeContratService;
+    private final SaisieArticleService saisieArticleService;
 
     public DpaeServiceImpl(DpaeRepository dpaeRepository,
                            DpaeMapper dpaeMapper,
-                           WrapperPdfDpaeMapper wrapperPdfDpaeMapper,
+                           EmployeMapper employeMapper,
+                           SocieteMapper societeMapper,
+                           AdresseMapper adresseMapper,
+                           InfoEntrepriseMapper infoEntrepriseMapper,
+                           SaisieArticleMapper saisieArticleMapper, ContratMapper contratMapper, TypeContratMapper typeContratMapper, WrapperDpaeMapper wrapperDpaeMapper, WrapperPdfDpaeMapper wrapperPdfDpaeMapper,
                            EmployeService employeService,
                            SocieteService societeService,
                            InfoEntrepriseService infoEntrepriseService,
                            AdresseService adresseService,
                            ContratService contratService,
-                           TypeContratService typeContratService) {
+                           TypeContratService typeContratService,
+                           SaisieArticleService saisieArticleService) {
         this.dpaeRepository = dpaeRepository;
         this.dpaeMapper = dpaeMapper;
+        this.employeMapper = employeMapper;
+        this.societeMapper = societeMapper;
+        this.adresseMapper = adresseMapper;
+        this.infoEntrepriseMapper = infoEntrepriseMapper;
+        this.saisieArticleMapper = saisieArticleMapper;
+        this.contratMapper = contratMapper;
+        this.typeContratMapper = typeContratMapper;
+        this.wrapperDpaeMapper = wrapperDpaeMapper;
         this.wrapperPdfDpaeMapper = wrapperPdfDpaeMapper;
         this.employeService = employeService;
         this.societeService = societeService;
@@ -59,6 +81,7 @@ public class DpaeServiceImpl implements DpaeService {
         this.adresseService = adresseService;
         this.contratService = contratService;
         this.typeContratService = typeContratService;
+        this.saisieArticleService = saisieArticleService;
     }
 
     @Override
@@ -120,12 +143,38 @@ public class DpaeServiceImpl implements DpaeService {
             final SocieteDTO societeDTO = societeService.findOne(employeDTO.getSocieteId()).get();
             final InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseService.findOne(societeDTO.getInfoEntrepriseId()).get();
             final AdresseDTO adresseDTO = adresseService.findOne(societeDTO.getAdresseId()).get();
+            final SaisieArticleDTO dateDebutDTO = saisieArticleService.findDateDebutbyContratId(dpaeDTO.getContratId());
             // tester nullité d'un élément au moins
-            wrapperDpae = Optional.of(new WrapperDpae(dpaeDTO, societeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO));
-        }else{
+            wrapperDpae = Optional.of(new WrapperDpae(dpaeDTO, societeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO, dateDebutDTO));
+        } else {
             wrapperDpae = Optional.empty();
         }
         return wrapperDpae;
+    }
+
+    @Override
+    public List<WrapperDpae> findAllWrapperDpaesToDoBySociety(Long societyId) {
+        List<WrapperDpae> wrapperDpaes = new ArrayList<>();
+
+        // get liste employés, contient employeDTO, societeDTO, infoEntrepriseDTO, adresseDTO
+        List<Employe> employees = employeService.findAllEmployeesWithDpaeToDoBySociety(societyId);
+        for (Employe employee : employees) {
+            EmployeDTO employeDTO = employeMapper.toDto(employee);
+            SocieteDTO societeDTO = societeMapper.toDto(employee.getSociete());
+            InfoEntrepriseDTO infoEntrepriseDTO = infoEntrepriseMapper.toDto(employee.getSociete().getInfoEntreprise());
+            AdresseDTO adresseDTO = adresseMapper.toDto(employee.getSociete().getAdresse());
+
+            // get date de début, contient dateDebutDTO, contratDTO, typeContratDTO
+            SaisieArticle dateDebut = saisieArticleService.findActiveStartDateByEmployee(employee.getId());
+            SaisieArticleDTO dateDebutDTO = saisieArticleMapper.toDto(dateDebut);
+            ContratDTO contratDTO = contratMapper.toDto(dateDebut.getContrat());
+            TypeContratDTO typeContratDTO = typeContratMapper.toDto(dateDebut.getContrat().getTypeContrat());
+
+            WrapperDpae wrapperDpae = wrapperDpaeMapper.buildWrapperDpaeWithoutDpaeDto(societeDTO, infoEntrepriseDTO, employeDTO, adresseDTO, contratDTO, typeContratDTO, dateDebutDTO);
+            wrapperDpaes.add(wrapperDpae);
+        }
+
+        return wrapperDpaes;
     }
 
     @Override
@@ -155,4 +204,5 @@ public class DpaeServiceImpl implements DpaeService {
         }
         return dpaeDTOList;
     }
+
 }

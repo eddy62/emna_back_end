@@ -6,6 +6,7 @@ import fr.insy2s.service.dto.DpaeDTO;
 import fr.insy2s.utils.files.HtmlUtil;
 import fr.insy2s.utils.files.PdfUtil;
 import fr.insy2s.utils.wrapper.WrapperDpae;
+import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.utils.wrapper.WrapperPdfDpae;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.web.rest.vm.HtmlVM;
@@ -197,4 +198,18 @@ public class DpaeResource {
         return ResponseEntity.ok()
                 .body(htmlVM);
     }
+
+    /**
+     * {@code GET /wrapper-dpaes-to-do/society/:id} : get all the wrapperDpaes to do by society.
+     *
+     * @param id of the society.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of society's wrapperDpaes to do in body.
+     */
+    @GetMapping("/wrapper-dpaes-to-do/society/{id}")
+    public List<WrapperDpae> getAllWrapperDpaesToDoBySociety(@PathVariable Long id) {
+        log.debug("REST request to get all WrapperDpaes by society : {}", id);
+        List<WrapperDpae> list = dpaeService.findAllWrapperDpaesToDoBySociety(id);
+        return list;
+    }
+
 }

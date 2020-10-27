@@ -159,6 +159,13 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Employe> findAllEmployeesWithDpaeToDoBySociety(Long societyId) {
+        log.debug("Request to get all Employes with Dpae to do by Society");
+        return employeRepository.findAllEmployeesWithDpaeToDoBySociety(societyId);
+    }
+
+    @Override
     public Optional<WrapperEmploye> findById(final Long id) {
         log.debug("Request to get WrapperEmploye : {}", id);
         Contrat contrat = contratService.getActiveContratEmployee(id);
