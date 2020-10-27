@@ -18,7 +18,8 @@
       },
       "titre": "Titre",
       "intitule": "Intitule",
-      "description": "Description"
+      "description": "Description",
+      "optional": "Optional"
     }
   }
 }

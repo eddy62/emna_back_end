@@ -35,6 +35,9 @@ public class Article implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "optional")
+    private Boolean optional;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -82,6 +85,19 @@ public class Article implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Boolean isOptional() {
+        return optional;
+    }
+
+    public Article optional(Boolean optional) {
+        this.optional = optional;
+        return this;
+    }
+
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -108,6 +124,7 @@ public class Article implements Serializable {
             ", titre='" + getTitre() + "'" +
             ", intitule='" + getIntitule() + "'" +
             ", description='" + getDescription() + "'" +
+            ", optional='" + isOptional() + "'" +
             "}";
     }
 }
