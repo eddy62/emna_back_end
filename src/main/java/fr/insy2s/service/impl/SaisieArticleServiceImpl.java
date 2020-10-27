@@ -65,4 +65,14 @@ public class SaisieArticleServiceImpl implements SaisieArticleService {
         log.debug("Request to delete SaisieArticle : {}", id);
         saisieArticleRepository.deleteById(id);
     }
+
+    public void saveSaisieArticle(SaisieArticleDTO saisieArticleSave) {
+        Long idArticle = saisieArticleSave.getArticleId();
+        Long idContrat = saisieArticleSave.getContratId();
+        Long idAvenant = saisieArticleSave.getAvenantId();
+        String libelle = saisieArticleSave.getLibelle();
+//        saisieArticleRepository.saveSaisieArticle(idAvenant,idArticle,idContrat,libelle);
+    }
+
+
 }

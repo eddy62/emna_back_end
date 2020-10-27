@@ -1,6 +1,9 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Avenant;
+import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.service.dto.AvenantDTO;
+import fr.insy2s.service.dto.SaisieArticleDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,4 +50,6 @@ public interface AvenantService {
      * @return une liste d'avenant
      */
     List<AvenantDTO> getAllAmendmentByContractId(long idContract);
+
+    AvenantDTO saveFromListeSaisieArticle(List<SaisieArticleDTO> listeSaisieArticle);
 }

@@ -19,7 +19,5 @@ public interface AvenantRepository extends JpaRepository<Avenant, Long> {
         "join SaisieArticle sa on sa.avenant.id=a.id " +
         "where sa.contrat.id=:idContract")
     List<Avenant> getAllAmendmentByIdContract(@Param("idContract") long idContract);
-
-
 }
 
