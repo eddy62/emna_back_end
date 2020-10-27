@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -148,29 +145,37 @@ public class DocumentResource {
     /**
      * {@code GET  /documentsPdf/:id} : get PDF File by path name.
      *
-     * @param path the path of File.
+     * @param id the path of File.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} PDF File.
      */
 
-    @GetMapping("/getPdfFile/{path}")
-    public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable String path) {
-        log.debug("path avant : {}", path);
-        path = path.replaceAll("¤¤¤", "/");
+    @GetMapping("/getPdfFile/{id}")
+    public ResponseEntity<byte[]> getPdfFileByPath(@PathVariable Long id) {
+        log.debug("path avant : {}", id);
+        //path = path.replaceAll("¤¤¤", "/");
+        //Optional<ResponseEntity<byte[]>> response = Optional.empty();//new ResponseEntity<byte[]>();
+        Optional <DocumentDTO> documentDTO = documentService.findOne(id);
+        if(documentDTO.isPresent()) {
+            String path = documentDTO.get().getCheminFichier();
+            Path completePath = Paths.get(path);
+            byte[] pdfContents = null;
+            try {
+                pdfContents = Files.readAllBytes(completePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("content-disposition", "attachment; filename=" + path);
 
-        Path completePath = Paths.get(path);
-        log.debug("path completePath : {}", completePath);
-        byte[] pdfContents = null;
-        try {
-            pdfContents = Files.readAllBytes(completePath);
-        } catch (IOException e) {
-            e.printStackTrace();
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+                pdfContents, headers, HttpStatus.OK);
+            return response;
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("content-disposition", "attachment; filename=" + path);
-
-        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
-            pdfContents, headers, HttpStatus.OK);
-        return response;
+        else {
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+                null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            return response;
+        }
     }
 
 

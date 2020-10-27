@@ -1,6 +1,6 @@
 package fr.insy2s.service.dto;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -18,6 +18,9 @@ public class ArticleDTO implements Serializable {
 
     @NotNull
     private String description;
+
+    @NotNull
+    private Boolean optional;
 
 
     public Long getId() {
@@ -52,8 +55,16 @@ public class ArticleDTO implements Serializable {
         this.description = description;
     }
 
+    public Boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
+    }
+
     public String asString() {
-        String title    = this.titre.trim().toLowerCase().replaceAll("\\s+", "");
+        String title = this.titre.trim().toLowerCase().replaceAll("\\s+", "");
         String intitule = this.intitule.trim().toLowerCase().replaceAll("\\s+", "");
         return title + intitule;
     }
@@ -66,6 +77,7 @@ public class ArticleDTO implements Serializable {
         if (!(o instanceof ArticleDTO)) {
             return false;
         }
+
 
         return id != null && id.equals(((ArticleDTO) o).id);
     }
@@ -83,6 +95,7 @@ public class ArticleDTO implements Serializable {
             ", titre='" + getTitre() + "'" +
             ", intitule='" + getIntitule() + "'" +
             ", description='" + getDescription() + "'" +
+            ", optional='" + isOptional() + "'" +
             "}";
     }
 }

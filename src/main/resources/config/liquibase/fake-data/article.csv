@@ -1,9 +1,12 @@
-id;titre;intitule;description
-1;ARTICLE 1;LIEU DE TRAVAIL;A titre indicatif, le salarié sera affecté dans l’établissement situé au
-2;ARTICLE 2;DATE DE DÉBUT;La société engage le titulaire du présent contrat à compter du
-3;ARTICLE 3;DESCRIPTION DU POSTE;La société engage le titulaire du présent contrat en qualité de
-4;ARTICLE 4;GRADE;Le poste du titulaire du présent contrat correspond au grade de
-5;ARTICLE 5;FONCTION;Le titulaire du présent contrat exercera ses fonctions sous l’autorité et selon les directives de son supérieur hiérarchique ou toute autre personne que ce dernier désigne pour le substituer, auquel il rendra compte de son activité
-6;ARTICLE 6;DURÉE DU TRAVAIL;Sur demande du salarié, la durée mensuelle de travail du contrat est de 35 heures répartie, à titre indicatif au cours du mois de la manière suivante
-7;ARTICLE 7;REMUNERATION;La société engage le titulaire du présent contrat aux taux horaires de
-8;ARTICLE 8;OBLIGATION;Le titulaire du présent contrat
+id;titre;intitule;description;optional
+1;ARTICLE 1;LIEU DE TRAVAIL;A titre indicatif, le salarié sera affecté dans l’établissement situé au;FALSE
+2;ARTICLE 2;DATE DE DÉBUT;La société engage le titulaire du présent contrat à compter du;FALSE
+3;ARTICLE 3;DESCRIPTION DU POSTE;La société engage le titulaire du présent contrat en qualité de;FALSE
+4;ARTICLE 4;GRADE;Le poste du titulaire du présent contrat correspond au grade de;FALSE
+5;ARTICLE 5;FONCTION;Le titulaire du présent contrat exercera ses fonctions sous l’autorité et selon les directives de son supérieur hiérarchique ou toute autre personne que ce dernier désigne pour le substituer, auquel il rendra compte de son activité;FALSE
+6;ARTICLE 6;DURÉE DU TRAVAIL;Sur demande du salarié, la durée mensuelle de travail du contrat est de 35 heures répartie, à titre indicatif au cours du mois de la manière suivante;FALSE
+7;ARTICLE 7;REMUNERATION;La société engage le titulaire du présent contrat aux taux horaires de;FALSE
+8;ARTICLE 8;OBLIGATION;Le titulaire du présent contrat;FALSE
+9;ARTICLE 9;Optional choice;Optional choice desc2;TRUE
+10;ARTICLE 10;Optional choice 2;Optional choice desc2;TRUE
+11;ARTICLE 11;Optional choice 3;Optional choice desc3;TRUE

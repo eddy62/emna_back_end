@@ -15,7 +15,8 @@ import java.util.Optional;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface DevisRepository extends JpaRepository<Devis, Long> {
+public interface
+DevisRepository extends JpaRepository<Devis, Long> {
 
     @Query("select d FROM Devis d, ClientFournisseur c WHERE d.clientFournisseur.id=c.id and c.societe.id=:id")
     List<Devis> findQuotesBySocietyId(@Param("id") Long id);

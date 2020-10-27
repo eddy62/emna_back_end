@@ -40,4 +40,6 @@ public interface LigneProduitService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    void deleteByDevisId(Long id);
 }

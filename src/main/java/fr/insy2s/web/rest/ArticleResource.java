@@ -99,7 +99,7 @@ public class ArticleResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of articles in body.
      */
     @GetMapping("/articles")
-    public List<ArticleDTO> getAllArticles(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<ArticleDTO> getAllArticles() {
         log.debug("REST request to get all Articles");
         return articleService.findAll();
     }

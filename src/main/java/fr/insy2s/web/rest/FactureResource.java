@@ -177,3 +177,4 @@ public class FactureResource {
             factureService.mergeOperationByIdFacture(idFacture,idOperation);
     }
 }
+

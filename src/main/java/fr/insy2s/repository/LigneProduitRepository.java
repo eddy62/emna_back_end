@@ -20,4 +20,5 @@ public interface LigneProduitRepository extends JpaRepository<LigneProduit, Long
     List<LigneProduit> getLigneProduitByIdFacture(@Param("idFacture") Long idFacture);
 
     boolean existsByProduit_Id(Long id);
+    void deleteByDevis_Id(Long id);
 }

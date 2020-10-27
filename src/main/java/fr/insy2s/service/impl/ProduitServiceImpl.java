@@ -7,6 +7,7 @@ import fr.insy2s.security.SecurityUtils;
 import fr.insy2s.service.ProduitService;
 import fr.insy2s.domain.Produit;
 import fr.insy2s.repository.ProduitRepository;
+import fr.insy2s.service.SocieteService;
 import fr.insy2s.service.dto.ProduitDTO;
 import fr.insy2s.service.dto.UserDTO;
 import fr.insy2s.service.mapper.ProduitMapper;
@@ -39,15 +40,18 @@ public class ProduitServiceImpl implements ProduitService {
 
     private final UserRepository userRepository;
 
+
     private final LigneProduitRepository ligneProduitRepository;
+    private final SocieteService societeService;
 
 
     public ProduitServiceImpl(ProduitRepository produitRepository, ProduitMapper produitMapper, UserMapper userMapper,
-                              UserRepository userRepository, LigneProduitRepository ligneProduitRepository1) {
+                              UserRepository userRepository, SocieteService societeService, LigneProduitRepository ligneProduitRepository1) {
         this.produitRepository = produitRepository;
         this.produitMapper = produitMapper;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.societeService = societeService;
         this.ligneProduitRepository = ligneProduitRepository1;
     }
 
@@ -80,7 +84,7 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public boolean delete(Long id) {
         log.debug("Request to delete Produit : {}", id);
-        if (!ligneProduitRepository.existsByProduit_Id(id) ) {
+        if (!ligneProduitRepository.existsByProduit_Id(id)) {
             produitRepository.deleteById(id);
             return true;
         }
@@ -113,6 +117,27 @@ public class ProduitServiceImpl implements ProduitService {
             if (AuthoritiesConstants.SOCIETY.equals(auth)) return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean userCanUpdateProduct(Long societyId, Long userId, Long productId) {
+        return produitRepository.canUserUpdateProduct(societyId, userId, productId);
+    }
+    /**
+     * find list of products by id of user's society and the product's label or his refeerence
+     * @param keyWord
+     * @param idSociety
+     * @return list of produitDTO
+     */
+
+    @Override
+    public List<ProduitDTO> findProductByNameOrReferenceAndIdSociety(String keyWord, Long idSociety) {
+        log.debug("Request to get product by name and reference and id of society");
+        List<Produit> listeProduit = produitRepository.getByNomOrReferenceAndSociete_Id(keyWord, idSociety);
+        return listeProduit.stream()
+            .map(produitMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+
     }
 
 

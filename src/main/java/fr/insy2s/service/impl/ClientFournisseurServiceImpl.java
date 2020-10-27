@@ -308,7 +308,7 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
     public Boolean connectedUserIsSociete(){
         UserDTO currentUser =findOneByLogin(SecurityUtils.getCurrentUserLogin().get());
         for(String auth:currentUser.getAuthorities()){
-            if(AuthoritiesConstants.SOCIETY.equals(auth))return true;
+            if(AuthoritiesConstants.SOCIETY.equals(auth) || AuthoritiesConstants.ADMIN.equals(auth))return true;
         }
         return false;
     }

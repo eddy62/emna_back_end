@@ -9,7 +9,6 @@ import fr.insy2s.domain.Societe;
 import fr.insy2s.repository.SocieteRepository;
 import fr.insy2s.service.dto.*;
 import fr.insy2s.service.mapper.*;
-import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.utils.wrapper.WrapperSociete;
 
 import org.slf4j.Logger;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -177,6 +175,20 @@ public class SocieteServiceImpl implements SocieteService {
         log.debug("Request to get Employe from a specific Societe id : {}", societeId);
         Optional <Societe> societe = societeRepository.findById(societeId);
         return societe.get().getListeEmployes().stream().map(employeMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public boolean existBySocietyIdAndUserId(Long societyId, Long userId) {
+        return societeRepository.existByIdAndUser_Id(societyId, userId);
+    }
+    /**
+     * Get id of society by the login of current user
+     * @param login
+     * @return id of society
+     */
+    @Override
+    public Societe findByUserLogin(String login) {
+        return societeRepository.findByUser_Login(login);
     }
 
 }

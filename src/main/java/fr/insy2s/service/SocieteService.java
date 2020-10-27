@@ -1,12 +1,9 @@
 package fr.insy2s.service;
 
-import fr.insy2s.domain.Employe;
-import fr.insy2s.service.dto.ComptableInfoEntrepriseAdresseUserDTO;
+import fr.insy2s.domain.Societe;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.service.dto.SocieteDTO;
 import fr.insy2s.service.dto.SocieteInfoEntrepriseAdresseUserDTO;
-import fr.insy2s.utils.wrapper.WrapperComptable;
-import fr.insy2s.utils.wrapper.WrapperEmploye;
 import fr.insy2s.utils.wrapper.WrapperSociete;
 
 import java.util.List;
@@ -44,12 +41,13 @@ public interface SocieteService {
     /**
      * Delete the "id" societe.
      *
-     * @param id the id of the entity.
+     * @param id the id of the entity
      */
     void delete(Long id);
 
     /**
      * Get the "id" WrapperSociete
+     *
      * @param id
      * @return the wrapperSociete
      */
@@ -60,6 +58,7 @@ public interface SocieteService {
     Optional<SocieteDTO> findByUser(Long id);
 
     WrapperSociete creerOuModifierSociete(SocieteInfoEntrepriseAdresseUserDTO societeInfoEntrepriseAdresseUserDTO, String callingMethode);
+
     WrapperSociete getSociete(Long id);
 
     /**
@@ -68,4 +67,18 @@ public interface SocieteService {
      * @return the list of Employe
      */
     List<EmployeDTO> findAllEmployeBySociete(Long societeId);
+
+    /**
+     * Check if user exist in society
+     *
+     * @param userId
+     * @return the wrapperSociete
+     */
+    boolean existBySocietyIdAndUserId(Long societyId, Long userId);
+     /* Get id of society by the login of current user
+     * @param login
+     * @return id of society
+     */
+    Societe findByUserLogin(String login);
+
 }

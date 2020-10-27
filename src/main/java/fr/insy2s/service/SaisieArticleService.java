@@ -41,6 +41,8 @@ public interface SaisieArticleService {
      */
     void delete(Long id);
 
+    void saveSaisieArticle(SaisieArticleDTO saisieArticleSave);
+
     /**
      * Get the "contratId" date de début.
      *

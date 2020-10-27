@@ -7,6 +7,7 @@ import fr.insy2s.service.dto.SaisieArticleDTO;
 import fr.insy2s.service.mapper.SaisieArticleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,5 +78,13 @@ public class SaisieArticleServiceImpl implements SaisieArticleService {
     public SaisieArticle findActiveStartDateByEmployee(Long employeeId) {
         log.debug("Request to get date de début active by Employe : {}", employeeId);
         return saisieArticleRepository.findActiveStartDateByEmployee(employeeId);
+    }
+
+    public void saveSaisieArticle(SaisieArticleDTO saisieArticleSave) {
+        Long idArticle = saisieArticleSave.getArticleId();
+        Long idContrat = saisieArticleSave.getContratId();
+        Long idAvenant = saisieArticleSave.getAvenantId();
+        String libelle = saisieArticleSave.getLibelle();
+//        saisieArticleRepository.saveSaisieArticle(idAvenant,idArticle,idContrat,libelle);
     }
 }
