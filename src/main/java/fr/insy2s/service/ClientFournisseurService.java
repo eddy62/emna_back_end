@@ -1,7 +1,9 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.ClientFournisseur;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
 import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +84,9 @@ public interface ClientFournisseurService {
     Optional<ClientFournisseurDTO> findByNom(String nom);
 
     Optional<ClientFournisseurDTO> findByNomAndSocieteId(String nom, Long id);
+
+    List<ClientFournisseurDTO> findBySiretAndSocietyId(String siret, Long id);
+
     /**
      * check the id of current user
      * @param id

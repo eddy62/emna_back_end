@@ -2,6 +2,7 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.ClientFournisseurService;
+import fr.insy2s.service.SocieteService;
 import fr.insy2s.utils.wrapper.WrapperClientFournisseur;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import fr.insy2s.service.dto.ClientFournisseurDTO;
@@ -38,8 +39,11 @@ public class ClientFournisseurResource {
 
     private final ClientFournisseurService clientFournisseurService;
 
-    public ClientFournisseurResource(ClientFournisseurService clientFournisseurService) {
+    private final SocieteService societeService;
+
+    public ClientFournisseurResource(ClientFournisseurService clientFournisseurService, SocieteService societeService) {
         this.clientFournisseurService = clientFournisseurService;
+        this.societeService = societeService;
     }
 
     /**
@@ -238,6 +242,23 @@ public class ClientFournisseurResource {
         log.debug("REST request to get ClientFournisseur : {}", nom);
         Optional<ClientFournisseurDTO> clientFournisseurDTO = clientFournisseurService.findByNom(nom);
         return ResponseUtil.wrapOrNotFound(clientFournisseurDTO);
+    }
+
+    /**
+     * {@code GET  /produits/{keyWord} : get the list of products.
+     *
+     * @param keyWord.
+     * @param principal (current user).
+     * @return list of products.
+     */
+    @GetMapping("/clients-fournisseurs/siret/{siret}")
+    public  ResponseEntity<List<ClientFournisseurDTO>> getClientFournisseurBySiret(@PathVariable String siret, Principal principal) {
+        log.debug("REST request to get ClientFournisseur : {}", siret);
+        String login = principal.getName();
+        Long idSociety = societeService.findByUserLogin(login).getId();
+        List<ClientFournisseurDTO> clientsFournisseurs = clientFournisseurService.findBySiretAndSocietyId(siret, idSociety);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(clientsFournisseurs));
+
     }
 
     /**

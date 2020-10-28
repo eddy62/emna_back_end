@@ -31,4 +31,6 @@ public interface ClientFournisseurRepository extends JpaRepository<ClientFournis
     Optional<ClientFournisseur> findByNom(String nom);
 
     Optional<ClientFournisseur> findByNomAndSocieteId(String nom, Long societeId);
+
+    List<ClientFournisseur> findBySiretAndSocieteId(String siret, Long societeId);
 }
