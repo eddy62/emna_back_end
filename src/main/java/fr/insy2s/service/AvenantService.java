@@ -59,5 +59,7 @@ public interface AvenantService {
      */
     byte[] getPDFAmendment(Long idAmendment) throws JRException;
 
+    Boolean signAmendment(Long id);
+
     AvenantDTO saveFromListeSaisieArticle(List<SaisieArticleDTO> listeSaisieArticle);
 }
