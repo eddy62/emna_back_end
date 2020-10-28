@@ -303,6 +303,14 @@ public class ClientFournisseurServiceImpl implements ClientFournisseurService {
             .map(clientFournisseurMapper::toDto);
     }
 
+    @Override
+    public List<ClientFournisseurDTO> findBySiretAndSocietyId(String siret, Long id) {
+        log.debug("Request to get all ClientFournisseurs By Siret Society");
+        return clientFournisseurRepository.findBySiretAndSocieteId(siret, id).stream()
+            .map(clientFournisseurMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
 
     @Override
     public Boolean connectedUserIsSociete(){
