@@ -99,6 +99,18 @@ public class AvenantServiceImpl implements AvenantService {
     }
 
     @Override
+    public Boolean signAmendment(Long id) {
+        Optional<Avenant> avenant = avenantRepository.findById(id);
+       if (avenant.isPresent()){
+            avenant.get().setSigne(true);
+            avenantRepository.save(avenant.get());
+            return avenant.get().isSigne();
+        }else {
+           return false;
+       }
+    }
+
+    @Override
     public AvenantDTO saveFromListeSaisieArticle(List<SaisieArticleDTO> listeSaisieArticle) {
         AvenantDTO avenantDTO = new AvenantDTO();
         avenantDTO.setDateDeCreation(LocalDate.now());

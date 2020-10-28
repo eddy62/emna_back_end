@@ -12,9 +12,11 @@ import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -133,11 +135,12 @@ public class AvenantResource {
 
     /**
      * {@code GET  /avenants/:idContrat} : Récupère tout les avenants du contrat passer en id
+     *
      * @param idContract id du contrat pour récupèré tout les avenants de celui-ci
      * @return {@link ResponseEntity} avec le status {@code 200 (OK)} et la liste des avenants.
      */
     @GetMapping("avenants/contrats/{idContract}")
-    public List<AvenantDTO> getAllAmendmentByContractId(@PathVariable long idContract){
+    public List<AvenantDTO> getAllAmendmentByContractId(@PathVariable long idContract) {
         log.debug("REST request to get all Amendement by contract id ", idContract);
         return avenantService.getAllAmendmentByContractId(idContract);
     }
@@ -154,11 +157,19 @@ public class AvenantResource {
         AuthoritiesConstants.ACCOUNTANT
     })
     @GetMapping("/avenant/pdf/{idAmendment}")
-    public ResponseEntity<byte[]> getPDFAmendment(@PathVariable Long idAmendment) throws JRException{
-        log.debug("REST request to get avenant by the id ",idAmendment);
+    public ResponseEntity<byte[]> getPDFAmendment(@PathVariable Long idAmendment) throws JRException {
+        log.debug("REST request to get avenant by the id ", idAmendment);
         byte[] bytes = avenantService.getPDFAmendment(idAmendment);
         return ResponseEntity.ok()
             .header("Content-Type", "application/pdf; charset=UTF-8")
             .body(bytes);
+    }
+
+    @PostMapping("/upload/avenant/{id}")
+    public ResponseEntity<String> uploadSignedAvenant(@RequestParam("files") MultipartFile files, @PathVariable Long id) {
+        log.warn(new StringBuilder().append(files.getOriginalFilename()).append(" idAvenant ==> ").append(id).toString());
+        avenantService.signAmendment(id);
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
+
     }
 }

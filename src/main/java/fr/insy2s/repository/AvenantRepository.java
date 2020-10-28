@@ -2,14 +2,12 @@ package fr.insy2s.repository;
 
 import fr.insy2s.domain.Avenant;
 
-import fr.insy2s.domain.SaisieArticle;
-import fr.insy2s.domain.Societe;
-import fr.insy2s.service.dto.AvenantDTO;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Spring Data  repository for the Avenant entity.
@@ -26,5 +24,6 @@ public interface AvenantRepository extends JpaRepository<Avenant, Long> {
         "where a.id=:idAmendment ")
     Avenant getAmendmentById(@Param("idAmendment") long idAmendment);
     //and sa.contrat.employe.societe
+
 }
 
