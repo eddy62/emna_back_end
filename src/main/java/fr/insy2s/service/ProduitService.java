@@ -69,4 +69,12 @@ public interface ProduitService {
 
     boolean userCanUpdateProduct(Long societyId, Long userId, Long productId);
 
+    /**
+     * find list of products by id of user's society and the product's label or his refeerence
+     * @param keyWord
+     * @param idSociety
+     * @return list of produitDTO
+     */
+    List<ProduitDTO> findProductByNameOrReferenceAndIdSociety(String keyWord, Long idSociety);
 }
+

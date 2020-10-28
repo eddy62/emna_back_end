@@ -40,4 +40,6 @@ public interface SaisieArticleService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    void saveSaisieArticle(SaisieArticleDTO saisieArticleSave);
 }

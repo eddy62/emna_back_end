@@ -1,7 +1,10 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Avenant;
+import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.service.dto.AvenantDTO;
 import net.sf.jasperreports.engine.JRException;
+import fr.insy2s.service.dto.SaisieArticleDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,4 +58,8 @@ public interface AvenantService {
      * @return
      */
     byte[] getPDFAmendment(Long idAmendment) throws JRException;
+
+    Boolean signAmendment(Long id);
+
+    AvenantDTO saveFromListeSaisieArticle(List<SaisieArticleDTO> listeSaisieArticle);
 }
