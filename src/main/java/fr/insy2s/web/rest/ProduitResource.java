@@ -43,7 +43,6 @@ public class ProduitResource {
     private String applicationName;
 
     private final ProduitService produitService;
-
     private final SocieteService societeService;
 
     public ProduitResource(ProduitService produitService, SocieteService societeService) {
@@ -94,6 +93,23 @@ public class ProduitResource {
         log.debug("REST request to get Produit : {}", id);
         Optional<ProduitDTO> produitDTO = produitService.findOne(id);
         return ResponseUtil.wrapOrNotFound(produitDTO);
+    }
+
+    /**
+     * {@code GET  /produits/{keyWord} : get the list of products.
+     *
+     * @param keyWord.
+     * @param principal (current user).
+     * @return list of products.
+     */
+    @GetMapping("/products/q/{keyWord}")
+    public  ResponseEntity<List<ProduitDTO>> getProductByNameOrReferenceAndSocietyId(@PathVariable String keyWord, Principal principal) {
+        log.debug("REST request to get Produit : {}", keyWord);
+        String login = principal.getName();
+        Long idSociety = societeService.findByUserLogin(login).getId();
+        List<ProduitDTO> produits = produitService.findProductByNameOrReferenceAndIdSociety(keyWord, idSociety);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(produits));
+
     }
 
     /**

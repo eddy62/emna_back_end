@@ -23,4 +23,11 @@ public interface SocieteRepository extends JpaRepository<Societe, Long> {
 
     @Query("select (count(s) > 0) from Societe s where s.id = :societyId and s.user.id = :userId")
     boolean existByIdAndUser_Id(@Param("societyId") Long societyId, @Param("userId")Long userId);
+    /**
+     * Get id of society by the login of current user
+     * @param login
+     * @return id of society
+     */
+    Societe findByUser_Login(String login);
+
 }
