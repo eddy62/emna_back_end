@@ -1,5 +1,6 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.service.dto.SaisieArticleDTO;
 
 import java.util.List;
@@ -25,7 +26,6 @@ public interface SaisieArticleService {
      */
     List<SaisieArticleDTO> findAll();
 
-
     /**
      * Get the "id" saisieArticle.
      *
@@ -42,4 +42,20 @@ public interface SaisieArticleService {
     void delete(Long id);
 
     void saveSaisieArticle(SaisieArticleDTO saisieArticleSave);
+
+    /**
+     * Get the "contratId" date de début.
+     *
+     * @param id the contratId of the entity.
+     * @return the saisieArticle for the Article "date de début".
+     */
+    SaisieArticleDTO findDateDebutbyContratId(Long id);
+
+    /**
+     * Get the "employeeId" date de début active.
+     *
+     * @param id the employeeId of the entity.
+     * @return  the  entity.
+     */
+    SaisieArticle findActiveStartDateByEmployee(Long id);
 }

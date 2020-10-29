@@ -1,8 +1,8 @@
 package fr.insy2s.service.impl;
 
-import fr.insy2s.service.SaisieArticleService;
 import fr.insy2s.domain.SaisieArticle;
 import fr.insy2s.repository.SaisieArticleRepository;
+import fr.insy2s.service.SaisieArticleService;
 import fr.insy2s.service.dto.SaisieArticleDTO;
 import fr.insy2s.service.mapper.SaisieArticleMapper;
 import org.slf4j.Logger;
@@ -66,6 +66,20 @@ public class SaisieArticleServiceImpl implements SaisieArticleService {
         saisieArticleRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public SaisieArticleDTO findDateDebutbyContratId(Long id) {
+        log.debug("Request to get SaisieArticle for the Article date de début : {}", id);
+        return saisieArticleMapper.toDto(saisieArticleRepository.findDateDebutbyContratId(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SaisieArticle findActiveStartDateByEmployee(Long employeeId) {
+        log.debug("Request to get date de début active by Employe : {}", employeeId);
+        return saisieArticleRepository.findActiveStartDateByEmployee(employeeId);
+    }
+
     public void saveSaisieArticle(SaisieArticleDTO saisieArticleSave) {
         Long idArticle = saisieArticleSave.getArticleId();
         Long idContrat = saisieArticleSave.getContratId();
@@ -73,6 +87,4 @@ public class SaisieArticleServiceImpl implements SaisieArticleService {
         String libelle = saisieArticleSave.getLibelle();
 //        saisieArticleRepository.saveSaisieArticle(idAvenant,idArticle,idContrat,libelle);
     }
-
-
 }

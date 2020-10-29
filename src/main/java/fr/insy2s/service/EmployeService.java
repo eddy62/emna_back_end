@@ -1,5 +1,6 @@
 package fr.insy2s.service;
 
+import fr.insy2s.domain.Employe;
 import fr.insy2s.repository.projection.IEmployeContratProjection;
 import fr.insy2s.service.dto.EmployeDTO;
 import fr.insy2s.utils.wrapper.WrapperEmploye;
@@ -43,8 +44,7 @@ public interface EmployeService {
      */
     void delete(Long id);
 
-
-//    List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id);
+//  List<IEmployeContratProjection> getAllEmployeArticleClauseBySocieteId(Long id);
 
     /**
      * Get all the WrapperEmploye
@@ -59,6 +59,14 @@ public interface EmployeService {
      * @return the list of wrapperEmploye
      */
     List<WrapperEmploye> findAllWrapperEmployeBySociete(final Long societeId);
+
+    /**
+     * Get all the employes with a dpae to do by society.
+     *
+     * @param societyId id of the society
+     * @return the list of entities.
+     */
+    List<Employe> findAllEmployeesWithDpaeToDoBySociety(final Long societyId);
 
     /**
      * Get the "id" wrapperEmploye

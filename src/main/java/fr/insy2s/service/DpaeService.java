@@ -64,4 +64,12 @@ public interface DpaeService {
      * @return the list of wrapperAbsence
      */
     List<DpaeDTO> findAllDpaeByEmployeIdMonthStartMonthEnd(Long idEmploye, Integer year, Integer monthStart, Integer monthEnd);
+
+    /**
+     * Get all the WrapperDpaes by society
+     *
+     * @param societyId id of the society
+     * @return the list of wrapperDpaes
+     */
+    List<WrapperDpae> findAllWrapperDpaesToDoBySociety(Long societyId);
 }
