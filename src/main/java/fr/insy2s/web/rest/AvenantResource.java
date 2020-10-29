@@ -2,15 +2,19 @@ package fr.insy2s.web.rest;
 
 import fr.insy2s.security.AuthoritiesConstants;
 import fr.insy2s.service.AvenantService;
-import fr.insy2s.service.dto.SaisieArticleDTO;
-import fr.insy2s.web.rest.errors.BadRequestAlertException;
+import fr.insy2s.service.DocumentService;
+import fr.insy2s.service.FilesStorageService;
 import fr.insy2s.service.dto.AvenantDTO;
+import fr.insy2s.service.dto.DocumentDTO;
+import fr.insy2s.service.dto.SaisieArticleDTO;
+import fr.insy2s.utils.TypeDocumentConstants;
 import fr.insy2s.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +42,11 @@ public class AvenantResource {
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
+
+    @Autowired
+    FilesStorageService storageService;
+    @Autowired
+    DocumentService documentService;
 
     private final AvenantService avenantService;
 
@@ -165,11 +175,38 @@ public class AvenantResource {
             .body(bytes);
     }
 
-    @PostMapping("/upload/avenant/{id}")
-    public ResponseEntity<String> uploadSignedAvenant(@RequestParam("files") MultipartFile files, @PathVariable Long id) {
-        log.warn(new StringBuilder().append(files.getOriginalFilename()).append(" idAvenant ==> ").append(id).toString());
-        avenantService.signAmendment(id);
-        return ResponseEntity.status(HttpStatus.OK).body("ok");
+    @PostMapping("/upload/avenant/{id}/{idContrat}")
+    public ResponseEntity<String> uploadSignedAvenant(@RequestParam("files") MultipartFile files, @PathVariable Long id, @PathVariable Long idContrat) {
+        String message = "";
+        Optional<AvenantDTO> optionalAvenantDTO = avenantService.findOne(id);
+        if (optionalAvenantDTO.isEmpty())
+            throw new BadRequestAlertException("The contract does not exist", "avenant", "avenantNonExistant");
+        AvenantDTO avenantDTO = optionalAvenantDTO.get();
+        if (avenantDTO.isSigne())
+            throw new BadRequestAlertException("The amendment is already signed", "avenant", "alreadySigned");
 
+        try {
+            Path documentPath = storageService.saveAmendment(files, "avenant",idContrat, id);
+            try {
+                DocumentDTO documentDTO = new DocumentDTO();
+                documentDTO.setCheminFichier("./"+documentPath.toString().replace("\\\"", "\""));
+                documentDTO.setNom(documentPath.getFileName().toString());
+                documentDTO.setContratId(idContrat);
+                documentDTO.setAvenantId(id);
+                documentDTO.setEmployeId(id);
+                documentDTO.setTypeDocumentId(TypeDocumentConstants.AVENANT);
+                documentService.save(documentDTO);
+                avenantService.signAmendment(id);
+                message = "File uploaded with success: " + files.getOriginalFilename();
+                return ResponseEntity.status(HttpStatus.OK).body(message);
+            } catch (Exception e) {
+                message = "Error: could not create the entity Document linked to: " + files.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
+
 }
+

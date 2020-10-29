@@ -1,5 +1,12 @@
 package fr.insy2s.service.impl;
 
+import fr.insy2s.service.FilesStorageService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -9,13 +16,6 @@ import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.stream.Stream;
-
-import fr.insy2s.service.FilesStorageService;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
@@ -43,11 +43,30 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
+    public Path saveAmendment(MultipartFile file, String type,Long idContrat, Long idAmendment) {
+        try {
+            Path defPath = Paths.get(String.format("%s/%s/%s/%s", DEFAULT_PATH, type,idContrat, idAmendment));
+            Files.createDirectories(defPath);
+            Path path = defPath.resolve(
+                String.format("%s_%s",
+                    type,
+                    file.getOriginalFilename()
+                )
+            );
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            return path;
+        } catch (Exception e) {
+            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+        }
+
+    }
+
+    @Override
     public Path saveFile(MultipartFile file, String type, String societyName) {
         try {
-            String[] extension  = Objects.requireNonNull(file.getContentType()).split("/");
-            Long timestamp      = new Timestamp(System.currentTimeMillis()).getTime();
-            Path defPath        = Paths.get(String.format("%s/%s/%s", DEFAULT_PATH, type, societyName));
+            String[] extension = Objects.requireNonNull(file.getContentType()).split("/");
+            Long timestamp = new Timestamp(System.currentTimeMillis()).getTime();
+            Path defPath = Paths.get(String.format("%s/%s/%s", DEFAULT_PATH, type, societyName));
             Files.createDirectories(defPath);
             Path path = defPath.resolve(
                 String.format("%s_%s.%s",
