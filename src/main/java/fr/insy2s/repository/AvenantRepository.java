@@ -24,6 +24,5 @@ public interface AvenantRepository extends JpaRepository<Avenant, Long> {
         "where a.id=:idAmendment ")
     Avenant getAmendmentById(@Param("idAmendment") long idAmendment);
     //and sa.contrat.employe.societe
-
 }
 
