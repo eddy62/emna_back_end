@@ -203,13 +203,13 @@ public class ReleveResource {
      * @param idReleve the id of releveDTO to validate.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated releveDTO
      */
-//    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.ACCOUNTANT})
     @PutMapping("/releve/valider/comptable/{idReleve}")
     public ResponseEntity<Boolean> updateEtatRelever(@PathVariable Long idReleve) {
         log.debug("REST request to update etat releve");
         boolean conditionsBeforValidate = false;
         if (CheckUtil.isAcountant()) {
-            conditionsBeforValidate = releveService.hasPermissionForThisReleve(idReleve,"accountant")
+            conditionsBeforValidate = releveService.hasPermissionForThisReleve(idReleve,CheckUtil.getLoginCurrentUser())
             && releveService.balanceOperationsEqualsInvoices(idReleve);
         } else if (CheckUtil.isAdmin()) {
             conditionsBeforValidate = releveService.balanceOperationsEqualsInvoices(idReleve);

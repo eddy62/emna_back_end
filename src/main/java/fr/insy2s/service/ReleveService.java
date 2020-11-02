@@ -64,7 +64,7 @@ public interface ReleveService {
     /**
      * checked solde Invoices equals solde statements
      *
-     * @param idReleve the id of the releve.
+     * @param idReleve the id0. of the releve.
      * @return boolean
      */
     boolean balanceOperationsEqualsInvoices(Long idReleve);

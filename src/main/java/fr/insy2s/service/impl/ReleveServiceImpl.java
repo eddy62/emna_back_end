@@ -146,8 +146,7 @@ public class ReleveServiceImpl implements ReleveService {
                         sommeFacture = sommeFacture.add(TotalUtil.getTTCFacture(facture));
                     }
                 }
-                double sommeF = sommeFacture.doubleValue();
-                isSoldeEquals = Double.compare(operations.get(i).getSolde().doubleValue(), sommeF) == 0;
+                isSoldeEquals = operations.get(i).getSolde().compareTo(sommeFacture) == 0;
 
                 i++;
             }
